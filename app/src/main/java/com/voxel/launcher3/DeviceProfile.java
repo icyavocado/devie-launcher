@@ -444,7 +444,10 @@ public class DeviceProfile {
         Point point3 = new Point();
         defaultDisplay.getSize(point);
         defaultDisplay.getCurrentSizeRange(point2, point3);
-        return (((int) ((this.availableWidthPx - (this.edgeMarginPx * 4)) / cellParamsForType.numColumns)) - cellParamsForType.iconDrawablePaddingPx) / DynamicGrid.pxFromDp(this.iconSize, displayMetrics);
+        return ((((int) ((this.availableWidthPx - (this.edgeMarginPx * 4)) / cellParamsForType.numColumns)) - cellParamsForType.iconDrawablePaddingPx) / (float) DynamicGrid.pxFromDp(this.iconSize, displayMetrics));
+        /* REWORK: the donor dex int-to-floats BOTH operands before div-float; the
+           decompiled int/int division truncated to 0 once cell width < icon size px
+           (columns > 4) and the icon-size control stuck at 0. */
     }
 
     public float getMaxWorkspaceIconScale(Context context) {
@@ -467,14 +470,16 @@ public class DeviceProfile {
         paint.setTextSize(DynamicGrid.pxFromSp(this.iconTextSize, displayMetrics));
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         int iPxFromDp = DynamicGrid.pxFromDp(this.iconSize, displayMetrics) + ((int) Math.ceil(fontMetrics.bottom - fontMetrics.top));
-        float fPxFromDp = i4 / DynamicGrid.pxFromDp(this.iconSize, displayMetrics);
-        float fMin = Math.min(i3 / iPxFromDp, fPxFromDp);
+        float fPxFromDp = i4 / (float) DynamicGrid.pxFromDp(this.iconSize, displayMetrics);
+        /* REWORK: donor dex rounds through div-float with both operands converted;
+           int/int truncation zeroed the max scale. */
+        float fMin = Math.min(i3 / (float) iPxFromDp, fPxFromDp);
         if (fMin >= MIN_ICON_TEXT_SCALE) {
             return fMin;
         }
         paint.setTextSize(DynamicGrid.pxFromSp(this.iconTextSize * 0.75f, displayMetrics));
         Paint.FontMetrics fontMetrics2 = paint.getFontMetrics();
-        return Math.min((i3 - ((int) Math.ceil(fontMetrics2.bottom - fontMetrics2.top))) / DynamicGrid.pxFromDp(this.iconSize, displayMetrics), fPxFromDp);
+        return Math.min((i3 - ((int) Math.ceil(fontMetrics2.bottom - fontMetrics2.top))) / (float) DynamicGrid.pxFromDp(this.iconSize, displayMetrics), fPxFromDp);
     }
 
     Rect getOverviewModeButtonBarRect() {
