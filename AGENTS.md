@@ -86,7 +86,7 @@ Upon release:
 4. Ship the same build to the user's phone (Samsung SM-S901W, USB serial
    `R5CT60JX7FM`; poll `adb devices` first) — standing instruction.
 
-NEVER cut a release (version bump + tag) without the user's explicit
+NEVER push or cut a release (version bump + tag) without the user's explicit
 go-ahead; plain fix-builds to the phone are fine otherwise.
 
 NEVER commit: `keystore/`, `.docker-*/`, `.gradle/`, `app/build/`, donor
