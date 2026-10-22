@@ -1,103 +1,286 @@
-# AGENTS.md — environment + workflow (do not re-derive this)
+# AGENTS.md — dEvie Launcher: complete build/test/release/runbook
 
-## Where things are
+Anyone joining this session cold: read this top-to-bottom once; it contains
+every environment fact, trap and standing rule accumulated across the whole
+rework. Do not re-derive any of it.
+
+## 1. What this project is
+
+dEvie = a ground-up Gradle rebuild of **Evie Launcher 2.14.8** from its donor
+APK (GPL-3.0), with all cloud services stripped. Fully offline, no tracking.
+Repo: `github.com/icyavocado/devie-launcher` (public), branch `main` = default.
+
+| Fact | Value |
+|---|---|
+| Application id | `com.ovacoda.devie` (rebranded from original `is.shortcut`; was briefly `app.dai.evie`) |
+| Launcher activity | `com.voxel.launcher3.Launcher` |
+| Language / min / target | Pure Java, minSdk 21, target+compile 35 |
+| versionName scheme | `2.14.8-rw<N>` (increment `rw<N>` every release) |
+| Latest release | `v2.14.8-rw4` (signed, published by CI) |
+| License | GPL-3.0 |
+
+## 2. Where things are
 
 | Thing | Path |
 |---|---|
-| Repo (this project) | `/home/dai/projects/evie` |
-| Original APK (donor) | `./evie-launcher-2.14.8.12_arm64.apk` |
-| Decompiled donor tree (jadx) | `/tmp/opencode/evie-src/sources` (session-temp; re-decompile `~/tools` not needed — `jadx` at `/tmp/opencode/jadx/bin/jadx`) |
+| Repo (always here) | `/home/dai/projects/evie` |
+| Donor APK | `./evie-launcher-2.14.8.12_arm64.apk` |
+| Donor jadx source tree | `/tmp/opencode/evie-src/sources` (**session-temp — may vanish; see §3 to regenerate**) |
+| Donor smali (dex truth) | `/tmp/opencode/apktool-smali` (**may vanish; regenerate, see §3**) |
+| Donor res decode | `/tmp/opencode/apktool-out` |
+| jadx binary | `/tmp/opencode/jadx/bin/jadx` |
 | apktool jar | `/tmp/opencode/apktool.jar` (2.12.1) |
-| apktool resource decode | `/tmp/opencode/apktool-out` |
-| smali dump | `/tmp/opencode/apktool-smali` (for cross-checking decompile damage) |
-| Plan file | `/home/dai/.opencode/plan/evie-launcher-rework.md` |
-| Roadmap (post-build backlog) | `docs/roadmap.md` |
-| Smoke-test log | `docs/smoke-test.md` |
+| Release signing | `keystore/evie-release.jks` + `keystore/evie-release.properties` (git-ignored, NEVER commit, NEVER echo values) |
+| Build outputs | `app/build/outputs/apk/{debug,phoneDebug,release}/` |
+| R8 map (symbolication) | `app/build/outputs/mapping/release/mapping.txt` |
+| Roadmap backlog | `docs/roadmap.md` |
+| Smoke log | `docs/smoke-test.md` (per-session verification record) |
+| CI workflow | `.github/workflows/release.yml` |
+| Screenshots for README | `docs/screenshots/` |
 
-## Builds — Docker only (host has no gradle SDK)
+## 3. Regenerating donor truth (after `/tmp` is wiped)
 
 ```sh
-./scripts/evie-build.sh :app:assembleDebug      # or assembleRelease
+cd /home/dai/projects/evie
+# jadx (binary re-download if /tmp/opencode/jadx is gone: jadx-1.4.7 zip, unzip)
+/tmp/opencode/jadx/bin/jadx -d /tmp/opencode/evie-src evie-launcher-2.14.8.12_arm64.apk
+# smali + res (apktool jar: re-download 2.12.1 if missing)
+java -jar /tmp/opencode/apktool.jar d -s -f -o /tmp/opencode/apktool-smali evie-launcher-2.14.8.12_arm64.apk
+java -jar /tmp/opencode/apktool.jar d -r -f -o /tmp/opencode/apktool-out evie-launcher-2.14.8.12_arm64.apk
 ```
-- Image `evie-build` (built from `Dockerfile`: gradle 9.8.1 + jdk17 + platform-tools).
-- Host has NO gradle SDK; do not try host-side gradle.
-- `.docker-gradle/` = persistent gradle cache volume; `.docker-home/` = pinned debug keystore.
-- The image's default user is `gradle` (uid 1000). `evie-build.sh` passes `-u $(id -u):$(id -g)` so files written into `app/` stay user-owned.
 
-## Emulator — HOST side, not docker
+## 4. Builds — Docker only (host has NO gradle)
 
-- **Host Android SDK: `~/Android/Sdk`** (emulator binary, platform-tools/adb, cmdline-tools, system-images). Use it.
-- **adb on host: `~/Android/Sdk/platform-tools/adb`** — not on PATH. Use the script:
-  `./scripts/evie-emulator.sh [boot|wait|status|adb|shell|install|screencap|logcat|kill]`
-- **AVD: `evie-test`** (pixel_4 profile, API 33, x86_64, headless: `-no-window -no-audio`), log at `~/.local/share/evie-emu/emulator.log`.
-- Device name once up: `emulator-5554`.
-- First-run smoke checklist lives in `docs/smoke-test.md`.
+```sh
+./scripts/evie-build.sh :app:assembleDebug        # or assembleRelease, assemblePhoneDebug
+```
+
+- Image `evie-build` (from repo `Dockerfile`: gradle 9.8.1 + jdk17 + AGP 9.4 + SDK 35).
+- `.docker-gradle/` = persistent gradle cache; `.docker-home/` = the container's
+  `~/.android`, holds the **pinned debug keystore** `.docker-home/debug.keystore`
+  (`signingConfigs.debug` pins it: alias `androiddebugkey`, passwords `android`).
+  If deleted, regenerate:
+  ```sh
+  docker run --rm -v "$PWD:$PWD" -w "$PWD" -u "$(id -u):$(id -g)" evie-build \
+    keytool -genkeypair -keystore .docker-home/debug.keystore -storepass android \
+    -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 \
+    -dname "CN=Android Debug,O=Android,C=US"
+  ```
+  (Without the pin each build signs with a fresh key and every reinstall needs an
+  uninstall first — known-painful; keep the pin.)
+- `phoneDebug` buildType = release-signed but debuggable (update-in-place; `run-as` works).
+- Release = R8 minify + shrinkResources; signing only when
+  `keystore/evie-release.properties` exists (CI builds unsigned without secrets).
+- Crash lines from R8 builds: symbolicate with `mapping.txt` (e.g. `r7` ↔ class via mapping).
+- R8 rules live in `proguard-rules.pro`: keepnames for `com.voxel.**`/`com.evie.**`/
+  `com.ovacoda.**` (ButterKnife 8.x binds reflectively by `Class`+`"_ViewBinding"`
+  names — renaming either side crashes bindings at runtime), Room `_Impl` + `**_Impl`
+  ctors, Fragment subclasses, `-dontoptimize` (API-36 ART VerifyError on decompiled
+  receiver classes).
+
+## 5. Devices
+
+| Device | Serial | Screen | Notes |
+|---|---|---|---|
+| Emulator (AVD evie-test) | `emulator-5554` | 1080×2280 | **y≈2235 = nav bar — blind taps there press HOME** |
+| Phone Samsung SM-S901W | `R5CT60JX7FM` (USB) | 1080×2340 | screencap imgs ≈ 900-wide → ×1.2/×1.17; wireless adb ports rotate (mdns empty on LAN) |
+| Tablet acer A10-31P | `534014316917` (USB) | 800×1280@160 | Android 15 |
+
+- adb (host): `~/Android/Sdk/platform-tools/adb` — NOT on PATH. Multi-device:
+  **always `-s <serial>`**, and check `adb devices` first — never let `install`
+  block waiting on an absent serial (it waits forever).
+- screencap = `adb -s S shell screencap -p /sdcard/x.png` + `exec-out cat` (direct
+  exec-out screencap corrupts on some devices).
+- Live logging: `nohup adb -s S logcat -v time > /tmp/opencode/live.log 2>&1 &` —
+  don't poll; grep it after actions.
+- Never `pkill` with a pattern matching your own shell's cmdline (kills the agent
+  shell). Use `./scripts/evie-emulator.sh kill` / `pgrep -f qemu | xargs -r kill`.
+- OEM phone: starts of non-exported activities fail (`am start SettingsActivity` →
+  SecurityException) — reach Settings via the search overlay: type "set" → tap the
+  "dEvie Settings" row. Default home lives in the ROLE system (see §9).
+- Don't tap/drive a device the user is actively using; ask first.
+
+## 6. Emulator runbook (AVD `evie-test`, host-side)
+
+```sh
+./scripts/evie-emulator.sh [boot|wait|status|adb|shell|install|screencap|logcat|kill]
+```
+
+- **Cold boots wipe `/data`** (no snapshots): after each `boot` = reinstall APK +
+  `cmd role add-role-holder android.app.role.HOME com.ovacoda.devie` + the app runs
+  onboarding fresh (grants revoked).
+- Emulator-only gap: default-workspace favorites referencing missing packages
+  (`com.android.dialer` etc.) throw NameNotFoundException during the default load —
+  environmental, expected (the user's phone resolves them).
+- Contacts provider starts empty; seed if needed:
+  ```sh
+ adb -s emulator-5554 shell 'content insert --user 0 --uri content://com.android.contacts/raw_contacts --bind display_name:s:Name'
+  # then data rows on content://com.android.contacts/data:
+  #   mimetype s:vnd.android.cursor.item/name, data1 s:"Full Name", raw_contact_id i:<id>
+  #   mimetype s:vnd.android.cursor.item/phone_v2 (+ optional phone row)
+  # verify: content query --user 0 --uri content://com.android.contacts/contacts --projection "_id:display_name:in_visible_group"
+  ```
 
 ### Verify loop (every fix, in this order)
 
 ```sh
 ./scripts/evie-build.sh :app:assembleDebug
 ./scripts/evie-emulator.sh install app/build/outputs/apk/debug/app-debug.apk
-./scripts/evie-emulator.sh shell am force-stop app.dai.evie
-./scripts/evie-emulator.sh shell monkey -p app.dai.evie 1        # relaunch home
-./scripts/evie-emulator.sh logcat -d | tail -100                  # crash check
-./scripts/evie-emulator.sh screencap /tmp/opencode/emu.png
+./scripts/evie-emulator.sh shell am force-stop com.ovacoda.devie
+./scripts/evie-emulator.sh shell monkey -p com.ovacoda.devie 1   # relaunch home
+./scripts/evie-emulator.sh logcat -d | grep -E 'FATAL|ANR in|Skipping child'   # crash check
+./scripts/evie-emulator.sh shell screencap -p /sdcard/x.png && ./scripts/evie-emulator.sh adb pull /sdcard/x.png /tmp/opencode/x.png
 ```
 
-### Emulator quirks
+Signature mismatch on install (`INSTALL_FAILED_UPDATE_INCOMPATIBLE`) happens after
+keystore changes or cross-buildtype swaps: `pm uninstall com.ovacoda.devie` once,
+reinstall, re-add the role.
 
-- Host emulator process may be torn down between long adb calls — run adb commands
-  promptly (or `-no-window -no-audio` keeps it stable).
-- Set default home once if needed:
-  `cmd role add-role-holder android.app.role.HOME app.dai.evie`
-- Reset app state for a clean onboarding run:
-  `adb shell pm clear app.dai.evie` (grants are revoked; expect the onboarding flow).
-- Screen is **1080×2280** (`wm size`) — not 2340; blind taps at y≈2235 hit the nav
-  bar. For button coords use uiautomator dump via `scripts/drive_onboarding.py`
-  (exact-text priority matching); `rm -f /sdcard/ui.xml` first — stale pulls when
-  uiautomator null-roots.
-- `run-as` fails on release builds (not debuggable): inspect app DBs with
-  `su 0 sh -c "... | sqlite3 /data/data/app.dai.evie/databases/launcher.db"`.
-- Never `pkill` with a pattern matching the shell's own cmdline (kills the agent
-  shell); use `./scripts/evie-emulator.sh kill`.
-- jadx decode traps to check against smali (`/tmp/opencode/apktool-smali`) when
-  logic misbehaves: int-to-float division dropped (mock preview scale 0 — fixed
-  in 5 SettingsFragments), flattened dex flow (`LocalSearchManager.search`
-  far-distance case must `continue`; trailing `get(-1)`), hardcoded constants
-  (`BaseApplication.isDebugBuild` was `false` — must read `BuildConfig.DEBUG`).
+### Onboarding-driving helper
 
-## Git discipline
+`python3 scripts/drive_onboarding.py` = pm clear + HOME, then taps through
+first-run by uiautomator-dump button matching (exact-text priority). Coordinates
+(emulator): Grant Access @(540,2066); location dialog WHILE USING @(540,1380);
+contacts ALLOW @(540,1181); set-default OK @(678,2006); dEvie in picker @(395,639).
 
-- One commit per todo/fix. Conventional-commit style, subject ≤ 50 chars.
-- Working dir is `/home/dai/projects/evie`; repo is NOT at any other path.
+- **uiautomator traps**: `rm -f /sdcard/ui.xml` BEFORE every dump+pull (stale file
+  when the dump null-roots); DiscreteSeekBar thumbs don't respond to plain taps —
+  **drag** them (`input swipe x1 y x2 y 500` on the track y).
+- The emulator's first-run flows are enabled by rework tweaks in
+  `Launcher.shouldRunFirstRunActivity/shouldRunFirstRunClings` (the
+  `isRunningInTestHarness` clause removed — do not "restore" it).
 
-## Releases
+### App DBs on real devices
 
-Upon release:
+Release/phoneDebug = not debuggable → run-as fails on RELEASE only:
+emulator release: `su 0 sh -c 'cat /data/local/tmp/qN.sql | sqlite3 /data/data/com.ovacoda.devie/databases/launcher.db'`
+(push SQL to /data/local/tmp first). Tablet has NO sqlite binary: on debug builds
+`exec-out run-as com.ovacoda.devie cat databases/launcher.db` → host `python3 -c` with `sqlite3`.
 
-1. **Increase dEvie's version** — `versionCode` +1 and `versionName` → next
-   `rw<N>` suffix (e.g. `2.14.8-rw2`) in `app/build.gradle.kts`; commit.
-2. **Push `main`**, then **push a version tag** `v<versionName>` (e.g.
-   `v2.14.8-rw2`) — the tag push runs the `release` CI workflow, which builds
-   the signed APK and publishes the release at that tag
-   (`devie-launcher-<tag>.apk`). No rolling `latest` releases.
-3. **Edit the release notes** with the changelog:
-   `gh release edit <tag> -R icyavocado/devie-launcher --notes "..."`.
-4. Ship the same build to the user's phone (Samsung SM-S901W, USB serial
-   `R5CT60JX7FM`; poll `adb devices` first) — standing instruction.
+| DB | Contents |
+|---|---|
+| `launcher.db` | `favorites` (container -100 ws / -101 dock, itemType 0 app/1 shortcut/2 folder/4 widget/6 deep-shortcut, cellX/cellY/spanX/spanY) + `workspaceScreens` (_id, screenRank) |
+| `LocalSearch.db` | `item` + `search` keyword index (fuzzy match) + `recents` |
+| `APPS_INFO_DB` | app metadata + icons |
 
-NEVER push or cut a release (version bump + tag) without the user's explicit
-go-ahead; plain fix-builds to the phone are fine otherwise.
+## 7. Git + release discipline
 
-NEVER commit: `keystore/`, `.docker-*/`, `.gradle/`, `app/build/`, donor
-dumps (`.aapt-dump.txt`). Never use `git add -f` (it sweeps ignored secrets
-in — this leaked once and required a full squash + purge).
+- One commit per fix; Conventional-commit; subject ≤ 50 chars.
+- **NEVER `git push` or cut a release (version bump + tag) without the user's
+  explicit go-ahead.** Plain fix-builds installed on the phone without a release
+  are fine (standing instruction: "after fixing the bug install on my phone").
+- NEVER commit: `keystore/`, `.docker-*/`, `.gradle/`, `app/build/`, donor dumps
+  (`.aapt-dump.txt`). **NEVER `git add -f`** (it sweeps ignored secrets in — this
+  leaked once and forced a full squash + purge).
+- History = a single squashed root on purpose (secret purge). Keep it that way.
+
+### How to cut a release (user has approved)
+
+1. `app/build.gradle.kts`: `versionCode` +1, `versionName` next `rw<N>`; commit
+   `chore(release): bump 2.14.8-rw<N>`.
+2. `git push origin main`.
+3. `git tag v2.14.8-rw<N> && git push origin v2.14.8-rw<N>` — the tag push runs the
+   `release` workflow (tag-only; no rolling `latest`): signed APK published at the
+   tag as `devie-launcher-<tag>.apk`.
+4. `gh run watch <run> -R icyavocado/devie-launcher --interval 20` (≈2 min).
+5. Edit notes with the changelog: `gh release edit <tag> -R icyavocado/devie-launcher
+   --title "dEvie <version>" --notes "..."` (shape: `## Changelog` / `### Fixed` /
+   bullets, then "Install: download the APK below and allow installing from this
+   source." — only the fixes of THAT release).
+6. Install the same local build on the phone: poll `adb devices` for
+   `R5CT60JX7FM`, then `adb -s R5CT60JX7FM install -r app/build/outputs/apk/release/app-release.apk`
+   + force-stop/relaunch + FATAL check.
+
+CI signing = repo secrets `RELEASE_KEYSTORE` (base64 .jks) + `RELEASE_PROPERTIES`;
+those are set by the user locally (keystore material never enters chat). `gh` is
+authenticated as `icyavocado` (HTTPS remote; ssh port 22 firewalled).
+
+## 8. Code map (who lives where)
+
+| Area | Location |
+|---|---|
+| Launcher core (4.4-era Launcher2/3) | `com.voxel.launcher3.*` — Launcher, Workspace, CellLayout, LauncherModel (+ LoaderTask, workspaceScreens reconcile), LauncherProvider (authority `com.ovacoda.devie.settings`), DeviceProfile/DynamicGrid, IconCache, dragndrop, Folder/FolderIcon, wallpaper-picker helpers (`com.android.gallery3d.*`) |
+| Evie feature layer | `com.voxel.simplesearchlauncher.*` — search overlay (SearchPresenter/SearchUiHelper + `com.evie.search.*` local fuzzy engine), settings (SettingsActivity, *SettingsFragment, gridsettings.*, MockLauncherController previews), onboarding (PermissionsSlide; IntroSlide was cut), notification/badge (NotificationListener + NotificationReceiver), app lock (DeviceAdmin/LockOverlay), backup/restore (BackupRestoreManager + BackupRestoreSettingsFragment, SAF + ProgressDialog) |
+| New code home | `com.ovacoda.devie.*` — DevieLinks (REPO_URL/ISSUES_URL → github.com/icyavocado/devie-launcher), view.LoadingSpinner (in-house spinner) |
+| Vendored | `org.adw.library...` DiscreteSeekBar (label/track), `io.github.luizgrp...` SectionedRecyclerViewAdapter (settings list), ButterKnife 8.8.1 (23 `_ViewBinding` hosts — reflection-bound) |
+| Dagger | Hand-maintained generated tree under `com.voxel.simplesearchlauncher.dagger/`. Deleting an injected class = update `DaggerLauncherAppComponent` (imports/fields/inner builders/map.put/ctor-assign) + the module file. |
+
+- **Workspace settings preview** = `MockLauncherController` over
+  `layout/settings_mock_launcher`; reads `LauncherModel.getItemsForScreenPosition(0)`
+  + `getHotseatItems()`. The folder preview = `Folder.fromXml` + a mocked 16-item
+  FolderInfo; items pull REAL icons via
+  `iconCache.getIcon(intent, UserHandleCompat.myUserHandle())` with the component
+  from `LocalAppData`. Dark "phone screen" = `@color/mock_screen_background`
+  (#18212c) on the mock panel (`mock_phone_screen` drawable for the folder grid).
+- **Settings look**: opaque window, flat soft-gray `#d9dde3` top-to-bottom; rows =
+  white rounded cards (14dip radius drawable + 14dip bottom margins); seek rows =
+  label stacked above a full-width track. The divider include = spacer kept for
+  ButterKnife's `R.id.list_divider` binding — do not remove it from row layouts.
+- **Set-default flow** = API 29+: `RoleManager.isRoleHeld(ROLE_HOME)` /
+  `createRequestRoleIntent` (requestCode 47161) in `ResetLauncherActivity`; the
+  2020 resolveActivity/clearHome dance only runs < Q.
+- Package visibility (API 30+): manifest `<queries>` has MAIN/LAUNCHER intent +
+  `QUERY_ALL_PACKAGES` — without it OEMs return an empty app universe (drawer +
+  search dead). Do not trim these.
+
+## 9. Decompile-trap catalog (all fixed; treat every oddity as a suspect)
+
+The codebase = a jadx decompile rebuilt by hand. When logic misbehaves, diff
+against donor smali (`/tmp/opencode/apktool-smali`) or the upstream 4.4 sources
+(`android-4.4.4_r2` via googlesource, format=TEXT + base64 -d) BEFORE inventing a
+patch. Known trap classes + the fixes:
+
+1. **int-to-float dropped** → int division truncates: preview scale 0
+   (5 SettingsFragments 688c945-era), icon-scale max 0 at Columns>4
+   (`DeviceProfile.getMaxIconScale*` — donor `div-float`s both operands).
+2. **Flattened dex flow** → missing edges: `LocalSearchManager.search` far-distance
+   must `continue` (the trailing `get(-1)` AIOOBE was swallowed by
+   `.onErrorReturnItem` = all contact search silently empty);
+   `CellLayout.findNearestArea` (11-param) occupied-cell skip → infinite spin →
+   ANR "icons disappear/cut off" (fixed by restoring the canonical 4.4 body
+   verbatim); `Launcher.bindItems` double-increment (every other dock icon
+   skipped); `DragController.drop/endDrag` re-entrancy NPEs (capture locals at
+   entry, null-guard mDragObject); `Widget drop` null host-view guard.
+3. **Hardcoded constants**: `BaseApplication.isDebugBuild` = was hardcoded false
+   (Timber never planted → ALL app logs invisible) → read `BuildConfig.DEBUG`;
+   `shouldRunFirstRunActivity/Clings` test-harness clause removed for the emulator;
+   provider `insert()` rejecting workspaceScreens rowId 0; container check flipped
+   (-100/-101).
+4. **Generics erased on desugared lambdas**: raw `AsyncTask` param → javac passes
+   `Object[]` varargs → `doInBackground(Integer...)` CCE (wallpaper picker crash).
+5. **Styleable-index reads** (`getInt(2,1)` → home-page bug), blank registers /
+   `this.f$0` lambda artifacts, WeakReference holder (`sLauncherProvider` — now a
+   strong static; a GC'd ref silently disabled workspaceScreens reconcile).
+
+## 10. Known quirks / open items (see docs/roadmap.md)
+
+- Emulator-only: partial default-workspace loads (missing packages), occasional
+  empty-page flicker on reload cycles; verify absence of `Skipping child, screenId`
+  lines after loader changes. User devices resolve everything.
+- The first-run flow flags live in `app.voxel.launcher3_preferences.xml`
+  (`launcher.first_run_*`) — `pm clear` resets them (and ALL grants).
+- `com.sec.android.diagmonagent` (Samsung) crashes harmlessly after our bloatware
+  purge — unrelated to dEvie.
+
+## 11. Spin-up checklist (fresh session)
+
+1. Read this file (+ `docs/smoke-test.md` tail for the latest session state).
+2. `./scripts/evie-emulator.sh status` → up? else `boot` + `wait`; reinstall the
+   debug build; re-add the HOME role.
+3. `./scripts/evie-build.sh :app:assembleDebug` → green?
+4. Confirm the donor trees exist (§3), else regenerate.
+5. Check `git status` — clean tree; `git log --oneline -5` for context.
+6. Working rule: reproduce on the emulator (or the user's device per their
+   instruction), fix donor-faithfully, verify, commit; push/release only on the
+   user's explicit go-ahead; always ship plain fix-builds to the phone.
 
 ## Rework scope (locked)
 
-- Package `app.dai.evie` (was `is.shortcut`), pure Java, minSdk 21 / target+compile 35.
-- CUT: side-screen feed, Jigsaw cards, remote/web search backends, analytics
-  (crashlytics/fabric/events), Firebase/GMS extras, launcher-settings importers,
-  debug activities (MemoryDump/ToggleWeightWatcher).
-- KEEP: local search + web-intent row, notifications/badges, app lock, backup/restore
-  (local/SAF), feedback/upgrade card, contacts onboarding permission.
+- CUT stays cut: side-screen feed/jigsaw cards, remote/web search backends,
+  analytics (crashlytics/fabric/events), Firebase/GMS extras, launcher-settings
+  importers, debug activities (MemoryDump/ToggleWeightWatcher), MemoryTracker/
+  WeightWatcher, What's-New popup + promo videos, Privacy Policy (replaced by the
+  No-tracking dialog), dead Terms page + hidden 10-tap easter egg.
+- KEEP: local search + web-intent row (opens in the user's browser), notifications/
+  badges, app lock, backup/restore (local/SAF), feedback screen (GitHub Issues +
+  star links), contacts onboarding permission.
