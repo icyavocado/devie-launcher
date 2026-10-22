@@ -11,8 +11,7 @@
                 <include android:id="@id/scrolling_wallpaper_switch" layout="@layout/settings_activity_switch_item" />
                 <include android:id="@id/app_drawer_hint_switch" layout="@layout/settings_activity_switch_item" />
                 <include android:id="@id/lock_switch" layout="@layout/settings_activity_switch_item" />
-                <!-- REWORK: cut cloud feed; sidescreen_switch and celsius_switch removed. -->
-                <View android:id="@id/button" android:background="@null" android:layout_width="fill_parent" android:layout_height="@dimen/settings_list_item_height" />
+                <!-- REWORK: cut cloud feed (sidescreen/celsius rows) and the dead terms easter egg (@id/button removed). -->
             </LinearLayout>
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>

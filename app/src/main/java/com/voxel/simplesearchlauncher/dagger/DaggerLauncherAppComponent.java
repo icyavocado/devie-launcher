@@ -9,8 +9,6 @@ import com.evie.common.utils.MemoryWatcher;
 import com.evie.models.frequentlyused.FrequentlyUsedModel;
 import com.evie.models.frequentlyused.room.AppLaunchDatabase;
 import com.evie.models.frequentlyused.submodels.FrequentlyUsedLocalModel;
-import com.evie.screen.TermsAndConditionsActivity;
-import com.evie.screen.TermsAndConditionsActivity_MembersInjector;
 import com.voxel.launcher3.BaseApplication;
 import com.voxel.launcher3.BaseApplication_MembersInjector;
 import com.voxel.launcher3.FlavorInitializer;
@@ -35,7 +33,6 @@ import com.voxel.simplesearchlauncher.appoptions.ChangeIconFragment_MembersInjec
 import com.voxel.simplesearchlauncher.dagger.module.AppDatabaseModule_ProvidesAppDatabaseFactory;
 import com.voxel.simplesearchlauncher.dagger.module.CommonAndroidInjectionModule_AllAppsFragment;
 import com.voxel.simplesearchlauncher.dagger.module.CommonAndroidInjectionModule_ContributesConfirmShortcutActivityInjector;
-import com.voxel.simplesearchlauncher.dagger.module.CommonAndroidInjectionModule_TermsAndConditionsActivity;
 import com.voxel.simplesearchlauncher.dagger.module.CommonAndroidInjectionModule_WidgetsFragment;
 import com.voxel.simplesearchlauncher.dagger.module.DeepShortcutManagerModule;
 import com.voxel.simplesearchlauncher.dagger.module.DeepShortcutManagerModule_ProvideDeepShortcutManagerFactory;
@@ -166,7 +163,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     private Provider<FlavorAndroidInjectionModule_ResetLauncherFailureFragment.ResetLauncherFailureFragmentSubcomponent.Builder> resetLauncherFailureFragmentSubcomponentBuilderProvider;
     private Provider<FlavorAndroidInjectionModule_ResetLauncherPromptFragment.ResetLauncherPromptFragmentSubcomponent.Builder> resetLauncherPromptFragmentSubcomponentBuilderProvider;
     private Provider<FlavorAndroidInjectionModule_SelectAppFragment.SelectAppFragmentSubcomponent.Builder> selectAppFragmentSubcomponentBuilderProvider;
-    private Provider<CommonAndroidInjectionModule_TermsAndConditionsActivity.TermsAndConditionsActivitySubcomponent.Builder> termsAndConditionsActivitySubcomponentBuilderProvider;
     private Provider<CommonAndroidInjectionModule_WidgetsFragment.WidgetsFragmentSubcomponent.Builder> widgetsFragmentSubcomponentBuilderProvider;
 
     /* JADX INFO: loaded from: classes2.dex */
@@ -857,46 +853,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
 
 
     /* JADX INFO: loaded from: classes2.dex */
-    private final class TermsAndConditionsActivitySubcomponentBuilder extends CommonAndroidInjectionModule_TermsAndConditionsActivity.TermsAndConditionsActivitySubcomponent.Builder {
-        private TermsAndConditionsActivity seedInstance;
-
-        private TermsAndConditionsActivitySubcomponentBuilder() {
-        }
-
-        @Override // dagger.android.AndroidInjector.Builder
-        /* JADX INFO: renamed from: build */
-        public AndroidInjector<TermsAndConditionsActivity> build() {
-            Preconditions.checkBuilderRequirement(this.seedInstance, TermsAndConditionsActivity.class);
-            return new TermsAndConditionsActivitySubcomponentImpl(this.seedInstance);
-        }
-
-        @Override // dagger.android.AndroidInjector.Builder
-        public void seedInstance(TermsAndConditionsActivity termsAndConditionsActivity) {
-            this.seedInstance = (TermsAndConditionsActivity) Preconditions.checkNotNull(termsAndConditionsActivity);
-        }
-    }
-
-
-
-    /* JADX INFO: loaded from: classes2.dex */
-    private final class TermsAndConditionsActivitySubcomponentImpl implements CommonAndroidInjectionModule_TermsAndConditionsActivity.TermsAndConditionsActivitySubcomponent {
-        private TermsAndConditionsActivitySubcomponentImpl(TermsAndConditionsActivity termsAndConditionsActivity) {
-        }
-
-        private TermsAndConditionsActivity injectTermsAndConditionsActivity(TermsAndConditionsActivity termsAndConditionsActivity) {
-            TermsAndConditionsActivity_MembersInjector.injectMClient(termsAndConditionsActivity, (OkHttpClient) DaggerLauncherAppComponent.this.providesOkHttpClientProvider.get());
-            return termsAndConditionsActivity;
-        }
-
-        @Override // dagger.android.AndroidInjector
-        public void inject(TermsAndConditionsActivity termsAndConditionsActivity) {
-            injectTermsAndConditionsActivity(termsAndConditionsActivity);
-        }
-    }
-
-
-
-    /* JADX INFO: loaded from: classes2.dex */
     private final class WidgetsFragmentSubcomponentBuilder extends CommonAndroidInjectionModule_WidgetsFragment.WidgetsFragmentSubcomponent.Builder {
         private WidgetsFragment seedInstance;
 
@@ -1027,7 +983,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
 
     private Map<Class<?>, Provider<AndroidInjector.Factory<?>>> getMapOfClassOfAndProviderOfFactoryOf() {
         Map<Class<?>, Provider<AndroidInjector.Factory<?>>> map = new HashMap<>();
-        map.put(TermsAndConditionsActivity.class, injectCast(this.termsAndConditionsActivitySubcomponentBuilderProvider));
         map.put(AllAppsFragment.class, injectCast(this.allAppsFragmentSubcomponentBuilderProvider));
         map.put(WidgetsFragment.class, injectCast(this.widgetsFragmentSubcomponentBuilderProvider));
         map.put(OnboardingActivity.class, injectCast(this.onboardingActivitySubcomponentBuilderProvider));
@@ -1071,7 +1026,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         this.connectionPoolKillerProvider = DoubleCheck.provider(ConnectionPoolKiller_Factory.create(this.contextProvider, this.providesOkHttpClientProvider));
         this.providesHideAppsModelProvider = DoubleCheck.provider(HideAppsModule_ProvidesHideAppsModelFactory.create(hideAppsModule, this.contextProvider));
         this.launcherAppComponentProvider = InstanceFactory.create(this);
-        this.termsAndConditionsActivitySubcomponentBuilderProvider = () -> new TermsAndConditionsActivitySubcomponentBuilder();
         this.allAppsFragmentSubcomponentBuilderProvider = () -> new AllAppsFragmentSubcomponentBuilder();
         this.widgetsFragmentSubcomponentBuilderProvider = () -> new WidgetsFragmentSubcomponentBuilder();
         this.onboardingActivitySubcomponentBuilderProvider = () -> new OnboardingActivitySubcomponentBuilder();

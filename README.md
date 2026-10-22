@@ -54,8 +54,7 @@ credentials (not part of the repo). For a plain debug build: `./gradlew :app:ass
 
 **dEvie doesn't track you.** No analytics, no ads, no accounts, no telemetry of any kind —
 the things you do in dEvie never leave your device. The only network touches are icons of
-apps you already have, the web-search row (which opens in *your* browser), and this
-[terms page](http://www.evie.com/appflash/tc.html) inherited from the original app.
+apps you already have, and the web-search row (which opens in *your* browser).
 
 ## Feedback
 

@@ -11,7 +11,6 @@ public class DesktopSettingsFragment_ViewBinding implements Unbinder {
 
     public DesktopSettingsFragment_ViewBinding(DesktopSettingsFragment desktopSettingsFragment, View view) {
         this.target = desktopSettingsFragment;
-        desktopSettingsFragment.mHiddenButton = Utils.findRequiredView(view, R.id.button, "field 'mHiddenButton'");
     }
 
     @Override // butterknife.Unbinder
@@ -21,6 +20,5 @@ public class DesktopSettingsFragment_ViewBinding implements Unbinder {
             throw new IllegalStateException("Bindings already cleared.");
         }
         this.target = null;
-        desktopSettingsFragment.mHiddenButton = null;
     }
 }

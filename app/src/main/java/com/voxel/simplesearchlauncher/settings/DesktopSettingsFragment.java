@@ -2,7 +2,6 @@ package com.voxel.simplesearchlauncher.settings;
 
 import timber.log.Timber;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -41,7 +40,6 @@ public class DesktopSettingsFragment extends Fragment {
     private MockLauncherController.MockLauncherHolder mFragmentInteractionListener;
     private GridSettingsView mGridSettingsView;
 
-    View mHiddenButton;
     LayoutSettingsManager mLayoutSettingsManager;
     private SettingsSwitchViewHolder mLockDesktopViewHolder;
     private View mMockLauncher;
@@ -156,20 +154,7 @@ public class DesktopSettingsFragment extends Fragment {
                 DesktopSettingsFragment.this.lambda$setupControls$5( compoundButton, z);
             }
         });
-        this.mHiddenButton.setOnClickListener(new View.OnClickListener() { // from class: com.voxel.simplesearchlauncher.settings.DesktopSettingsFragment.2
-            int clickCount = 0;
 
-            @Override // android.view.View.OnClickListener
-            public void onClick(View view2) {
-                this.clickCount++;
-                if (this.clickCount >= 10) {
-                    this.clickCount = 0;
-                    Intent intent = new Intent(DesktopSettingsFragment.this.getActivity(), (Class<?>) com.evie.screen.TermsAndConditionsActivity.class);
-                    intent.addFlags(268468224);
-                    DesktopSettingsFragment.this.getActivity().startActivity(intent);
-                }
-            }
-        });
     }
 
     private void setupMockLauncher(FrameLayout frameLayout) {
