@@ -3,9 +3,7 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
     <com.voxel.simplesearchlauncher.view.RoundedFrameLayout android:id="@id/mock" android:fitsSystemWindows="false" android:layout_width="fill_parent" android:layout_height="fill_parent" app:vxl_radius="10.0dip"
       xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-        <!-- REWORK: no backdrop — the donor veil (#33ffffff) sat over the mock;
-             the settings root already carries the settings background and the navy
-             panel lives on the mock itself (settings_mock_launcher). -->
+        <View android:background="@color/mock_screen_background" android:layout_width="fill_parent" android:layout_height="fill_parent" />
         <fragment android:name="com.voxel.simplesearchlauncher.allapps.AllAppsFragment" android:id="@id/all_apps_fragment" android:background="#ffff0000" android:layout_width="fill_parent" android:layout_height="fill_parent" />
     </com.voxel.simplesearchlauncher.view.RoundedFrameLayout>
     <androidx.core.widget.NestedScrollView android:id="@id/scroll_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true">
