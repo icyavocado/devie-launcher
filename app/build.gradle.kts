@@ -18,6 +18,15 @@ android {
     }
 
     signingConfigs {
+        getByName("debug") {
+            /* REWORK: pin the debug signing key to the persistent .docker-home
+               keystore — the container HOME is recreated per run, so default
+               debug keys changed every rebuild. */
+            storeFile = rootProject.file(".docker-home/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
         create("evie") {
             // REWORK: generate a fresh self-signed key for this reworked package;
             // passwords live in keystore/evie-release.properties (git-ignored).
