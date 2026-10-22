@@ -13,8 +13,8 @@ android {
         applicationId = "com.ovacoda.devie"
         minSdk = 21
         targetSdk = 35
-        versionCode = 21408013
-        versionName = "2.14.8-rw1"
+        versionCode = 21408014
+        versionName = "2.14.8-rw2"
     }
 
     signingConfigs {
