@@ -1,6 +1,7 @@
 package com.voxel.simplesearchlauncher.settings;
 
 import android.content.Context;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -126,10 +127,18 @@ public class FolderSettingsFragment extends Fragment {
         this.mShuffledRankList = new ArrayList<>(16);
         for (int i = 0; i < 16; i++) {
             ShortcutInfo shortcutInfo = new ShortcutInfo();
+            LocalAppData localAppData = (allLocalLaunchApps.size() > 0) ? allLocalLaunchApps.get(i % allLocalLaunchApps.size()) : null;
             shortcutInfo.intent = new Intent();
-            shortcutInfo.setIcon(iconCache.getDefaultIcon(UserHandleCompat.myUserHandle()));
-            if (allLocalLaunchApps.size() > 0) {
-                shortcutInfo.title = allLocalLaunchApps.get(i % allLocalLaunchApps.size()).getLabel();
+            if (localAppData != null) {
+                /* REWORK: pull the real per-app icon instead of the default green
+                   android — the mock used to fetch getDefaultIcon() unconditionally
+                   even though the labels came from real apps. */
+                shortcutInfo.intent.setPackage(localAppData.getAppPackageName());
+                shortcutInfo.intent.setComponent(new ComponentName(localAppData.getAppPackageName(), localAppData.getAppActivityName()));
+                shortcutInfo.title = localAppData.getLabel();
+                shortcutInfo.setIcon(iconCache.getIcon(shortcutInfo.intent, UserHandleCompat.myUserHandle()));
+            } else {
+                shortcutInfo.setIcon(iconCache.getDefaultIcon(UserHandleCompat.myUserHandle()));
             }
             this.mFolderInfo.add(shortcutInfo);
             this.mShuffledRankList.add(Integer.valueOf(i));
