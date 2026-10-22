@@ -72,10 +72,7 @@
     <color name="material_grey_800">#ff424242</color>
     <color name="material_grey_850">#ff303030</color>
     <color name="material_grey_900">#ff212121</color>
-    <!-- REWORK: was a #33ffffff wash — near-invisible on the light settings
-         background and it left the mocks' white icon labels illegible. The mock
-         "phone screen" is now the navy launcher panel so labels contrast. -->
-    <color name="mock_screen_background">#ff1f2a38</color>
+    <color name="mock_screen_background">#33ffffff</color>
     <color name="mtrl_btn_bg_color_disabled">#1f000000</color>
     <color name="mtrl_btn_text_color_disabled">#61000000</color>
     <color name="mtrl_btn_transparent_bg_color">#00ffffff</color>
