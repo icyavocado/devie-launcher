@@ -115,7 +115,10 @@ public class FolderSettingsFragment extends Fragment {
     }
 
     private void setupMockTarget() {
-        this.mFragmentInteractionListener.getRootView().setBackgroundColor(1610612736);
+        /* REWORK: donor painted a 37.5% black wash (0x60000000) behind the folder
+           mock, which made the preview band read darker than the card rows; use
+           the settings background so both match. */
+        this.mFragmentInteractionListener.getRootView().setBackgroundColor(getContext().getResources().getColor(R.color.settings_activity_background));
         this.mFolderInfo = new FolderInfo();
         this.mFolderInfo.setTitle(getResources().getString(R.string.app_settings_item_folders_name));
         IconCache iconCache = LauncherAppState.getInstance().getIconCache();
