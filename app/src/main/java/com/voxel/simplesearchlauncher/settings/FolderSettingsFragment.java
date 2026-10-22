@@ -137,6 +137,10 @@ public class FolderSettingsFragment extends Fragment {
         Collections.shuffle(this.mShuffledRankList);
         applyShuffledRanksToFolderInfo();
         this.mFolder = Folder.fromXml(getContext());
+        /* REWORK: in the mock the folder sits on the light settings band; the donor's
+           30%-white drag background left the white labels illegible. An opaque navy
+           "phone screen" panel behind the folder keeps the white text readable. */
+        this.mFolder.getContent().setBackground(this.getResources().getDrawable(R.drawable.mock_phone_screen));
         this.mFolder.bind(this.mFolderInfo, false, SettingsStorage.getInstance().getFolderAlphabetSortEnabled());
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-2, -2);
         layoutParams.gravity = 17;
