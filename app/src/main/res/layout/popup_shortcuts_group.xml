@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.voxel.simplesearchlauncher.popup.ShortcutsGroupView android:id="@id/shortcuts_view" android:background="@drawable/popup_bg_white_round_rect" android:layout_width="@dimen/bg_popup_item_width" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:id="@id/deep_shortcuts" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+</com.voxel.simplesearchlauncher.popup.ShortcutsGroupView>

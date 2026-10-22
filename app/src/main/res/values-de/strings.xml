@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abandoned_clean_this">Entfernen</string>
+    <string name="abandoned_promise_explanation">Die App zu diesem Symbol ist nicht installiert. Du kannst es entfernen oder nach der App suchen und sie neu installieren.</string>
+    <string name="abandoned_promises_title">Diese App ist nicht installiert</string>
+    <string name="abandoned_search">Suchen</string>
+
+
+    <string name="abc_action_menu_overflow_description">Weitere Optionen</string>
+    <string name="abc_action_mode_done">Fertig</string>
+
+
+    <string name="abc_capital_off">Aus</string>
+    <string name="abc_capital_on">An</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Suchen…</string>
+    <string name="abc_searchview_description_clear">Suchanfrage löschen</string>
+
+    <string name="abc_searchview_description_search">Suchen</string>
+    <string name="abc_searchview_description_submit">Suchanfrage senden</string>
+    <string name="abc_searchview_description_voice">Sprachsuche</string>
+
+
+    <string name="abc_toolbar_collapse_description">Minimieren</string>
+    <string name="activity_not_found">App ist nicht installiert.</string>
+    <string name="admin_receiver_status_disable_warning">Achtung: Damit der Bildschirm gesperrt werden kann, muss dEvie als Geräteadministrator aktiviert sein. Wird dies deaktiviert, muss es erst reaktiviert werden, damit das \"Sperren\"-Feature funktioniert.</string>
+    <string name="all_apps">Alle Apps</string>
+
+    <string name="all_apps_home_button_label">Startbildschirm</string>
+    <string name="all_apps_new_section">NEU</string>
+    <string name="all_apps_set_default_launcher_text">Lege dEvie als Standard-Launcher fest, wenn du einen einfachen und schnellen Startbildschirm möchtest.</string>
+    <string name="announce_selection">%1$s ausgewählt</string>
+    <string name="app_name">dEvie</string>
+    <string name="app_options_app_info">App-Info</string>
+    <string name="app_options_change_icon">Symbol ändern</string>
+    <string name="app_options_label">App-Optionen</string>
+    <string name="app_options_uninstall">Deinstallieren</string>
+
+    <string name="app_settings_alert_dialog_double_tap_msg">Sperrt sofort. Benötigt PIN oder Muster zum Entsperren. Entsperren mit Fingerabdruck funktioniert nicht.</string>
+
+    <string name="app_settings_badge_configure_gmail">Google Mail konfigurieren</string>
+    <string name="app_settings_badge_notification_permission_button">Zugriff ermöglichen</string>
+    <string name="app_settings_badge_notification_permission_description">Erlaube dEvie, Benachrichtigungen zu lesen, damit die Benachrichtigungs-Badges aktiviert werden können.</string>
+    <string name="app_settings_badge_section_notification">Benachrichtigungs-Zähler</string>
+    <string name="app_settings_badge_section_notification_description">dEvie stellt aufgrund der Anzahl der App-Benachrichtigungen einen Benachrichtigungs-Zähler als Überlagerung dar.</string>
+    <string name="app_settings_badge_section_unread">Ungelesen-Zähler</string>
+    <string name="app_settings_badge_section_unread_description">dEvie kann den Ungelesen-Zähler dieser Apps zuverlässig auslesen.</string>
+    <string name="app_settings_badge_style">Badge-Stil</string>
+    <string name="app_settings_badge_style_count">Zähler</string>
+    <string name="app_settings_badge_style_dots">Punkte</string>
+    <string name="app_settings_dock_background_alpha">Deckkraft Hintergrund</string>
+    <string name="app_settings_dock_background_blur">Unschärfe Hintergrund</string>
+
+
+    <string name="app_settings_gestures_dialog_lock_type">Wähle die Methode zum Sperren des Bildschirms</string>
+
+
+    <string name="app_settings_gestures_double_tap_lock_type_device_admin_title">Sofortige Sperre</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_description">Sperrt erst, nachdem 5 bis 10 Sekunden ein schwarzer Bildschirm angezeigt wird. Dann funktioniert das Entsperren mit Fingerabdruck.</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_title">Zeitgesteuerte Sperre</string>
+
+
+
+
+    <string name="app_settings_hide_apps">Apps verstecken</string>
+    <string name="app_settings_hide_apps_dialog_confirm">Einige Apps, die versteckt werden sollen, werden auf dem Startbildschirm angezeigt. Sollen diese behalten oder entfernt werden?</string>
+    <string name="app_settings_hide_apps_dialog_confirm_keep">Behalten</string>
+    <string name="app_settings_hide_apps_dialog_confirm_remove">Entfernen</string>
+    <string name="app_settings_hide_apps_hide_from_search">In der Suche verbergen</string>
+    <string name="app_settings_hide_apps_hide_from_search_subtext">Versteckte Apps nicht in der Suche anzeigen</string>
+    <string name="app_settings_home_screen_layout_columns">Spalten</string>
+    <string name="app_settings_home_screen_layout_icon_size">Größe</string>
+    <string name="app_settings_home_screen_layout_rows">Zeilen</string>
+
+    <string name="app_settings_item_app_drawer_display_style">Darstellung</string>
+    <string name="app_settings_item_app_drawer_display_style_dialog_title">Darstellung auswählen</string>
+    <string name="app_settings_item_app_drawer_display_style_grid">Raster</string>
+    <string name="app_settings_item_app_drawer_display_style_list">Liste</string>
+    <string name="app_settings_item_app_drawer_error_grid_only">Nur Gitter-Layout</string>
+    <string name="app_settings_item_app_drawer_index_style">Index-Stil</string>
+    <string name="app_settings_item_app_drawer_index_style_classic_scrollbar">Klassische Scrollbar</string>
+    <string name="app_settings_item_app_drawer_index_style_dialog_title">Stil des Index auswählen</string>
+    <string name="app_settings_item_app_drawer_index_style_vertical_letters">Buchstaben vertikal</string>
+    <string name="app_settings_item_app_drawer_show_new_apps">Neue Apps anzeigen</string>
+    <string name="app_settings_item_app_drawer_title">App-Übersicht</string>
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_backup">Jetzt sichern</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog">Sicherung fehlgeschlagen</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_positive">Okay</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_subtext">Leider konnte die Sicherung nicht gespeichert werden. Bitte kontaktiere uns, damit wir helfen können.</string>
+    <string name="app_settings_item_backup_restore_backup_progress">Sichere die Einstellungen...</string>
+    <string name="app_settings_item_backup_restore_backup_subtext">Sichere das Startbildschirm-Layout und die Einstellungen.</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog">Sicherung erfolgreich!</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_positive">Okay</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_subtext">Du kannst dein Icon-, Widget- und Ordner-Layout aus diesem Backup nun auf jedem Gerät wiederherstellen.</string>
+
+
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_restore">Wiederherstellen</string>
+
+    <string name="app_settings_item_backup_restore_restore_dialog">Wählen Sie eine Sicherung</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog">Wiederherstellung fehlgeschlagen</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog_subtext">Leider konnte die Sicherung nicht wiederhergestellt werden. Bitte kontaktiere uns, damit wir helfen können.</string>
+    <string name="app_settings_item_backup_restore_restore_progress">Einstellungen werden wiederhergestellt...</string>
+    <string name="app_settings_item_backup_restore_restore_subtext">Symbol-, Widget- und Ordner-Layout wiederherstellen.</string>
+
+
+
+
+    <string name="app_settings_item_backup_restore_title">Sichern &amp; Wiederherstellen</string>
+    <string name="app_settings_item_badges_title">Benachrichtigungs-Badges</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite">Einigen Apps wurden eigene Symbole zugewiesen. Sollen diese mit Symbolen aus %1$s ersetzt werden oder so bleiben, wie sie sind?</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_keep">Behalten</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_replace">Ersetzen</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_message">Sollen wirklich alle zuletzt ermittelten Ergebnisse entfernt werden?</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_title">Letzte Ergebnisse löschen?</string>
+    <string name="app_settings_item_customization_header">ANPASSUNG</string>
+    <string name="app_settings_item_desktop_app_drawer_hint_title">Hinweis für App-Übersicht (^) anzeigen</string>
+    <string name="app_settings_item_desktop_lock_subtitle">Änderungen am Startbildschirm sperren</string>
+    <string name="app_settings_item_desktop_lock_title">Startbildschirm sperren</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_subtitle">Das Hintergrundbild bewegt sich mit, wenn man zwischen den Startbildschirmen scrollt</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_title">Hintergrundbild scrollen</string>
+
+
+    <string name="app_settings_item_desktop_title">Startbildschirm</string>
+
+
+    <string name="app_settings_item_dock_title">Dock</string>
+
+
+    <string name="app_settings_item_feedback_title">Feedback</string>
+    <string name="app_settings_item_folder_title">Ordner</string>
+    <string name="app_settings_item_folders_alpha_sort">Apps in Ordnern alphabetisch sortieren</string>
+    <string name="app_settings_item_folders_name">Ordner</string>
+    <string name="app_settings_item_folders_shape">Form Ordner-Symbol</string>
+    <string name="app_settings_item_folders_shape_circle">Kreis</string>
+    <string name="app_settings_item_folders_shape_dialog_title">Form des Ordner-Symbols auswählen</string>
+    <string name="app_settings_item_folders_shape_square">Quadrat</string>
+    <string name="app_settings_item_folders_shape_squircle">Abgerundetes Quadrat</string>
+    <string name="app_settings_item_general_header">ALLGEMEIN</string>
+    <string name="app_settings_item_gestures_title">Gesten</string>
+    <string name="app_settings_item_icon_normalization_subtext">Symbole werden auf eine einheitliche Größe angepasst</string>
+    <string name="app_settings_item_icon_normalization_text">Intelligente Symbolgröße</string>
+    <string name="app_settings_item_icon_pack_title">Symbolpaket</string>
+    <string name="app_settings_item_layout_inherit_subtitle">Passt die Einstellungen an das Layout deines Startbildschirms an</string>
+    <string name="app_settings_item_layout_inherit_title">Startbildschirm-Layout erben</string>
+
+    <string name="app_settings_item_permission_required">Berechtigungen benötigt!</string>
+
+    <string name="app_settings_item_search_auto_complete_title">Google-Ergebnisse werden im Browser geöffnet</string>
+    <string name="app_settings_item_search_bar_desktop_enable">Suchleiste auf Startbildschirm anzeigen</string>
+    <string name="app_settings_item_search_bar_style">Suchleisten-Stil</string>
+
+    <string name="app_settings_item_search_bar_style_subtle">Subtiler Modus</string>
+    <string name="app_settings_item_search_bar_style_subtle_description">Die Suchleiste verschmilzt mit dem Hintergrund.</string>
+    <string name="app_settings_item_search_bar_style_white">Weiß</string>
+    <string name="app_settings_item_search_bar_style_white_description">Die Suchleiste ist weiß.</string>
+    <string name="app_settings_item_search_clear_recent">Letzte Ergebnisse löschen</string>
+    <string name="app_settings_item_search_clear_recent_subtext">Alle Einträge aus der Liste der letzten Ergebnisse löschen.</string>
+    <string name="app_settings_item_search_done_button_close_keyboard">Tastatur ausblenden</string>
+    <string name="app_settings_item_search_done_button_dialog_title">Aktion auswählen</string>
+    <string name="app_settings_item_search_done_button_open_first_result">Erstes Ergebnis öffnen</string>
+    <string name="app_settings_item_search_done_button_title">Aktion für Suchen-Button</string>
+    <string name="app_settings_item_search_engine">Suchmaschine</string>
+    <string name="app_settings_item_search_engine_bing">Bing</string>
+    <string name="app_settings_item_search_engine_dialog_title">Suchmaschine auswählen</string>
+    <string name="app_settings_item_search_engine_duck_duck_go">DuckDuckGo</string>
+    <string name="app_settings_item_search_engine_google">Google</string>
+    <string name="app_settings_item_search_include_frequently_used">Häufig benutzte Apps</string>
+    <string name="app_settings_item_search_include_frequently_used_subtext">Zeige häufig benutzte Apps in der Suche</string>
+    <string name="app_settings_item_search_recents_include_web_results">Suchverlauf enthält Ergebnisse aus Websuchen</string>
+    <string name="app_settings_item_search_title">Suche</string>
+    <string name="app_settings_item_switch_launcher">Zu einem anderen Launcher wechseln</string>
+
+    <string name="app_settings_item_toast_clear_recent_results">Die letzten Ergebnisse wurden gelöscht.</string>
+    <string name="app_settings_size_label">Größe</string>
+    <string name="app_settings_title">dEvie Einstellungen</string>
+
+    <string name="button_label_cancel">Abbrechen</string>
+
+
+
+
+
+    <string name="change_icon_icon_count">%1$d Symbole</string>
+    <string name="change_icon_loading">Lade Symbol-Vorschläge, bitte warten...</string>
+    <string name="change_icon_packs">Symbolpakete</string>
+    <string name="change_icon_suggested">Vorgeschlagen</string>
+    <string name="change_icon_title"><b>Wähle ein Symbol</b> für \"%1$s\"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="contact_action_call">Anruf</string>
+    <string name="contact_action_call_type">Anruf %1$s</string>
+    <string name="contact_action_email">E-Mail</string>
+    <string name="contact_action_text">Nachricht</string>
+    <string name="contact_action_text_type">Nachricht %1$s</string>
+
+    <string name="contact_entity_chat">Chat %1$s</string>
+    <string name="contact_entity_message">Nachricht %1$s</string>
+    <string name="contact_entity_open_in_contacts">In der Kontakte-App öffnen</string>
+    <string name="contact_entity_skype">Skype %1$s</string>
+    <string name="crop_wallpaper">Hintergrundbild zuschneiden</string>
+    <string name="default_scroll_format">Seite %1$d von %2$d</string>
+
+
+    <string name="delete_target_cancel_label">Abbrechen</string>
+    <string name="delete_target_label">Entfernen</string>
+
+    <string name="desktop_unlock_fingerprint">Mit Fingerabdruck entsperren</string>
+    <string name="desktop_unlock_long_press">Lange Tippen zum Entsperren</string>
+    <string name="desktop_unlocked_message">Startbildschirm entsperrt</string>
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Vorspulen</string>
+    <string name="exo_controls_next_description">Nächster Titel</string>
+    <string name="exo_controls_pause_description">Pausieren</string>
+    <string name="exo_controls_play_description">Wiedergeben</string>
+    <string name="exo_controls_previous_description">Vorheriger Titel</string>
+
+
+
+    <string name="exo_controls_rewind_description">Zurückspulen</string>
+    <string name="exo_controls_shuffle_description">Zufallsmix</string>
+
+
+    <string name="feedback_enjoying_app_negative">Nicht wirklich</string>
+    <string name="feedback_enjoying_app_positive">Ja!</string>
+    <string name="feedback_enjoying_app_question">Gefällt dir dEvie?</string>
+    <string name="feedback_feedback_negative">Nein danke</string>
+    <string name="feedback_feedback_positive">Okay</string>
+    <string name="feedback_feedback_question">Möchtest du uns Feedback geben?</string>
+    <string name="feedback_generic_enjoying_app_question">Gefällt dir %1$s?</string>
+    <string name="feedback_generic_no_feedback">Das ist in Ordnung. Wir werden hart daran arbeiten, %1$s besser zu machen!</string>
+
+    <string name="feedback_no_feedback">Das ist okay. Wir arbeiten weiter hart daran, dEvie besser zu machen!</string>
+    <string name="feedback_no_rating">Kein Problem! Freut uns zu hören, dass dir dEvie gefällt!</string>
+    <string name="feedback_rating_app_negative">Nein danke</string>
+    <string name="feedback_rating_app_positive">Okay</string>
+    <string name="feedback_rating_app_question">Wie wäre es mit einer Bewertung im Play Store?</string>
+    <string name="folder_hint_text">Unbenannter Ordner</string>
+    <string name="folder_name" />
+    <string name="folder_name_format">Ordner: %1$s</string>
+    <string name="folder_opened">Ordner geöffnet, %1$d mal %2$d</string>
+    <string name="folder_renamed">Ordner in %1$s umbenannt</string>
+    <string name="folder_tap_to_close">Antippen zum Schließen</string>
+    <string name="folder_tap_to_rename">Antippen zum Speichern</string>
+    <string name="gadget_error_text">Problem beim Laden des Widgets</string>
+    <string name="gadget_setup_text">Einrichtung</string>
+    <string name="gesture_action_app_drawer">App-Übersicht</string>
+    <string name="gesture_action_evie_search">dEvie-Suche</string>
+    <string name="gesture_action_expand_notifications">Benachrichtigungen erweitern</string>
+    <string name="gesture_action_google_now">Google Now</string>
+    <string name="gesture_action_google_voice_search">Sprachsuche</string>
+    <string name="gesture_action_launch_app">Starte App</string>
+    <string name="gesture_action_launch_app_with_name">Starte App: %s</string>
+    <string name="gesture_action_none">Nichts</string>
+    <string name="gesture_action_screen_lock_device_admin">Bildschirmsperre (sofort)</string>
+    <string name="gesture_action_screen_lock_generic">Bildschirmsperre</string>
+    <string name="gesture_action_screen_lock_write_settings">Bildschirmsperre (Timer)</string>
+    <string name="gesture_type_double_tap">Doppel-Tipp</string>
+    <string name="gesture_type_expand">Auseinanderziehen</string>
+    <string name="gesture_type_home_button">Startbutton</string>
+    <string name="gesture_type_pinch">Zusammenziehen</string>
+    <string name="gesture_type_swipe_down">Nach unten wischen</string>
+    <string name="gesture_type_swipe_up">Nach oben wischen</string>
+    <string name="gesture_type_two_finger_swipe_down">Nach unten wischen 2 Finger</string>
+    <string name="gesture_type_two_finger_swipe_up">Nach oben wischen 2 Finger</string>
+    <string name="hotseat_out_of_space">Im Dock ist kein Platz mehr</string>
+    <string name="icon_pack_market_search">Weitere Symbol-Pakete...</string>
+    <string name="image_load_fail">Konnte Bild nicht laden</string>
+
+    <string name="launcher_restored_negative">Rückgängig</string>
+    <string name="launcher_restored_positive">Okay</string>
+    <string name="launcher_restored_subtext">Alle Apps, Widgets und Einstellungen wurden wiederhergestellt!</string>
+    <string name="long_press_widget_to_add">Tippen &amp; halten, um ein Widget hinzuzufügen.</string>
+    <string name="manifest_label_device_admin_description">Erlaube dEvie den Bildschirm zu sperren</string>
+
+
+
+
+    <string name="msg_no_generic_permission">Diese App darf diese Aktion nicht ausführen</string>
+    <string name="msg_no_phone_permission">%1$s darf keine Telefonanrufe machen</string>
+
+
+
+    <string name="notifications_header">Benachrichtigungen</string>
+
+
+
+
+
+
+    <string name="onboarding_default_home_not_now">Nicht jetzt</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="onboarding_permission_deny_access">Zugriff verweigern</string>
+    <string name="onboarding_permission_grant_access">Zugriff gewähren</string>
+    <string name="onboarding_permission_grant_limited_access">Eingeschränkten Zugriff gewähren</string>
+    <string name="onboarding_permission_title">dEvie braucht ein wenig Hilfe von dir.</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="out_of_space">Auf diesem Startbildschirm ist kein Platz mehr.</string>
+
+    <string name="permdesc_install_shortcut">Erlaubt einer App Verknüpfungen ohne Eingreifen des Benutzers hinzuzufügen.</string>
+    <string name="permdesc_read_settings">Erlaubt der App die Einstellungen und Verknüpfungen des Startbildschirms zu lesen.</string>
+    <string name="permdesc_uninstall_shortcut">Erlaubt einer App Verknüpfungen ohne Eingreifen des Benutzers zu entfernen.</string>
+    <string name="permdesc_write_settings">Erlaubt der App die Einstellungen und Verknüpfungen des Startbildschirms zu ändern.</string>
+    <string name="permission_call_text">dEvie benötigt Zugriff auf den Dialer, wenn du mit dEvie telefonieren möchtest.</string>
+    <string name="permission_call_title">Zugriff auf Dialer erlauben?</string>
+    <string name="permission_contacts_name">Kontakte</string>
+    <string name="permission_contacts_text">Damit du deine Freunde schnell erreichen kannst.</string>
+    <string name="permission_contacts_title">Kontakte</string>
+    <string name="permission_location_name">Standort</string>
+    <string name="permission_location_text">Damit du Restaurants, Geschäfte und Sehenswürdigkeiten in der Nähe findest.</string>
+    <string name="permission_location_title">Standort</string>
+    <string name="permission_storage_name">Speicher</string>
+    <string name="permission_storage_text">Zugriff auf das System-Hintergrundbild für visuelle Effekte. (Benötigt)</string>
+    <string name="permission_storage_title">Speicher</string>
+    <string name="permission_tip">Tippe auf <b>Zulassen</b> bei der %1$s-Aufforderung</string>
+    <string name="permlab_install_shortcut">Verknüpfung hinzufügen</string>
+    <string name="permlab_read_settings">Startbildschirm-Einstellungen und Verknüpfungen lesen</string>
+    <string name="permlab_uninstall_shortcut">Verknüpfung entfernen</string>
+    <string name="permlab_write_settings">Startbildschirm-Einstellungen und Verknüpfungen schreiben</string>
+    <string name="phone_number_fax_home">Fax privat</string>
+    <string name="phone_number_fax_work">Fax Arbeit</string>
+    <string name="phone_number_home">Privat</string>
+    <string name="phone_number_mobile">Mobil</string>
+    <string name="phone_number_work">Arbeit</string>
+    <string name="phone_number_work_mobile">Mobil Arbeit</string>
+    <string name="pick_image">Bild auswählen</string>
+    <string name="pick_wallpaper">Hintergrundbilder</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="reset_default_home_failure">dEvie konnte nicht als Standard-Launcher eingestellt werden. Noch einmal versuchen?</string>
+    <string name="reset_default_home_import_prompt">Wir haben das Layout deines bisherigen Startbildschirms erfolgreich importiert. Möchtest du dEvie als Standard-Launcher nutzen?</string>
+    <string name="reset_default_home_later">Später</string>
+    <string name="reset_default_home_prompt">Lege dEvie als Standard-Launcher fest, wenn du einen einfachen und schnellen Startbildschirm möchtest.</string>
+    <string name="resize_label">Größe ändern</string>
+
+
+
+
+
+
+
+    <string name="safemode_shortcut_error">Heruntergeladene App im abgesicherten Modus deaktiviert</string>
+    <string name="search_bar_hint">Suche</string>
+    <string name="search_frequently_used_header">Häufig benutzt</string>
+    <string name="search_local_results_header">Auf deinem Gerät</string>
+
+    <string name="search_no_recents_message">"Probiere eine Suche nach einem Kontakt oder
+einer App auf deinem Mobiltelefon"</string>
+    <string name="search_no_recents_title">Keine vorherigen Suchen</string>
+    <string name="search_recent_results_header">Vorherige Ergebnisse</string>
+
+    <string name="settings_button_text">Einstellungen</string>
+
+
+    <string name="settings_item_about_device">Über das Gerät</string>
+    <string name="settings_item_account">Konto-Einstellungen</string>
+    <string name="settings_item_airplane_mode">Flugmodus-Einstellungen</string>
+    <string name="settings_item_applications">Apps</string>
+    <string name="settings_item_apps">App-Einstellungen</string>
+    <string name="settings_item_backup_reset">Sichern &amp; Zurücksetzen</string>
+    <string name="settings_item_battery">Akku-Einstellungen</string>
+    <string name="settings_item_bluetooth">Bluetooth-Einstellungen</string>
+    <string name="settings_item_date_time">Datum- &amp; Zeit-Einstellungen</string>
+    <string name="settings_item_daydream">Daydream-Einstellungen</string>
+    <string name="settings_item_default_apps">Standardeinstellungen für Apps</string>
+    <string name="settings_item_developer">Entwickler-Optionen</string>
+    <string name="settings_item_device_info">Geräte-Info</string>
+    <string name="settings_item_display">Display-Einstellungen</string>
+    <string name="settings_item_evie">dEvie-Einstellungen</string>
+
+    <string name="settings_item_home">Standard App-Einstellungen</string>
+    <string name="settings_item_hotspot">Tethering &amp; Hotspot-Einstellungen</string>
+    <string name="settings_item_input_method">Eingabemethoden-Einstellungen</string>
+    <string name="settings_item_keyboard">Tastatur-Einstellungen</string>
+    <string name="settings_item_language">Sprach-Einstellungen</string>
+    <string name="settings_item_launcher">Launcher-Einstellungen</string>
+    <string name="settings_item_location">Standort-Einstellungen</string>
+    <string name="settings_item_network_operator">Netzbetreiber-Einstellungen</string>
+    <string name="settings_item_nfc">NFC-Einstellungen</string>
+    <string name="settings_item_notification_access">Benachrichtigungszugriff</string>
+    <string name="settings_item_overlay_permission">Einstellungen für Overlay-Berechtigung</string>
+    <string name="settings_item_screensaver">Bildschirmschoner-Einstellungen</string>
+    <string name="settings_item_security">Sperrbildschirm- &amp; Sicherheits-Einstellungen</string>
+    <string name="settings_item_sound">Ton-Einstellungen</string>
+    <string name="settings_item_storage">Speicher-Einstellungen</string>
+
+    <string name="settings_item_wallpaper">Hintergrundbild-Einstellungen</string>
+    <string name="settings_item_wifi">WLAN-Einstellungen</string>
+    <string name="settings_item_wireless">Drahtlos-Einstellungen</string>
+    <string name="settings_show_icon_labels">Symbolbeschriftungen</string>
+
+    <string name="shortcut_error_text">"Durch Änderungen im System ist diese Verknüpfung nicht mehr gültig.
+Bitte lege sie neu an."</string>
+    <string name="shortcut_not_available">Verknüpfung ist nicht verfügbar</string>
+    <string name="shortcut_uninstalled">Verknüpfung \"%s\" wurde entfernt.</string>
+
+
+
+    <string name="toast_error_lock_permission_error">dEvie hat nicht die erforderlichen Berechtigungen. Bitte die Sperre erneut einschalten, damit sie angefordert werden.</string>
+    <string name="toast_error_workspace_still_loading">Der Startbildschirm lädt noch. Bitte warten...</string>
+
+
+    <string name="uninstall_system_app_text">Dies ist eine System-App und kann nicht deinstalliert werden.</string>
+    <string name="unnamed_hint_text">Unbenannt</string>
+    <string name="voice_no_assistant">Kein Sprachassistent verfügbar.</string>
+
+
+
+
+    <string name="wallpaper_accessibility_name">Hintergrundbild %1$d von %2$d</string>
+    <string name="wallpaper_button_text">Hintergründe</string>
+    <string name="wallpaper_delete">Löschen</string>
+    <string name="wallpaper_instructions">Hintergrundbild einstellen</string>
+    <string name="wallpaper_load_fail">Konnte Bild nicht als Hintergrund laden</string>
+    <string name="wallpaper_set_fail">Konnte Bild nicht als Hintergrund einstellen</string>
+    <string name="which_wallpaper_option_home_screen">Startbildschirm</string>
+    <string name="which_wallpaper_option_home_screen_and_lock_screen">Start- und Sperrbildschirm</string>
+    <string name="which_wallpaper_option_lock_screen">Sperrbildschirm</string>
+    <string name="widget_button_text">Widgets</string>
+    <string name="widget_could_not_be_added_error">Widget konnte nicht hinzugefügt werden.</string>
+    <string name="widget_dims_format">%1$d × %2$d</string>
+    <string name="workspace_scroll_format">Startbildschirm %1$d von %2$d</string>
+</resources>

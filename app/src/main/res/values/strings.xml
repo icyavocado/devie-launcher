@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abandoned_clean_this">Remove</string>
+    <string name="abandoned_promise_explanation">"The app for this icon isn't installed. You can remove it, or search for the app and install it manually."</string>
+    <string name="abandoned_promises_title">This app is not installed</string>
+    <string name="abandoned_search">Search</string>
+
+
+    <string name="abc_action_menu_overflow_description">More options</string>
+    <string name="abc_action_mode_done">Done</string>
+
+
+    <string name="abc_capital_off">OFF</string>
+    <string name="abc_capital_on">ON</string>
+
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_font_family_title_material">sans-serif-medium</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Search…</string>
+    <string name="abc_searchview_description_clear">Clear query</string>
+
+    <string name="abc_searchview_description_search">Search</string>
+    <string name="abc_searchview_description_submit">Submit query</string>
+    <string name="abc_searchview_description_voice">Voice search</string>
+
+
+    <string name="abc_toolbar_collapse_description">Collapse</string>
+    <string name="activity_not_found">"App isn't installed."</string>
+
+    <string name="admin_receiver_status_disable_warning">Warning: the Device Admin is required in order for the \"Lock\" feature to work. Deactivating this will require reactivation in order for the \"Lock\" feature to work again.</string>
+
+    <string name="all_apps">All Apps</string>
+
+    <string name="all_apps_home_button_label">Home</string>
+    <string name="all_apps_new_section">NEW</string>
+    <string name="all_apps_set_default_launcher_text">Set dEvie as your default launcher for a simpler, faster home screen.</string>
+    <string name="announce_selection">Selected %1$s</string>
+
+    <string name="app_options_app_info">App info</string>
+    <string name="app_options_change_icon">Change icon</string>
+    <string name="app_options_label">App options</string>
+    <string name="app_options_uninstall">Uninstall</string>
+
+    <string name="app_settings_alert_dialog_double_tap_msg">Locks immediately. Requires PIN/Pattern to unlock, fingerprint will NOT work.</string>
+
+    <string name="app_settings_badge_configure_gmail">Configure Gmail</string>
+    <string name="app_settings_badge_notification_permission_button">Enable access</string>
+    <string name="app_settings_badge_notification_permission_description">To enable unread badges, you must grant dEvie access to read your notifications.</string>
+    <string name="app_settings_badge_section_notification">Notification count</string>
+    <string name="app_settings_badge_section_notification_description">"dEvie infers a badge count based on an app's notifications."</string>
+    <string name="app_settings_badge_section_unread">Unread count</string>
+    <string name="app_settings_badge_section_unread_description">dEvie receives a reliable unread count from these apps.</string>
+    <string name="app_settings_badge_style">Badge style</string>
+    <string name="app_settings_badge_style_count">Count</string>
+    <string name="app_settings_badge_style_dots">Dots</string>
+    <string name="app_settings_dock_background_alpha">Background Opacity</string>
+    <string name="app_settings_dock_background_blur">Blur Background</string>
+
+
+    <string name="app_settings_gestures_dialog_lock_type">Select Screen Lock Method</string>
+
+
+    <string name="app_settings_gestures_double_tap_lock_type_device_admin_title">Instant Lock</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_description">Locks after a 5-10 second (black screen) delay. Fingerprint works.</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_title">Timer Lock</string>
+
+
+
+
+    <string name="app_settings_hide_apps">Hide apps</string>
+    <string name="app_settings_hide_apps_dialog_confirm">Some apps you’ve selected to hide are on your home screen. Would you like to keep or remove them?</string>
+    <string name="app_settings_hide_apps_dialog_confirm_keep">Keep</string>
+    <string name="app_settings_hide_apps_dialog_confirm_remove">Remove</string>
+    <string name="app_settings_hide_apps_hide_from_search">Hide from search</string>
+    <string name="app_settings_hide_apps_hide_from_search_subtext">Do not show hidden apps in search</string>
+    <string name="app_settings_home_screen_layout_columns">Columns</string>
+    <string name="app_settings_home_screen_layout_icon_size">Icon Size</string>
+    <string name="app_settings_home_screen_layout_rows">Rows</string>
+
+    <string name="app_settings_item_app_drawer_display_style">Display style</string>
+    <string name="app_settings_item_app_drawer_display_style_dialog_title">Select display style</string>
+    <string name="app_settings_item_app_drawer_display_style_grid">Grid</string>
+    <string name="app_settings_item_app_drawer_display_style_list">List</string>
+    <string name="app_settings_item_app_drawer_error_grid_only">Grid Layout Only</string>
+    <string name="app_settings_item_app_drawer_index_style">Index style</string>
+    <string name="app_settings_item_app_drawer_index_style_classic_scrollbar">Classic scrollbar</string>
+    <string name="app_settings_item_app_drawer_index_style_dialog_title">Select index style</string>
+    <string name="app_settings_item_app_drawer_index_style_vertical_letters">Vertical letters</string>
+    <string name="app_settings_item_app_drawer_show_new_apps">Show new apps</string>
+    <string name="app_settings_item_app_drawer_title">App drawer</string>
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_backup">Backup now</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog">Backup failed</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_positive">Okay</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_subtext">Unfortunately your backup could not be saved. Please contact us for help.</string>
+    <string name="app_settings_item_backup_restore_backup_progress">Backing up your settings...</string>
+    <string name="app_settings_item_backup_restore_backup_subtext">Save your home screen layout and settings.</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog">Backup successful!</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_positive">Okay</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_subtext">Now you can restore your icon, widget, and folder layout from this backup on any device.</string>
+
+
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_restore">Restore</string>
+
+    <string name="app_settings_item_backup_restore_restore_dialog">Select a backup</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog">Restore failed</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog_subtext">Unfortunately your backup could not be restored. Please contact us for help.</string>
+    <string name="app_settings_item_backup_restore_restore_progress">Restoring your settings...</string>
+    <string name="app_settings_item_backup_restore_restore_subtext">Restore icon, widget, and folder layout.</string>
+
+
+
+
+    <string name="app_settings_item_backup_restore_title">Backup &amp; Restore</string>
+    <string name="app_settings_item_badges_title">Unread badges</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite">"You've assigned some apps custom icons. Would you like to replace those with icons from %1$s or keep them as they are?"</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_keep">Keep</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_replace">Replace</string>
+    <string name="app_settings_item_community_subtext">Report a bug or request a feature on GitHub</string>
+    <string name="app_settings_item_community_text">Found an issue?</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_message">Are you sure you want to remove all recent items?</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_title">Clear recent results?</string>
+    <string name="app_settings_item_customization_header">CUSTOMIZATION</string>
+    <string name="app_settings_item_desktop_app_drawer_hint_title">Show app drawer hint (^)</string>
+    <string name="app_settings_item_desktop_lock_subtitle">Prevent changes to the homescreen</string>
+    <string name="app_settings_item_desktop_lock_title">Lock homescreen</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_subtitle">Wallpaper moves as you scroll the homescreen</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_title">Scroll wallpaper</string>
+
+
+    <string name="app_settings_item_desktop_title">Homescreen</string>
+
+
+    <string name="app_settings_item_dock_title">Dock</string>
+
+
+    <string name="app_settings_item_feedback_title">Feedback</string>
+    <string name="app_settings_item_folder_title">Folders</string>
+    <string name="app_settings_item_folders_alpha_sort">Sort items in folders alphabetically</string>
+    <string name="app_settings_item_folders_name">Folder</string>
+    <string name="app_settings_item_folders_shape">Folder icon shape</string>
+    <string name="app_settings_item_folders_shape_circle">Circle</string>
+    <string name="app_settings_item_folders_shape_dialog_title">Select Folder Icon Shape</string>
+    <string name="app_settings_item_folders_shape_square">Square</string>
+    <string name="app_settings_item_folders_shape_squircle">Squircle</string>
+    <string name="app_settings_item_general_header">GENERAL</string>
+    <string name="app_settings_item_gestures_title">Gestures</string>
+    <string name="app_settings_item_icon_normalization_subtext">Resize icons to make their sizes similar</string>
+    <string name="app_settings_item_icon_normalization_text">Normalize icons</string>
+    <string name="app_settings_item_icon_pack_title">Icon pack</string>
+    <string name="app_settings_item_layout_inherit_subtitle">"Match settings to your homescreen's layout"</string>
+    <string name="app_settings_item_layout_inherit_title">Inherit homescreen layout</string>
+
+    <string name="app_settings_item_permission_required">Permissions required!</string>
+
+    <string name="app_settings_item_rating">Do you love dEvie?</string>
+    <string name="app_settings_item_rating_subtext">Star the project on GitHub</string>
+    <string name="app_settings_item_search_auto_complete_title">Google results open in browser</string>
+    <string name="app_settings_item_search_bar_desktop_enable">Show search bar on homescreen</string>
+    <string name="app_settings_item_search_bar_style">Search bar style</string>
+
+    <string name="app_settings_item_search_bar_style_subtle">Subtle mode</string>
+    <string name="app_settings_item_search_bar_style_subtle_description">Search bar blends in with the wallpaper.</string>
+    <string name="app_settings_item_search_bar_style_white">White</string>
+    <string name="app_settings_item_search_bar_style_white_description">Search bar is white.</string>
+    <string name="app_settings_item_search_clear_recent">Clear recent results</string>
+    <string name="app_settings_item_search_clear_recent_subtext">Delete all items from the recent results list.</string>
+    <string name="app_settings_item_search_done_button_close_keyboard">Close keyboard</string>
+    <string name="app_settings_item_search_done_button_dialog_title">Select Action</string>
+    <string name="app_settings_item_search_done_button_open_first_result">Open first result</string>
+    <string name="app_settings_item_search_done_button_title">Done button action</string>
+    <string name="app_settings_item_search_engine">Search Engine</string>
+    <string name="app_settings_item_search_engine_bing">Bing</string>
+    <string name="app_settings_item_search_engine_dialog_title">Select Search Engine</string>
+    <string name="app_settings_item_search_engine_duck_duck_go">DuckDuckGo</string>
+    <string name="app_settings_item_search_engine_google">Google</string>
+    <string name="app_settings_item_search_include_frequently_used">Frequently used apps</string>
+    <string name="app_settings_item_search_include_frequently_used_subtext">Show frequently used apps in search</string>
+    <string name="app_settings_item_search_recents_include_web_results">Include web searches in recent results</string>
+    <string name="app_settings_item_search_title">Search</string>
+    <string name="app_settings_item_switch_launcher">Switch to another launcher</string>
+
+    <string name="app_settings_item_toast_clear_recent_results">Your recent results have been cleared.</string>
+    <string name="app_settings_size_label">Size</string>
+    <string name="app_settings_title">dEvie Settings</string>
+    <string name="appbar_scrolling_view_behavior">com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="change_icon_icon_count">%1$d icons</string>
+    <string name="change_icon_loading">Loading icon suggestions, please wait...</string>
+    <string name="change_icon_packs">Packs</string>
+    <string name="change_icon_suggested">Suggested</string>
+    <string name="change_icon_title"><b>Pick an icon</b> for \"%1$s\"</string>
+
+
+    <string name="circular_font_medium">fonts/CircularProMedium.otf</string>
+    <string name="circular_font_regular">fonts/CircularProBook.otf</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="confab_generic_error_button">Try again</string>
+    <string name="confab_generic_error_subtext">Try checking your network connectivity.</string>
+    <string name="confab_generic_error_text">Something went wrong</string>
+    <string name="contact_action_call">Call</string>
+    <string name="contact_action_call_type">Call %1$s</string>
+    <string name="contact_action_email">Email</string>
+    <string name="contact_action_text">Text</string>
+    <string name="contact_action_text_type">Text %1$s</string>
+    <string name="contact_cover_blue_url">http://s3-us-west-2.amazonaws.com/apiserver-assets/entity/default_images/contact/cover_blue_</string>
+    <string name="contact_cover_green_url">http://s3-us-west-2.amazonaws.com/apiserver-assets/entity/default_images/contact/cover_green_</string>
+    <string name="contact_cover_purple_url">http://s3-us-west-2.amazonaws.com/apiserver-assets/entity/default_images/contact/cover_purple_</string>
+    <string name="contact_cover_red_url">http://s3-us-west-2.amazonaws.com/apiserver-assets/entity/default_images/contact/cover_red_</string>
+
+    <string name="contact_entity_chat">Chat %1$s</string>
+    <string name="contact_entity_message">Message %1$s</string>
+    <string name="contact_entity_open_in_contacts">Open in Contacts</string>
+    <string name="contact_entity_skype">Skype %1$s</string>
+    <string name="crop_wallpaper">Crop wallpaper</string>
+
+    <string name="default_scroll_format">Page %1$d of %2$d</string>
+
+
+
+    <string name="delete_target_cancel_label">Cancel</string>
+    <string name="delete_target_label">Remove</string>
+
+    <string name="desktop_unlock_fingerprint">Unlock with Fingerprint</string>
+    <string name="desktop_unlock_long_press">Long press to Unlock</string>
+    <string name="desktop_unlocked_message">Desktop unlocked</string>
+
+
+
+
+
+
+    <string name="dialog_open_source_title">AppFlash Open Source Information</string>
+    <string name="exo_controls_fastforward_description">Fast forward</string>
+    <string name="exo_controls_next_description">Next track</string>
+    <string name="exo_controls_pause_description">Pause</string>
+    <string name="exo_controls_play_description">Play</string>
+    <string name="exo_controls_previous_description">Previous track</string>
+
+
+
+    <string name="exo_controls_rewind_description">Rewind</string>
+    <string name="exo_controls_shuffle_description">Shuffle</string>
+
+
+
+
+
+    <string name="feedback_enjoying_app_negative">Not really</string>
+    <string name="feedback_enjoying_app_positive">Yeah!</string>
+    <string name="feedback_enjoying_app_question">Are you enjoying dEvie?</string>
+    <string name="feedback_feedback_negative">No thanks</string>
+    <string name="feedback_feedback_positive">Okay</string>
+    <string name="feedback_feedback_question">Would you mind giving us feedback?</string>
+    <string name="feedback_generic_enjoying_app_question">Are you enjoying %1$s?</string>
+    <string name="feedback_generic_no_feedback">"That's okay. We'll keep working hard to make %1$s better!"</string>
+
+    <string name="feedback_no_feedback">"That's okay. We'll keep working hard to make dEvie better!"</string>
+    <string name="feedback_no_rating">"No worries! Glad to hear you're enjoying dEvie!"</string>
+    <string name="feedback_rating_app_negative">No thanks</string>
+    <string name="feedback_rating_app_positive">Okay</string>
+    <string name="feedback_rating_app_question">How about rating us on the Play Store?</string>
+    <string name="folder_hint_text">Unnamed Folder</string>
+    <string name="folder_name" />
+    <string name="folder_name_format">Folder: %1$s</string>
+    <string name="folder_opened">Folder opened, %1$d by %2$d</string>
+    <string name="folder_renamed">Folder renamed to %1$s</string>
+    <string name="folder_tap_to_close">Touch to close folder</string>
+    <string name="folder_tap_to_rename">Touch to save rename</string>
+    <string name="font_fontFamily_medium">sans-serif</string>
+    <string name="gadget_error_text">Problem loading widget</string>
+    <string name="gadget_setup_text">Setup</string>
+
+    <string name="gesture_action_app_drawer">App drawer</string>
+    <string name="gesture_action_evie_search">dEvie search</string>
+    <string name="gesture_action_expand_notifications">Expand notifications</string>
+    <string name="gesture_action_google_now">Google Now</string>
+    <string name="gesture_action_google_voice_search">Voice search</string>
+    <string name="gesture_action_launch_app">Launch app</string>
+    <string name="gesture_action_launch_app_with_name">Launch app: %s</string>
+    <string name="gesture_action_none">None</string>
+    <string name="gesture_action_screen_lock_device_admin">Screen lock (instant)</string>
+    <string name="gesture_action_screen_lock_generic">Screen lock</string>
+    <string name="gesture_action_screen_lock_write_settings">Screen lock (timer)</string>
+    <string name="gesture_type_double_tap">Double tap</string>
+    <string name="gesture_type_expand">Expand</string>
+    <string name="gesture_type_home_button">Home button</string>
+    <string name="gesture_type_pinch">Pinch</string>
+    <string name="gesture_type_swipe_down">Swipe down</string>
+    <string name="gesture_type_swipe_up">Swipe up</string>
+    <string name="gesture_type_two_finger_swipe_down">Two fingers swipe down</string>
+    <string name="gesture_type_two_finger_swipe_up">Two fingers swipe up</string>
+
+
+
+
+
+
+    <string name="hotseat_out_of_space">No more room in the Favorites tray</string>
+    <string name="icon_pack_market_search">Browse more icon packs...</string>
+    <string name="image_load_fail">"Couldn't load image"</string>
+
+
+
+
+
+    <string name="launcher_restored_negative">Undo</string>
+    <string name="launcher_restored_positive">Okay</string>
+    <string name="launcher_restored_subtext">All your apps, widgets, and settings have been restored!</string>
+
+
+    <string name="long_press_widget_to_add">Touch &amp; hold to pick up a widget.</string>
+    <string name="manifest_label_device_admin">@string/app_name</string>
+    <string name="manifest_label_device_admin_description">Allow dEvie Launcher to lock the screen</string>
+
+
+
+
+    <string name="msg_no_generic_permission">This app is not allowed to perform this action</string>
+    <string name="msg_no_phone_permission">%1$s is not allowed to make phone calls</string>
+
+
+
+
+
+
+    <string name="notifications_header">Notifications</string>
+
+
+    <string name="old_launcher_provider_uri">content://com.android.launcher2.settings/favorites?notify=true</string>
+
+
+
+
+    <string name="onboarding_default_home_not_now">Not now</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="onboarding_permission_deny_access">Deny Access</string>
+    <string name="onboarding_permission_grant_access">Grant Access</string>
+    <string name="onboarding_permission_grant_limited_access">Grant Limited Access</string>
+    <string name="onboarding_permission_title">dEvie needs a little help from you.</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="out_of_space">No more room on this Home screen.</string>
+
+    <string name="password_toggle_content_description">Show password</string>
+    <string name="path_password_eye">M12,4.5C7,4.5 2.73,7.61 1,12c1.73,4.39 6,7.5 11,7.5s9.27,-3.11 11,-7.5c-1.73,-4.39 -6,-7.5 -11,-7.5zM12,17c-2.76,0 -5,-2.24 -5,-5s2.24,-5 5,-5 5,2.24 5,5 -2.24,5 -5,5zM12,9c-1.66,0 -3,1.34 -3,3s1.34,3 3,3 3,-1.34 3,-3 -1.34,-3 -3,-3z</string>
+    <string name="path_password_eye_mask_strike_through">M2,4.27 L19.73,22 L22.27,19.46 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
+    <string name="path_password_eye_mask_visible">M2,4.27 L2,4.27 L4.54,1.73 L4.54,1.73 L4.54,1 L23,1 L23,23 L1,23 L1,4.27 Z</string>
+    <string name="path_password_strike_through">M3.27,4.27 L19.74,20.74</string>
+
+
+    <string name="permdesc_install_shortcut">Allows an app to add shortcuts without user intervention.</string>
+    <string name="permdesc_read_settings">Allows the app to read the settings and shortcuts in Home.</string>
+    <string name="permdesc_uninstall_shortcut">Allows the app to remove shortcuts without user intervention.</string>
+    <string name="permdesc_write_settings">Allows the app to change the settings and shortcuts in Home.</string>
+    <string name="permission_call_text">dEvie needs access to your dialer if you want to make calls from dEvie.</string>
+    <string name="permission_call_title">Enable dialer access?</string>
+    <string name="permission_contacts_name">contacts</string>
+    <string name="permission_contacts_text">To quickly surface friends to call, email, or text.</string>
+    <string name="permission_contacts_title">Contacts</string>
+    <string name="permission_location_name">location</string>
+    <string name="permission_location_text">To find nearby restaurants, stores, and places for you.</string>
+    <string name="permission_location_title">Location</string>
+    <string name="permission_storage_name">storage</string>
+    <string name="permission_storage_text">To access system wallpaper for visual effects. (Required)</string>
+    <string name="permission_storage_title">Storage</string>
+    <string name="permission_tip">Tap <b>ALLOW</b> on the %1$s prompt</string>
+    <string name="permlab_install_shortcut">install shortcuts</string>
+    <string name="permlab_read_settings">read Home settings and shortcuts</string>
+    <string name="permlab_uninstall_shortcut">uninstall shortcuts</string>
+    <string name="permlab_write_settings">write Home settings and shortcuts</string>
+    <string name="phone_number_fax_home">Fax Home</string>
+    <string name="phone_number_fax_work">Fax Work</string>
+    <string name="phone_number_home">Home</string>
+    <string name="phone_number_mobile">Mobile</string>
+    <string name="phone_number_work">Work</string>
+    <string name="phone_number_work_mobile">Work Mobile</string>
+    <string name="pick_image">Pick image</string>
+    <string name="pick_wallpaper">Wallpapers</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="receive_first_load_broadcast_permission">com.voxel.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST</string>
+    <string name="receive_launch_broadcasts_permission">com.voxel.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="reset_default_home_failure">"dEvie wasn't set as your default launcher. Would you like to try again?"</string>
+    <string name="reset_default_home_import_prompt">We successfully imported your previous home screen! Would you like to set dEvie as your default launcher?</string>
+    <string name="reset_default_home_later">Later</string>
+    <string name="reset_default_home_prompt">Set dEvie as your default launcher for a simpler, faster home screen.</string>
+    <string name="resize_label">Resize</string>
+
+
+
+
+
+
+
+    <string name="safemode_shortcut_error">Downloaded app disabled in Safe mode</string>
+    <string name="search_bar_hint">Search</string>
+    <string name="search_frequently_used_header">Frequently used</string>
+    <string name="search_local_results_header">On your device</string>
+
+    <string name="search_no_recents_message">"Try searching for your favorite app or
+a contact in your phone"</string>
+    <string name="search_no_recents_no_contacts">"Try searching for some of your favorite
+apps on your phone"</string>
+    <string name="search_no_recents_title">No recent searches</string>
+    <string name="search_recent_results_header">Recent results</string>
+
+
+
+
+
+
+
+
+
+    <string name="settings_button_text">Settings</string>
+
+
+
+
+
+
+    <string name="settings_item_about_device">About Device</string>
+    <string name="settings_item_account">Accounts Settings</string>
+    <string name="settings_item_airplane_mode">Airplane Mode Settings</string>
+    <string name="settings_item_applications">Applications</string>
+    <string name="settings_item_apps">Apps Settings</string>
+    <string name="settings_item_backup_reset">Backup &amp; Reset</string>
+    <string name="settings_item_battery">Battery Settings</string>
+    <string name="settings_item_bluetooth">Bluetooth Settings</string>
+    <string name="settings_item_date_time">Date &amp; Time Settings</string>
+    <string name="settings_item_daydream">Daydream Settings</string>
+    <string name="settings_item_default_apps">Default Apps Settings</string>
+    <string name="settings_item_developer">Developer Options</string>
+    <string name="settings_item_device_info">Device Info</string>
+
+    <string name="settings_item_display">Display Settings</string>
+    <string name="settings_item_evie">dEvie Settings</string>
+
+
+    <string name="settings_item_home">Default Home Settings</string>
+    <string name="settings_item_hotspot">Tethering &amp; Hotspot Settings</string>
+    <string name="settings_item_input_method">Input Method Settings</string>
+    <string name="settings_item_keyboard">Keyboard Settings</string>
+    <string name="settings_item_language">Language Settings</string>
+    <string name="settings_item_launcher">Launcher Settings</string>
+    <string name="settings_item_location">Location Settings</string>
+    <string name="settings_item_network_operator">Network Operator Settings</string>
+    <string name="settings_item_nfc">NFC Settings</string>
+    <string name="settings_item_notification_access">Notification Access</string>
+
+    <string name="settings_item_overlay_permission">Overlay Permission Settings</string>
+
+    <string name="settings_item_screensaver">Screensaver Settings</string>
+    <string name="settings_item_security">Lock Screen &amp; Security Settings</string>
+    <string name="settings_item_sound">Sound Settings</string>
+    <string name="settings_item_storage">Storage Settings</string>
+
+
+
+    <string name="settings_item_wallpaper">Wallpaper Settings</string>
+    <string name="settings_item_wifi">WiFi Settings</string>
+    <string name="settings_item_wireless">Wireless Settings</string>
+
+    <string name="settings_show_icon_labels">Icon labels</string>
+
+
+
+
+
+    <string name="shortcut_error_text">"Due to system changes, this shortcut is no longer valid.
+Please recreate it."</string>
+    <string name="shortcut_not_available">"Shortcut isn't available"</string>
+    <string name="shortcut_uninstalled">Shortcut \"%s\" was removed.</string>
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="ss_personalize_search_hint">Search for anything…</string>
+
+    <string name="swipe_down_hint">Swipe down!</string>
+    <string name="terms_and_conditions_title">Terms of Service</string>
+
+
+
+    <string name="toast_error_lock_permission_error">dEvie does not have the required permissions. Please re-enable the lock setting to fix.</string>
+    <string name="toast_error_workspace_still_loading">Your homescreen is still loading, please wait...</string>
+
+
+
+
+    <string name="uninstall_system_app_text">"This is a system app and can't be uninstalled."</string>
+    <string name="unnamed_hint_text">Unnamed</string>
+    <string name="voice_no_assistant">No voice assistant available.</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="wallpaper_accessibility_name">Wallpaper %1$d of %2$d</string>
+    <string name="wallpaper_button_text">Wallpapers</string>
+    <string name="wallpaper_delete">Delete</string>
+    <string name="wallpaper_instructions">Set wallpaper</string>
+    <string name="wallpaper_load_fail">"Couldn't load image as wallpaper"</string>
+    <string name="wallpaper_set_fail">"Couldn't set image as wallpaper"</string>
+    <string name="which_wallpaper_option_home_screen">Home screen</string>
+    <string name="which_wallpaper_option_home_screen_and_lock_screen">Home screen and lock screen</string>
+    <string name="which_wallpaper_option_lock_screen">Lock screen</string>
+    <string name="widget_button_text">Widgets</string>
+    <string name="widget_could_not_be_added_error">Widget could not be added.</string>
+    <string name="widget_dims_format">%1$d × %2$d</string>
+    <string name="workspace_scroll_format">Home screen %1$d of %2$d</string>
+    <string name="app_name">dEvie</string>
+    <string name="app_settings_item_no_tracking_title">No tracking</string>
+    <string name="app_settings_no_tracking_blurb">dEvie doesn\'t track you. No analytics, no ads, no accounts, no telemetry of any kind — the things you do in dEvie never leave your device.</string>
+    <string name="button_label_cancel">Cancel</string>
+</resources>

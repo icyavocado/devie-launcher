@@ -1,0 +1,144 @@
+import java.io.FileInputStream
+import java.util.Properties
+
+plugins {
+    id("com.android.application")
+}
+
+android {
+    namespace = "com.ovacoda.devie"
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = "com.ovacoda.devie"
+        minSdk = 21
+        targetSdk = 35
+        versionCode = 21408013
+        versionName = "2.14.8-rw1"
+    }
+
+    signingConfigs {
+        create("evie") {
+            // REWORK: generate a fresh self-signed key for this reworked package;
+            // passwords live in keystore/evie-release.properties (git-ignored).
+            val props = Properties().apply {
+                val f = rootProject.file("keystore/evie-release.properties")
+                if (f.exists()) {
+                    FileInputStream(f).use { load(it) }
+                }
+            }
+            storeFile = rootProject.file("keystore/evie-release.jks")
+            storePassword = props.getProperty("storePassword")
+            keyAlias = props.getProperty("keyAlias")
+            keyPassword = props.getProperty("keyPassword")
+        }
+        // REWORK: pin debug signing to the persisted keystore. The gradle
+        // daemon's user.home is /home/gradle (not HOME=/tmp/evie), so the
+        // default debug keystore lived in the ephemeral container and every
+        // build re-signed with a fresh key, forcing uninstalls per rebuild.
+        // Standard debug credentials apply (android / androiddebugkey).
+        getByName("debug") {
+            val f = rootProject.file(".docker-home/debug.keystore")
+            if (f.exists()) {
+                storeFile = f
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            /* REWORK: R8 on — the rework compiles clean; shrinkResources drops
+               res-table entries the compiler cannot reach. */
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            /* REWORK(ci): sign only when the keystore is present — CI runs without
+               the git-ignored keystore and still needs to publish the APK. */
+            if (rootProject.file("keystore/evie-release.properties").exists()) {
+                signingConfig = signingConfigs.getByName("evie")
+            }
+        }
+        /* REWORK: release-signed but debuggable — installs as an in-place update
+           over release (same signature, data preserved) while run-as keeps the
+           app DB inspectable for live device debugging. */
+        create("phoneDebug") {
+            initWith(getByName("release"))
+            isDebuggable = true
+            matchingFallbacks += listOf("release")
+        }
+    }
+
+    lint {
+        // REWORK: the decompile shipped the whole merged (app + libs) resource table,
+        // so release lint trips on lib-owned cycles/decls reproduced in our res.
+        // checkReleaseBuilds stays off until the resource table is trimmed properly.
+        checkReleaseBuilds = false
+    }
+
+    buildFeatures {
+        buildConfig = true // AGP 9 defaults it off; launcher code imports com.ovacoda.devie.BuildConfig
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+}
+
+// Grind aid: show the whole error inventory per pass, not javac's 100-error cap.
+tasks.withType<JavaCompile> {
+    options.compilerArgs.addAll(listOf("-Xmaxerrs", "10000", "-Xmaxwarns", "10000"))
+}
+
+dependencies {
+    // AndroidX (versions pinned to those resolvable for compileSdk 35)
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    // REWORK: layout classes the decompile merge shipped as res-table entries
+    // only (styles shadow fine; attrs and material styleables were deduped out
+    // of values/attrs.xml — libs now provide them, with the R classes the
+    // library code needs at runtime).
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.cardview:cardview:1.0.0")
+    implementation("androidx.percentlayout:percentlayout:1.0.0")
+    implementation("androidx.legacy:legacy-support-core-ui:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.fragment:fragment:1.8.6")
+    implementation("androidx.core:core:1.13.1")
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.viewpager:viewpager:1.1.0")
+    implementation("androidx.browser:browser:1.8.0")
+    implementation("androidx.sqlite:sqlite:2.4.0")
+    implementation("androidx.palette:palette:1.0.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    implementation("androidx.interpolator:interpolator:1.0.0")
+    implementation("androidx.collection:collection:1.4.4")
+    implementation("androidx.lifecycle:lifecycle-runtime:2.8.7")
+    implementation("androidx.room:room-runtime:2.6.1")
+    // REWORK: the decompiled AppLaunchDAO_Impl/AppLaunchDatabase_Impl refused to
+    // build against Room 2.6.1's API, so the _Impl classes are regenerated by the
+    // annotation processor from the annotated @Dao/@Database/@Entity sources.
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.multidex:multidex:2.0.1")
+
+    // Third-party as originally used (decompiled generated classes target these exact versions)
+    implementation("com.facebook.fresco:fresco:1.14.2")
+    implementation("com.facebook.fresco:imagepipeline-okhttp3:1.14.2")
+    implementation("com.facebook.rebound:rebound:0.3.8")
+    implementation("com.jakewharton:butterknife:8.8.1")
+    implementation("com.google.dagger:dagger:2.22.1")
+    implementation("com.google.dagger:dagger-android:2.22.1")
+    implementation("com.google.dagger:dagger-android-support:2.22.1")
+    implementation("com.google.code.gson:gson:2.8.9")
+    implementation("com.google.protobuf.nano:protobuf-javanano:3.1.0")
+    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation("com.getkeepsafe.relinker:relinker:1.4.5")
+    implementation("uk.co.chrisjenx:calligraphy:2.3.0")
+    implementation("io.reactivex.rxjava2:rxjava:2.2.21")
+    implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
+
+    // Retrofit/OkHttp: wired for kept local-search/frequently-used model classes;
+    // removed again if cuts prove all consumers eliminated.)))
+    implementation("com.squareup.okhttp3:okhttp:3.12.13")
+}

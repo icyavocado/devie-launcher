@@ -1,0 +1,21 @@
+# Gradle / build outputs
+.gradle/
+build/
+app/build/
+.docker-gradle/
+.docker-home/
+
+# IDE
+.idea/
+*.iml
+
+# APKs and keys stay out of git
+*.apk
+*.keystore
+*.jks
+
+# OS cruft
+.DS_Store
+
+# Signing material (keystore + recorded passwords) stays out of the repo
+keystore/

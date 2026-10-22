@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.facebook.drawee.view.SimpleDraweeView android:layout_width="@dimen/frequently_used_image_dimension" android:layout_height="@dimen/frequently_used_image_dimension" app:actualImageScaleType="centerInside" app:placeholderImage="@android:color/transparent" />
+</LinearLayout>

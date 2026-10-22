@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="@dimen/settings_list_item_height" style="@style/SettingsListItemStyle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:background="?selectableItemBackground" android:layout_width="fill_parent" android:layout_height="@dimen/search_list_item_height" android:paddingStart="@dimen/search_list_item_row_padding_left" android:paddingEnd="@dimen/search_list_item_row_padding_right">
+        <ImageView android:id="@id/list_item_icon" android:layout_width="40.0dip" android:layout_height="40.0dip" android:layout_centerVertical="true" android:layout_alignParentStart="true" />
+        <TextView android:textAppearance="@style/LightAppTextAppearance" android:textSize="15.0sp" android:gravity="center_vertical" android:layout_gravity="center_vertical" android:id="@id/list_item_label" android:layout_width="fill_parent" android:layout_height="fill_parent" android:lines="1" android:fontFamily="sans-serif" android:layout_marginStart="@dimen/search_list_item_label_padding_left" android:layout_toStartOf="@id/radio_btn" android:layout_toEndOf="@id/list_item_icon" />
+        <androidx.appcompat.widget.AppCompatRadioButton android:id="@id/radio_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_alignParentEnd="true" android:buttonTint="@color/settings_radio_color" />
+    </RelativeLayout>
+    <include layout="@layout/settings_activity_list_item_divider" />
+</FrameLayout>

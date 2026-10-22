@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/widgets_cell_list_container" android:paddingTop="10.0dip" android:focusable="true" android:descendantFocusability="afterDescendants" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:paddingLeft="@dimen/widget_section_horizontal_padding" android:paddingRight="@dimen/widget_section_horizontal_padding" android:layout_width="fill_parent" android:layout_height="@dimen/widget_section_height">
+        <com.facebook.drawee.view.SimpleDraweeView android:layout_gravity="center_vertical" android:id="@id/section_icon" android:layout_width="@dimen/widget_section_icon_size" android:layout_height="@dimen/widget_section_icon_size" android:scaleType="centerInside" />
+        <TextView android:textSize="16.0sp" android:textColor="@color/widgets_view_section_text_color" android:ellipsize="end" android:gravity="start|center" android:id="@id/section" android:focusable="true" android:layout_width="fill_parent" android:layout_height="fill_parent" android:singleLine="true" android:importantForAccessibility="no" android:paddingStart="@dimen/widget_section_label_start_padding" />
+    </LinearLayout>
+    <HorizontalScrollView android:id="@id/widgets_scroll_container" android:scrollbars="none" android:clipToPadding="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:paddingStart="@dimen/widget_row_padding_start" android:paddingEnd="@dimen/widget_row_padding_end">
+        <LinearLayout android:orientation="horizontal" android:id="@id/widgets_cell_list" android:layout_width="wrap_content" android:layout_height="wrap_content" android:showDividers="middle" />
+    </HorizontalScrollView>
+</LinearLayout>

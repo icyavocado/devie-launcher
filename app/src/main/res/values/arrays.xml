@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="contact_colors">
+        <item>#ffe04332</item>
+        <item>#ff5fd49a</item>
+        <item>#ff38b6f8</item>
+        <item>#ffaa24c1</item>
+    </array>
+    <string-array name="contact_headers">
+        <item>@string/contact_cover_red_url</item>
+        <item>@string/contact_cover_green_url</item>
+        <item>@string/contact_cover_blue_url</item>
+        <item>@string/contact_cover_purple_url</item>
+    </string-array>
+    <string-array name="which_wallpaper_options">
+        <item>@string/which_wallpaper_option_home_screen</item>
+        <item>@string/which_wallpaper_option_lock_screen</item>
+        <item>@string/which_wallpaper_option_home_screen_and_lock_screen</item>
+    </string-array>
+</resources>

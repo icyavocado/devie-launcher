@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/change_icon_section_header_margin_size" android:layout_marginBottom="@dimen/change_icon_section_header_margin_size" android:paddingStart="@dimen/search_list_item_row_padding_left" android:paddingEnd="@dimen/search_list_item_row_padding_right"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="@dimen/change_icon_section_header_font_size" android:textColor="#aaffffff" android:id="@id/text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAllCaps="true" android:letterSpacing="0.2" />
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="3.0dip" android:layout_toRightOf="@id/text" android:layout_alignTop="@id/text" android:layout_alignBottom="@id/text">
+        <View android:layout_gravity="center" android:background="#aaffffff" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    </FrameLayout>
+</RelativeLayout>

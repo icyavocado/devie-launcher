@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.voxel.simplesearchlauncher.popup.PopupContainerWithArrow android:orientation="vertical" android:id="@id/deep_shortcuts_container" android:paddingTop="8.0dip" android:paddingBottom="8.0dip" android:clipChildren="false" android:clipToPadding="false" android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

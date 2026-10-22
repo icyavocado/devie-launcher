@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View android:background="@color/dark_list_divider" android:layout_width="fill_parent" android:layout_height="1.0px" />
+    <androidx.percentlayout.widget.PercentRelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:layout_marginBottom="10.0dip">
+        <TextView android:textSize="18.0sp" android:id="@id/onboarding_permission_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="5.0dip" android:fontFamily="sans-serif" />
+        <TextView android:textAppearance="@style/OnboardingSubTextAppearance" android:textSize="15.0sp" android:id="@id/onboarding_permission_text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_below="@id/onboarding_permission_title" app:layout_widthPercent="70.00001%" />
+        <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignTop="@id/onboarding_permission_title" android:layout_alignBottom="@id/onboarding_permission_text" android:layout_alignParentRight="true">
+            <CheckBox android:layout_gravity="center_vertical" android:id="@id/onboarding_permission_checkbox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" />
+        </FrameLayout>
+        <RelativeLayout android:orientation="horizontal" android:id="@id/onboarding_permission_tip" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="5.0dip" android:layout_below="@id/onboarding_permission_text">
+            <ImageView android:id="@id/onboarding_permission_tip_image" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/onboarding_warning_icon" android:adjustViewBounds="true" android:layout_alignTop="@id/onboarding_permission_tip_text" android:layout_alignBottom="@id/onboarding_permission_tip_text" />
+            <TextView android:textSize="12.0sp" android:id="@id/onboarding_permission_tip_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:layout_toRightOf="@id/onboarding_permission_tip_image" />
+        </RelativeLayout>
+    </androidx.percentlayout.widget.PercentRelativeLayout>
+</FrameLayout>

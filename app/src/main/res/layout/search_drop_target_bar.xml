@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.voxel.launcher3.SearchDropTargetBar android:orientation="horizontal" android:focusable="false" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center" android:id="@id/drag_target_bar" android:layout_width="fill_parent" android:layout_height="fill_parent" android:alpha="0.0">
+        <include layout="@layout/drop_target_bar" />
+    </LinearLayout>
+    <include android:id="@id/qsb" layout="@layout/qsb" />
+</com.voxel.launcher3.SearchDropTargetBar>

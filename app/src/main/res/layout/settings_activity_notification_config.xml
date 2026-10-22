@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="150.0dip">
+        <com.voxel.simplesearchlauncher.view.BadgeableAppIcon android:layout_gravity="center_vertical" android:id="@id/icon1" android:padding="8.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="18.0dip" />
+        <com.voxel.simplesearchlauncher.view.BadgeableAppIcon android:layout_gravity="center_vertical" android:id="@id/icon2" android:padding="8.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="18.0dip" />
+        <com.voxel.simplesearchlauncher.view.BadgeableAppIcon android:layout_gravity="center_vertical" android:id="@id/icon3" android:padding="8.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="18.0dip" />
+        <com.voxel.simplesearchlauncher.view.BadgeableAppIcon android:layout_gravity="center_vertical" android:id="@id/icon4" android:padding="8.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:background="@color/settings_activity_background" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <include android:id="@id/badge_style" layout="@layout/settings_activity_text_item" />
+        <include android:id="@id/badge_size_seek" layout="@layout/settings_activity_seek_item" />
+    </LinearLayout>
+</LinearLayout>

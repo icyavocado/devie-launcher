@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="horizontal" android:background="?selectableItemBackground" android:paddingTop="@dimen/search_subitem_top_spacing" android:paddingBottom="@dimen/search_subitem_bottom_spacing" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.facebook.drawee.view.SimpleDraweeView android:id="@id/search_subitem_image" android:layout_width="@dimen/search_subitem_image_dimension" android:layout_height="@dimen/search_subitem_image_dimension" android:layout_marginLeft="@dimen/search_subitem_spacing" app:actualImageScaleType="centerInside" app:placeholderImage="@android:color/transparent" />
+    <TextView android:ellipsize="end" android:gravity="center_vertical" android:id="@id/search_subitem_label" android:layout_width="wrap_content" android:layout_height="@dimen/search_subitem_image_dimension" android:layout_marginLeft="@dimen/search_text_spacing" android:lines="1" style="@style/TextSearchSmallTitle" />
+</LinearLayout>

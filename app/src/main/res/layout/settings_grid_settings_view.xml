@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.voxel.simplesearchlauncher.settings.gridsettings.GridSettingsView android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" style="@style/SettingsListItemContainerStyle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView android:textSize="12.0sp" android:textColor="#ffff0000" android:id="@id/error" android:paddingLeft="@dimen/settings_list_item_row_padding_left" android:paddingTop="10.0dip" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="wrap_content" android:drawableLeft="@drawable/ic_warning_red" android:drawablePadding="5.0dip" android:textAllCaps="true" android:fontFamily="sans-serif" style="@style/SettingsListItemStyle" />
+    <include android:id="@id/inherit_switch" layout="@layout/settings_activity_switch_item" />
+    <include android:id="@id/columns_seek" layout="@layout/settings_activity_seek_item" />
+    <include android:id="@id/rows_seek" layout="@layout/settings_activity_seek_item" />
+    <include android:id="@id/icon_size_seek" layout="@layout/settings_activity_seek_item" />
+</com.voxel.simplesearchlauncher.settings.gridsettings.GridSettingsView>

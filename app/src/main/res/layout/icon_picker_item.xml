@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.percentlayout.widget.PercentFrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ImageView android:id="@id/icon" android:padding="@dimen/change_icon_suggested_icon_padding" android:scaleType="centerInside" app:layout_aspectRatio="100.0%" app:layout_widthPercent="100.0%" />
+</androidx.percentlayout.widget.PercentFrameLayout>

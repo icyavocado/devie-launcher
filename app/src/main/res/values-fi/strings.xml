@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="abc_action_menu_overflow_description">Lisää</string>
+    <string name="abc_action_mode_done">Valmis</string>
+
+
+    <string name="abc_capital_off">POIS KÄYTÖSTÄ</string>
+    <string name="abc_capital_on">KÄYTÖSSÄ</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Haku…</string>
+    <string name="abc_searchview_description_clear">Tyhjennä kysely</string>
+
+    <string name="abc_searchview_description_search">Haku</string>
+    <string name="abc_searchview_description_submit">Lähetä kysely</string>
+    <string name="abc_searchview_description_voice">Puhehaku</string>
+
+
+    <string name="abc_toolbar_collapse_description">Kutista</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Kelaa eteenpäin</string>
+    <string name="exo_controls_next_description">Seuraava kappale</string>
+    <string name="exo_controls_pause_description">Keskeytä</string>
+    <string name="exo_controls_play_description">Toista</string>
+    <string name="exo_controls_previous_description">Edellinen kappale</string>
+
+
+
+    <string name="exo_controls_rewind_description">Kelaa taaksepäin</string>
+    <string name="exo_controls_shuffle_description">Satunnaistoisto</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>

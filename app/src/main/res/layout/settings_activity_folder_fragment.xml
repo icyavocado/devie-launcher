@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.voxel.simplesearchlauncher.view.RoundedFrameLayout android:id="@id/mock" android:fitsSystemWindows="false" android:layout_width="fill_parent" android:layout_height="fill_parent" app:vxl_radius="10.0dip"
+      xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+        <View android:background="@color/mock_screen_background" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </com.voxel.simplesearchlauncher.view.RoundedFrameLayout>
+    <androidx.core.widget.NestedScrollView android:id="@id/scroll_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:orientation="horizontal" android:id="@id/mock_target" android:layout_width="fill_parent" android:layout_height="@dimen/settings_mock_screen_height" />
+            <LinearLayout android:orientation="vertical" android:background="@color/settings_activity_background" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
+                <include android:id="@id/grid_settings" layout="@layout/settings_grid_settings_view" />
+                <include android:id="@id/icon_label_switch" layout="@layout/settings_activity_switch_item" />
+                <View android:layout_width="fill_parent" android:layout_height="10.0dip" />
+                <include android:id="@id/folder_shape" layout="@layout/settings_activity_text_item" />
+                <include android:id="@id/folder_alpha_sort" layout="@layout/settings_activity_switch_item" />
+                <View android:layout_width="fill_parent" android:layout_height="@dimen/settings_list_item_height" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

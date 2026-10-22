@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@id/action_list_root" android:fitsSystemWindows="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <AbsoluteLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <com.voxel.simplesearchlauncher.view.RoundedFrameLayout android:id="@id/background" android:layout_width="fill_parent" android:layout_height="0.0dip">
+            <View android:background="@android:color/white" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        </com.voxel.simplesearchlauncher.view.RoundedFrameLayout>
+    </AbsoluteLayout>
+    <com.voxel.recyclerview.widget.SpringRecyclerView android:id="@id/recycler_view" android:visibility="visible" android:fitsSystemWindows="false" android:scrollbars="none" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <com.ovacoda.devie.view.LoadingSpinner android:layout_gravity="center_horizontal" android:id="@id/spinner_progress" android:visibility="gone" android:layout_width="40.0dip" android:layout_height="40.0dip" app:spinner_autoStart="false" app:spinner_color="#ff9b9b9b" xmlns:app="http://schemas.android.com/apk/res-auto" />
+</FrameLayout>

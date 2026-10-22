@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" style="@style/SettingsListItemStyle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/search_list_item_height" android:splitMotionEvents="false" android:paddingStart="@dimen/settings_list_item_row_padding_left" android:paddingEnd="10.0dip" android:layout_marginStart="12.0dip" android:layout_marginEnd="12.0dip" android:background="@drawable/settings_list_item_background" android:layout_marginBottom="14.0dip">
+        <TextView android:textAppearance="@style/SettingsItemTextAppearance" android:layout_gravity="center_vertical" android:id="@id/label" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0" />
+        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar android:layout_gravity="center_vertical" android:id="@id/seek_bar" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="3.0" android:paddingStart="5.0dip" />
+    </LinearLayout>
+    <include layout="@layout/settings_activity_list_item_divider" />
+</FrameLayout>

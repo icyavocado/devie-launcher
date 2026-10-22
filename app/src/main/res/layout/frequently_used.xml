@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/frequently_used_layout" android:layout_width="fill_parent" android:layout_height="@dimen/frequently_used_item_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/frequently_used_item" />
+    <include layout="@layout/frequently_used_item" />
+    <include layout="@layout/frequently_used_item" />
+    <include layout="@layout/frequently_used_item" />
+    <include layout="@layout/frequently_used_item" />
+</LinearLayout>

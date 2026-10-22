@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="abc_action_menu_overflow_description">その他のオプション</string>
+    <string name="abc_action_mode_done">完了</string>
+
+
+    <string name="abc_capital_off">OFF</string>
+    <string name="abc_capital_on">ON</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">検索…</string>
+    <string name="abc_searchview_description_clear">検索キーワードを削除</string>
+
+    <string name="abc_searchview_description_search">検索</string>
+    <string name="abc_searchview_description_submit">検索キーワードを送信</string>
+    <string name="abc_searchview_description_voice">音声検索</string>
+
+
+    <string name="abc_toolbar_collapse_description">折りたたむ</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">早送り</string>
+    <string name="exo_controls_next_description">次のトラック</string>
+    <string name="exo_controls_pause_description">一時停止</string>
+    <string name="exo_controls_play_description">再生</string>
+    <string name="exo_controls_previous_description">前のトラック</string>
+
+
+
+    <string name="exo_controls_rewind_description">巻き戻し</string>
+    <string name="exo_controls_shuffle_description">シャッフル</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>

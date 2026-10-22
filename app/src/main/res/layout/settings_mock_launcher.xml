@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.voxel.simplesearchlauncher.view.RoundedFrameLayout android:id="@id/main_layer" android:fitsSystemWindows="false" android:layout_width="fill_parent" android:layout_height="fill_parent" app:vxl_radius="10.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View android:background="@color/mock_screen_background" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <com.voxel.simplesearchlauncher.view.WindowInsetPolicyFrameLayout android:id="@id/workspace" android:fitsSystemWindows="false" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <com.voxel.launcher3.CellLayout android:id="@id/cell_layout" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        <com.voxel.simplesearchlauncher.view.WindowInsetPolicyFrameLayout android:id="@id/grid_line_container" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </com.voxel.simplesearchlauncher.view.WindowInsetPolicyFrameLayout>
+    <com.voxel.simplesearchlauncher.view.WindowInsetPolicyFrameLayout android:fitsSystemWindows="false" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <FrameLayout android:id="@id/qsb" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <com.voxel.simplesearchlauncher.view.SpringySearchView android:id="@id/qsb_search" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentTop="true" app:iconifiedByDefault="false" app:queryHint="@string/search_bar_hint" app:voiceIcon="@drawable/homescreen_mic_icon" />
+        </FrameLayout>
+    </com.voxel.simplesearchlauncher.view.WindowInsetPolicyFrameLayout>
+    <com.voxel.simplesearchlauncher.view.WindowInsetPolicyFrameLayout android:id="@id/hotseat" android:background="@drawable/hotseat_bg" android:fitsSystemWindows="false" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <com.voxel.launcher3.CellLayout android:id="@id/cell_layout" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        <com.voxel.simplesearchlauncher.view.WindowInsetPolicyFrameLayout android:id="@id/grid_line_container" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </com.voxel.simplesearchlauncher.view.WindowInsetPolicyFrameLayout>
+</com.voxel.simplesearchlauncher.view.RoundedFrameLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- REWORK: the dex-era defaults named 2014-era Android packages that no modern
+     device ships, so every row failed to resolve and the rebuild started with an
+     empty desktop. Modern defaults: dialer, settings, files, messaging, camera,
+     browser (whatever exists resolves; the rest are skipped by loadFavorites). -->
+<favorites xmlns:launcher="http://schemas.android.com/apk/res-auto/com.voxel.launcher3">
+    <favorite launcher:className="com.android.dialer.DialtactsActivity" launcher:packageName="com.android.dialer" launcher:container="-101" launcher:screen="1" launcher:x="0" launcher:y="0" />
+    <favorite launcher:className="com.android.mms.ui.ConversationList" launcher:packageName="com.android.messaging" launcher:container="-101" launcher:screen="1" launcher:x="1" launcher:y="0" />
+    <favorite launcher:className="com.android.settings.Settings" launcher:packageName="com.android.settings" launcher:container="-101" launcher:screen="1" launcher:x="2" launcher:y="0" />
+    <favorite launcher:className="com.google.android.apps.nbu.files.home.HomeActivity" launcher:packageName="com.google.android.apps.nbu.files" launcher:container="-101" launcher:screen="1" launcher:x="3" launcher:y="0" />
+    <favorite launcher:className="com.android.camera2.CameraActivity" launcher:packageName="com.android.camera2" launcher:container="-101" launcher:screen="1" launcher:x="4" launcher:y="0" />
+    <favorite launcher:className="com.google.android.documentsui.FilesGridActivity" launcher:packageName="com.google.android.documentsui" launcher:screen="0" launcher:x="0" launcher:y="3" />
+    <favorite launcher:className="com.android.deskclock.DeskClock" launcher:packageName="com.android.deskclock" launcher:screen="0" launcher:x="1" launcher:y="3" />
+    <favorite launcher:className="com.android.messaging.ui.conversation.ConversationListActivity" launcher:packageName="com.android.messaging" launcher:screen="0" launcher:x="2" launcher:y="3" />
+    <favorite launcher:className="com.android.settings.Settings" launcher:packageName="com.android.settings" launcher:screen="0" launcher:x="3" launcher:y="3" />
+</favorites>

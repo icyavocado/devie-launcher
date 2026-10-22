@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="abc_action_menu_overflow_description">Mais opções</string>
+    <string name="abc_action_mode_done">Concluído</string>
+
+
+    <string name="abc_capital_off">DESATIVADO</string>
+    <string name="abc_capital_on">ATIVADO</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Pesquisar...</string>
+    <string name="abc_searchview_description_clear">Limpar consulta</string>
+
+    <string name="abc_searchview_description_search">Pesquisar</string>
+    <string name="abc_searchview_description_submit">Enviar consulta</string>
+    <string name="abc_searchview_description_voice">Pesquisa por voz</string>
+
+
+    <string name="abc_toolbar_collapse_description">Reduzir</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Avançar</string>
+    <string name="exo_controls_next_description">Faixa seguinte</string>
+    <string name="exo_controls_pause_description">Colocar em pausa</string>
+    <string name="exo_controls_play_description">Reproduzir</string>
+    <string name="exo_controls_previous_description">Faixa anterior</string>
+
+
+
+    <string name="exo_controls_rewind_description">Recuar</string>
+    <string name="exo_controls_shuffle_description">Reproduzir aleatoriamente</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>

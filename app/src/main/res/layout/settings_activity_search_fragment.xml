@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.core.widget.NestedScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true">
+        <LinearLayout android:orientation="vertical" android:background="@color/settings_activity_background" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <include android:id="@id/search_bar_style" layout="@layout/settings_activity_text_item" />
+            <include android:id="@id/include_frequently_used" layout="@layout/settings_activity_switch_item" />
+            <include android:id="@id/done_button_behavior" layout="@layout/settings_activity_text_item" />
+            <include android:id="@id/search_engine" layout="@layout/settings_activity_text_item" />
+            <include android:id="@id/autocomplete_behavior" layout="@layout/settings_activity_switch_item" />
+            <include android:id="@id/recents_include_web_results" layout="@layout/settings_activity_switch_item" />
+            <include android:id="@id/clear_recent" layout="@layout/settings_activity_text_item" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:background="?selectableItemBackground" android:layout_width="fill_parent" android:layout_height="@dimen/search_item_height"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.facebook.drawee.view.SimpleDraweeView android:id="@id/search_item_image" android:layout_width="@dimen/search_item_image_dimension" android:layout_height="@dimen/search_item_image_dimension" android:layout_marginLeft="@dimen/search_header_spacing" app:actualImageScaleType="centerInside" app:placeholderImage="@android:color/transparent" />
+    <LinearLayout android:orientation="vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/search_text_spacing">
+        <TextView android:ellipsize="end" android:id="@id/search_item_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" style="@style/TextSearchBigTitle" />
+        <LinearLayout android:gravity="bottom" android:orientation="horizontal" android:id="@id/search_item_note_layout" android:paddingBottom="@dimen/search_item_rating_bottom_padding" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="@dimen/search_item_text_inner_spacing">
+            <TextView android:ellipsize="end" android:id="@id/search_item_label_note" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/search_item_rating_image_spacing_left" android:lines="1" style="@style/TextSearchContent" />
+            <com.facebook.drawee.view.SimpleDraweeView android:id="@id/search_item_rating_image" android:layout_width="@dimen/search_item_rating_image_dimension" android:layout_height="@dimen/search_item_rating_image_dimension" android:layout_marginRight="@dimen/search_item_rating_image_spacing_right" app:actualImageScaleType="centerInside" app:placeholderImage="@android:color/transparent" />
+            <TextView android:ellipsize="end" android:id="@id/search_item_rating_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" style="@style/TextSearchContent" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

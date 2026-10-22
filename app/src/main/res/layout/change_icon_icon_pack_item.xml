@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="?selectableItemBackground" android:layout_width="fill_parent" android:layout_height="@dimen/search_list_item_height" android:paddingStart="@dimen/search_list_item_row_padding_left" android:paddingEnd="@dimen/search_list_item_row_padding_right"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/icon" android:layout_width="@dimen/search_list_item_icon_size" android:layout_height="@dimen/search_list_item_icon_size" android:layout_centerVertical="true" />
+    <LinearLayout android:gravity="center_vertical" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_toRightOf="@id/icon" android:layout_centerVertical="true" android:paddingStart="@dimen/search_list_item_label_padding_left" android:paddingEnd="7.0dip">
+        <TextView android:textSize="16.0sp" android:textColor="#ffffffff" android:id="@id/text" android:layout_width="fill_parent" android:layout_height="wrap_content" android:fontFamily="sans-serif" />
+        <TextView android:textSize="12.0sp" android:textColor="#bbffffff" android:id="@id/text2" android:layout_width="fill_parent" android:layout_height="wrap_content" android:fontFamily="sans-serif" />
+    </LinearLayout>
+    <View android:layout_width="fill_parent" android:layout_height="1.0px" android:layout_alignParentBottom="true" />
+</RelativeLayout>

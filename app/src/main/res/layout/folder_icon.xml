@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.voxel.launcher3.FolderIcon android:focusable="true" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:layout_gravity="center_horizontal" android:id="@id/preview_background" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/folder_icon_background_square" android:antialias="true" />
+    <com.voxel.launcher3.BubbleTextView android:layout_gravity="top" android:id="@id/folder_icon_name" android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/WorkspaceIcon" />
+</com.voxel.launcher3.FolderIcon>

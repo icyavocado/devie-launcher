@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:gravity="bottom" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:gravity="center" android:orientation="vertical" android:id="@id/container" android:layout_width="fill_parent" android:layout_height="250.0dip">
+        <View android:id="@id/background" android:background="@drawable/lock_overlay_bg_gradient" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@id/control_group" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <FrameLayout android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <ImageView android:id="@id/fingerprint_icon" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_unlock_fingerprint" />
+                <ImageView android:id="@id/unlock_icon" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_unlock_button" />
+            </FrameLayout>
+            <TextView android:textColor="#ffffffff" android:id="@id/text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10.0dip" android:text="@string/desktop_unlock_long_press" />
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

@@ -1,0 +1,9 @@
+# Keep build context small.
+.git
+.gradle
+build/
+app/build/
+*.apk
+*.keystore
+*.jks
+docs

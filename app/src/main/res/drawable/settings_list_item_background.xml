@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- REWORK: card background for settings rows (modern restyle). -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="#ffffffff" />
+    <corners android:radius="14dip" />
+</shape>

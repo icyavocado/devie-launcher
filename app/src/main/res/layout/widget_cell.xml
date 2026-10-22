@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.voxel.simplesearchlauncher.widget.WidgetCell android:gravity="center_horizontal" android:focusable="true" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_weight="1.0" android:paddingEnd="10.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:orientation="vertical" android:background="@drawable/widget_cell_bg" android:layout_width="wrap_content" android:layout_height="wrap_content">
+        <ImageView android:id="@id/widget_preview" android:layout_width="@dimen/widget_preview_width" android:layout_height="@dimen/widget_preview_height" android:layout_margin="5.0dip" android:scaleType="centerInside" />
+        <View android:background="@color/widgets_cell_divider_color" android:layout_width="fill_parent" android:layout_height="0.5dip" />
+        <LinearLayout android:orientation="horizontal" android:paddingLeft="@dimen/widget_preview_label_horizontal_padding" android:paddingTop="@dimen/widget_preview_label_vertical_padding" android:paddingRight="@dimen/widget_preview_label_horizontal_padding" android:paddingBottom="@dimen/widget_preview_label_vertical_padding" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:textSize="12.0sp" android:textColor="@color/widgets_view_item_text_color" android:ellipsize="end" android:gravity="start" android:id="@id/widget_name" android:fadingEdge="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:singleLine="true" android:shadowColor="#b0000000" android:shadowRadius="2.0" android:layout_weight="1.0" android:fontFamily="sans-serif" />
+            <TextView android:textSize="12.0sp" android:textColor="@color/widgets_view_item_text_color" android:id="@id/widget_dims" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5.0dip" android:shadowColor="#b0000000" android:shadowRadius="2.0" android:fontFamily="sans-serif" android:layout_marginStart="5.0dip" />
+        </LinearLayout>
+    </LinearLayout>
+</com.voxel.simplesearchlauncher.widget.WidgetCell>

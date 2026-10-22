@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="abc_action_menu_overflow_description">更多選項</string>
+    <string name="abc_action_mode_done">完成</string>
+
+
+    <string name="abc_capital_off">關閉</string>
+    <string name="abc_capital_on">開啟</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">搜尋…</string>
+    <string name="abc_searchview_description_clear">清除查詢</string>
+
+    <string name="abc_searchview_description_search">搜尋</string>
+    <string name="abc_searchview_description_submit">提交查詢</string>
+    <string name="abc_searchview_description_voice">語音搜尋</string>
+
+
+    <string name="abc_toolbar_collapse_description">收合</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">向前快轉</string>
+    <string name="exo_controls_next_description">下一首曲目</string>
+    <string name="exo_controls_pause_description">暫停</string>
+    <string name="exo_controls_play_description">播放</string>
+    <string name="exo_controls_previous_description">上一首曲目</string>
+
+
+
+    <string name="exo_controls_rewind_description">倒轉</string>
+    <string name="exo_controls_shuffle_description">隨機播放</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>

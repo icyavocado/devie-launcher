@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@id/top_bar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/search_list_item_height">
+        <TextView android:textSize="18.0sp" android:textColor="#ffffffff" android:gravity="center_vertical" android:paddingLeft="@dimen/search_list_item_row_padding_left" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/all_apps" android:layout_centerVertical="true" android:fontFamily="sans-serif" android:layout_toStartOf="@id/buttons_container" android:layout_alignParentStart="true" />
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@id/buttons_container" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_marginEnd="9.0dip" android:layout_alignParentEnd="true">
+            <ImageView android:id="@id/grid_button" android:padding="6.0dip" android:layout_width="36.0dip" android:layout_height="36.0dip" android:src="@drawable/all_apps_grid_button_icon" android:layout_marginEnd="3.0dip" />
+            <View android:layout_gravity="center_vertical" android:background="?android:listDivider" android:layout_width="1.0dip" android:layout_height="18.0dip" />
+            <ImageView android:id="@id/list_button" android:padding="6.0dip" android:layout_width="36.0dip" android:layout_height="36.0dip" android:src="@drawable/all_apps_list_button_icon" android:layout_marginStart="3.0dip" />
+        </LinearLayout>
+    </RelativeLayout>
+    <com.voxel.simplesearchlauncher.view.FastScrollRecyclerView android:enabled="false" android:id="@id/fastscroll_list" android:paddingLeft="@dimen/all_apps_grid_view_start_margin" android:paddingRight="@dimen/all_apps_grid_view_end_margin" android:visibility="gone" android:fitsSystemWindows="false" android:scrollbars="none" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@id/top_bar" android:overScrollMode="always" />
+    <com.voxel.simplesearchlauncher.allapps.AllAppsRecyclerView android:enabled="false" android:id="@id/scrollbar_list" android:paddingLeft="@dimen/container_fastscroll_thumb_max_width" android:paddingRight="@dimen/container_fastscroll_thumb_max_width" android:visibility="gone" android:fitsSystemWindows="false" android:scrollbars="none" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_below="@id/top_bar" android:overScrollMode="always" />
+    <ProgressBar android:id="@id/progress_bar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true" />
+    <View android:id="@id/top_fade" android:background="@drawable/all_apps_top_fade_gradient" android:layout_width="fill_parent" android:layout_height="@dimen/all_apps_header_shadow_height" android:layout_below="@id/top_bar" />
+</RelativeLayout>

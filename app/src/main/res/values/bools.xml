@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="abc_config_actionMenuItemAllCaps">true</bool>
+    <bool name="allow_rotation">false</bool>
+    <bool name="android_below_o">true</bool>
+    <bool name="android_o">false</bool>
+    <bool name="center_crop">true</bool>
+    <bool name="enable_backup">true</bool>
+    <bool name="hotseat_transpose_layout_with_orientation">true</bool>
+    <bool name="is_large_tablet">false</bool>
+    <bool name="is_tablet">false</bool>
+    <bool name="widget_enabled">false</bool>
+</resources>

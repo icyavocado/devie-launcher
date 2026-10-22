@@ -1,0 +1,499 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abandoned_clean_this">Loại bỏ</string>
+    <string name="abandoned_promise_explanation">Ứng dụng cho biểu tượng này chưa được cài đặt. Bạn có thể xóa nó, hoặc tìm kiếm các ứng dụng và cài đặt nó theo cách thủ công.</string>
+    <string name="abandoned_promises_title">Ứng dụng này chưa được cài đặt</string>
+    <string name="abandoned_search">Tìm kiếm</string>
+
+
+    <string name="abc_action_menu_overflow_description">Tùy chọn khác</string>
+    <string name="abc_action_mode_done">Xong</string>
+
+
+    <string name="abc_capital_off">TẮT</string>
+    <string name="abc_capital_on">BẬT</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Tìm kiếm…</string>
+    <string name="abc_searchview_description_clear">Xóa truy vấn</string>
+
+    <string name="abc_searchview_description_search">Tìm kiếm</string>
+    <string name="abc_searchview_description_submit">Gửi truy vấn</string>
+    <string name="abc_searchview_description_voice">Tìm kiếm bằng giọng nói</string>
+
+
+    <string name="abc_toolbar_collapse_description">Thu gọn</string>
+    <string name="activity_not_found">Ứng dụng chưa được cài đặt.</string>
+    <string name="admin_receiver_status_disable_warning">Cảnh báo: Quản Trị Thiết Bị là bắt buộc để tính năng \"Khóa\" hoạt động. Ngừng hoạt động này sẽ yêu cầu kích hoạt lại để tính năng \"Khóa\" hoạt động trở lại.</string>
+    <string name="all_apps">Tất cả Ứng dụng</string>
+
+    <string name="all_apps_home_button_label">Trang chủ</string>
+    <string name="all_apps_new_section">MỚI</string>
+    <string name="all_apps_set_default_launcher_text">Đặt dEvie làm trình khởi chạy mặc định cho màn hình chính đơn giản và nhanh hơn.</string>
+    <string name="announce_selection">Đã chọn %1$s</string>
+    <string name="app_name">dEvie</string>
+    <string name="app_options_app_info">Thông tin ứng dụng</string>
+    <string name="app_options_change_icon">Thay đổi biểu tượng</string>
+    <string name="app_options_label">Tùy chọn ứng dụng</string>
+    <string name="app_options_uninstall">Gỡ cài đặt</string>
+
+    <string name="app_settings_alert_dialog_double_tap_msg">Khóa ngay lập tức. Yêu cầu mã PIN/Mẫu hình để mở khóa, vân tay sẽ KHÔNG hoạt động.</string>
+
+    <string name="app_settings_badge_configure_gmail">Định Cấu Hình Gmail</string>
+    <string name="app_settings_badge_notification_permission_button">Kích hoạt quyền truy cập</string>
+    <string name="app_settings_badge_notification_permission_description">Để bật huy hiệu chưa đọc, bạn phải cấp quyền truy cập dEvie để đọc thông báo của bạn.</string>
+    <string name="app_settings_badge_section_notification">Đếm thông báo</string>
+    <string name="app_settings_badge_section_notification_description">dEvie đưa ra một số huy hiệu dựa trên thông báo của một ứng dụng.</string>
+    <string name="app_settings_badge_section_unread">Đếm chưa đọc</string>
+    <string name="app_settings_badge_section_unread_description">dEvie nhận được một số chưa đọc đáng tin cậy từ các ứng dụng này.</string>
+    <string name="app_settings_badge_style">Kiểu huy hiệu</string>
+    <string name="app_settings_badge_style_count">Đếm</string>
+    <string name="app_settings_badge_style_dots">Chấm</string>
+    <string name="app_settings_dock_background_alpha">độ mờ nền</string>
+    <string name="app_settings_dock_background_blur">nền mờ</string>
+
+
+    <string name="app_settings_gestures_dialog_lock_type">Chọn Phương thức Khóa Màn hình</string>
+
+
+    <string name="app_settings_gestures_double_tap_lock_type_device_admin_title">Khóa Tức Thời</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_description">Khóa sau 5-10 giây (màn hình đen) chậm trễ. Vân tay hoạt động.</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_title">Khóa Hẹn Giờ</string>
+
+
+
+
+    <string name="app_settings_hide_apps">Ẩn ứng dụng</string>
+    <string name="app_settings_hide_apps_dialog_confirm">Một số ứng dụng bạn đã chọn ẩn nằm trên màn hình chính. Bạn có muốn giữ hoặc xóa chúng?</string>
+    <string name="app_settings_hide_apps_dialog_confirm_keep">Giữ</string>
+    <string name="app_settings_hide_apps_dialog_confirm_remove">Loại bỏ</string>
+    <string name="app_settings_hide_apps_hide_from_search">Ẩn khỏi tìm kiếm</string>
+    <string name="app_settings_hide_apps_hide_from_search_subtext">Đừng hiển thị lại ứng dụng ẩn trong tìm kiếm</string>
+    <string name="app_settings_home_screen_layout_columns">Cột</string>
+    <string name="app_settings_home_screen_layout_icon_size">Kích Cỡ Biểu Tượng</string>
+    <string name="app_settings_home_screen_layout_rows">Hàng</string>
+
+    <string name="app_settings_item_app_drawer_display_style">Kiểu hiển thị</string>
+    <string name="app_settings_item_app_drawer_display_style_dialog_title">Chọn kiểu hiển thị</string>
+    <string name="app_settings_item_app_drawer_display_style_grid">Lưới</string>
+    <string name="app_settings_item_app_drawer_display_style_list">Danh sách</string>
+    <string name="app_settings_item_app_drawer_error_grid_only">Chỉ Bố Cục Lưới</string>
+    <string name="app_settings_item_app_drawer_index_style">Kiểu chỉ mục</string>
+    <string name="app_settings_item_app_drawer_index_style_classic_scrollbar">Thanh cuộn cổ điển</string>
+    <string name="app_settings_item_app_drawer_index_style_dialog_title">Chọn kiểu chỉ mục</string>
+    <string name="app_settings_item_app_drawer_index_style_vertical_letters">Chữ đứng</string>
+    <string name="app_settings_item_app_drawer_show_new_apps">Hiển thị ứng dụng mới</string>
+    <string name="app_settings_item_app_drawer_title">Ngăn kéo ứng dụng</string>
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_backup">Sao lưu ngay</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog">Sao lưu thất bại</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_positive">Đồng ý</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_subtext">Thật không may, bản sao lưu của bạn không thể lưu được. Xin vui lòng liên hệ với chúng tôi để được giúp đỡ.</string>
+    <string name="app_settings_item_backup_restore_backup_progress">Đang sao lưu cài đặt của bạn...</string>
+    <string name="app_settings_item_backup_restore_backup_subtext">Lưu bố cục màn hình chính và cài đặt của bạn.</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog">Sao lưu thành công!</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_positive">Đồng ý</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_subtext">Giờ đây, bạn có thể khôi phục lại biểu tượng, tiện ích và bố cục thư mục từ bản sao lưu này trên bất kỳ thiết bị nào.</string>
+
+
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_restore">Khôi phục</string>
+
+    <string name="app_settings_item_backup_restore_restore_dialog">Chọn một bản sao lưu</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog">Khôi phục thất bại</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog_subtext">Thật không may, bản sao lưu của bạn không thể khôi phục. Xin vui lòng liên hệ với chúng tôi để được giúp đỡ.</string>
+    <string name="app_settings_item_backup_restore_restore_progress">Đang khôi phục cài đặt của bạn...</string>
+    <string name="app_settings_item_backup_restore_restore_subtext">Khôi phục biểu tượng, tiện ích và bố cục thư mục.</string>
+
+
+
+
+    <string name="app_settings_item_backup_restore_title">Sao Lưu &amp; Khôi Phục</string>
+    <string name="app_settings_item_badges_title">Huy hiệu chưa đọc</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite">Bạn đã chỉ định một số biểu tượng tùy chỉnh ứng dụng. Bạn có muốn thay thế những biểu tượng có từ %1$s hoặc giữ chúng theo cách của họ?</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_keep">Giữ</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_replace">Thay thế</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_message">Bạn có chắc chắn muốn xóa tất cả các mục gần đây?</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_title">Xóa kết quả gần đây?</string>
+    <string name="app_settings_item_customization_header">TÙY BIẾN</string>
+    <string name="app_settings_item_desktop_app_drawer_hint_title">Hiển thị gợi ý ngăn kéo ứng dụng (^)</string>
+    <string name="app_settings_item_desktop_lock_subtitle">Ngăn những thay đổi đối với màn hình chính</string>
+    <string name="app_settings_item_desktop_lock_title">Khóa màn hình chính</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_subtitle">Hình nền di chuyển khi bạn di chuyển màn hình chính</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_title">Hình nền cuộn</string>
+
+
+    <string name="app_settings_item_desktop_title">Màn hình chủ</string>
+
+
+    <string name="app_settings_item_dock_title">Đế</string>
+
+
+    <string name="app_settings_item_feedback_title">Phản hồi</string>
+    <string name="app_settings_item_folder_title">Thư mục</string>
+    <string name="app_settings_item_folders_alpha_sort">Sort applications in folders in alphabetical order</string>
+    <string name="app_settings_item_folders_name">Thư mục</string>
+    <string name="app_settings_item_folders_shape">Hình dạng biểu tượng thư mục</string>
+    <string name="app_settings_item_folders_shape_circle">Tròn</string>
+    <string name="app_settings_item_folders_shape_dialog_title">Chọn Hình Dạng Biểu Tượng Thư Mục</string>
+    <string name="app_settings_item_folders_shape_square">Vuông</string>
+    <string name="app_settings_item_folders_shape_squircle">Bầu dục</string>
+    <string name="app_settings_item_general_header">CHUNG</string>
+    <string name="app_settings_item_gestures_title">Cử chỉ</string>
+    <string name="app_settings_item_icon_normalization_subtext">Thay đổi kích thước các biểu tượng để làm cho kích thước của chúng tương tự nhau</string>
+    <string name="app_settings_item_icon_normalization_text">Bình thường hóa biểu tượng</string>
+    <string name="app_settings_item_icon_pack_title">Gói biểu tượng</string>
+    <string name="app_settings_item_layout_inherit_subtitle">Khớp cài đặt với bố cục màn hình chính của bạn</string>
+    <string name="app_settings_item_layout_inherit_title">Kế thừa bố cục màn hình chính</string>
+
+    <string name="app_settings_item_permission_required">Yêu cầu quyền!</string>
+
+    <string name="app_settings_item_search_auto_complete_title">Kết quả của Google mở trong trình duyệt</string>
+    <string name="app_settings_item_search_bar_desktop_enable">Hiện thanh tìm kiếm trên màn hình chính</string>
+    <string name="app_settings_item_search_bar_style">Kiểu thanh tìm kiếm</string>
+
+    <string name="app_settings_item_search_bar_style_subtle">Chế độ tinh tế</string>
+    <string name="app_settings_item_search_bar_style_subtle_description">Thanh tìm kiếm pha trộn với hình nền.</string>
+    <string name="app_settings_item_search_bar_style_white">Trắng</string>
+    <string name="app_settings_item_search_bar_style_white_description">Thanh tìm kiếm là màu trắng.</string>
+    <string name="app_settings_item_search_clear_recent">Xóa kết quả gần đây</string>
+    <string name="app_settings_item_search_clear_recent_subtext">Xóa tất cả các mục khỏi danh sách kết quả gần đây.</string>
+    <string name="app_settings_item_search_done_button_close_keyboard">Đóng bàn phím</string>
+    <string name="app_settings_item_search_done_button_dialog_title">Chọn Hành động</string>
+    <string name="app_settings_item_search_done_button_open_first_result">Mở kết quả đầu tiên</string>
+    <string name="app_settings_item_search_done_button_title">Hành động nút hoàn thành</string>
+    <string name="app_settings_item_search_engine">Công Cụ Tìm Kiếm</string>
+    <string name="app_settings_item_search_engine_bing">Bing</string>
+    <string name="app_settings_item_search_engine_dialog_title">Chọn Công Cụ Tìm Kiếm</string>
+    <string name="app_settings_item_search_engine_duck_duck_go">DuckDuckGo</string>
+    <string name="app_settings_item_search_engine_google">Google</string>
+    <string name="app_settings_item_search_include_frequently_used">Ứng dụng thường xuyên sử dụng</string>
+    <string name="app_settings_item_search_include_frequently_used_subtext">Hiển thị các ứng dụng thường sử dụng trong tìm kiếm</string>
+    <string name="app_settings_item_search_recents_include_web_results">Bao gồm các tìm kiếm trên web trong kết quả gần đây</string>
+    <string name="app_settings_item_search_title">Tìm kiếm</string>
+    <string name="app_settings_item_switch_launcher">Chuyển sang trình khởi chạy khác</string>
+
+    <string name="app_settings_item_toast_clear_recent_results">Kết quả gần đây của bạn đã được xóa.</string>
+    <string name="app_settings_size_label">Kích cỡ</string>
+    <string name="app_settings_title">dEvie Cài đặt</string>
+
+    <string name="button_label_cancel">Hủy</string>
+
+
+
+
+
+    <string name="change_icon_icon_count">%1$d biểu tượng</string>
+    <string name="change_icon_loading">Đang tải đề xuất biểu tượng, vui lòng đợi...</string>
+    <string name="change_icon_packs">Gói</string>
+    <string name="change_icon_suggested">Được đề xuất</string>
+    <string name="change_icon_title"><b>Chọn một biểu tượng</b> cho \"%1$s\"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="contact_action_call">Gọi</string>
+    <string name="contact_action_call_type">Gọi %1$s</string>
+    <string name="contact_action_email">Thư điện tử</string>
+    <string name="contact_action_text">Văn bản</string>
+    <string name="contact_action_text_type">Văn bản %1$s</string>
+
+    <string name="contact_entity_chat">Trò chuyện %1$s</string>
+    <string name="contact_entity_message">Tin nhắn %1$s</string>
+    <string name="contact_entity_open_in_contacts">Mở trong Danh Bạ</string>
+    <string name="contact_entity_skype">Skype %1$s</string>
+    <string name="crop_wallpaper">Cắt hình nền</string>
+    <string name="default_scroll_format">Trang %1$d của %2$d</string>
+
+
+    <string name="delete_target_cancel_label">Hủy</string>
+    <string name="delete_target_label">Loại bỏ</string>
+
+    <string name="desktop_unlock_fingerprint">Mở khoá với Vân tay</string>
+    <string name="desktop_unlock_long_press">Nhấn giữ để Mở khoá</string>
+    <string name="desktop_unlocked_message">Đã mở khoá bàn làm việc</string>
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Tua đi</string>
+    <string name="exo_controls_next_description">Bản nhạc tiếp theo</string>
+    <string name="exo_controls_pause_description">Tạm dừng</string>
+    <string name="exo_controls_play_description">Phát</string>
+    <string name="exo_controls_previous_description">Bản nhạc trước</string>
+
+
+
+    <string name="exo_controls_rewind_description">Tua lại</string>
+    <string name="exo_controls_shuffle_description">Phát ngẫu nhiên</string>
+
+
+    <string name="feedback_enjoying_app_negative">Không thực sự</string>
+    <string name="feedback_enjoying_app_positive">Đồng ý!</string>
+    <string name="feedback_enjoying_app_question">Bạn có thích dEvie không?</string>
+    <string name="feedback_feedback_negative">Không, cảm ơn</string>
+    <string name="feedback_feedback_positive">Đồng ý</string>
+    <string name="feedback_feedback_question">Bạn có thể đưa ra phản hồi cho chúng tôi không?</string>
+    <string name="feedback_generic_enjoying_app_question">Bạn có thích %1$s không?</string>
+    <string name="feedback_generic_no_feedback">Không sao đâu. Chúng tôi sẽ tiếp tục làm việc chăm chỉ để làm cho %1$s tốt hơn!</string>
+
+    <string name="feedback_no_feedback">Không sao đâu. Chúng tôi sẽ tiếp tục làm việc chăm chỉ để làm cho dEvie tốt hơn!</string>
+    <string name="feedback_no_rating">Đừng lo! Rất vui khi nghe bạn đang tận hưởng dEvie! :)</string>
+    <string name="feedback_rating_app_negative">Không, cảm ơn</string>
+    <string name="feedback_rating_app_positive">Đồng ý</string>
+    <string name="feedback_rating_app_question">Tại sao không xếp hạng chúng tôi trên Cửa hàng Play?</string>
+    <string name="folder_hint_text">Thư mục Chưa đặt tên</string>
+    <string name="folder_name" />
+    <string name="folder_name_format">Thư mục %1$s</string>
+    <string name="folder_opened">Đã mở thư mục, %1$d bởi %2$d</string>
+    <string name="folder_renamed">Thư mục được đổi tên thành %1$s</string>
+    <string name="folder_tap_to_close">Chạm để đóng thư mục</string>
+    <string name="folder_tap_to_rename">Chạm để lưu đổi tên</string>
+    <string name="gadget_error_text">Vấn đề tải tiện ích</string>
+    <string name="gadget_setup_text">Thiết lập</string>
+    <string name="gesture_action_app_drawer">Ngăn kéo ứng dụng</string>
+    <string name="gesture_action_evie_search">dEvie tìm kiếm</string>
+    <string name="gesture_action_expand_notifications">Mở rộng thông báo</string>
+    <string name="gesture_action_google_now">Google Now</string>
+    <string name="gesture_action_google_voice_search">Tìm kiếm bằng giọng nói</string>
+    <string name="gesture_action_launch_app">Chạy chương trình</string>
+    <string name="gesture_action_launch_app_with_name">Chạy chương trình: %s</string>
+    <string name="gesture_action_none">Không ai</string>
+    <string name="gesture_action_screen_lock_device_admin">Khóa màn hình (tức thời)</string>
+    <string name="gesture_action_screen_lock_generic">Khóa màn hình</string>
+    <string name="gesture_action_screen_lock_write_settings">Khóa màn hình (hẹn giờ)</string>
+    <string name="gesture_type_double_tap">Bấm hai lần</string>
+    <string name="gesture_type_expand">Mở rộng</string>
+    <string name="gesture_type_home_button">Nút home</string>
+    <string name="gesture_type_pinch">Véo</string>
+    <string name="gesture_type_swipe_down">Vuốt xuống</string>
+    <string name="gesture_type_swipe_up">Vuốt lên</string>
+    <string name="gesture_type_two_finger_swipe_down">Vuốt hai ngón xuống</string>
+    <string name="gesture_type_two_finger_swipe_up">Vuốt hai ngón lên</string>
+    <string name="hotseat_out_of_space">Không còn chỗ trong Khay yêu thích</string>
+    <string name="icon_pack_market_search">Duyệt thêm gói biểu tượng...</string>
+    <string name="image_load_fail">Không thể tải hình ảnh</string>
+
+    <string name="launcher_restored_negative">Hoàn tác</string>
+    <string name="launcher_restored_positive">Đồng ý</string>
+    <string name="launcher_restored_subtext">Tất cả các ứng dụng, tiện ích và cài đặt của bạn đã được khôi phục!</string>
+    <string name="long_press_widget_to_add">Chạm &amp; giữ để lấy một tiện ích.</string>
+    <string name="manifest_label_device_admin_description">Cho phép Trình Khởi Chạy dEvie khóa màn hình</string>
+
+
+
+
+    <string name="msg_no_generic_permission">Ứng dụng này không được phép thực hiện hành động này</string>
+    <string name="msg_no_phone_permission">%1$s không được phép thực hiện cuộc gọi điện thoại</string>
+
+
+
+    <string name="notifications_header">Thông báo</string>
+
+
+
+
+
+
+    <string name="onboarding_default_home_not_now">Không phải bây giờ</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="onboarding_permission_deny_access">Từ Chối Truy Cập</string>
+    <string name="onboarding_permission_grant_access">Cấp Phép Truy Cập</string>
+    <string name="onboarding_permission_grant_limited_access">Cấp Quyền Truy Cập Bị Hạn Chế</string>
+    <string name="onboarding_permission_title">dEvie cần một chút sự giúp đỡ từ bạn.</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="out_of_space">Không còn chỗ trên Màn hình chính này.</string>
+
+    <string name="permdesc_install_shortcut">Cho phép ứng dụng thêm lối tắt mà không cần sự can thiệp của người dùng.</string>
+    <string name="permdesc_read_settings">Cho phép ứng dụng đọc cài đặt và lối tắt trong Trang chủ.</string>
+    <string name="permdesc_uninstall_shortcut">Cho phép ứng dụng xóa lối tắt mà không cần sự can thiệp của người dùng.</string>
+    <string name="permdesc_write_settings">Cho phép ứng dụng thay đổi cài đặt và lối tắt trong Trang chủ.</string>
+    <string name="permission_call_text">dEvie cần truy cập vào trình quay số của bạn nếu bạn muốn thực hiện cuộc gọi từ dEvie.</string>
+    <string name="permission_call_title">Kích hoạt truy cập quay số?</string>
+    <string name="permission_contacts_name">địa chỉ liên lạc</string>
+    <string name="permission_contacts_text">Để nhanh chóng liên hệ với bạn bè để gọi, email hoặc văn bản.</string>
+    <string name="permission_contacts_title">Liên hệ</string>
+    <string name="permission_location_name">vị trí</string>
+    <string name="permission_location_text">Tìm nhà hàng, cửa hàng và địa điểm gần đó cho bạn.</string>
+    <string name="permission_location_title">Vị trí</string>
+    <string name="permission_storage_name">lưu trữ</string>
+    <string name="permission_storage_text">Để truy cập vào hệ hình nền hệ thống cho hiệu ứng hình ảnh. (Cần thiết)</string>
+    <string name="permission_storage_title">Lưu trữ</string>
+    <string name="permission_tip">Chạm<b>CHO PHÉP</b> trên nhắc nhở %1$s</string>
+    <string name="permlab_install_shortcut">cài đặt các lối tắt</string>
+    <string name="permlab_read_settings">đọc cài đặt Trang chủ và lối tắt</string>
+    <string name="permlab_uninstall_shortcut">gỡ cài đặt lối tắt</string>
+    <string name="permlab_write_settings">viết cài đặt Trang chủ và lối tắt</string>
+    <string name="phone_number_fax_home">Fax Nhà</string>
+    <string name="phone_number_fax_work">Fax Công Việc</string>
+    <string name="phone_number_home">Nhà</string>
+    <string name="phone_number_mobile">Di động</string>
+    <string name="phone_number_work">Công việc</string>
+    <string name="phone_number_work_mobile">Di Động Công Việc</string>
+    <string name="pick_image">Chọn hình ảnh</string>
+    <string name="pick_wallpaper">Hình nền</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="reset_default_home_failure">dEvie không được đặt làm trình khởi chạy mặc định của bạn. Bạn có muốn thử lại không?</string>
+    <string name="reset_default_home_import_prompt">Chúng tôi đã nhập thành công màn hình chính trước của bạn! Bạn có muốn đặt dEvie làm trình khởi chạy mặc định của mình không?</string>
+    <string name="reset_default_home_later">Để Sau</string>
+    <string name="reset_default_home_prompt">Đặt dEvie làm trình khởi chạy mặc định cho màn hình chính đơn giản và nhanh hơn.</string>
+    <string name="resize_label">Thay đổi kích thước</string>
+
+
+
+
+
+
+
+    <string name="safemode_shortcut_error">Ứng dụng đã tải xuống bị vô hiệu hóa ở Chế độ An toàn</string>
+    <string name="search_bar_hint">Tìm kiếm</string>
+    <string name="search_frequently_used_header">Đã sử dụng gần đây</string>
+    <string name="search_local_results_header">Trên thiết bị của bạn</string>
+
+    <string name="search_no_recents_message">"Thử tìm kiếm ứng dụng bạn yêu thích hoặc
+danh bạ trong điện thoại của bạn"</string>
+    <string name="search_no_recents_title">Không có tìm kiếm gần đây</string>
+    <string name="search_recent_results_header">Kết quả gần đây</string>
+
+    <string name="settings_button_text">Cài đặt</string>
+
+
+    <string name="settings_item_about_device">Giới Thiệu Thiết Bị</string>
+    <string name="settings_item_account">Cài đặt Tài khoản</string>
+    <string name="settings_item_airplane_mode">Cài Đặt Chế Độ Máy Bay</string>
+    <string name="settings_item_applications">Các ứng dụng</string>
+    <string name="settings_item_apps">Cài Đặt Ứng Dụng</string>
+    <string name="settings_item_backup_reset">Sao Lưu &amp; Thiết Lập Lại</string>
+    <string name="settings_item_battery">Cài Đặt Pin</string>
+    <string name="settings_item_bluetooth">Cài đặt Bluetooth</string>
+    <string name="settings_item_date_time">Cài Đặt Ngày &amp; Thời Gian</string>
+    <string name="settings_item_daydream">Cài Đặt Daydream</string>
+    <string name="settings_item_default_apps">Cài Đặt Ứng Dụng Mặc Định</string>
+    <string name="settings_item_developer">Cài đặt Nhà phát triển</string>
+    <string name="settings_item_device_info">Thông Tin Thiết Bị</string>
+    <string name="settings_item_display">Cài Đặt Hiển Thị</string>
+    <string name="settings_item_evie">Cài đặt dEvie</string>
+
+    <string name="settings_item_home">Cài Đặt Màn Hình Chính Mặc Định</string>
+    <string name="settings_item_hotspot">Cài Đặt Điểm Phát Sóng &amp; Di Động</string>
+    <string name="settings_item_input_method">Cài đặt Phương thức Nhập</string>
+    <string name="settings_item_keyboard">Cài đặt Bàn phím</string>
+    <string name="settings_item_language">Cài đặt Ngôn ngữ</string>
+    <string name="settings_item_launcher">Cài Đặt Trình Khởi Chạy</string>
+    <string name="settings_item_location">Cài Đặt Vị Trí</string>
+    <string name="settings_item_network_operator">Cài Đặt Nhà Điều Hành Mạng</string>
+    <string name="settings_item_nfc">Cài Đặt NFC</string>
+    <string name="settings_item_notification_access">Truy cập Thông báo</string>
+    <string name="settings_item_overlay_permission">Cài Đặt Quyền Lớp Phủ</string>
+    <string name="settings_item_screensaver">Cài Đặt Bảo Vệ Màn Hình</string>
+    <string name="settings_item_security">Cài Đặt Bảo Mật &amp; Màn Hình Khóa</string>
+    <string name="settings_item_sound">Cài đặt Âm thanh</string>
+    <string name="settings_item_storage">Cài Đặt Lưu Trữ</string>
+
+    <string name="settings_item_wallpaper">Cài Đặt Hình Nền</string>
+    <string name="settings_item_wifi">Cài Đặt Wi-Fi</string>
+    <string name="settings_item_wireless">Cài Đặt Không Dây</string>
+    <string name="settings_show_icon_labels">Nhãn biểu tượng</string>
+
+    <string name="shortcut_error_text">"Do thay đổi hệ thống, phím tắt này không còn hợp lệ.
+Hãy tạo lại nó."</string>
+    <string name="shortcut_not_available">Lối tắt không có sẵn</string>
+    <string name="shortcut_uninstalled">Lối tắt \"%s\" đã loại bỏ.</string>
+
+
+
+    <string name="toast_error_lock_permission_error">dEvie không có các quyền được phép. Vui lòng bật lại cài đặt khóa để khắc phục.</string>
+    <string name="toast_error_workspace_still_loading">Màn hình chính của bạn vẫn đang được tải, vui lòng đợi...</string>
+
+
+    <string name="uninstall_system_app_text">Đây là ứng dụng hệ thống và không thể gỡ cài đặt.</string>
+    <string name="unnamed_hint_text">Vô danh</string>
+    <string name="voice_no_assistant">Không có trợ lý giọng nói nào.</string>
+
+
+
+
+    <string name="wallpaper_accessibility_name">Hình nền %1$d của %2$d</string>
+    <string name="wallpaper_button_text">Hình nền</string>
+    <string name="wallpaper_delete">Xóa</string>
+    <string name="wallpaper_instructions">Đặt hình nền</string>
+    <string name="wallpaper_load_fail">Không thể tải hình ảnh làm hình nền</string>
+    <string name="wallpaper_set_fail">Không thể đặt hình ảnh làm hình nền</string>
+    <string name="which_wallpaper_option_home_screen">Màn hình chủ</string>
+    <string name="which_wallpaper_option_home_screen_and_lock_screen">Màn hình chủ và màn hình khóa</string>
+    <string name="which_wallpaper_option_lock_screen">Màn hình khóa</string>
+    <string name="widget_button_text">Tiện ích</string>
+    <string name="widget_could_not_be_added_error">Không thể thêm tiện ích.</string>
+    <string name="widget_dims_format">%1$d × %2$d</string>
+    <string name="workspace_scroll_format">Màn hình chủ %1$d của %2$d</string>
+</resources>

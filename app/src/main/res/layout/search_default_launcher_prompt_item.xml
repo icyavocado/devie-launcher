@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:paddingTop="@dimen/search_feedback_item_inner_padding_top" android:paddingBottom="@dimen/search_feedback_item_inner_padding_bottom" android:layout_width="fill_parent" android:layout_height="@dimen/search_default_launcher_prompt_item_height"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.voxel.simplesearchlauncher.view.SlideLayout android:id="@id/feedback_slides" android:paddingLeft="@dimen/search_list_item_row_padding_left" android:paddingRight="@dimen/search_list_item_row_padding_right" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+</LinearLayout>

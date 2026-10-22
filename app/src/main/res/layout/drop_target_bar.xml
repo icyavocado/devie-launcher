@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <FrameLayout android:layout_weight="1.0" style="@style/DropTargetButtonContainer"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <com.voxel.launcher3.RemoveDropTarget android:id="@id/remove_target_text" android:text="@string/delete_target_label" android:drawableStart="@drawable/remove_target_selector" style="@style/DropTargetButton" />
+    </FrameLayout>
+</merge>

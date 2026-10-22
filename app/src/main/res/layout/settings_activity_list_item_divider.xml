@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- REWORK: was a 1px divider; the card restyle separates rows with this gap. -->
+<View android:layout_width="fill_parent" android:layout_height="14.0dip"
+  xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="@dimen/search_list_item_height" style="@style/SettingsListItemStyle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:background="?selectableItemBackground" android:layout_width="fill_parent" android:layout_height="@dimen/search_list_item_height" android:paddingStart="@dimen/settings_list_item_row_padding_left" android:paddingEnd="@dimen/settings_list_item_row_padding_right"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+        <com.facebook.drawee.view.SimpleDraweeView android:id="@id/application_icon" android:layout_width="@dimen/search_list_item_icon_size" android:layout_height="@dimen/search_list_item_icon_size" android:layout_centerVertical="true" android:layout_alignParentStart="true" />
+        <TextView android:ellipsize="end" android:id="@id/label" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="15.0dip" android:layout_marginRight="15.0dip" android:singleLine="true" android:layout_toLeftOf="@id/checkbox" android:layout_toRightOf="@id/application_icon" android:layout_centerVertical="true" style="@style/SettingsItemTextAppearance" />
+        <androidx.appcompat.widget.AppCompatCheckBox android:id="@id/checkbox" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_alignParentEnd="true" android:buttonTint="@color/settings_checkbox_color" />
+    </RelativeLayout>
+    <include layout="@layout/settings_activity_list_item_divider" />
+</FrameLayout>

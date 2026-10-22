@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.core.widget.NestedScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true">
+        <LinearLayout android:orientation="vertical" android:background="@color/settings_activity_background" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <include android:id="@id/join_community" layout="@layout/settings_activity_text_item" />
+            <include android:id="@id/rate_app" layout="@layout/settings_activity_text_item" />
+            <View android:layout_width="fill_parent" android:layout_height="@dimen/settings_list_item_height" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>
