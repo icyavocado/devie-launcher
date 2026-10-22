@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <com.voxel.simplesearchlauncher.view.RoundedFrameLayout android:id="@id/mock" android:fitsSystemWindows="false" android:layout_width="fill_parent" android:layout_height="fill_parent" app:vxl_radius="10.0dip"
+    <com.voxel.simplesearchlauncher.view.RoundedFrameLayout android:id="@id/mock" android:fitsSystemWindows="false" android:layout_width="fill_parent" android:layout_height="fill_parent" app:vxl_radius="10.0dip" android:background="@color/mock_screen_background"
       xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
-        <View android:background="@color/mock_screen_background" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        <!-- REWORK: the veil here used to sit OVER the folder icons and went opaque
+             with the palette change, hiding everything (the "completely dark"
+             preview). The holder itself now paints the dark surface; no veil layer. -->
     </com.voxel.simplesearchlauncher.view.RoundedFrameLayout>
     <androidx.core.widget.NestedScrollView android:id="@id/scroll_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true">
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
