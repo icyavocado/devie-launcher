@@ -11,7 +11,6 @@
             <LinearLayout android:orientation="vertical" android:background="@color/settings_activity_background" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
                 <include android:id="@id/grid_settings" layout="@layout/settings_grid_settings_view" />
                 <include android:id="@id/icon_label_switch" layout="@layout/settings_activity_switch_item" />
-                <View android:layout_width="fill_parent" android:layout_height="10.0dip" />
                 <include android:id="@id/folder_shape" layout="@layout/settings_activity_text_item" />
                 <include android:id="@id/folder_alpha_sort" layout="@layout/settings_activity_switch_item" />
                 <View android:layout_width="fill_parent" android:layout_height="@dimen/settings_list_item_height" />
