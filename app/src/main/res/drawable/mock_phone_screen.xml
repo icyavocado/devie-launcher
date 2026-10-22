@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- REWORK: opaque navy "phone screen" for the folder settings preview — keeps the
+<!-- REWORK: opaque near-black navy "phone screen" for the folder settings preview — keeps the
      launcher's white folder labels legible on the light settings band. -->
 <shape
   xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#ff1f2a38" />
+    <solid android:color="#ff18212c" />
     <corners android:radius="20.0dip" />
 </shape>
