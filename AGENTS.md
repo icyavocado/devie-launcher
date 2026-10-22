@@ -71,6 +71,25 @@
 - One commit per todo/fix. Conventional-commit style, subject ≤ 50 chars.
 - Working dir is `/home/dai/projects/evie`; repo is NOT at any other path.
 
+## Releases
+
+Upon release:
+
+1. **Increase dEvie's version** — `versionCode` +1 and `versionName` → next
+   `rw<N>` suffix (e.g. `2.14.8-rw2`) in `app/build.gradle.kts`; commit.
+2. **Push `main`**, then **push a version tag** `v<versionName>` (e.g.
+   `v2.14.8-rw2`) — the tag push runs the `release` CI workflow, which builds
+   the signed APK and publishes the release at that tag
+   (`devie-launcher-<tag>.apk`). No rolling `latest` releases.
+3. **Edit the release notes** with the changelog:
+   `gh release edit <tag> -R icyavocado/devie-launcher --notes "..."`.
+4. Ship the same build to the user's phone (Samsung SM-S901W, USB serial
+   `R5CT60JX7FM`; poll `adb devices` first) — standing instruction.
+
+NEVER commit: `keystore/`, `.docker-*/`, `.gradle/`, `app/build/`, donor
+dumps (`.aapt-dump.txt`). Never use `git add -f` (it sweeps ignored secrets
+in — this leaked once and required a full squash + purge).
+
 ## Rework scope (locked)
 
 - Package `app.dai.evie` (was `is.shortcut`), pure Java, minSdk 21 / target+compile 35.
