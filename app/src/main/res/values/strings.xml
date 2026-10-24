@@ -131,7 +131,6 @@
 
     <string name="app_settings_item_backup_restore_restore">Restore</string>
 
-    <string name="app_settings_item_backup_restore_restore_dialog">Select a backup</string>
 
     <string name="app_settings_item_backup_restore_restore_failure_dialog">Restore failed</string>
 
@@ -253,9 +252,6 @@
 
 
 
-    <string name="confab_generic_error_button">Try again</string>
-    <string name="confab_generic_error_subtext">Try checking your network connectivity.</string>
-    <string name="confab_generic_error_text">Something went wrong</string>
     <string name="contact_action_call">Call</string>
     <string name="contact_action_call_type">Call %1$s</string>
     <string name="contact_action_email">Email</string>
@@ -283,17 +279,9 @@
 
 
 
-    <string name="dialog_open_source_title">AppFlash Open Source Information</string>
-    <string name="exo_controls_fastforward_description">Fast forward</string>
-    <string name="exo_controls_next_description">Next track</string>
-    <string name="exo_controls_pause_description">Pause</string>
-    <string name="exo_controls_play_description">Play</string>
-    <string name="exo_controls_previous_description">Previous track</string>
 
 
 
-    <string name="exo_controls_rewind_description">Rewind</string>
-    <string name="exo_controls_shuffle_description">Shuffle</string>
 
 
 

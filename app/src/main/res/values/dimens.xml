@@ -125,7 +125,6 @@
     <dimen name="design_snackbar_min_width">-1.0px</dimen>
     <dimen name="design_snackbar_padding_horizontal">12.0dip</dimen>
     <dimen name="design_snackbar_padding_vertical">14.0dip</dimen>
-    <dimen name="design_snackbar_text_size">14.0sp</dimen>
     <dimen name="design_tab_max_width">264.0dip</dimen>
     <dimen name="design_tab_text_size">14.0sp</dimen>
     <item type="dimen" name="disabled_alpha_material_dark">0.3</item>
@@ -180,7 +179,6 @@
     <dimen name="mtrl_bottomappbar_fab_cradle_vertical_offset">0.0dip</dimen>
     <dimen name="mtrl_btn_corner_radius">4.0dip</dimen>
     <dimen name="mtrl_btn_dialog_btn_min_width">64.0dip</dimen>
-    <dimen name="mtrl_btn_icon_btn_padding_left">12.0dip</dimen>
     <dimen name="mtrl_btn_icon_padding">8.0dip</dimen>
     <dimen name="mtrl_btn_inset">6.0dip</dimen>
     <item type="dimen" name="mtrl_btn_letter_spacing">0.07</item>
@@ -193,7 +191,6 @@
     <dimen name="mtrl_btn_text_btn_padding_left">8.0dip</dimen>
     <dimen name="mtrl_btn_text_btn_padding_right">8.0dip</dimen>
     <dimen name="mtrl_card_elevation">1.0dip</dimen>
-    <dimen name="mtrl_chip_text_size">14.0sp</dimen>
     <dimen name="mtrl_fab_elevation">6.0dip</dimen>
     <dimen name="mtrl_fab_translation_z_hovered_focused">2.0dip</dimen>
     <dimen name="mtrl_fab_translation_z_pressed">6.0dip</dimen>
@@ -205,7 +202,6 @@
     <dimen name="mtrl_textinput_box_corner_radius_medium">4.0dip</dimen>
     <dimen name="mtrl_textinput_box_corner_radius_small">0.0dip</dimen>
     <dimen name="mtrl_toolbar_default_height">56.0dip</dimen>
-    <dimen name="notification_action_text_size">13.0sp</dimen>
     <dimen name="notification_content_margin_start">8.0dip</dimen>
     <dimen name="notification_elevation">2.0dip</dimen>
     <dimen name="notification_footer_height">32.0dip</dimen>
@@ -286,7 +282,6 @@
     <dimen name="settings_mock_screen_height">300.0dip</dimen>
     <dimen name="shortcut_icon_dimension">44.0dip</dimen>
     <dimen name="spacer">10.0dip</dimen>
-    <dimen name="ss_base_and_half_spacing">15.0dip</dimen>
     <dimen name="ss_follow_button_corner_radius">3.0dip</dimen>
     <dimen name="ss_image_rounded_corner_radius">4.0dip</dimen>
     <dimen name="ss_search_bar_height">48.0dip</dimen>

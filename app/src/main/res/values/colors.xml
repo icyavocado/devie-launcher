@@ -5,7 +5,6 @@
     <color name="abc_search_url_text_selected">@android:color/black</color>
     <color name="accent_material_dark">@color/material_deep_teal_200</color>
     <color name="accent_material_light">@color/material_deep_teal_500</color>
-    <color name="activity_voxel_app_dialog_text_color">#ff929292</color>
     <color name="all_apps_fade_end_color">#00000000</color>
     <color name="all_apps_fade_start_color">#40000000</color>
     <color name="appwidget_error_color">#ffcccccc</color>
@@ -14,7 +13,6 @@
     <color name="background_material_dark">@color/material_grey_850</color>
     <color name="background_material_light">@color/material_grey_50</color>
     <color name="badge_color">@color/evie_theme_green_dark</color>
-    <color name="black">#ff000000</color>
     <color name="blocked_color">#ffda5a55</color>
     <color name="blocked_color_pressed">#ffa72722</color>
     <color name="blur_darken_live_wallpaper">#bb000000</color>
@@ -25,14 +23,10 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
-    <color name="cardview_dark_background">#ff424242</color>
-    <color name="cardview_light_background">#ffffffff</color>
     <color name="checkbox_tint">#ff2bc6f7</color>
     <color name="container_fastscroll_thumb_active_color">#ff009688</color>
     <color name="container_fastscroll_thumb_inactive_color">#ff009688</color>
     <color name="dark_list_divider">#28000000</color>
-    <color name="default_ad_accent_color">#ffffc600</color>
-    <color name="default_main_color">#ffffffff</color>
     <color name="delete_target_hover_tint">#daff0000</color>
     <color name="design_default_color_primary">#ff3f51b5</color>
     <color name="design_default_color_primary_dark">#ff303f9f</color>
@@ -44,10 +38,8 @@
     <color name="dsb_track_color">#ff939393</color>
     <color name="error_color_material_dark">#ffff7043</color>
     <color name="error_color_material_light">#ffff5722</color>
-    <color name="evie_black">#ff202020</color>
     <color name="evie_gray">#ff787878</color>
     <color name="evie_light_gray">#ffe1e1e1</color>
-    <color name="evie_medium_gray">#ffbebebe</color>
     <color name="evie_sky_blue">#ff11a0f0</color>
     <color name="evie_sky_blue_pressed">#ff0c85c9</color>
     <color name="evie_theme_green">#ff0bd7ba</color>
@@ -95,7 +87,6 @@
     <color name="primary_text_default_material_light">#de000000</color>
     <color name="primary_text_disabled_material_dark">#4dffffff</color>
     <color name="primary_text_disabled_material_light">#39000000</color>
-    <color name="quantum_panel_text_color">#ff666666</color>
     <color name="ripple_material_dark">#33ffffff</color>
     <color name="ripple_material_light">#1f000000</color>
     <color name="secondary_text_default_material_dark">#b3ffffff</color>
@@ -114,20 +105,15 @@
     <color name="tooltip_background_dark">#e6616161</color>
     <color name="tooltip_background_light">#e6ffffff</color>
     <color name="transparent">#00ffffff</color>
-    <color name="vpi__background_holo_dark">#ff000000</color>
     <color name="vpi__background_holo_light">#fff3f3f3</color>
     <color name="vpi__bright_foreground_disabled_holo_dark">#ff4c4c4c</color>
     <color name="vpi__bright_foreground_holo_dark">@color/vpi__background_holo_light</color>
-    <color name="vpi__bright_foreground_holo_light">@color/vpi__background_holo_dark</color>
     <color name="wallpaper_picker_translucent_gray">#66000000</color>
-    <color name="white">#ffffffff</color>
     <color name="white_button">#ffffffff</color>
     <color name="white_button_pressed">#ffecf0f1</color>
     <color name="widgets_cell_color">#40ffffff</color>
     <color name="widgets_cell_divider_color">#50ffffff</color>
     <color name="widgets_view_item_text_color">#ffeeeeee</color>
     <color name="widgets_view_section_text_color">#ffffffff</color>
-    <color name="workspace_all_apps_and_delete_zone_text_color">#ccffffff</color>
-    <color name="workspace_all_apps_and_delete_zone_text_shadow_color">#a0000000</color>
     <color name="workspace_icon_text_color">#ffffffff</color>
 </resources>
