@@ -22,7 +22,7 @@ public class AnalyticsHandler {
     private static final String TAG = "AnalyticsHandler";
     private static AnalyticsHandler instance;
     private Context context;
-    private final AnalyticsFilter mAnalyticsFilter;
+    private AnalyticsFilter mAnalyticsFilter;
     private final boolean mAllowedUser;
 
     public static class EventProp {
@@ -149,6 +149,18 @@ public class AnalyticsHandler {
             throw new IllegalArgumentException("Context must be provided.");
         }
         instance = new AnalyticsHandler(context, analyticsFilter);
+    }
+
+    /* REWORK: filters that need injected state (FrequentlyUsedAnalyticsFilter
+       reads FrequentlyUsedModel) cannot exist before the dagger graph; start
+       analytics with a pass-through and swap in the real filter post-inject. */
+    public static synchronized void setAnalyticsFilter(AnalyticsFilter analyticsFilter) {
+        if (instance == null) {
+            throw new IllegalStateException("Instance must be initialized before trying to use.");
+        }
+        if (analyticsFilter != null) {
+            instance.mAnalyticsFilter = analyticsFilter;
+        }
     }
 
     public void logEvent(String str) {
