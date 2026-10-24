@@ -1,7 +1,6 @@
 package com.evie.common.services.links;
 
 import android.net.Uri;
-import com.facebook.common.internal.Preconditions;
 import java.net.URLEncoder;
 
 /* JADX INFO: loaded from: classes.dex */
@@ -16,7 +15,9 @@ public final class Link {
     }
 
     public static Uri toCard(String str) {
-        Preconditions.checkNotNull(str, "Entity may not be null.");
+        if (str == null) {
+            throw new IllegalArgumentException("Entity may not be null.");
+        }
         return toUri(String.format("/layouts/card?entity=%s", encode(str)));
     }
 

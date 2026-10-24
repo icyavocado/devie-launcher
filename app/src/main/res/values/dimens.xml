@@ -259,9 +259,7 @@
     <dimen name="search_item_height">58.0dip</dimen>
     <dimen name="search_item_image_dimension">40.0dip</dimen>
     <dimen name="search_item_rating_bottom_padding">2.0dip</dimen>
-    <dimen name="search_item_rating_image_dimension">15.0dip</dimen>
     <dimen name="search_item_rating_image_spacing_left">2.0dip</dimen>
-    <dimen name="search_item_rating_image_spacing_right">4.0dip</dimen>
     <dimen name="search_item_text_inner_spacing">2.0dip</dimen>
     <dimen name="search_list_item_height">58.0dip</dimen>
     <dimen name="search_list_item_icon_size">44.0dip</dimen>

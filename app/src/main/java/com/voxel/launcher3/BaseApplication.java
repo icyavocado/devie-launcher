@@ -15,12 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.multidex.MultiDex;
 import com.evie.common.iconpack.IconPackFilter;
 import com.evie.common.utils.MemoryWatcher;
-import com.facebook.common.soloader.SoLoaderShim;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.getkeepsafe.relinker.ReLinker;
-import com.voxel.launcher3.fresco.ConservativeBitmapCacheConfigSupplier;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher;
+import com.ovacoda.devie.images.IconLoader;
 import com.voxel.simplesearchlauncher.analytics.AnalyticsHandler;
 import com.voxel.simplesearchlauncher.dagger.DaggerLauncherAppComponent;
 import com.voxel.simplesearchlauncher.dagger.Injector;
@@ -32,7 +27,6 @@ import com.voxel.simplesearchlauncher.model.LocalAppsUpdateReceiver;
 import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 import com.voxel.simplesearchlauncher.model.managers.UserProfileManager;
 import com.voxel.simplesearchlauncher.utils.DebugUtil;
-import com.voxel.simplesearchlauncher.utils.MemoryRegistry;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -51,11 +45,9 @@ public class BaseApplication extends Application implements Injector, HasActivit
     DispatchingAndroidInjector<Activity> mActivityInjector;
     AnalyticsHandler mAnalyticsHandler;
     private long mAppStartTime;
-    Provider<HybridNetworkFetcher> mHybridNetworkFetcherProvider;
     Provider<AppsInfoIconFilter> mIconFilterProvider;
     IconPackManager mIconPackManager;
     private Boolean mIsDebugBuild;
-    MemoryRegistry mMemoryRegistry;
     DispatchingAndroidInjector<Service> mServiceInjector;
     SettingsStorage mSettingsStorage;
     DispatchingAndroidInjector<Fragment> mSupportFragmentInjector;
@@ -83,16 +75,6 @@ public class BaseApplication extends Application implements Injector, HasActivit
         return (Injector) context.getApplicationContext();
     }
 
-    private void initFresco() {
-        SoLoaderShim.setHandler(new SoLoaderShim.Handler() { // from class: com.voxel.launcher3.-$$Lambda$BaseApplication$ApfR-bZU_494rDSvkyT2gOvCidY
-            @Override // com.facebook.common.soloader.SoLoaderShim.Handler
-            public final void loadLibrary(String str) {
-                ReLinker.loadLibrary(BaseApplication.this.getApplicationContext(), str);
-            }
-        });
-        Fresco.initialize(getApplicationContext(), ImagePipelineConfig.newBuilder(getApplicationContext()).setBitmapMemoryCacheParamsSupplier(new ConservativeBitmapCacheConfigSupplier((ActivityManager) getSystemService("activity"))).setNetworkFetcher(this.mHybridNetworkFetcherProvider.get()).setMemoryTrimmableRegistry(getMemoryRegistry()).build());
-    }
-
     private void registerPackageChangedReceiver() {
         String currentProcessName = getCurrentProcessName();
         if (currentProcessName != null && currentProcessName.equals(getPackageName())) {
@@ -117,7 +99,9 @@ public class BaseApplication extends Application implements Injector, HasActivit
         this.launcherAppComponent.inject(LauncherAppState.getInstance().getModel());
         LauncherAppState.getInstance().getModel().onInject();
         registerPackageChangedReceiver();
-        initFresco();
+        /* REWORK(fresco): the drawee pipeline is gone; the in-process icon
+         * loader takes its place (local data:/content:/magic URIs only). */
+        IconLoader.init(this);
     }
 
     private void setupGraph() {
@@ -146,10 +130,6 @@ public class BaseApplication extends Application implements Injector, HasActivit
     @Override // com.voxel.simplesearchlauncher.dagger.Injector
     public synchronized LauncherAppComponent getLauncherAppComponent() {
         return this.launcherAppComponent;
-    }
-
-    public MemoryRegistry getMemoryRegistry() {
-        return this.mMemoryRegistry;
     }
 
     public boolean isDebugBuild() {

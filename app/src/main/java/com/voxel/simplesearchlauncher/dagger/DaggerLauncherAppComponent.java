@@ -19,8 +19,6 @@ import com.voxel.launcher3.LauncherAppState_MembersInjector;
 import com.voxel.launcher3.LauncherModel;
 import com.voxel.launcher3.LauncherModel_MembersInjector;
 import com.voxel.launcher3.Launcher_MembersInjector;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher_Factory;
 import com.voxel.launcher3.shortcuts.DeepShortcutManager;
 import com.voxel.simplesearchlauncher.activity.OnboardingActivity;
 import com.voxel.simplesearchlauncher.allapps.AllAppsFragment;
@@ -56,14 +54,10 @@ import com.voxel.simplesearchlauncher.dagger.module.FrequentlyUsedModule_Provide
 import com.voxel.simplesearchlauncher.dagger.module.FrequentlyUsedModule_ProvidesFrequentlyUsedModelFactory;
 import com.voxel.simplesearchlauncher.dagger.module.HideAppsModule;
 import com.voxel.simplesearchlauncher.dagger.module.HideAppsModule_ProvidesHideAppsModelFactory;
-import com.voxel.simplesearchlauncher.dagger.module.MemoryRegistryModule;
-import com.voxel.simplesearchlauncher.dagger.module.MemoryRegistryModule_ProvideMemoryRegistryFactory;
 import com.voxel.simplesearchlauncher.dagger.module.SingletonsModule;
 import com.voxel.simplesearchlauncher.dagger.module.SingletonsModule_ProvidesAnalyticsHandlerFactory;
 import com.voxel.simplesearchlauncher.dagger.module.SingletonsModule_ProvidesSettingsStorageFactory;
 import com.voxel.simplesearchlauncher.dagger.module.SingletonsModule_ProvidesUserProfileManagerFactory;
-import com.voxel.simplesearchlauncher.dagger.module.http.OkHttpModule;
-import com.voxel.simplesearchlauncher.dagger.module.http.OkHttpModule_ProvidesOkHttpClientFactory;
 import com.voxel.simplesearchlauncher.fragment.ResetLauncherFailureFragment;
 import com.voxel.simplesearchlauncher.fragment.ResetLauncherFailureFragment_MembersInjector;
 import com.voxel.simplesearchlauncher.fragment.ResetLauncherPromptFragment;
@@ -103,9 +97,6 @@ import com.voxel.simplesearchlauncher.settings.gestures.SelectAppFragment;
 import com.voxel.simplesearchlauncher.settings.gestures.SelectAppFragment_MembersInjector;
 import com.voxel.simplesearchlauncher.shortcut.ConfirmShortcutActivity;
 import com.voxel.simplesearchlauncher.shortcut.ConfirmShortcutActivity_MembersInjector;
-import com.voxel.simplesearchlauncher.utils.ConnectionPoolKiller;
-import com.voxel.simplesearchlauncher.utils.ConnectionPoolKiller_Factory;
-import com.voxel.simplesearchlauncher.utils.MemoryRegistry;
 import com.voxel.simplesearchlauncher.widget.WidgetsFragment;
 import com.voxel.simplesearchlauncher.widget.WidgetsFragment_MembersInjector;
 import dagger.android.AndroidInjector;
@@ -122,7 +113,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import javax.inject.Provider;
-import okhttp3.OkHttpClient;
 /* JADX INFO: REWORK: regenerated component; sidescreen/feed/Jigsaw-adjacent graph removed */
 public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     private Provider<CommonAndroidInjectionModule_AllAppsFragment.AllAppsFragmentSubcomponent.Builder> allAppsFragmentSubcomponentBuilderProvider;
@@ -132,7 +122,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     private Provider<AppsInfoIconFilter> appsInfoIconFilterProvider;
     private Provider<FlavorAndroidInjectionModule_ChangeIconFragment.ChangeIconFragmentSubcomponent.Builder> changeIconFragmentSubcomponentBuilderProvider;
     private Provider<CommonAndroidInjectionModule_ContributesConfirmShortcutActivityInjector.ConfirmShortcutActivitySubcomponent.Builder> confirmShortcutActivitySubcomponentBuilderProvider;
-    private Provider<ConnectionPoolKiller> connectionPoolKillerProvider;
     private final Context context;
     private Provider<Context> contextProvider;
     private Provider<FlavorAndroidInjectionModule_CustomGestureSettingsFragment.CustomGestureSettingsFragmentSubcomponent.Builder> customGestureSettingsFragmentSubcomponentBuilderProvider;
@@ -140,7 +129,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     private Provider<FlavorAndroidInjectionModule_DockSettingsFragment.DockSettingsFragmentSubcomponent.Builder> dockSettingsFragmentSubcomponentBuilderProvider;
     private Provider<FlavorAndroidInjectionModule_FolderSettingsFragment.FolderSettingsFragmentSubcomponent.Builder> folderSettingsFragmentSubcomponentBuilderProvider;
     private Provider<FlavorAndroidInjectionModule_HideAppSettingsFragment.HideAppsSettingsFragmentSubcomponent.Builder> hideAppsSettingsFragmentSubcomponentBuilderProvider;
-    private Provider<HybridNetworkFetcher> hybridNetworkFetcherProvider;
     private Provider<IconPackManager> iconPackManagerProvider;
     private Provider<FlavorAndroidInjectionModule_IconPackSettingsFragment.IconPackSettingsFragmentSubcomponent.Builder> iconPackSettingsFragmentSubcomponentBuilderProvider;
     private Provider<LauncherAppComponent> launcherAppComponentProvider;
@@ -151,13 +139,11 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     private Provider<FlavorAndroidInjectionModule_OnboardingActivity.OnboardingActivitySubcomponent.Builder> onboardingActivitySubcomponentBuilderProvider;
     private Provider<FlavorAndroidInjectionModule_PopupFragment.PopupFragmentSubcomponent.Builder> popupFragmentSubcomponentBuilderProvider;
     private Provider<DeepShortcutManager> provideDeepShortcutManagerProvider;
-    private Provider<MemoryRegistry> provideMemoryRegistryProvider;
     private Provider<AnalyticsHandler> providesAnalyticsHandlerProvider;
     private Provider<AppLaunchDatabase> providesAppDatabaseProvider;
     private Provider<FrequentlyUsedLocalModel> providesFrequentlyUsedLocalModelProvider;
     private Provider<FrequentlyUsedModel> providesFrequentlyUsedModelProvider;
     private Provider<HideAppsModel> providesHideAppsModelProvider;
-    private Provider<OkHttpClient> providesOkHttpClientProvider;
     private Provider<SettingsStorage> providesSettingsStorageProvider;
     private Provider<UserProfileManager> providesUserProfileManagerProvider;
     private Provider<FlavorAndroidInjectionModule_ResetLauncherFailureFragment.ResetLauncherFailureFragmentSubcomponent.Builder> resetLauncherFailureFragmentSubcomponentBuilderProvider;
@@ -891,10 +877,10 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     }
 
 
-    private DaggerLauncherAppComponent(SingletonsModule singletonsModule, OkHttpModule okHttpModule, FrequentlyUsedModule frequentlyUsedModule, MemoryRegistryModule memoryRegistryModule, DeepShortcutManagerModule deepShortcutManagerModule, HideAppsModule hideAppsModule, Application application, Context context, MemoryWatcher memoryWatcher) {
+    private DaggerLauncherAppComponent(SingletonsModule singletonsModule, FrequentlyUsedModule frequentlyUsedModule, DeepShortcutManagerModule deepShortcutManagerModule, HideAppsModule hideAppsModule, Application application, Context context, MemoryWatcher memoryWatcher) {
         this.memoryWatcher = memoryWatcher;
         this.context = context;
-        initialize(singletonsModule, okHttpModule, frequentlyUsedModule, memoryRegistryModule, deepShortcutManagerModule, hideAppsModule, application, context, memoryWatcher);
+        initialize(singletonsModule, frequentlyUsedModule, deepShortcutManagerModule, hideAppsModule, application, context, memoryWatcher);
     }
 
     private static final class Builder implements LauncherAppComponent.Builder {
@@ -903,9 +889,7 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         private DeepShortcutManagerModule deepShortcutManagerModule;
         private FrequentlyUsedModule frequentlyUsedModule;
         private HideAppsModule hideAppsModule;
-        private MemoryRegistryModule memoryRegistryModule;
         private MemoryWatcher memoryWatcher;
-        private OkHttpModule okHttpModule;
         private SingletonsModule singletonsModule;
 
         @Override // com.voxel.simplesearchlauncher.dagger.LauncherAppComponent.Builder
@@ -931,14 +915,8 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             if (this.singletonsModule == null) {
                 this.singletonsModule = new SingletonsModule();
             }
-            if (this.okHttpModule == null) {
-                this.okHttpModule = new OkHttpModule();
-            }
             if (this.frequentlyUsedModule == null) {
                 this.frequentlyUsedModule = new FrequentlyUsedModule();
-            }
-            if (this.memoryRegistryModule == null) {
-                this.memoryRegistryModule = new MemoryRegistryModule();
             }
             if (this.deepShortcutManagerModule == null) {
                 this.deepShortcutManagerModule = new DeepShortcutManagerModule();
@@ -949,7 +927,7 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             Preconditions.checkBuilderRequirement(this.application, Application.class);
             Preconditions.checkBuilderRequirement(this.context, Context.class);
             Preconditions.checkBuilderRequirement(this.memoryWatcher, MemoryWatcher.class);
-            return new DaggerLauncherAppComponent(this.singletonsModule, this.okHttpModule, this.frequentlyUsedModule, this.memoryRegistryModule, this.deepShortcutManagerModule, this.hideAppsModule, this.application, this.context, this.memoryWatcher);
+            return new DaggerLauncherAppComponent(this.singletonsModule, this.frequentlyUsedModule, this.deepShortcutManagerModule, this.hideAppsModule, this.application, this.context, this.memoryWatcher);
         }
     }
 
@@ -1004,26 +982,22 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         return map;
     }
 
-    private void initialize(SingletonsModule singletonsModule, OkHttpModule okHttpModule, FrequentlyUsedModule frequentlyUsedModule, MemoryRegistryModule memoryRegistryModule, DeepShortcutManagerModule deepShortcutManagerModule, HideAppsModule hideAppsModule, Application application, Context context, MemoryWatcher memoryWatcher) {
+    private void initialize(SingletonsModule singletonsModule, FrequentlyUsedModule frequentlyUsedModule, DeepShortcutManagerModule deepShortcutManagerModule, HideAppsModule hideAppsModule, Application application, Context context, MemoryWatcher memoryWatcher) {
         this.contextProvider = InstanceFactory.create(context);
         this.applicationProvider = InstanceFactory.create(application);
         this.localAppsManagerProvider = DoubleCheck.provider(LocalAppsManager_Factory.create(this.contextProvider));
         // REWORK: SetFactory.builder(0, 0).build() is raw (SetFactory<Object>) in Dagger 2.22.1,
         // so shape the empty set explicitly for the gson-deserializer slot.
-        this.providesOkHttpClientProvider = DoubleCheck.provider(OkHttpModule_ProvidesOkHttpClientFactory.create(okHttpModule));
         this.providesSettingsStorageProvider = DoubleCheck.provider(SingletonsModule_ProvidesSettingsStorageFactory.create(singletonsModule, this.contextProvider));
         this.providesAnalyticsHandlerProvider = DoubleCheck.provider(SingletonsModule_ProvidesAnalyticsHandlerFactory.create(singletonsModule));
         this.providesAppDatabaseProvider = DoubleCheck.provider(AppDatabaseModule_ProvidesAppDatabaseFactory.create(this.contextProvider));
         this.providesFrequentlyUsedLocalModelProvider = DoubleCheck.provider(FrequentlyUsedModule_ProvidesFrequentlyUsedLocalModelFactory.create(frequentlyUsedModule, this.providesAppDatabaseProvider));
         this.providesFrequentlyUsedModelProvider = DoubleCheck.provider(FrequentlyUsedModule_ProvidesFrequentlyUsedModelFactory.create(frequentlyUsedModule, this.contextProvider, this.providesFrequentlyUsedLocalModelProvider));
         this.providesUserProfileManagerProvider = DoubleCheck.provider(SingletonsModule_ProvidesUserProfileManagerFactory.create(singletonsModule));
-        this.provideMemoryRegistryProvider = DoubleCheck.provider(MemoryRegistryModule_ProvideMemoryRegistryFactory.create(memoryRegistryModule));
-        this.hybridNetworkFetcherProvider = HybridNetworkFetcher_Factory.create(this.contextProvider, this.providesOkHttpClientProvider);
         this.iconPackManagerProvider = DoubleCheck.provider(IconPackManager_Factory.create(this.contextProvider, this.localAppsManagerProvider));
         this.appsInfoIconFilterProvider = AppsInfoIconFilter_Factory.create(this.contextProvider, this.localAppsManagerProvider);
         this.provideDeepShortcutManagerProvider = DoubleCheck.provider(DeepShortcutManagerModule_ProvideDeepShortcutManagerFactory.create(deepShortcutManagerModule, this.contextProvider));
         this.layoutSettingsManagerProvider = DoubleCheck.provider(LayoutSettingsManager_Factory.create(this.contextProvider));
-        this.connectionPoolKillerProvider = DoubleCheck.provider(ConnectionPoolKiller_Factory.create(this.contextProvider, this.providesOkHttpClientProvider));
         this.providesHideAppsModelProvider = DoubleCheck.provider(HideAppsModule_ProvidesHideAppsModelFactory.create(hideAppsModule, this.contextProvider));
         this.launcherAppComponentProvider = InstanceFactory.create(this);
         this.allAppsFragmentSubcomponentBuilderProvider = () -> new AllAppsFragmentSubcomponentBuilder();
@@ -1056,9 +1030,7 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
 
     private BaseApplication injectBaseApplication(BaseApplication baseApplication) {
         BaseApplication_MembersInjector.injectMAnalyticsHandler(baseApplication, this.providesAnalyticsHandlerProvider.get());
-        BaseApplication_MembersInjector.injectMMemoryRegistry(baseApplication, this.provideMemoryRegistryProvider.get());
         BaseApplication_MembersInjector.injectMSettingsStorage(baseApplication, this.providesSettingsStorageProvider.get());
-        BaseApplication_MembersInjector.injectMHybridNetworkFetcherProvider(baseApplication, this.hybridNetworkFetcherProvider);
         BaseApplication_MembersInjector.injectMIconPackManager(baseApplication, this.iconPackManagerProvider.get());
         BaseApplication_MembersInjector.injectMIconFilterProvider(baseApplication, this.appsInfoIconFilterProvider);
         BaseApplication_MembersInjector.injectMActivityInjector(baseApplication, getDispatchingAndroidInjectorOfActivity());
@@ -1070,11 +1042,9 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     private FlavorInitializer injectFlavorInitializer(FlavorInitializer flavorInitializer) {
         FlavorInitializer_MembersInjector.injectMLauncherAppComponent(flavorInitializer, this);
         FlavorInitializer_MembersInjector.injectMSettingsStorage(flavorInitializer, this.providesSettingsStorageProvider.get());
-        FlavorInitializer_MembersInjector.injectMOkHttpClient(flavorInitializer, this.providesOkHttpClientProvider.get());
         FlavorInitializer_MembersInjector.injectMIconPackManager(flavorInitializer, this.iconPackManagerProvider.get());
         FlavorInitializer_MembersInjector.injectMIconFilterProvider(flavorInitializer, this.appsInfoIconFilterProvider);
         FlavorInitializer_MembersInjector.injectMFrequentlyUsedModel(flavorInitializer, this.providesFrequentlyUsedModelProvider.get());
-        FlavorInitializer_MembersInjector.injectMKiller(flavorInitializer, this.connectionPoolKillerProvider.get());
         return flavorInitializer;
     }
 

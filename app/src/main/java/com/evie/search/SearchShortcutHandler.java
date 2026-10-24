@@ -19,7 +19,7 @@ import com.evie.search.model.FrequentlyUsedItem;
 import com.evie.search.model.LocalSearchItem;
 import com.evie.search.model.RecentItem;
 import com.evie.search.model.WebSearchItem;
-import com.facebook.drawee.view.SimpleDraweeView;
+import android.widget.ImageView;
 import com.voxel.simplesearchlauncher.utils.BitmapUtil;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -56,9 +56,9 @@ public class SearchShortcutHandler {
 
     public boolean createShortcut(View view, LocalSearchSubitem localSearchSubitem) {
         Intent intent;
-        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.search_subitem_image);
+        ImageView simpleDraweeView = (ImageView) view.findViewById(R.id.search_subitem_image);
         if (simpleDraweeView == null) {
-            simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.search_item_image);
+            simpleDraweeView = (ImageView) view.findViewById(R.id.search_item_image);
         }
         if (localSearchSubitem.getLink().startsWith("tel:")) {
             intent = new Intent("android.intent.action.CALL", Uri.parse(localSearchSubitem.getLink()));
@@ -77,7 +77,7 @@ public class SearchShortcutHandler {
 
     public boolean createShortcut(View view, FrequentlyUsedItem frequentlyUsedItem) {
         try {
-            SimpleDraweeView simpleDraweeView = (SimpleDraweeView) ((LinearLayout) view).getChildAt(0);
+            ImageView simpleDraweeView = (ImageView) ((LinearLayout) view).getChildAt(0);
             Intent intent = frequentlyUsedItem.getIntent();
             ResolveInfo resolveInfoResolveActivity = this.mPackageManager.resolveActivity(intent, 0);
             if (resolveInfoResolveActivity != null) {
@@ -99,7 +99,7 @@ public class SearchShortcutHandler {
         if (localSearchItem.getImageUrl() == null) {
             return false;
         }
-        SimpleDraweeView simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.search_item_image);
+        ImageView simpleDraweeView = (ImageView) view.findViewById(R.id.search_item_image);
         Uri uri = Uri.parse(localSearchItem.getLink());
         String type = localSearchItem.getType();
         int iHashCode = type.hashCode();

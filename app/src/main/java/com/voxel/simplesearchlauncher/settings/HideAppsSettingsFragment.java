@@ -22,11 +22,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import butterknife.internal.Utils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import android.widget.ImageView;
+import com.ovacoda.devie.images.IconLoader;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.LauncherModel;
 import com.voxel.launcher3.compat.UserHandleCompat;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher;
+import com.evie.common.HybridNetworkFetcherCommon;
 import com.voxel.simplesearchlauncher.hideapps.HideAppsModel;
 import com.voxel.simplesearchlauncher.model.AppsInfoDataHelper;
 import dagger.android.support.AndroidSupportInjection;
@@ -100,7 +101,7 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
 
         class ItemViewHolder extends RecyclerView.ViewHolder {
 
-            SimpleDraweeView mApplicationIcon;
+            ImageView mApplicationIcon;
 
             CheckBox mCheckBox;
 
@@ -119,7 +120,7 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             public ItemViewHolder_ViewBinding(ItemViewHolder itemViewHolder, View view) {
                 this.target = itemViewHolder;
                 itemViewHolder.mCheckBox = (CheckBox) Utils.findRequiredViewAsType(view, R.id.checkbox, "field 'mCheckBox'", CheckBox.class);
-                itemViewHolder.mApplicationIcon = (SimpleDraweeView) Utils.findRequiredViewAsType(view, R.id.application_icon, "field 'mApplicationIcon'", SimpleDraweeView.class);
+                itemViewHolder.mApplicationIcon = (ImageView) Utils.findRequiredViewAsType(view, R.id.application_icon, "field 'mApplicationIcon'", ImageView.class);
                 itemViewHolder.mLabel = (TextView) Utils.findRequiredViewAsType(view, R.id.label, "field 'mLabel'", TextView.class);
             }
 
@@ -197,8 +198,8 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
             itemViewHolder.mCheckBox.setChecked(zContains);
             itemViewHolder.mLabel.setText(appInfo.appLabel);
-            itemViewHolder.mApplicationIcon.setImageURI((Uri) null);
-            itemViewHolder.mApplicationIcon.setImageURI(HybridNetworkFetcher.getMagicResourceUri(appInfo.packageName, appInfo.activityName, appInfo.appVersion));
+            itemViewHolder.mApplicationIcon.setImageDrawable(null);
+            IconLoader.getInstance().loadInto(itemViewHolder.mApplicationIcon, HybridNetworkFetcherCommon.getMagicResourceUri(appInfo.packageName, appInfo.activityName, appInfo.appVersion));
         }
     }
 

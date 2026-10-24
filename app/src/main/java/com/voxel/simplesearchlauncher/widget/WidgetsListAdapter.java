@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,9 @@ import com.voxel.launcher3.Launcher;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.Utilities;
 import com.voxel.launcher3.WidgetPreviewLoader;
+import com.voxel.simplesearchlauncher.widget.WidgetsRowViewHolder;
 import com.ovacoda.devie.R;
+import com.ovacoda.devie.images.IconLoader;
 import java.util.List;
 
 /* JADX INFO: loaded from: classes2.dex */
@@ -85,8 +86,11 @@ public class WidgetsListAdapter extends RecyclerView.Adapter<WidgetsRowViewHolde
             }
         }
         PackageItemInfo packageItemInfo = this.mWidgetsModel.getPackageItemInfo(i);
-        widgetsRowViewHolder.mSectionIcon.setImageURI((Uri) null);
-        widgetsRowViewHolder.mSectionIcon.setImageURI(packageItemInfo.iconUri);
+        if (packageItemInfo.iconUri == null) {
+            widgetsRowViewHolder.mSectionIcon.setImageDrawable(null);
+        } else {
+            IconLoader.getInstance().loadInto(widgetsRowViewHolder.mSectionIcon, packageItemInfo.iconUri);
+        }
         TextView textView = widgetsRowViewHolder.mSection;
         textView.setText(packageItemInfo.title);
         textView.setTag(packageItemInfo);

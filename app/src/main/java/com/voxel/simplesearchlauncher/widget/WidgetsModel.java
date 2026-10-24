@@ -20,7 +20,7 @@ import com.voxel.launcher3.Utilities;
 import com.voxel.launcher3.compat.AlphabeticIndexCompat;
 import com.voxel.launcher3.compat.AppWidgetManagerCompat;
 import com.voxel.launcher3.compat.UserHandleCompat;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher;
+import com.evie.common.HybridNetworkFetcherCommon;
 import com.voxel.simplesearchlauncher.utils.AppNameComparator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -149,7 +149,7 @@ public class WidgetsModel {
                         LauncherAppWidgetProviderInfo launcherAppWidgetProviderInfo2 = (LauncherAppWidgetProviderInfo) obj;
                         PackageInfo packageInfo = getPackageInfo(context, launcherAppWidgetProviderInfo2.provider.getPackageName());
                         if (packageInfo != null) {
-                            packageItemInfo.iconUri = HybridNetworkFetcher.getMagicResourceUri(launcherAppWidgetProviderInfo2.provider.getPackageName(), null, packageInfo.versionCode);
+                            packageItemInfo.iconUri = HybridNetworkFetcherCommon.getMagicResourceUri(launcherAppWidgetProviderInfo2.provider.getPackageName(), null, packageInfo.versionCode);
                             packageItemInfo.title = context.getPackageManager().getApplicationLabel(packageInfo.applicationInfo);
                             packageItemInfo.titleSectionName = this.mIndexer.computeSectionName(packageItemInfo.title);
                         }
@@ -157,7 +157,7 @@ public class WidgetsModel {
                         ResolveInfo resolveInfo2 = (ResolveInfo) obj;
                         PackageInfo packageInfo2 = getPackageInfo(context, resolveInfo2.activityInfo.packageName);
                         if (packageInfo2 != null) {
-                            packageItemInfo.iconUri = HybridNetworkFetcher.getMagicResourceUri(resolveInfo2.activityInfo.packageName, resolveInfo2.activityInfo.name, packageInfo2.versionCode);
+                            packageItemInfo.iconUri = HybridNetworkFetcherCommon.getMagicResourceUri(resolveInfo2.activityInfo.packageName, resolveInfo2.activityInfo.name, packageInfo2.versionCode);
                             packageItemInfo.title = context.getPackageManager().getApplicationLabel(packageInfo2.applicationInfo);
                             packageItemInfo.titleSectionName = this.mIndexer.computeSectionName(packageItemInfo.title);
                         }

@@ -146,8 +146,8 @@ dependencies {
     implementation("androidx.multidex:multidex:2.0.1")
 
     // Third-party as originally used (decompiled generated classes target these exact versions)
-    implementation("com.facebook.fresco:fresco:1.14.2")
-    implementation("com.facebook.fresco:imagepipeline-okhttp3:1.14.2")
+    // REWORK(fresco): Fresco + okhttp + ReLinker dropped — all image loads are
+    // now handled by com.ovacoda.devie.images.IconLoader (local URIs only).
     implementation("com.facebook.rebound:rebound:0.3.8")
     implementation("com.jakewharton:butterknife:8.8.1")
     implementation("com.google.dagger:dagger:2.22.1")
@@ -156,12 +156,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("com.google.protobuf.nano:protobuf-javanano:3.1.0")
     implementation("com.jakewharton.timber:timber:4.7.1")
-    implementation("com.getkeepsafe.relinker:relinker:1.4.5")
     implementation("uk.co.chrisjenx:calligraphy:2.3.0")
     implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
-    // Retrofit/OkHttp: wired for kept local-search/frequently-used model classes;
-    // removed again if cuts prove all consumers eliminated.)))
-    implementation("com.squareup.okhttp3:okhttp:3.12.13")
+    // REWORK(fresco): Retrofit/OkHttp removed — no network consumers remain
+    // after the fresco pipeline deletion (ConnectionPoolKiller died with it).
 }

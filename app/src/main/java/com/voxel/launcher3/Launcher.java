@@ -88,8 +88,6 @@ import com.evie.common.services.links.Link;
 import com.evie.models.frequentlyused.FrequentlyUsedModel;
 import com.evie.search.SearchPresenter;
 import com.evie.search.local.LocalSearchManager;
-import com.facebook.common.memory.MemoryTrimType;
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.rebound.SpringConfig;
 import com.voxel.launcher3.compat.AppWidgetManagerCompat;
 import com.voxel.launcher3.compat.LauncherAppsCompat;
@@ -100,7 +98,8 @@ import com.voxel.launcher3.dragndrop.DragController;
 import com.voxel.launcher3.dragndrop.DragLayer;
 import com.voxel.launcher3.dragndrop.DragOptions;
 import com.voxel.launcher3.dragndrop.DragView;
-import com.voxel.launcher3.fresco.ImagePipelineCleaner;
+import com.ovacoda.devie.images.IconLoader;
+import com.ovacoda.devie.images.IconCacheCleaner;
 import com.voxel.launcher3.shortcuts.DeepShortcutManager;
 import com.voxel.launcher3.shortcuts.ShortcutKey;
 import com.voxel.launcher3.util.ItemInfoMatcher;
@@ -4111,7 +4110,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         ContextCompat.registerReceiver(this, this.mCloseSystemDialogsReceiver, new IntentFilter("android.intent.action.CLOSE_SYSTEM_DIALOGS"), ContextCompat.RECEIVER_NOT_EXPORTED);
         unlockScreenOrientation(true);
         this.mPreviousDefaultState = UserProfileManager.getInstance().getLauncherDefaultState();
-        getApplication().registerActivityLifecycleCallbacks(new ImagePipelineCleaner(this.mLocalSearchManager));
+        getApplication().registerActivityLifecycleCallbacks(new IconCacheCleaner(this.mLocalSearchManager));
         if (DebugUtil.isDevDebugLogEnabled()) {
             Log.d("STARTUP-PERFORMANCE", "* Launcher Activity onCreate() total time: " + (System.currentTimeMillis() - jCurrentTimeMillis));
         }
@@ -4121,7 +4120,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onDestroy() {
         super.onDestroy();
-        Fresco.getImagePipeline().clearMemoryCaches();
+        IconLoader.getInstance().clearMemory();
         this.mHandler.removeMessages(1);
         this.mHandler.removeMessages(0);
         this.mWorkspace.removeCallbacks(this.mBuildLayersRunnable);
@@ -4306,7 +4305,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         if (iconCache != null) {
             iconCache.flush();
         }
-        Fresco.getImagePipeline().clearMemoryCaches();
+        IconLoader.getInstance().clearMemory();
     }
 
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
@@ -4753,36 +4752,19 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return this.mQsbSearchViewGestureDetector.onTouchEvent(motionEvent) || super.onTouchEvent(motionEvent);
     }
 
-    /* JADX WARN: Code duplicated, block: B:15:0x001c  */
-    /* JADX WARN: Code duplicated, block: B:17:0x0022  */
-    /* JADX WARN: Code duplicated, block: B:18:0x0026  */
+    /* REWORK(fresco): the MemoryTrimType registry was fresco-owned; our
+     * IconCache flush + LRU eviction is all that remains. */
     @Override // android.app.Activity, android.content.ComponentCallbacks2
     public void onTrimMemory(int i) {
-        MemoryTrimType memoryTrimType;
-        IconCache iconCache;
         super.onTrimMemory(i);
-        if (i == 5 || i == 10) {
-            memoryTrimType = MemoryTrimType.OnSystemLowMemoryWhileAppInForeground;
-        } else if (i == 15) {
-            memoryTrimType = MemoryTrimType.OnSystemLowMemoryWhileAppInBackground;
-            iconCache = this.mIconCache;
-            if (iconCache != null) {
-                iconCache.flush();
-            }
-        } else if (i == 40 || i == 60) {
-            memoryTrimType = MemoryTrimType.OnSystemLowMemoryWhileAppInForeground;
-        } else if (i != 80) {
-            memoryTrimType = null;
-        } else {
-            memoryTrimType = MemoryTrimType.OnSystemLowMemoryWhileAppInBackground;
+        IconCache iconCache;
+        if (i == 15 || i == 80) {
             iconCache = this.mIconCache;
             if (iconCache != null) {
                 iconCache.flush();
             }
         }
-        if (memoryTrimType != null) {
-            LauncherApplication.getApplication().getMemoryRegistry().trimMemory(memoryTrimType);
-        }
+        IconLoader.getInstance().clearMemory();
     }
 
     @Override // android.app.Activity, android.view.Window.Callback

@@ -117,6 +117,7 @@
     <item type="id" name="button_type" />
     <item type="id" name="buttons_container" />
     <item type="id" name="calligraphy_tag_id" />
+    <item type="id" name="devie_icon_url" />
     <item type="id" name="cancel_action" />
     <item type="id" name="cancel_button" />
     <item type="id" name="card_container" />
@@ -508,8 +509,6 @@
     <item type="id" name="search_item_label" />
     <item type="id" name="search_item_label_note" />
     <item type="id" name="search_item_note_layout" />
-    <item type="id" name="search_item_rating_image" />
-    <item type="id" name="search_item_rating_text" />
     <item type="id" name="search_layout" />
     <item type="id" name="search_mag_icon" />
     <item type="id" name="search_message_text" />

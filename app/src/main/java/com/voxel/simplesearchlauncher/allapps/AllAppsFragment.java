@@ -26,14 +26,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.evie.common.dragndrop.DragObjectAbstraction;
 import com.evie.common.dragndrop.DragSource;
 import com.evie.search.local.LocalSearchManager;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.imagepipeline.request.ImageRequest;
+import com.ovacoda.devie.images.IconLoader;
+import com.evie.common.HybridNetworkFetcherCommon;
 import com.voxel.launcher3.BaseApplication;
 import com.voxel.launcher3.CellParams;
 import com.voxel.launcher3.DeviceProfile;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.LauncherApplication;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher;
+import com.evie.common.HybridNetworkFetcherCommon;
 import com.voxel.simplesearchlauncher.activity.ResetLauncherActivity;
 import com.voxel.simplesearchlauncher.adapter.ListSeparator;
 import com.voxel.simplesearchlauncher.analytics.AnalyticsHandler;
@@ -407,7 +407,7 @@ public class AllAppsFragment extends Fragment implements DragSource {
 
     /* JADX INFO: Access modifiers changed from: private */
     public void prefetchIcon(LocalAppData localAppData) {
-        Fresco.getImagePipeline().prefetchToDiskCache(ImageRequest.fromUri(HybridNetworkFetcher.getMagicResourceUri(localAppData)), null);
+        IconLoader.getInstance().prefetch(HybridNetworkFetcherCommon.getMagicResourceUri(localAppData).toString());
     }
 
     /* JADX INFO: Access modifiers changed from: private */

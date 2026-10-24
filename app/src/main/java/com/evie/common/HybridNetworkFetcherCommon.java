@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import com.evie.common.iconpack.IconPackFilter;
 import com.evie.common.iconpack.IconPackFilterHolder;
+import com.voxel.simplesearchlauncher.model.itemdata.LocalAppData;
 import java.util.Calendar;
 
 /* JADX INFO: loaded from: classes.dex */
@@ -20,6 +21,12 @@ public class HybridNetworkFetcherCommon {
             return -1;
         }
         return iconPackFilter.getVersionCode();
+    }
+
+    /* REWORK(fresco): moved here from the deleted HybridNetworkFetcher so the
+     * persisted magic-URI identifier keeps one author. */
+    public static Uri getMagicResourceUri(LocalAppData localAppData) {
+        return getMagicResourceUri(localAppData.getPackageName(), localAppData.getActivityName(), localAppData.getVersionCode());
     }
 
     public static Uri getMagicResourceUri(String str, String str2, int i) {

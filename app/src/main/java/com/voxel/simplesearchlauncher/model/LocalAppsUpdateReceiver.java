@@ -12,11 +12,11 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 import android.util.Pair;
-import com.facebook.drawee.backends.pipeline.Fresco;
+import com.ovacoda.devie.images.IconLoader;
 import com.voxel.launcher3.compat.LauncherActivityInfoCompat;
 import com.voxel.launcher3.compat.LauncherAppsCompat;
 import com.voxel.launcher3.compat.UserHandleCompat;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher;
+import com.evie.common.HybridNetworkFetcherCommon;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -87,9 +87,9 @@ public class LocalAppsUpdateReceiver extends BroadcastReceiver {
                 if (appInfo != null) {
                     Log.d(TAG, "  - updating: " + className);
                     apps.remove(appInfo);
-                    Uri magicResourceUri = HybridNetworkFetcher.getMagicResourceUri(appInfo.packageName, appInfo.activityName, appInfo.appVersion);
-                    Fresco.getImagePipeline().evictFromMemoryCache(magicResourceUri);
-                    Fresco.getImagePipeline().evictFromDiskCache(magicResourceUri);
+                    Uri magicResourceUri = HybridNetworkFetcherCommon.getMagicResourceUri(appInfo.packageName, appInfo.activityName, appInfo.appVersion);
+                    IconLoader.getInstance().evict(magicResourceUri);
+                    IconLoader.getInstance().evict(magicResourceUri);
                     appInfo.appLabel = label.toString();
                     appInfo.appVersion = appVersionCode;
                     appInfo.firstInstallTime = firstInstallTime;

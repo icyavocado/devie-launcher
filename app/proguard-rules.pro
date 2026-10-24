@@ -19,10 +19,8 @@
     private static final java.io.ObjectStreamField[] serialPersistentFields;
 }
 
-# Fresco: native pipeline + AAR bytecode calls SoLoaderShim by exact FQCN.
--keep class com.facebook.** { *; }
--keep class com.facebook.common.soloader.SoLoaderShim$Handler { *; }
--keep interface com.facebook.common.soloader.SoLoaderShim$Handler { *; }
+# Fresco: removed. REWORK(fresco): the pipeline is gone; rebound still lives
+# under com.facebook.rebound but is plain Java (no reflection binding).
 
 # Rx subjects/disposables are reflected by schedulers (defensive; R8 usually fine).
 -dontwarn org.w3c.dom.**

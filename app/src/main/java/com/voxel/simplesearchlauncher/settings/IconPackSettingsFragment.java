@@ -20,7 +20,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-import com.facebook.drawee.backends.pipeline.Fresco;
+import com.ovacoda.devie.images.IconLoader;
 import com.voxel.launcher3.DeviceProfile;
 import com.voxel.launcher3.FolderInfo;
 import com.voxel.launcher3.ItemInfo;
@@ -71,7 +71,7 @@ public class IconPackSettingsFragment extends Fragment {
 
         public void lambda$onCreateDialog$1(DialogInterface dialogInterface, int i) {
             this.mLocalAppsManager.clearAllCustomIcons();
-            Fresco.getImagePipeline().clearCaches();
+            IconLoader.getInstance().clearMemory();
             LauncherAppState.getInstance().getIconCache().flush();
             LauncherAppState.getInstance().getModel().forceReload();
             dialogInterface.dismiss();
@@ -159,7 +159,7 @@ public class IconPackSettingsFragment extends Fragment {
 
     public void lambda$onViewCreated$0(CompoundButton compoundButton, boolean z) {
         SettingsStorage.getInstance().setIconNormalizationSetting(z);
-        Fresco.getImagePipeline().clearCaches();
+        IconLoader.getInstance().clearMemory();
         LauncherAppState.getInstance().getIconCache().flush();
         LauncherAppState.getInstance().getModel().forceReload();
         this.refreshMockLauncher();

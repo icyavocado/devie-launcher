@@ -23,11 +23,12 @@ import androidx.core.util.Pair;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.evie.common.iconpack.IconPackFilter;
-import com.facebook.drawee.backends.pipeline.Fresco;
+import com.ovacoda.devie.images.IconLoader;
+import com.evie.common.HybridNetworkFetcherCommon;
 import com.voxel.launcher3.ItemInfo;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.Utilities;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher;
+import com.evie.common.HybridNetworkFetcherCommon;
 import com.voxel.recyclerview.widget.RecyclerView;
 import com.voxel.recyclerview.widget.SpringRecyclerView;
 import com.voxel.simplesearchlauncher.activity.SafeActivityStarter;
@@ -382,12 +383,12 @@ public class ChangeIconFragment extends LauncherStackableFragment {
         LauncherAppState.getInstance().getIconCache().flush();
         Uri magicResourceUri = null;
         if (app != null) {
-            magicResourceUri = HybridNetworkFetcher.getMagicResourceUri(component.getPackageName(), component.getClassName(), app.appVersion);
+            magicResourceUri = HybridNetworkFetcherCommon.getMagicResourceUri(component.getPackageName(), component.getClassName(), app.appVersion);
         } else if (app2 != null) {
-            magicResourceUri = HybridNetworkFetcher.getMagicResourceUri(app2);
+            magicResourceUri = HybridNetworkFetcherCommon.getMagicResourceUri(app2);
         }
         if (magicResourceUri != null) {
-            Fresco.getImagePipeline().evictFromCache(magicResourceUri);
+            IconLoader.getInstance().evict(magicResourceUri);
         }
         LauncherAppState.getInstance().getModel().forceReload();
         this.mIconPackManager.notifyDataChanged();

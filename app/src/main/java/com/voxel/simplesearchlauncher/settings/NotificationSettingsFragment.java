@@ -20,11 +20,12 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.facebook.drawee.view.SimpleDraweeView;
+import android.widget.ImageView;
+import com.ovacoda.devie.images.IconLoader;
 import com.voxel.launcher3.CellParams;
 import com.voxel.launcher3.DeviceProfile;
 import com.voxel.launcher3.LauncherAppState;
-import com.voxel.launcher3.fresco.HybridNetworkFetcher;
+import com.evie.common.HybridNetworkFetcherCommon;
 import com.voxel.simplesearchlauncher.activity.SafeActivityStarter;
 import com.voxel.simplesearchlauncher.model.AppsInfoDataHelper;
 import com.voxel.simplesearchlauncher.notification.InterceptingWidgetHost;
@@ -142,8 +143,8 @@ public class NotificationSettingsFragment extends Fragment {
             switchViewHolder.itemView.setOnClickListener(null);
             switchViewHolder.mSwitch.setChecked(zIsAppWorking);
             switchViewHolder.mLabel.setText(appInfo.appLabel);
-            switchViewHolder.mImage.setImageURI((Uri) null);
-            switchViewHolder.mImage.setImageURI(HybridNetworkFetcher.getMagicResourceUri(appInfo.packageName, appInfo.activityName, appInfo.appVersion));
+            switchViewHolder.mImage.setImageDrawable(null);
+            IconLoader.getInstance().loadInto(switchViewHolder.mImage, HybridNetworkFetcherCommon.getMagicResourceUri(appInfo.packageName, appInfo.activityName, appInfo.appVersion));
             switchViewHolder.itemView.setOnClickListener(new View.OnClickListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$NotificationSettingsFragment$AppSwitchSection$coJ0OUtkFmW7p4r0vs54hDRwKBU
                 @Override // android.view.View.OnClickListener
                 public final void onClick(View view) {
@@ -283,14 +284,14 @@ public class NotificationSettingsFragment extends Fragment {
     }
 
     static class SwitchViewHolder extends RecyclerView.ViewHolder {
-        SimpleDraweeView mImage;
+        ImageView mImage;
         TextView mLabel;
         TextView mSubLabel;
         SwitchCompat mSwitch;
 
         public SwitchViewHolder(View view) {
             super(view);
-            this.mImage = (SimpleDraweeView) view.findViewById(R.id.list_item_icon);
+            this.mImage = (ImageView) view.findViewById(R.id.list_item_icon);
             this.mLabel = (TextView) view.findViewById(R.id.line1);
             this.mSubLabel = (TextView) view.findViewById(R.id.line2);
             this.mSwitch = (SwitchCompat) view.findViewById(R.id.item_switch);

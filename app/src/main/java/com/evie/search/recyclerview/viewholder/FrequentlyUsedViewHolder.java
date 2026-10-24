@@ -6,9 +6,10 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import com.evie.search.model.FrequentlyUsedItem;
 import com.evie.search.recyclerview.presenter.FrequentlyUsedItemPresenter;
-import com.facebook.drawee.view.SimpleDraweeView;
+import android.widget.ImageView;
 import java.util.List;
 import com.ovacoda.devie.R;
+import com.ovacoda.devie.images.IconLoader;
 
 /* JADX INFO: loaded from: classes.dex */
 public class FrequentlyUsedViewHolder extends BaseViewHolder {
@@ -43,7 +44,7 @@ public class FrequentlyUsedViewHolder extends BaseViewHolder {
                     return ((FrequentlyUsedItemPresenter) FrequentlyUsedViewHolder.this.mPresenter).onItemLongClick(view, icap);
                 }
             });
-            ((SimpleDraweeView) linearLayout.getChildAt(0)).setImageURI(list.get(i).getImageUrl());
+            IconLoader.getInstance().loadInto((ImageView) linearLayout.getChildAt(0), list.get(i).getImageUrl());
             i++;
         }
     }
@@ -54,7 +55,7 @@ public class FrequentlyUsedViewHolder extends BaseViewHolder {
             LinearLayout linearLayout = (LinearLayout) this.mLayout.getChildAt(i);
             linearLayout.setOnClickListener(null);
             linearLayout.setOnLongClickListener(null);
-            ((SimpleDraweeView) linearLayout.getChildAt(0)).setImageDrawable(null);
+            ((ImageView) linearLayout.getChildAt(0)).setImageBitmap(null);
         }
     }
 }

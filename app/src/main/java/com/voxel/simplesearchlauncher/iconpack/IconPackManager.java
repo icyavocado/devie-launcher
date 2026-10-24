@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.text.TextUtils;
 import com.evie.common.iconpack.IconPackFilter;
-import com.facebook.drawee.backends.pipeline.Fresco;
+import com.ovacoda.devie.images.IconLoader;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.simplesearchlauncher.model.itemdata.LocalAppData;
 import com.voxel.simplesearchlauncher.model.managers.LocalAppsManager;
@@ -137,7 +137,7 @@ public class IconPackManager {
         editorEdit.putInt("version_code", iconPack.versionCode);
         editorEdit.commit();
         LauncherAppState.getInstance().getIconCache().setIconPackFilter(getCurrentIconPackPackageName() != null ? new IconPackFilter(this.mContext.getApplicationContext(), getCurrentIconPackPackageName(), getCurrentIconPackVersionCode()) : null);
-        Fresco.getImagePipeline().clearCaches();
+        IconLoader.getInstance().clearMemory();
         LauncherAppState.getInstance().getModel().forceReload();
         notifyDataChanged();
     }
