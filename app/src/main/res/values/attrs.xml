@@ -226,7 +226,7 @@
     <attr name="followingButtonBackground" format="reference|color" />
     <attr name="font" format="reference" />
     <attr name="fontFamily" format="string" />
-    <attr name="fontPath" format="string" />
+
     <attr name="fontProviderCerts" format="reference" />
     <attr name="fontProviderQuery" format="string" />
     <attr name="fontWeight" format="integer" />

@@ -1512,11 +1512,9 @@
     </style>
     <style name="SSTextStyleMedium">
         <item name="android:lineSpacingMultiplier">1.2</item>
-        <item name="fontPath">@string/circular_font_medium</item>
     </style>
     <style name="SSTextStyleRegular">
         <item name="android:lineSpacingMultiplier">1.2</item>
-        <item name="fontPath">@string/circular_font_regular</item>
     </style>
     <style name="SSWeatherTextAppearance" parent="@style/SSTextStyleRegular">
         <item name="android:textColor">#ffffffff</item>

@@ -165,7 +165,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.9")
     implementation("com.google.protobuf.nano:protobuf-javanano:3.1.0")
     implementation("com.jakewharton.timber:timber:4.7.1")
-    implementation("uk.co.chrisjenx:calligraphy:2.3.0")
+
     implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
