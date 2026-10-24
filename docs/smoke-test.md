@@ -164,3 +164,32 @@ TAP focus path opens the overlay. Two earlier "system QuickSearchBox
 suggestions" appearances were the emulator's own com.android.quicksearchbox
 app foregrounding, not dEvie. Icon-pack "browse icon packs" market:// rows
 KEPT per owner decision (generic intent).
+
+## Session: smaller-faster branch — size push (rw5 + de-Fresco)
+
+Branch from main@f970532 (rw5 released; CI green, asset published).
+
+1. `59a02c3 perf(size): arm64/v7a ABIs and English-only locales in packaging`
+   — release 4.97 → 3.94 MB (arsc 1453→685 KB, lib 727→328 KB; localeFilters
+   en + release ndk.abiFilters arm64-v8a/armeabi-v7a; x86 stays in debug).
+2. `e4fa220 perf(size): convert drawable PNGs to lossless WebP` — 116 drawables
+   via `magick -define webp:lossless=true -define webp:method=6` (kept .9.png
+   + mipmap icons); release 3.94 → 3.85 MB.
+3. `31eb1bb perf(size): remove Fresco for in-process IconLoader` — all three
+   .so files are now GONE (zero lib/ in the APK); com.facebook drawee/pipeline
+   classes, SoLoaderShim, MemoryRegistry(+module), OkHttpModule,
+   ConnectionPoolKiller deleted; deps dropped: fresco, imagepipeline-okhttp3,
+   okhttp3, relinker (rebound kept — spring UI). New
+   com.ovacoda.devie.images.IconLoader = LruCache with dispatch over
+   data:image/bmp;base64 (BitmapUtil.getUrlFromBitmap), content:// contact
+   photos, and magic example.com URIs → IconCache (+icon-pack filter);
+   anything else is refused+logged. IconCacheCleaner keeps the recents
+   warm-up lifecycle. 9 layouts: SimpleDraweeView → ImageView (rating widgets
+   in search_item.xml were dead → removed with their dimens/ids).
+
+   Verified on emulator-5554 (debug): workspace bar + overlay (search
+   "Jenny" → local purple JA initials avatar, web row), all-apps drawer
+   rendered fully through the new loader (magic URIs → IconCache), recents
+   row written, 0 FATAL/ANR, logcat clean of refusals. Release build green:
+   **3.01 MB** (from 4.97 MB at rw5; −39%).
+
