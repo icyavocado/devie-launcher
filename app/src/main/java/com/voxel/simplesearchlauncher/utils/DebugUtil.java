@@ -9,10 +9,6 @@ public final class DebugUtil {
         Timber.d(str2, new Object[0]);
     }
 
-    public static boolean isAnalyticsEnabled() {
-        return true;
-    }
-
     public static boolean isDevDebugLogEnabled() {
         return false;
     }

@@ -5,11 +5,9 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.text.TextUtils;
-import java.util.UUID;
 import org.json.JSONException;
 import org.json.JSONObject;
 import timber.log.Timber;
@@ -17,14 +15,15 @@ import timber.log.Timber;
 /* REWORK: cloud analytics removed (events.evie.com upload, Fabric/Crashlytics, GMS AdvertisingIdClient,
  * device fingerprint payload, location/geohash, local log upload DB). Events still flow through the
  * AnalyticsFilter chain locally: FrequentlyUsedAnalyticsFilter uses app-launch events to keep the
- * frequently-used list populated. Upload side is a no-op. */
+ * frequently-used list populated. Upload side is a no-op, and no device
+ * identifiers are generated or persisted (the old anonym_user_id UUID prefs
+ * writer is gone — event JSON carries no user_id). */
 public class AnalyticsHandler {
     private static final String TAG = "AnalyticsHandler";
     private static AnalyticsHandler instance;
     private Context context;
     private final AnalyticsFilter mAnalyticsFilter;
     private final boolean mAllowedUser;
-    private String distinctUserId;
 
     public static class EventProp {
         private Object action;
@@ -101,15 +100,10 @@ public class AnalyticsHandler {
         return eventProp;
     }
 
-    private String generateDistinctUserId() {
-        return UUID.randomUUID().toString();
-    }
-
     private JSONObject generateEventLog(String str, EventProp eventProp) {
         JSONObject jSONObject = new JSONObject();
         try {
             jSONObject.put("event", str);
-            jSONObject.put("user_id", getDistinctUserId());
             jSONObject.put("time", System.currentTimeMillis());
             if (eventProp != null) {
                 jSONObject.put("properties", eventProp.getProps());
@@ -147,10 +141,6 @@ public class AnalyticsHandler {
         return instance;
     }
 
-    private String getFromSharedPref(String str) {
-        return this.context.getSharedPreferences("analytics_pref", 0).getString(str, null);
-    }
-
     public static synchronized void init(Context context, AnalyticsFilter analyticsFilter) {
         if (instance != null) {
             return;
@@ -159,17 +149,6 @@ public class AnalyticsHandler {
             throw new IllegalArgumentException("Context must be provided.");
         }
         instance = new AnalyticsHandler(context, analyticsFilter);
-    }
-
-    public String getDistinctUserId() {
-        if (this.distinctUserId == null) {
-            this.distinctUserId = getFromSharedPref("anonym_user_id");
-        }
-        if (this.distinctUserId == null) {
-            this.distinctUserId = generateDistinctUserId();
-            saveDistinctUserId(this.distinctUserId);
-        }
-        return this.distinctUserId;
     }
 
     public void logEvent(String str) {
@@ -195,11 +174,6 @@ public class AnalyticsHandler {
     }
 
     public void requestLogsSync(boolean z) {
-    }
-
-    public void saveDistinctUserId(String str) {
-        this.distinctUserId = str;
-        this.context.getSharedPreferences("analytics_pref", 0).edit().putString("anonym_user_id", str).apply();
     }
 
     public void stopLogsSync() {
