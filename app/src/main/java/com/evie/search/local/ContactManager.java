@@ -20,7 +20,6 @@ import com.evie.search.model.AppLink;
 import com.evie.search.model.ContactData;
 import com.evie.search.model.LocalSearchItem;
 import com.voxel.simplesearchlauncher.utils.BitmapUtil;
-import com.voxel.simplesearchlauncher.utils.ColorUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import timber.log.Timber;
@@ -74,29 +73,6 @@ public class ContactManager {
             }
         }
         return null;
-    }
-
-    private String getHeaderImageUrl(int i) {
-        TypedArray typedArrayObtainTypedArray = this.mResources.obtainTypedArray(R.array.contact_colors);
-        int i2 = 0;
-        int i3 = -1;
-        double d = 0.0d;
-        for (int i4 = 0; i4 < typedArrayObtainTypedArray.length(); i4++) {
-            double colorDifference = ColorUtil.getColorDifference(i, typedArrayObtainTypedArray.getColor(i4, -16777216));
-            if (i3 < 0 || colorDifference < d) {
-                i3 = i4;
-                d = colorDifference;
-            }
-        }
-        typedArrayObtainTypedArray.recycle();
-        String str = this.mResources.getDisplayMetrics().densityDpi <= 240 ? "hdpi" : "xhdpi";
-        TypedArray typedArrayObtainTypedArray2 = this.mResources.obtainTypedArray(R.array.contact_headers);
-        if (i3 >= 0 && i3 < typedArrayObtainTypedArray2.length()) {
-            i2 = i3;
-        }
-        String str2 = typedArrayObtainTypedArray2.getString(i2) + str;
-        typedArrayObtainTypedArray2.recycle();
-        return str2;
     }
 
     private String getIconUrl(AppData appData) {
@@ -419,7 +395,12 @@ public class ContactManager {
                             strBuildInitialsUri = buildInitialsUri(string, TextDrawable.builder().beginConfig().fontSize(this.mResources.getDimensionPixelSize(R.dimen.contact_shortcut_initials_size)).bold().endConfig(), this.mResources.getDimensionPixelSize(R.dimen.shortcut_icon_dimension));
                             contactData.setShortcutUri(strBuildInitialsUri);
                         }
-                        contactData.setHeaderUri(getHeaderImageUrl(BitmapUtil.getTint(BitmapUtil.getBitmap(Uri.parse(strBuildInitialsUri), this.mContentResolver))));
+                        /* REWORK: header used to come from getHeaderImageUrl()
+                         * = a cleartext S3 cover-image URL that Fresco fetched
+                         * over the network on every photo-less contact bind.
+                         * Reuse the local initials/photo URI instead — no
+                         * network fetch anywhere in the app now. */
+                        contactData.setHeaderUri(strBuildInitialsUri);
                     }
                 } catch (Throwable th) {
                     th = th;

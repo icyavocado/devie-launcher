@@ -261,11 +261,6 @@
     <string name="contact_action_email">Email</string>
     <string name="contact_action_text">Text</string>
     <string name="contact_action_text_type">Text %1$s</string>
-    <string name="contact_cover_blue_url">http://s3-us-west-2.amazonaws.com/apiserver-assets/entity/default_images/contact/cover_blue_</string>
-    <string name="contact_cover_green_url">http://s3-us-west-2.amazonaws.com/apiserver-assets/entity/default_images/contact/cover_green_</string>
-    <string name="contact_cover_purple_url">http://s3-us-west-2.amazonaws.com/apiserver-assets/entity/default_images/contact/cover_purple_</string>
-    <string name="contact_cover_red_url">http://s3-us-west-2.amazonaws.com/apiserver-assets/entity/default_images/contact/cover_red_</string>
-
     <string name="contact_entity_chat">Chat %1$s</string>
     <string name="contact_entity_message">Message %1$s</string>
     <string name="contact_entity_open_in_contacts">Open in Contacts</string>

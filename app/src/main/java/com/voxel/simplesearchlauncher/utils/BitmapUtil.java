@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.PorterDuff;
@@ -16,15 +15,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.PaintDrawable;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.util.Base64;
-import androidx.palette.graphics.Palette;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class BitmapUtil {
@@ -109,62 +104,6 @@ public class BitmapUtil {
                 } catch (IOException unused3) {
                 }
             }
-        }
-    }
-
-    public static Bitmap getBitmapFromURL(String str) {
-        if (TextUtils.isEmpty(str)) {
-            return null;
-        }
-        try {
-            HttpURLConnection httpURLConnection = (HttpURLConnection) new URL(str).openConnection();
-            httpURLConnection.setDoInput(true);
-            httpURLConnection.connect();
-            return getCircleBitmap(BitmapFactory.decodeStream(httpURLConnection.getInputStream()));
-        } catch (IOException unused) {
-            return null;
-        }
-    }
-
-    private static Bitmap getCircleBitmap(Bitmap bitmap) {
-        if (bitmap == null) {
-            return null;
-        }
-        Bitmap bitmapCreateBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas(bitmapCreateBitmap);
-        Paint paint = new Paint();
-        Rect rect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        RectF rectF = new RectF(rect);
-        paint.setAntiAlias(true);
-        canvas.drawARGB(0, 0, 0, 0);
-        paint.setColor(-65536);
-        canvas.drawOval(rectF, paint);
-        paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
-        bitmap.recycle();
-        return bitmapCreateBitmap;
-    }
-
-    public static int getTint(Bitmap bitmap) {
-        int iArgb = Color.argb(127, 0, 0, 0);
-        try {
-            Palette.Builder builder = new Palette.Builder(bitmap);
-            builder.maximumColorCount(24);
-            Palette paletteGenerate = builder.generate();
-            Palette.Swatch lightVibrantSwatch = paletteGenerate.getLightVibrantSwatch();
-            if (lightVibrantSwatch == null) {
-                lightVibrantSwatch = paletteGenerate.getVibrantSwatch();
-            }
-            if (lightVibrantSwatch == null) {
-                lightVibrantSwatch = paletteGenerate.getDarkVibrantSwatch();
-            }
-            if (lightVibrantSwatch == null) {
-                return iArgb;
-            }
-            int i = MaterialColorMapUtils.calculatePrimaryAndSecondaryColor(lightVibrantSwatch.getRgb(), false).mPrimaryColor;
-            return Color.argb(127, Color.red(i), Color.green(i), Color.blue(i));
-        } catch (IllegalArgumentException unused) {
-            return iArgb;
         }
     }
 
