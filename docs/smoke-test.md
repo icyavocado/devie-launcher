@@ -193,3 +193,58 @@ Branch from main@f970532 (rw5 released; CI green, asset published).
    row written, 0 FATAL/ANR, logcat clean of refusals. Release build green:
    **3.01 MB** (from 4.97 MB at rw5; −39%).
 
+
+## 2.14.8-rw5-branch: smaller-faster (class-design audit stream)
+
+Branch `smaller-faster` off rw5 (f970532). Explore-agent audit of all
+579 java files + res: reference-counted every class/member/resource.
+Fixes landed one-by-one, each with assembleDebug + emulator smoke
+(install -r → grant → force-stop → monkey → FATAL grep = 0):
+
+- `59a02c3` arm64/v7a release ABIs + English-only locales (4.97→3.94)
+- `e4fa220` 116 drawable PNGs → lossless WebP, kept .9.png (3.94→3.85)
+- `31eb1bb` de-Fresco: in-house IconLoader (LruCache + bg decoder +
+  IconCache magic-URI resolve; hard network refusal), IconCacheCleaner;
+  fresco/relinker/okhttp deps gone (3.85→3.01, zero lib/)
+- `528be47` commit the untracked footer layout (add -u lesson)
+- `f561338` inert deps: viewpager/swiperefresh/legacy-core-ui/
+  interpolator/sqlite/gson/multidex + @SerializedName pairs
+- `af6af66` res prune −12,168 lines: 124 locale value dirs (en-only),
+  381 unused ids, dead colors/dimens/strings/bools/integers (census
+  = fixpoint refs over java+manifest+ALL value xml incl qualifiers —
+  self-exclusion false-killed vpi__ alias colors: fixed; 9 non-locale
+  qualifier dirs wrongly swept restored, incl values-nodpi/arrays.xml
+  wallpapers array)
+- `e339255` Launcher dead members −89: intro-screen chain (dead since
+  hasDismissableIntroScreen=false), 12 decl-only getters/stubs, 7
+  no-op requestLogsSync/stopLogsSync sites, AnalyticsHandler no-ops
+- `041e7e1` Stats: dead per-launch disk-I/O/broadcast removed (−150,
+  manifest permission + string)
+- `e43eb33` MemoryCrashHandler no-op + fabricInit stub (−33)
+- `cc2a0b5` DebugUtil/TraceUtil: 21 log wrappers → Timber.tag().d(),
+  8 dead isDevDebugLogEnabled blocks, TraceUtil calls (−88)
+- `fefb949` wrappers: MainThreadExecutor.getInstance() inline, chain
+  classes deleted, AnalyticsHandler.init takes the one real filter
+- `7c7da33` inert analytics/event services −461: AnalyticsService/
+  BaseAnalyticsService/models×4/EventService/Link + dagger factories;
+  LinkResolver keeps real schemes only (http/https/contact/market/tel/
+  settingsdeeplink/websearch/app); local Timber shim KEPT
+- `99187e5`+`ca28ace` settings version footer scrolls with the list
+  under "Switch to another launcher": "dEvie <version> - <sha>" via
+  BuildConfig.GIT_SHA (git rev-parse, unknown-fallback)
+
+Release = **3.00 MB** (3,148,374 B; dex 1530 KB, arsc 667 KB STORED,
+res 616, META 96; zero native). −40% vs rw5 (4.97), −67% vs donor
+(9.07). All verified: workspace + search overlay (JA avatar + contact +
+web rows) + drawer through IconLoader, 0 FATAL/ANR throughout.
+
+Deliberately not done (audit findings kept as notes):
+- styles.xml lib-table prune: ABANDONED after 3 regex-census passes
+  ate live styles (SearchViewStyle/PreloadIcon family; android.R
+  substring artifacts) — zero APK benefit (shrinkResources strips at
+  link), repo-only weight; kept at HEAD for aapt fidelity
+- icon-bitmap dedup (#13) + grid-settings-fragment dedup (#7): skipped
+  (false-positive semantics / MockLauncherController risk per AGENTS §8)
+- lint checkReleaseBuilds stays OFF (documented in build.gradle.kts:
+  merged lib style table still trips release lint; shrinkResources
+  covers the artifact)
