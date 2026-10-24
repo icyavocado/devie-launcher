@@ -271,7 +271,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     private CombinedFactorHelper mQsbSearchViewScrollerModifier;
     private AsyncTask mRefreshBlurredImageTask;
     private boolean mRestoring;
-    private Bundle mSavedInstanceState;
     private Bundle mSavedState;
     private ScaleGestureDetector mScaleCustomGestureDetector;
     private int mScreenHeight;
@@ -336,7 +335,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     private final int mAdvanceStagger = 250;
     private long mAutoAdvanceTimeLeft = -1;
     private HashMap<View, AppWidgetProviderInfo> mWidgetsToAdvance = new HashMap<>();
-    private final int mRestoreScreenOrientationDelay = 500;
     private final ArrayList<Integer> mSynchronouslyBoundPages = new ArrayList<>();
     private Rect mRectForFolderAnimation = new Rect();
     private Runnable mBuildLayersRunnable = new Runnable() { // from class: com.voxel.launcher3.Launcher.1
@@ -1082,16 +1080,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         LauncherModel.updateItemInDatabase(this, launcherAppWidgetInfo);
     }
 
-    /* JADX WARN: Type inference fix 'apply assigned field type' failed
-    java.lang.UnsupportedOperationException: ArgType.getObject(), call class: class jadx.core.dex.instructions.args.ArgType$PrimitiveArg
-    	at jadx.core.dex.instructions.args.ArgType.getObject(ArgType.java:596)
-    	at jadx.core.dex.attributes.nodes.ClassTypeVarsAttr.getTypeVarsMapFor(ClassTypeVarsAttr.java:35)
-    	at jadx.core.dex.nodes.utils.TypeUtils.replaceClassGenerics(TypeUtils.java:177)
-    	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.insertExplicitUseCast(FixTypesVisitor.java:397)
-    	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.tryFieldTypeWithNewCasts(FixTypesVisitor.java:359)
-    	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.applyFieldType(FixTypesVisitor.java:309)
-    	at jadx.core.dex.visitors.typeinference.FixTypesVisitor.visit(FixTypesVisitor.java:94)
-     */
     private void completeTwoStageWidgetDrop(final int i, final int i2) {
         Runnable runnable;
         AppWidgetHostView appWidgetHostView;
@@ -1130,9 +1118,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 return;
             }
         }
-        if (false) { // REWORK: fabric removed
-            Timber.e(new IllegalStateException("Couldn't complete two stage widget drop due to null celllayout with screenId = " + this.mPendingAddInfo.screenId));
-        }
+        /* REWORK: fabric removed — the unreachable error-log branch is gone. */
         this.mDragLayer.clearAnimatedView();
         if (runnable != null) {
             runnable.run();
@@ -3135,7 +3121,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         Log.d("Launcher", "mWorkspaceLoading=" + this.mWorkspaceLoading);
         Log.d("Launcher", "mRestoring=" + this.mRestoring);
         Log.d("Launcher", "mWaitingForResult=" + this.mWaitingForResult);
-        Log.d("Launcher", "mSavedInstanceState=" + this.mSavedInstanceState);
         Log.d("Launcher", "sFolders.size=" + sFolders.size());
         this.mModel.dumpState();
         Log.d("Launcher", "END launcher3 dump state");
