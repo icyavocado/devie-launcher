@@ -124,3 +124,43 @@ the "Skipping child, screenId X not found" empty-desktop spiral.
 - `8ff5f51 fix(ws): restore canonical findNearestArea body`: the 11-param `findNearestArea` body restored verbatim from upstream Launcher2 4.4 (the donor dex is literally this algorithm — verified against `/tmp/opencode/fna11.smali`); terminating by construction (labeled `continue inner` + `while (!(hitMaxX && hitMaxY))` expansion).
 - Release rebuilt (11,448,096B) and installed on the acer tablet (Success, 0 FATAL). Phone missed the install (cable unplugged) — ship on next connection.
 - Related P1 (pre-existing): on some cycles the workspace view never re-lays-out (dump shows stale huge square bounds + `L` layout-requested flag) — empty desktop; tracked on roadmap.
+
+## Play-Store survey removal + cloud/dead-code sweep (2026-10-24)
+
+Full de-Play-Store + de-cloud pass across three commits (all verified on
+AVD `evie-test`, fresh cold-boot state, onboarding driven via
+`scripts/drive_onboarding.py`; no FATAL/ANR/Skipping-child in logcat):
+
+1. `33d2a5c fix(search): remove Play Store rating survey` — the search
+   overlay feedback chain deleted (SearchFeedbackPresenter, 9 slide/view
+   files incl. AppFlash orphan variant, layout, 13 strings × 15 locales,
+   dimen); Launcher branch reduced to set-default prompt only; kept
+   OptionSlide/TextSlide base classes (shared with onboarding) — TextSlide
+   itself then dropped as dead in the sweep below.
+2. `307c7d2 fix(contacts): drop S3 cover fetch, remove INTERNET` — the
+   real cloud leftover: `ContactManager.getHeaderImageUrl()` built a
+   cleartext S3 URL (`http://s3-us-west-2.amazonaws.com/.../cover_<color>_
+   <density>`) for photo-less contacts which Fresco fetched over the
+   network at bind time. Replaced with the local initials/photo URI;
+   dead HttpUrlConnection fetchers in BitmapUtil
+   (getBitmapFromURL/getCircleBitmap/getTint) removed; R.array
+   contact_headers + 4 contact_cover_*_url strings removed; manifest
+   INTERNET permission + network_security_config dropped — the app now
+   does no network I/O at the install level. Verified: seeded photo-less
+   contact "Jenny Appleseed", full search → row renders LOCAL purple
+   initials avatar, tapped row → recents written (CONTACT row, empty
+   image_url); final `strings` scan of LocalSearch.db + APPS_INFO_DB:
+   0 amazonaws/http rows.
+3. `4794fe6 refactor: remove leftover dead code and persisted UUID` —
+   TextSlide + its layout, utils/Constants (MILLIS_IN_*), DebugUtil
+   .isAnalyticsEnabled; AnalyticsHandler no longer generates/persists the
+   anonyous-user UUID (analytics_pref file gone from fresh installs).
+
+Emulator notes: fresh-install migration `SettingsStorage.onUpgrade(-1)`
+sets `search_bar_desktop_enabled=false` (bar hidden by design; search =
+swipe-down gesture / custom gestures, prefs `custom_gesture.*`). For
+testing I set the pref true via run-as so the workspace bar shows and the
+TAP focus path opens the overlay. Two earlier "system QuickSearchBox
+suggestions" appearances were the emulator's own com.android.quicksearchbox
+app foregrounding, not dEvie. Icon-pack "browse icon packs" market:// rows
+KEPT per owner decision (generic intent).
