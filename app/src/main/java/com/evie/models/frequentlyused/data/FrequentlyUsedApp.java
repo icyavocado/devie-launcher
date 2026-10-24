@@ -2,15 +2,12 @@ package com.evie.models.frequentlyused.data;
 
 import android.content.ComponentName;
 import com.evie.models.frequentlyused.SpecialAppsList;
-import com.google.gson.annotations.SerializedName;
 
 /* JADX INFO: loaded from: classes.dex */
 public class FrequentlyUsedApp {
 
-    @SerializedName("activity")
     public final String className;
 
-    @SerializedName("package")
     public final String packageName;
 
     public FrequentlyUsedApp(String str, String str2) {

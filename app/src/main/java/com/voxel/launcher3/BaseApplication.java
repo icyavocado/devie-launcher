@@ -12,7 +12,6 @@ import android.os.Process;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import androidx.fragment.app.Fragment;
-import androidx.multidex.MultiDex;
 import com.evie.common.iconpack.IconPackFilter;
 import com.evie.common.utils.MemoryWatcher;
 import com.ovacoda.devie.images.IconLoader;
@@ -120,8 +119,7 @@ public class BaseApplication extends Application implements Injector, HasActivit
     @Override // android.content.ContextWrapper
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);
-        MultiDex.install(this);
-    }
+            }
 
     public long getAppStartTime() {
         return this.mAppStartTime;

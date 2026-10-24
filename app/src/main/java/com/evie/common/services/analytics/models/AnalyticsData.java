@@ -1,20 +1,15 @@
 package com.evie.common.services.analytics.models;
 
-import com.google.gson.annotations.SerializedName;
 
 /* JADX INFO: loaded from: classes.dex */
 public class AnalyticsData {
 
-    @SerializedName("collection_data")
     private CollectionAnalyticsData collectionData;
 
-    @SerializedName("movie_data")
     private MovieAnalyticsData movieData;
 
-    @SerializedName("entity_type")
     private String entityType = "";
 
-    @SerializedName("entity_name")
     private String entityName = "";
     private String layout = "";
 
