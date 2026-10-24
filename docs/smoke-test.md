@@ -248,3 +248,22 @@ Deliberately not done (audit findings kept as notes):
 - lint checkReleaseBuilds stays OFF (documented in build.gradle.kts:
   merged lib style table still trips release lint; shrinkResources
   covers the artifact)
+
+## rw6 hotfix: recents-click NPE + release smoke gate (2026-10-24)
+
+- `44f2378` fix(analytics): set injectable log filter post-init — fefb949
+  regression: FrequentlyUsedAnalyticsFilter was built in preDaggerInit with a
+  not-yet-injected FrequentlyUsedModel, so the first logged click (recents /
+  frequently-used row) NPE'd and killed the app mid-launch on the R8 phone
+  build. AnalyticsHandler now starts with a pass-through filter and the real
+  one is swapped in via static setAnalyticsFilter after dagger injection.
+- `scripts/evie-smoke.py` = the pre-release gate: install -r + grants,
+  force-stop/logcat-c/monkey, overlay open (bar tap by resource-id;
+  swipe-down fallback for fresh installs where onUpgrade(-1) hides the bar —
+  the phone's SpringySearchView hint is NOT in the uiautomator text attr),
+  type query + click the result row + frequently-used area, then the
+  FATAL/ANR logcat gate (exit 1 on crash; screenshots to /tmp/opencode).
+  VERIFIED PASS on emulator-5554 (result row = Jenny Appleseed contact) and
+  phone R5CT60JX7FM (fixed release installed in-place; versionCode 21408018).
+- rw6 tag on GitHub still carries the pre-fix NPE for downloaders — rw7
+  re-tag pending go-ahead.
