@@ -25,7 +25,6 @@ import com.voxel.simplesearchlauncher.model.AppsInfoProvider;
 import com.voxel.simplesearchlauncher.model.LocalAppsUpdateReceiver;
 import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 import com.voxel.simplesearchlauncher.model.managers.UserProfileManager;
-import com.voxel.simplesearchlauncher.utils.DebugUtil;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
@@ -146,7 +145,7 @@ public class BaseApplication extends Application implements Injector, HasActivit
         }
         sApplication = this;
         AppsInfoProvider.setApplicationContext(this);
-        DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "**** LauncherApplication.onCreate() - Starting launcher process ****");
+        Timber.tag("DEBUG-HOME-DELAY").d("**** LauncherApplication.onCreate() - Starting launcher process ****");
         this.mAppStartTime = SystemClock.elapsedRealtime();
         super.onCreate();
         FlavorInitializer flavorInitializer = new FlavorInitializer(getApplicationContext());

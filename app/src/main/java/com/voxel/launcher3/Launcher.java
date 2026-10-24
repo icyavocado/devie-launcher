@@ -138,7 +138,6 @@ import com.voxel.simplesearchlauncher.touch.SpringyMotionTracker;
 import com.voxel.simplesearchlauncher.utils.AlphaUtil;
 import com.voxel.simplesearchlauncher.utils.Blur;
 import com.voxel.simplesearchlauncher.utils.CombinedFactorHelper;
-import com.voxel.simplesearchlauncher.utils.DebugUtil;
 import com.voxel.simplesearchlauncher.utils.FirstFrameAnimatorHelper;
 import com.voxel.simplesearchlauncher.utils.LaunchUtil;
 import com.voxel.simplesearchlauncher.utils.UpgradeUtil;
@@ -2631,7 +2630,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 Launcher.this.bindAppWidget(launcherAppWidgetInfo);
             }
         })) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "++ waitUntilResume - task added from bindAppWidget()");
+            Timber.tag("DEBUG-HOME-DELAY").d("++ waitUntilResume - task added from bindAppWidget()");
             return;
         }
         Workspace workspace = this.mWorkspace;
@@ -2682,7 +2681,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 Launcher.this.bindAppsAdded(arrayList, arrayList2, arrayList3, arrayList4);
             }
         })) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "++ waitUntilResume - task added from bindAppsAdded()");
+            Timber.tag("DEBUG-HOME-DELAY").d("++ waitUntilResume - task added from bindAppsAdded()");
             return;
         }
         if (arrayList != null) {
@@ -2705,7 +2704,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 Launcher.this.bindAppsRestored(arrayList);
             }
         })) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "++ waitUntilResume - task added from bindAppsRestored()");
+            Timber.tag("DEBUG-HOME-DELAY").d("++ waitUntilResume - task added from bindAppsRestored()");
             return;
         }
         Workspace workspace = this.mWorkspace;
@@ -2722,7 +2721,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 Launcher.this.bindAppsUpdated(arrayList);
             }
         })) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "++ waitUntilResume - task added from bindAppsUpdated()");
+            Timber.tag("DEBUG-HOME-DELAY").d("++ waitUntilResume - task added from bindAppsUpdated()");
             return;
         }
         Workspace workspace = this.mWorkspace;
@@ -2739,7 +2738,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 Launcher.this.bindComponentsRemoved(hashSet, hashSet2, userHandleCompat);
             }
         })) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "++ waitUntilResume - task added from bindComponentsRemoved()");
+            Timber.tag("DEBUG-HOME-DELAY").d("++ waitUntilResume - task added from bindComponentsRemoved()");
             return;
         }
         if (!hashSet.isEmpty()) {
@@ -2763,7 +2762,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 Launcher.this.bindFolders(longArrayMap);
             }
         })) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "++ waitUntilResume - task added from bindFolders()");
+            Timber.tag("DEBUG-HOME-DELAY").d("++ waitUntilResume - task added from bindFolders()");
         } else {
             sFolders.clear();
             sFolders = longArrayMap.clone();
@@ -2788,7 +2787,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 Launcher.this.bindItems(arrayList, i, i2, z, false);
             }
         })) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "++ waitUntilResume - task added from bindItems()");
+            Timber.tag("DEBUG-HOME-DELAY").d("++ waitUntilResume - task added from bindItems()");
             return;
         }
         AnimatorSet animatorSetCreateAnimatorSet = LauncherAnimUtils.createAnimatorSet();
@@ -3141,7 +3140,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 Launcher.this.finishBindingItems(z);
             }
         })) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "++ waitUntilResume - task added from finishBindingItems()");
+            Timber.tag("DEBUG-HOME-DELAY").d("++ waitUntilResume - task added from finishBindingItems()");
             return;
         }
         if (this.mSavedState != null) {
@@ -3171,13 +3170,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         }
         PackageInstallerCompat.getInstance(this).onFinishBind();
         this.mModel.recheckRestoredItems(this);
-        if (DebugUtil.isDevDebugLogEnabled()) {
-            long appStartTime = ((LauncherApplication) getApplication()).getAppStartTime();
-            if (appStartTime != 0) {
-                Log.d("STARTUP-PERFORMANCE", "> App Startup Completed - Total time: " + (SystemClock.elapsedRealtime() - appStartTime));
-                ((LauncherApplication) getApplication()).resetAppStartTime();
-            }
-        }
         this.localAppsManager.finishStartup();
         this.mDeepShortcutManager.finishStartup();
     }
@@ -3902,16 +3894,9 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
 
     @Override // androidx.fragment.app.FragmentActivity, androidx.core.app.ComponentActivity, android.app.Activity
     protected void onCreate(Bundle bundle) {
-        long jCurrentTimeMillis;
         this.mLocalSearchManager = LocalSearchManager.getInstance(getApplicationContext(), true);
         this.mSettingsStorage = SettingsStorage.getInstance();
-        DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "**** Launcher.onCreate() Launcer activity starting ****");
-        if (DebugUtil.isDevDebugLogEnabled()) {
-            Log.d("STARTUP-PERFORMANCE", "- Launcher Activity onCreate() starting...");
-            jCurrentTimeMillis = System.currentTimeMillis();
-        } else {
-            jCurrentTimeMillis = 0;
-        }
+        Timber.tag("DEBUG-HOME-DELAY").d("**** Launcher.onCreate() Launcer activity starting ****");
         AndroidInjection.inject(this);
         super.onCreate(bundle);
         LauncherAppState.setApplicationContext(getApplicationContext());
@@ -3940,18 +3925,8 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         this.mDeviceAdminComponentName = new ComponentName(this, "com.voxel.simplesearchlauncher.receiver.DeviceAdminReceiverSub");
         this.mPaused = false;
         checkForLocaleChange();
-        long jCurrentTimeMillis2 = DebugUtil.isDevDebugLogEnabled() ? System.currentTimeMillis() : 0L;
         setContentView(R.layout.launcher);
-        if (DebugUtil.isDevDebugLogEnabled()) {
-            Log.d("STARTUP-PERFORMANCE", "    - Load view layout time: " + (System.currentTimeMillis() - jCurrentTimeMillis2));
-        }
-        if (DebugUtil.isDevDebugLogEnabled()) {
-            jCurrentTimeMillis2 = System.currentTimeMillis();
-        }
         setupViews();
-        if (DebugUtil.isDevDebugLogEnabled()) {
-            Log.d("STARTUP-PERFORMANCE", "    - Setup Views time: " + (System.currentTimeMillis() - jCurrentTimeMillis2));
-        }
         this.mBackgroundFolderAnimationHelper = new BackgroundFolderAnimationHelper();
         this.mBackgroundFolderAnimationHelper.setListener(new BackgroundFolderAnimationHelper.AnimationListener() { // from class: com.voxel.launcher3.Launcher.3
             @Override // com.voxel.launcher3.BackgroundFolderAnimationHelper.AnimationListener
@@ -4042,10 +4017,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         unlockScreenOrientation(true);
         this.mPreviousDefaultState = UserProfileManager.getInstance().getLauncherDefaultState();
         getApplication().registerActivityLifecycleCallbacks(new IconCacheCleaner(this.mLocalSearchManager));
-        if (DebugUtil.isDevDebugLogEnabled()) {
-            Log.d("STARTUP-PERFORMANCE", "* Launcher Activity onCreate() total time: " + (System.currentTimeMillis() - jCurrentTimeMillis));
-        }
-        DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "**** Launcher.onCreate() DONE ****");
+        Timber.tag("DEBUG-HOME-DELAY").d("**** Launcher.onCreate() DONE ****");
     }
 
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
@@ -4146,7 +4118,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     }
 
     protected void onHomeIntent(boolean z, boolean z2) {
-        DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "----------- onHomeIntent ------------");
+        Timber.tag("DEBUG-HOME-DELAY").d("----------- onHomeIntent ------------");
         if (z2) {
             deactivateSearch(SearchInteractionMethod.HOME, z);
         } else if (this.mQsbSearchView.getCurrentFactor() == 1.0f && z) {
@@ -4448,7 +4420,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         cleanupGoogleNowLaunchBackground();
         this.mAppWidgetHost.startListening();
         this.isLaunchingVoiceAssist = false;
-        DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "Launcher.onResume()");
+        Timber.tag("DEBUG-HOME-DELAY").d("Launcher.onResume()");
         this.mQsbSearchView.setImeOptions(6);
         this.mLocalSearchManager.initContactsIfNeeded(this);
         this.mLocalSearchManager.updateRecents();
@@ -4483,20 +4455,20 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             this.mOnResumeNeedsLoad = false;
         }
         if (this.mBindOnResumeCallbacks.size() > 0) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "--> Running bindOnResumeCallbacks: " + this.mBindOnResumeCallbacks.size());
+            Timber.tag("DEBUG-HOME-DELAY").d("--> Running bindOnResumeCallbacks: " + this.mBindOnResumeCallbacks.size());
             for (int i = 0; i < this.mBindOnResumeCallbacks.size(); i++) {
                 this.mBindOnResumeCallbacks.get(i).run();
             }
             this.mBindOnResumeCallbacks.clear();
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "--> bindOnResumeCallbacks DONE");
+            Timber.tag("DEBUG-HOME-DELAY").d("--> bindOnResumeCallbacks DONE");
         }
         if (this.mOnResumeCallbacks.size() > 0) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "--> Running onResumeCallbacks: " + this.mOnResumeCallbacks.size());
+            Timber.tag("DEBUG-HOME-DELAY").d("--> Running onResumeCallbacks: " + this.mOnResumeCallbacks.size());
             for (int i2 = 0; i2 < this.mOnResumeCallbacks.size(); i2++) {
                 this.mOnResumeCallbacks.get(i2).run();
             }
             this.mOnResumeCallbacks.clear();
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "--> Running mOnResumeCallbacks DONE");
+            Timber.tag("DEBUG-HOME-DELAY").d("--> Running mOnResumeCallbacks DONE");
         }
         BubbleTextView bubbleTextView = this.mWaitingForResume;
         if (bubbleTextView != null) {
@@ -4613,8 +4585,8 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         this.isStopped = false;
         this.mFragmentHelper.onStart();
         FirstFrameAnimatorHelper.setIsVisible(true);
-        DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "Launcher.onStart()");
-        DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "Launcher.onStart() DONE");
+        Timber.tag("DEBUG-HOME-DELAY").d("Launcher.onStart()");
+        Timber.tag("DEBUG-HOME-DELAY").d("Launcher.onStart() DONE");
         this.sendHomeAnalyticsEventOnResume = true;
         NotificationController.getInstance(this).start();
     }

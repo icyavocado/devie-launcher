@@ -17,7 +17,6 @@ import com.facebook.rebound.SpringListener;
 import com.facebook.rebound.SpringSystem;
 import com.voxel.simplesearchlauncher.utils.AlphaUtil;
 import com.voxel.simplesearchlauncher.utils.Choreographer;
-import com.voxel.simplesearchlauncher.utils.TraceUtil;
 import com.ovacoda.devie.R;
 
 /* JADX INFO: loaded from: classes2.dex */
@@ -103,7 +102,6 @@ public abstract class SpringCardFragment extends LauncherStackableFragment {
         this.mSpringY.addListener(new SimpleSpringListener() { // from class: com.voxel.simplesearchlauncher.fragment.SpringCardFragment.2
             @Override // com.facebook.rebound.SimpleSpringListener, com.facebook.rebound.SpringListener
             public void onSpringUpdate(Spring spring) {
-                TraceUtil.beginSection("SpringCardFragment onSpringUpdate");
                 if (SpringCardFragment.this.mContainer != null) {
                     SpringCardFragment.this.mContainer.setTranslationY((int) spring.getCurrentValue());
                 }
@@ -113,7 +111,6 @@ public abstract class SpringCardFragment extends LauncherStackableFragment {
                 if (spring.getCurrentDisplacementDistance() < 1.0d) {
                     spring.setAtRest();
                 }
-                TraceUtil.endSection();
             }
         });
         this.mSpringScale = this.mSpringSystem.createSpring();
@@ -233,7 +230,6 @@ public abstract class SpringCardFragment extends LauncherStackableFragment {
 
     @Override // androidx.fragment.app.Fragment
     public final View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        TraceUtil.beginSection("SpringCardFragment onCreateView");
         this.mRootView = layoutInflater.inflate(R.layout.fragment_spring_card, viewGroup, false);
         this.mRootView.setOnClickListener(new View.OnClickListener() { // from class: com.voxel.simplesearchlauncher.fragment.-$$Lambda$SpringCardFragment$7CzlyWZMjYxx9nHctTU1ay6aCOc
             @Override // android.view.View.OnClickListener
@@ -265,7 +261,6 @@ public abstract class SpringCardFragment extends LauncherStackableFragment {
                 SpringCardFragment.this.lambda$onCreateView$2();
             }
         });
-        TraceUtil.endSection();
         return this.mRootView;
     }
 

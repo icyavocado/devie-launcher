@@ -1,6 +1,7 @@
 package com.voxel.launcher3;
 
 /* REWORK: minSdk-safe receiver registration (API 34+ flag rule) */
+import timber.log.Timber;
 import androidx.core.content.ContextCompat;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
@@ -50,7 +51,6 @@ import com.voxel.launcher3.util.MultiHashMap;
 import com.voxel.launcher3.util.PackageManagerHelper;
 import com.voxel.launcher3.util.StringFilter;
 import com.voxel.simplesearchlauncher.model.AppsInfoLabelOverrideFilter;
-import com.voxel.simplesearchlauncher.utils.DebugUtil;
 import com.ovacoda.devie.R;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Array;
@@ -3313,10 +3313,10 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
 
     public void startLoaderFromBackground() {
         Callbacks callbacks;
-        DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", ">>> startLoaderFromBackground() invoked.");
+        Timber.tag("DEBUG-HOME-DELAY").d(">>> startLoaderFromBackground() invoked.");
         WeakReference<Callbacks> weakReference = this.mCallbacks;
         if ((weakReference == null || (callbacks = weakReference.get()) == null || callbacks.setLoadOnResume()) ? false : true) {
-            DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", ">>> startLoaderFromBackground() - running task now.");
+            Timber.tag("DEBUG-HOME-DELAY").d(">>> startLoaderFromBackground() - running task now.");
             startLoader(false, -1001);
         }
     }

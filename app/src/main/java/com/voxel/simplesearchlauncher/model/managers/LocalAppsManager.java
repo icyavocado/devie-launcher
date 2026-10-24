@@ -24,7 +24,6 @@ import com.voxel.launcher3.compat.UserHandleCompat;
 import com.voxel.simplesearchlauncher.model.AppsInfoDataHelper;
 import com.voxel.simplesearchlauncher.model.AppsInfoProvider;
 import com.voxel.simplesearchlauncher.model.itemdata.LocalAppData;
-import com.voxel.simplesearchlauncher.utils.DebugUtil;
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Completable;
 import io.reactivex.disposables.CompositeDisposable;
@@ -193,15 +192,9 @@ public class LocalAppsManager {
     }
 
     public void lambda$new$0() {
-        if (DebugUtil.isDevDebugLogEnabled()) {
-            Log.d("STARTUP-PERFORMANCE", "> Loading local apps started.");
-        }
         this.refreshLocalApps();
         this.startupState = State.STARTED;
         LoadingNotificationsHelper.notifyStartupCompleted();
-        if (DebugUtil.isDevDebugLogEnabled()) {
-            Log.d("STARTUP-PERFORMANCE", "> Local apps loading DONE.");
-        }
     }
 
     private void loadGoogleQuickSearchApp(String str, String str2, String str3) {
