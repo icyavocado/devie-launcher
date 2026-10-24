@@ -17,12 +17,21 @@ android {
 
     compileSdk = 35
 
+    /* REWORK: short commit id baked into BuildConfig for the settings version
+       footer. Falls back when git is unavailable (e.g. bare CI export). */
+    val gitSha: String = try {
+        providers.exec { commandLine("git", "rev-parse", "--short", "HEAD") }.standardOutput.asText.get().trim()
+    } catch (t: Throwable) {
+        "unknown"
+    }
+
     defaultConfig {
         applicationId = "com.ovacoda.devie"
         minSdk = 21
         targetSdk = 35
         versionCode = 21408017
         versionName = "2.14.8-rw5"
+        buildConfigField("String", "GIT_SHA", "\"$gitSha\"")
     }
 
     signingConfigs {

@@ -1,3 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView android:id="@id/recycler_view" android:background="@color/settings_activity_background" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" />
+<LinearLayout android:orientation="vertical" android:background="@color/settings_activity_background" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.recyclerview.widget.RecyclerView android:id="@id/recycler_view" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" />
+    <TextView android:textAppearance="@style/LightAppTextAppearance" android:textSize="12.0sp" android:textColor="@color/subtext_color" android:gravity="center" android:id="@id/app_version_footer" android:paddingTop="4.0dip" android:paddingBottom="18.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:fontFamily="sans-serif" />
+</LinearLayout>

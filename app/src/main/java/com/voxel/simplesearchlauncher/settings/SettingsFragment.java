@@ -22,6 +22,7 @@ import com.voxel.simplesearchlauncher.activity.onboarding.PermissionsSlide;
 import com.voxel.simplesearchlauncher.analytics.AnalyticsHandler;
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+import com.ovacoda.devie.BuildConfig;
 import com.ovacoda.devie.R;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -399,6 +400,9 @@ public class SettingsFragment extends Fragment {
     @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
         this.mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        /* REWORK: version footer under the switch-launcher row. */
+        TextView versionFooter = (TextView) view.findViewById(R.id.app_version_footer);
+        versionFooter.setText(getString(R.string.app_settings_version_footer, BuildConfig.VERSION_NAME, BuildConfig.GIT_SHA));
         this.mAdapter = new SectionedRecyclerViewAdapter();
         this.mSections = new Section[SettingsGroup.values().length];
         for (int i = 0; i < this.mSections.length; i++) {

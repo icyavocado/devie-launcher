@@ -465,6 +465,7 @@
     <item type="id" name="rating_icon" />
     <item type="id" name="recents_include_web_results" />
     <item type="id" name="recycler_view" />
+    <item type="id" name="app_version_footer" />
     <item type="id" name="refresher" />
     <item type="id" name="remove_target_text" />
     <item type="id" name="replay_button" />

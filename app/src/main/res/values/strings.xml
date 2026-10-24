@@ -210,6 +210,7 @@
     <string name="app_settings_item_search_recents_include_web_results">Include web searches in recent results</string>
     <string name="app_settings_item_search_title">Search</string>
     <string name="app_settings_item_switch_launcher">Switch to another launcher</string>
+    <string name="app_settings_version_footer">dEvie %1$s - %2$s</string>
 
     <string name="app_settings_item_toast_clear_recent_results">Your recent results have been cleared.</string>
     <string name="app_settings_size_label">Size</string>
