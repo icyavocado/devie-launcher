@@ -304,20 +304,7 @@
 
 
 
-    <string name="feedback_enjoying_app_negative">Not really</string>
-    <string name="feedback_enjoying_app_positive">Yeah!</string>
-    <string name="feedback_enjoying_app_question">Are you enjoying dEvie?</string>
-    <string name="feedback_feedback_negative">No thanks</string>
-    <string name="feedback_feedback_positive">Okay</string>
-    <string name="feedback_feedback_question">Would you mind giving us feedback?</string>
-    <string name="feedback_generic_enjoying_app_question">Are you enjoying %1$s?</string>
-    <string name="feedback_generic_no_feedback">"That's okay. We'll keep working hard to make %1$s better!"</string>
 
-    <string name="feedback_no_feedback">"That's okay. We'll keep working hard to make dEvie better!"</string>
-    <string name="feedback_no_rating">"No worries! Glad to hear you're enjoying dEvie!"</string>
-    <string name="feedback_rating_app_negative">No thanks</string>
-    <string name="feedback_rating_app_positive">Okay</string>
-    <string name="feedback_rating_app_question">How about rating us on the Play Store?</string>
     <string name="folder_hint_text">Unnamed Folder</string>
     <string name="folder_name" />
     <string name="folder_name_format">Folder: %1$s</string>

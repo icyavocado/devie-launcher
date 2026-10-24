@@ -5,7 +5,6 @@ import androidx.core.content.ContextCompat;
 import android.app.Activity;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -25,11 +24,8 @@ import com.voxel.simplesearchlauncher.activity.ResetLauncherActivity;
 import com.voxel.simplesearchlauncher.analytics.AnalyticsHandler;
 import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 import com.voxel.simplesearchlauncher.utils.Choreographer;
-import com.voxel.simplesearchlauncher.utils.Constants;
 import com.voxel.simplesearchlauncher.view.PullDownRecyclerView;
 import com.voxel.simplesearchlauncher.view.SpringySearchView;
-import timber.log.Timber;
-
 /* JADX INFO: loaded from: classes2.dex */
 public class SearchUiHelper {
     private final Activity mActivity;
@@ -54,7 +50,6 @@ public class SearchUiHelper {
         }
     };
     private String mSearchText = "";
-    private boolean mFeedbackPromptShowing = false;
     private boolean mDefaultLauncherPromptShowing = false;
 
     /* JADX INFO: renamed from: com.voxel.simplesearchlauncher.search.SearchUiHelper$5, reason: invalid class name */
@@ -191,18 +186,13 @@ public class SearchUiHelper {
                         ((InputMethodManager) SearchUiHelper.this.mActivity.getApplicationContext().getSystemService("input_method")).hideSoftInputFromWindow(SearchUiHelper.this.mQsbSearchView.getWindowToken(), 0);
                         break;
                     case 4:
+                        /* REWORK: the rate-us survey was cut (no Play Store); the
+                         * completed-search counter only existed to trigger it. */
                         ((InputMethodManager) SearchUiHelper.this.mActivity.getApplicationContext().getSystemService("input_method")).hideSoftInputFromWindow(SearchUiHelper.this.mQsbSearchView.getWindowToken(), 0);
                         SearchUiHelper.this.mQsbSearchView.clearFocus();
-                        SharedPreferences.Editor editorEdit = SearchUiHelper.this.mSharedPrefs.edit();
                         if (!SearchUiHelper.this.mSharedPrefs.getBoolean("launcher.has_completed_search", false)) {
                             SearchUiHelper.this.mSharedPrefs.edit().putBoolean("launcher.has_completed_search", true).apply();
                         }
-                        long j = SearchUiHelper.this.mSharedPrefs.getLong("launcher.num_completed_searches", 0L);
-                        if (j < Long.MAX_VALUE) {
-                            j++;
-                        }
-                        editorEdit.putLong("launcher.num_completed_searches", j);
-                        editorEdit.apply();
                         break;
                 }
             }
@@ -227,11 +217,6 @@ public class SearchUiHelper {
             return;
         }
         this.mSearchPresenter.setAvailableHeight(Math.abs(i4 - i2));
-    }
-
-    public void lambda$showFeedbackItemIfNeeded$3() {
-        this.mFeedbackPromptShowing = false;
-        this.mSharedPrefs.edit().putBoolean("launcher.has_completed_feedback", true).apply();
     }
 
     public void lambda$showSetLauncherSearchPromptIfNeeded$4() {
@@ -282,29 +267,6 @@ public class SearchUiHelper {
 
     public String getSearchText() {
         return this.mSearchText;
-    }
-
-    public boolean showFeedbackItemIfNeeded() {
-        if (!this.mSharedPrefs.getBoolean("launcher.has_completed_feedback", false) && this.mSharedPrefs.getLong("launcher.num_completed_searches", 0L) >= 25) {
-            try {
-                if (System.currentTimeMillis() - this.mActivity.getPackageManager().getPackageInfo(this.mActivity.getPackageName(), 0).firstInstallTime > Constants.MILLIS_IN_DAY * 3) {
-                    this.mSearchPresenter.setCustomPresenter(new SearchFeedbackPresenter(this.mActivity), this.mSearchViewHolderFactory, new Runnable() { // from class: com.voxel.simplesearchlauncher.search.-$$Lambda$SearchUiHelper$QRyFP4zhESuij7FBrIGR0v4X5Rs
-                        @Override // java.lang.Runnable
-                        public final void run() {
-                            SearchUiHelper.this.lambda$showFeedbackItemIfNeeded$3();
-                        }
-                    });
-                    if (!this.mFeedbackPromptShowing) {
-                        this.mFeedbackPromptShowing = true;
-                        AnalyticsHandler.getInstance().logEvent("ev_search_feedback_shown", null);
-                    }
-                    return true;
-                }
-            } catch (PackageManager.NameNotFoundException unused) {
-                Timber.e("Error retrieving package info.", new Object[0]);
-            }
-        }
-        return false;
     }
 
     public boolean showSetLauncherSearchPromptIfNeeded() {

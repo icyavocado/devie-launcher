@@ -251,7 +251,6 @@
     <dimen name="search_delimiter_height">10.0dip</dimen>
     <dimen name="search_delimiter_small_height">16.0dip</dimen>
     <dimen name="search_delimiter_width">20.0dip</dimen>
-    <dimen name="search_feedback_item_height">130.0dip</dimen>
     <dimen name="search_feedback_item_inner_padding_bottom">24.0dip</dimen>
     <dimen name="search_feedback_item_inner_padding_top">24.0dip</dimen>
     <dimen name="search_header_spacing">12.0dip</dimen>

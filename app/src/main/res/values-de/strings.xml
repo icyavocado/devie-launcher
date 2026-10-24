@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">Zufallsmix</string>
 
 
-    <string name="feedback_enjoying_app_negative">Nicht wirklich</string>
-    <string name="feedback_enjoying_app_positive">Ja!</string>
-    <string name="feedback_enjoying_app_question">Gefällt dir dEvie?</string>
-    <string name="feedback_feedback_negative">Nein danke</string>
-    <string name="feedback_feedback_positive">Okay</string>
-    <string name="feedback_feedback_question">Möchtest du uns Feedback geben?</string>
-    <string name="feedback_generic_enjoying_app_question">Gefällt dir %1$s?</string>
-    <string name="feedback_generic_no_feedback">Das ist in Ordnung. Wir werden hart daran arbeiten, %1$s besser zu machen!</string>
 
-    <string name="feedback_no_feedback">Das ist okay. Wir arbeiten weiter hart daran, dEvie besser zu machen!</string>
-    <string name="feedback_no_rating">Kein Problem! Freut uns zu hören, dass dir dEvie gefällt!</string>
-    <string name="feedback_rating_app_negative">Nein danke</string>
-    <string name="feedback_rating_app_positive">Okay</string>
-    <string name="feedback_rating_app_question">Wie wäre es mit einer Bewertung im Play Store?</string>
     <string name="folder_hint_text">Unbenannter Ordner</string>
     <string name="folder_name" />
     <string name="folder_name_format">Ordner: %1$s</string>

@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">Reprodueix aleatòriament</string>
 
 
-    <string name="feedback_enjoying_app_negative">No gaire</string>
-    <string name="feedback_enjoying_app_positive">Sí!</string>
-    <string name="feedback_enjoying_app_question">"T'agrada dEvie?"</string>
-    <string name="feedback_feedback_negative">No gràcies</string>
-    <string name="feedback_feedback_positive">"D'acord"</string>
-    <string name="feedback_feedback_question">"T'importaria escriure'ns una ressenya?"</string>
-    <string name="feedback_generic_enjoying_app_question">"T'agrada %1$s?"</string>
-    <string name="feedback_generic_no_feedback">Està bé. Seguirem treballant dur per millorar %1$s!</string>
 
-    <string name="feedback_no_feedback">Està bé. Seguirem treballant dur per millorar dEvie!</string>
-    <string name="feedback_no_rating">"No et preocupis! Estem encantats de saber que t'agrada dEvie!"</string>
-    <string name="feedback_rating_app_negative">No gràcies</string>
-    <string name="feedback_rating_app_positive">"D'acord"</string>
-    <string name="feedback_rating_app_question">Que tal si escrius una ressenya a Play Store?</string>
     <string name="folder_hint_text">Carpeta sense nom</string>
     <string name="folder_name" />
     <string name="folder_name_format">Carpeta: %1$s</string>

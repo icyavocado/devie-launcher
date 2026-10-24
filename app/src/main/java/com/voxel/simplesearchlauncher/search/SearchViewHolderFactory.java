@@ -7,23 +7,16 @@ import android.view.ViewGroup;
 import com.evie.search.SearchPresenter;
 import com.evie.search.recyclerview.viewholder.BaseViewHolder;
 import com.evie.search.recyclerview.viewholder.CustomViewHolderFactory;
-import com.voxel.simplesearchlauncher.search.view.AppFlashFeedbackSlide;
-import com.voxel.simplesearchlauncher.search.view.EnjoySlide;
-import com.voxel.simplesearchlauncher.search.view.FeedbackSlide;
-import com.voxel.simplesearchlauncher.search.view.GenericEnjoySlide;
-import com.voxel.simplesearchlauncher.search.view.GenericNoFeedbackSlide;
-import com.voxel.simplesearchlauncher.search.view.NoFeedbackSlide;
-import com.voxel.simplesearchlauncher.search.view.NoRatingSlide;
-import com.voxel.simplesearchlauncher.search.view.RatingSlide;
 import com.voxel.simplesearchlauncher.search.view.SetDefaultLauncherSlide;
 import com.voxel.simplesearchlauncher.view.SlideLayout;
 import com.ovacoda.devie.R;
 
 /* JADX INFO: loaded from: classes2.dex */
+/* REWORK: the rate-us / feedback survey view types were cut with the Play
+ * Store (345780345 + the orphaned 345780346 AppFlash variant); only the
+ * set-default-launcher prompt remains. */
 class SearchViewHolderFactory implements CustomViewHolderFactory {
     private Activity mActivity;
-    private SlideViewHolder mAppflashFeedbackViewHolder;
-    private SlideViewHolder mFeedbackViewHolder;
     private SearchPresenter mSearch;
     private SlideViewHolder mSetDefaultLauncherViewHolder;
 
@@ -51,7 +44,7 @@ class SearchViewHolderFactory implements CustomViewHolderFactory {
 
     @Override // com.evie.search.recyclerview.viewholder.CustomViewHolderFactory
     public boolean handlesViewType(int i) {
-        return i == 345780345 || i == 796234692 || i == 345780346;
+        return i == 796234692;
     }
 
     @Override // com.evie.search.recyclerview.viewholder.CustomViewHolderFactory
@@ -63,29 +56,6 @@ class SearchViewHolderFactory implements CustomViewHolderFactory {
             }
             return this.mSetDefaultLauncherViewHolder;
         }
-        switch (i) {
-            case 345780345:
-                if (this.mFeedbackViewHolder == null) {
-                    this.mFeedbackViewHolder = new SlideViewHolder((ViewGroup) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.search_feedback_item, viewGroup, false));
-                    this.mFeedbackViewHolder.mSlideLayout.addSlide(new EnjoySlide(viewGroup.getContext(), this.mFeedbackViewHolder.mSlideLayout, 1, 3), 0);
-                    this.mFeedbackViewHolder.mSlideLayout.addSlide(new RatingSlide(viewGroup.getContext(), this.mFeedbackViewHolder.mSlideLayout, this.mSearch, this.mActivity, 2), 1);
-                    this.mFeedbackViewHolder.mSlideLayout.addSlide(new NoRatingSlide(viewGroup.getContext(), this.mFeedbackViewHolder.mSlideLayout, this.mSearch), 2);
-                    this.mFeedbackViewHolder.mSlideLayout.addSlide(new FeedbackSlide(viewGroup.getContext(), this.mFeedbackViewHolder.mSlideLayout, this.mSearch, this.mActivity, 4), 3);
-                    this.mFeedbackViewHolder.mSlideLayout.addSlide(new NoFeedbackSlide(viewGroup.getContext(), this.mFeedbackViewHolder.mSlideLayout, this.mSearch), 4);
-                }
-                return this.mFeedbackViewHolder;
-            case 345780346:
-                if (this.mAppflashFeedbackViewHolder == null) {
-                    this.mAppflashFeedbackViewHolder = new SlideViewHolder((ViewGroup) LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.search_feedback_item, viewGroup, false));
-                    this.mAppflashFeedbackViewHolder.mSlideLayout.addSlide(new GenericEnjoySlide(viewGroup.getContext(), this.mAppflashFeedbackViewHolder.mSlideLayout, 1, 3), 0);
-                    this.mAppflashFeedbackViewHolder.mSlideLayout.addSlide(new RatingSlide(viewGroup.getContext(), this.mAppflashFeedbackViewHolder.mSlideLayout, this.mSearch, this.mActivity, 2), 1);
-                    this.mAppflashFeedbackViewHolder.mSlideLayout.addSlide(new NoRatingSlide(viewGroup.getContext(), this.mAppflashFeedbackViewHolder.mSlideLayout, this.mSearch), 2);
-                    this.mAppflashFeedbackViewHolder.mSlideLayout.addSlide(new AppFlashFeedbackSlide(viewGroup.getContext(), this.mAppflashFeedbackViewHolder.mSlideLayout, this.mSearch, this.mActivity, 4), 3);
-                    this.mAppflashFeedbackViewHolder.mSlideLayout.addSlide(new GenericNoFeedbackSlide(viewGroup.getContext(), this.mAppflashFeedbackViewHolder.mSlideLayout, this.mSearch), 4);
-                }
-                return this.mAppflashFeedbackViewHolder;
-            default:
-                return null;
-        }
+        return null;
     }
 }

@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">Phát ngẫu nhiên</string>
 
 
-    <string name="feedback_enjoying_app_negative">Không thực sự</string>
-    <string name="feedback_enjoying_app_positive">Đồng ý!</string>
-    <string name="feedback_enjoying_app_question">Bạn có thích dEvie không?</string>
-    <string name="feedback_feedback_negative">Không, cảm ơn</string>
-    <string name="feedback_feedback_positive">Đồng ý</string>
-    <string name="feedback_feedback_question">Bạn có thể đưa ra phản hồi cho chúng tôi không?</string>
-    <string name="feedback_generic_enjoying_app_question">Bạn có thích %1$s không?</string>
-    <string name="feedback_generic_no_feedback">Không sao đâu. Chúng tôi sẽ tiếp tục làm việc chăm chỉ để làm cho %1$s tốt hơn!</string>
 
-    <string name="feedback_no_feedback">Không sao đâu. Chúng tôi sẽ tiếp tục làm việc chăm chỉ để làm cho dEvie tốt hơn!</string>
-    <string name="feedback_no_rating">Đừng lo! Rất vui khi nghe bạn đang tận hưởng dEvie! :)</string>
-    <string name="feedback_rating_app_negative">Không, cảm ơn</string>
-    <string name="feedback_rating_app_positive">Đồng ý</string>
-    <string name="feedback_rating_app_question">Tại sao không xếp hạng chúng tôi trên Cửa hàng Play?</string>
     <string name="folder_hint_text">Thư mục Chưa đặt tên</string>
     <string name="folder_name" />
     <string name="folder_name_format">Thư mục %1$s</string>

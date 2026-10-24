@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">Blanda spår</string>
 
 
-    <string name="feedback_enjoying_app_negative">Inte särskilt</string>
-    <string name="feedback_enjoying_app_positive">Ja!</string>
-    <string name="feedback_enjoying_app_question">Gillar du dEvie?</string>
-    <string name="feedback_feedback_negative">Nej tack</string>
-    <string name="feedback_feedback_positive">Okej</string>
-    <string name="feedback_feedback_question">Skulle du vilja ge oss feedback?</string>
-    <string name="feedback_generic_enjoying_app_question">Gillar du %1$s?</string>
-    <string name="feedback_generic_no_feedback">Det är okej. Vi fortsätter att jobba hårt för att göra %1$s bättre!</string>
 
-    <string name="feedback_no_feedback">Det är okej. Vi fortsätter att jobba hårt för att göra dEvie bättre!</string>
-    <string name="feedback_no_rating">Inga problem! Kul att höra att du gillar dEvie!</string>
-    <string name="feedback_rating_app_negative">Nej tack</string>
-    <string name="feedback_rating_app_positive">Okej</string>
-    <string name="feedback_rating_app_question">Vad sägs om att betygsätta oss i Play Butik?</string>
     <string name="folder_hint_text">Namnlös mapp</string>
     <string name="folder_name" />
     <string name="folder_name_format">Mapp: %1$s</string>

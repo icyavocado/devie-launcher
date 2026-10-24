@@ -266,20 +266,7 @@ Este es un bloqueo de seguridad completo que requiere que se ingrese el PIN/patr
     <string name="exo_controls_shuffle_description">Reproducir aleatoriamente</string>
 
 
-    <string name="feedback_enjoying_app_negative">No mucho</string>
-    <string name="feedback_enjoying_app_positive">¡Claro!</string>
-    <string name="feedback_enjoying_app_question">¡Te gusta dEvie?</string>
-    <string name="feedback_feedback_negative">No, gracias</string>
-    <string name="feedback_feedback_positive">Ok</string>
-    <string name="feedback_feedback_question">¿Te importaría enviarnos feedback?</string>
-    <string name="feedback_generic_enjoying_app_question">¿Te gusta %1$s?</string>
-    <string name="feedback_generic_no_feedback">Está bien. ¡Seguiremos trabajando duro para hacer que %1$s sea mejor!</string>
 
-    <string name="feedback_no_feedback">Está bien. ¡Seguiremos trabajando duro para hacer que dEvie sea mejor!</string>
-    <string name="feedback_no_rating">¡No hay problema! ¡Nos alegra saber que estás disfrutando dEvie!</string>
-    <string name="feedback_rating_app_negative">No, gracias</string>
-    <string name="feedback_rating_app_positive">Ok</string>
-    <string name="feedback_rating_app_question">¿Qué tal si nos calificas en la Play Store?</string>
     <string name="folder_hint_text">Carpeta sin nombre</string>
     <string name="folder_name" />
     <string name="folder_name_format">Carpeta: %1$s</string>

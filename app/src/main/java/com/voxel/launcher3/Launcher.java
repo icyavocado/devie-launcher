@@ -4584,7 +4584,9 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             changeAllAppsVisibility(false, false);
             changeSearchMode(false, false);
         }
-        if (!this.mSearchUiHelper.showFeedbackItemIfNeeded() && !getResources().getBoolean(R.bool.widget_enabled)) {
+        /* REWORK: the rate-us survey was cut (no Play Store); only the
+         * set-default search prompt remains in this chain. */
+        if (!getResources().getBoolean(R.bool.widget_enabled)) {
             this.mSearchUiHelper.showSetLauncherSearchPromptIfNeeded();
         }
         updateVoiceButtonProxyVisible(false);

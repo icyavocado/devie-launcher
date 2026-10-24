@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">셔플</string>
 
 
-    <string name="feedback_enjoying_app_negative">별로</string>
-    <string name="feedback_enjoying_app_positive">예!</string>
-    <string name="feedback_enjoying_app_question">Evie를 즐기고 있나요?</string>
-    <string name="feedback_feedback_negative">아니요. 괜찮습니다.</string>
-    <string name="feedback_feedback_positive">확인</string>
-    <string name="feedback_feedback_question">피드백을 줄 수 있나요?</string>
-    <string name="feedback_generic_enjoying_app_question">%1$s를 즐기고 있나요?</string>
-    <string name="feedback_generic_no_feedback">좋아요. 우리는 %1$s를 더욱 발전시키기 위해 노력할 것입니다!</string>
 
-    <string name="feedback_no_feedback">좋아요. 우리는 Evie를 더욱 발전시키기 위해 노력할 것입니다!</string>
-    <string name="feedback_no_rating">괜찮아요! Evie를 즐기고 있다니 기뻐요!</string>
-    <string name="feedback_rating_app_negative">아니요. 괜찮습니다.</string>
-    <string name="feedback_rating_app_positive">확인</string>
-    <string name="feedback_rating_app_question">Play 스토어에서 평가해보는게 어떨까요?</string>
     <string name="folder_hint_text">이름없는 폴더</string>
     <string name="folder_name" />
     <string name="folder_name_format">폴더 : %1$s</string>

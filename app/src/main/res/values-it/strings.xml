@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">Riproduzione casuale</string>
 
 
-    <string name="feedback_enjoying_app_negative">Non tanto</string>
-    <string name="feedback_enjoying_app_positive">Sicuro!</string>
-    <string name="feedback_enjoying_app_question">Ti piace dEvie?</string>
-    <string name="feedback_feedback_negative">No, grazie</string>
-    <string name="feedback_feedback_positive">Ok</string>
-    <string name="feedback_feedback_question">Ti dispiacerebbe fornirci un feedback?</string>
-    <string name="feedback_generic_enjoying_app_question">Ti trovi bene con %1$s?</string>
-    <string name="feedback_generic_no_feedback">"Non c'è problema. Continueremo a lavorare sodo per rendere %1$s migliore!"</string>
 
-    <string name="feedback_no_feedback">Va bene. Lavoreremo sodo per rendere dEvie ancora migliore!</string>
-    <string name="feedback_no_rating">Non ti preoccupare! Felici di sentire che ti piaccia dEvie!</string>
-    <string name="feedback_rating_app_negative">No, grazie</string>
-    <string name="feedback_rating_app_positive">Ok</string>
-    <string name="feedback_rating_app_question">Ti andrebbe di votarci sul Play Store?</string>
     <string name="folder_hint_text">Cartella senza nome</string>
     <string name="folder_name" />
     <string name="folder_name_format">Cartella: %1$s</string>

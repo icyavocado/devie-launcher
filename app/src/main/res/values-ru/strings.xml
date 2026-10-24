@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">Перемешать</string>
 
 
-    <string name="feedback_enjoying_app_negative">На самом деле, нет</string>
-    <string name="feedback_enjoying_app_positive">Конечно!</string>
-    <string name="feedback_enjoying_app_question">Вам нравится dEvie?</string>
-    <string name="feedback_feedback_negative">Нет, спасибо</string>
-    <string name="feedback_feedback_positive">Окей</string>
-    <string name="feedback_feedback_question">Не могли бы вы дать нам обратную связь?</string>
-    <string name="feedback_generic_enjoying_app_question">Вам нравится %1$s?</string>
-    <string name="feedback_generic_no_feedback">Это нормально. Мы будем упорно трудиться, чтобы сделать %1$s лучше!</string>
 
-    <string name="feedback_no_feedback">Это нормально. Мы будем упорно трудиться, чтобы сделать dEvie лучше!</string>
-    <string name="feedback_no_rating">Не беспокойтесь! Рады слышать, что вы наслаждаетесь dEvie!</string>
-    <string name="feedback_rating_app_negative">Нет, спасибо</string>
-    <string name="feedback_rating_app_positive">Окей</string>
-    <string name="feedback_rating_app_question">Оцените нас в Play Store?</string>
     <string name="folder_hint_text">Безымянная папка</string>
     <string name="folder_name" />
     <string name="folder_name_format">Папка: %1$s</string>

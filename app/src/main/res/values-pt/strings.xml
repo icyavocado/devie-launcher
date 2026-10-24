@@ -245,20 +245,7 @@
     <string name="exo_controls_rewind_description">Retroceder</string>
     <string name="exo_controls_shuffle_description">Aleatório</string>
 
-    <string name="feedback_enjoying_app_negative">Não muito</string>
-    <string name="feedback_enjoying_app_positive">Sim!</string>
-    <string name="feedback_enjoying_app_question">Você está curtindo o dEvie?</string>
-    <string name="feedback_feedback_negative">Não</string>
-    <string name="feedback_feedback_positive">Ok</string>
-    <string name="feedback_feedback_question">Poderia nos dar um feedback?</string>
-    <string name="feedback_generic_enjoying_app_question">Você está gostando do %1$s?</string>
-    <string name="feedback_generic_no_feedback">Tudo bem. Estamos sempre trabalhando para deixar o %1$s ainda melhor!</string>
 
-    <string name="feedback_no_feedback">Tudo bem. Estamos sempre trabalhando para deixar o dEvie ainda melhor!</string>
-    <string name="feedback_no_rating">Sem problemas! Que bom que você está curtindo o dEvie!</string>
-    <string name="feedback_rating_app_negative">Não</string>
-    <string name="feedback_rating_app_positive">Ok</string>
-    <string name="feedback_rating_app_question">Quer deixar uma avaliação na Play Store?</string>
     <string name="folder_hint_text">Pasta sem nome</string>
     <string name="folder_name" />
     <string name="folder_name_format">Pasta: %1$s</string>

@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">Náhodně</string>
 
 
-    <string name="feedback_enjoying_app_negative">Nic moc</string>
-    <string name="feedback_enjoying_app_positive">Ano!</string>
-    <string name="feedback_enjoying_app_question">Líbí se Vám dEvie?</string>
-    <string name="feedback_feedback_negative">Ne, díky</string>
-    <string name="feedback_feedback_positive">OK</string>
-    <string name="feedback_feedback_question">Nevadilo by Vám ohodnotit nás?</string>
-    <string name="feedback_generic_enjoying_app_question">Líbí se Vám %1$s?</string>
-    <string name="feedback_generic_no_feedback">"That's okay. We'll keep working hard to make %1$s better!"</string>
 
-    <string name="feedback_no_feedback">To nás mrzí. Budeme dále tvrdě pracovat na vylepšeních!</string>
-    <string name="feedback_no_rating">Nevadí! Jsme rádi, že se Vám dEvie líbí!</string>
-    <string name="feedback_rating_app_negative">Ne, díky</string>
-    <string name="feedback_rating_app_positive">OK</string>
-    <string name="feedback_rating_app_question">Což takhle ohodnotit nás na Play Store?</string>
     <string name="folder_hint_text">Nepojmenovaná složka</string>
     <string name="folder_name" />
     <string name="folder_name_format">Složka: %1$s</string>

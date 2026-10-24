@@ -264,20 +264,7 @@
     <string name="exo_controls_shuffle_description">Karıştır</string>
 
 
-    <string name="feedback_enjoying_app_negative">Pek sayılmaz</string>
-    <string name="feedback_enjoying_app_positive">Evett!</string>
-    <string name="feedback_enjoying_app_question">"dEvie'den hoşlanıyor musunuz?"</string>
-    <string name="feedback_feedback_negative">Hayır, teşekkürler</string>
-    <string name="feedback_feedback_positive">Tamam</string>
-    <string name="feedback_feedback_question">Bize geri bildirim vermeyi düşünür müsünüz?</string>
-    <string name="feedback_generic_enjoying_app_question">"dEvie'den hoşlanıyor musunuz?"</string>
-    <string name="feedback_generic_no_feedback">"Sorun değil. dEvie'yi daha iyi yapmak için daha çok çalışacağız!"</string>
 
-    <string name="feedback_no_feedback">"Sorun değil. dEvie'yi daha iyi yapmak için daha çok çalışacağız!"</string>
-    <string name="feedback_no_rating">"Endişelenmeyin! dEvie'den hoşlandığınıza sevindik!"</string>
-    <string name="feedback_rating_app_negative">Hayır, teşekkürler</string>
-    <string name="feedback_rating_app_positive">Tamam</string>
-    <string name="feedback_rating_app_question">"Bizi Play Store'da oylamaya ne dersiniz?"</string>
     <string name="folder_hint_text">Adsız Klasör</string>
     <string name="folder_name" />
     <string name="folder_name_format">Klasör: %1$s</string>
