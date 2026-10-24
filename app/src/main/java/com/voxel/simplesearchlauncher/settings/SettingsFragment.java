@@ -22,6 +22,7 @@ import com.voxel.simplesearchlauncher.activity.onboarding.PermissionsSlide;
 import com.voxel.simplesearchlauncher.analytics.AnalyticsHandler;
 import io.github.luizgrp.sectionedrecyclerviewadapter.Section;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import com.ovacoda.devie.BuildConfig;
 import com.ovacoda.devie.R;
 import java.util.ArrayList;
@@ -400,9 +401,6 @@ public class SettingsFragment extends Fragment {
     @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
         this.mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
-        /* REWORK: version footer under the switch-launcher row. */
-        TextView versionFooter = (TextView) view.findViewById(R.id.app_version_footer);
-        versionFooter.setText(getString(R.string.app_settings_version_footer, BuildConfig.VERSION_NAME, BuildConfig.GIT_SHA));
         this.mAdapter = new SectionedRecyclerViewAdapter();
         this.mSections = new Section[SettingsGroup.values().length];
         for (int i = 0; i < this.mSections.length; i++) {
@@ -423,5 +421,39 @@ public class SettingsFragment extends Fragment {
         this.mAdapter.addSection(settingsSection);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.mRecyclerView.setAdapter(this.mAdapter);
+        /* REWORK: version footer scrolls with the list, right under the
+           switch-launcher row (last section), instead of being pinned. */
+        Section versionFooterSection = new Section(SectionParameters.builder()
+                /* fork validation requires an itemResourceId even for a
+                   footer-only section; 0 content items = never inflated */
+                .itemResourceId(R.layout.settings_activity_top_level_list_item)
+                .footerResourceId(R.layout.settings_activity_version_footer)
+                .build()) {
+            @Override
+            public RecyclerView.ViewHolder getFooterViewHolder(View view) {
+                return new RecyclerView.ViewHolder(view) {};
+            }
+
+            @Override
+            public void onBindFooterViewHolder(RecyclerView.ViewHolder holder) {
+                ((TextView) holder.itemView).setText(getString(R.string.app_settings_version_footer, BuildConfig.VERSION_NAME, BuildConfig.GIT_SHA));
+            }
+
+            /* footer-only section: no content items */
+            @Override
+            public int getContentItemsTotal() {
+                return 0;
+            }
+
+            @Override
+            public RecyclerView.ViewHolder getItemViewHolder(View view) {
+                return new RecyclerView.ViewHolder(view) {};
+            }
+
+            @Override
+            public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
+            }
+        };
+        this.mAdapter.addSection(versionFooterSection);
     }
 }
