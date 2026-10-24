@@ -10,7 +10,7 @@ import com.evie.search.local.LocalSearchManager;
 import com.evie.search.model.RecentItem;
 import com.ovacoda.devie.images.IconLoader;
 import com.voxel.launcher3.MainThreadExecutor;
-import com.voxel.simplesearchlauncher.fragment.Executors;
+import com.voxel.launcher3.MainThreadExecutor;
 
 /**
  * REWORK(fresco): was ImagePipelineCleaner. Keeps the donor lifecycle
@@ -21,7 +21,7 @@ public class IconCacheCleaner implements Application.ActivityLifecycleCallbacks 
     private static final long CLEAN_DELAY_MS = 2000;
 
     private final LocalSearchManager mLocalSearchManager;
-    private final MainThreadExecutor mMainThreadExecutor = Executors.getMainThreadExecutor();
+    private final MainThreadExecutor mMainThreadExecutor = MainThreadExecutor.getInstance();
     private final IconLoader mIconLoader = IconLoader.getInstance();
     private final Runnable mCacheCleaner;
 

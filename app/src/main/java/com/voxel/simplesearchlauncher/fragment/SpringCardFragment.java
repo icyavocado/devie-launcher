@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import com.voxel.launcher3.MainThreadExecutor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,7 +62,7 @@ public abstract class SpringCardFragment extends LauncherStackableFragment {
             } else {
                 SpringCardFragment.this.mContainer.setTranslationY(0.0f);
                 SpringCardFragment.this.mSpringY.setCurrentValue(0.0d);
-                Executors.getMainThreadExecutor().post(new Runnable() { // from class: com.voxel.simplesearchlauncher.fragment.-$$Lambda$SpringCardFragment$4$QI3TVxBw5x4ZScO42u-WtRppRcQ
+                MainThreadExecutor.getInstance().post(new Runnable() { // from class: com.voxel.simplesearchlauncher.fragment.-$$Lambda$SpringCardFragment$4$QI3TVxBw5x4ZScO42u-WtRppRcQ
                     @Override // java.lang.Runnable
                     public final void run() {
                         SpringCardFragment.AnonymousClass4 anonymousClass5 = AnonymousClass4.this;
@@ -179,7 +180,7 @@ public abstract class SpringCardFragment extends LauncherStackableFragment {
         this.mSpringY.addListener(springListener);
         LauncherStackableFragment.OnFragmentInteractionListener onFragmentInteractionListener = (LauncherStackableFragment.OnFragmentInteractionListener) this.getActivity();
         if (onFragmentInteractionListener != null && onFragmentInteractionListener.providesTransitionAnimation()) {
-            Executors.getMainThreadExecutor().post(new Runnable() { // from class: com.voxel.simplesearchlauncher.fragment.-$$Lambda$SpringCardFragment$sBA8VhxI1l8hMLTqXk-cWwPBWFU
+            MainThreadExecutor.getInstance().post(new Runnable() { // from class: com.voxel.simplesearchlauncher.fragment.-$$Lambda$SpringCardFragment$sBA8VhxI1l8hMLTqXk-cWwPBWFU
                 @Override // java.lang.Runnable
                 public final void run() {
                     springListener.onSpringAtRest(SpringCardFragment.this.mSpringY);

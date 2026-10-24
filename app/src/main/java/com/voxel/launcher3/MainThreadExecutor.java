@@ -8,6 +8,17 @@ import java.util.concurrent.TimeUnit;
 
 /* JADX INFO: loaded from: classes.dex */
 public class MainThreadExecutor extends AbstractExecutorService {
+    private static MainThreadExecutor sInstance;
+
+    /* REWORK: was a lazily-held singleton in the trivial fragment/Executors
+       wrapper; the holder lives here now. */
+    public static synchronized MainThreadExecutor getInstance() {
+        if (sInstance == null) {
+            sInstance = new MainThreadExecutor();
+        }
+        return sInstance;
+    }
+
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
     @Override // java.util.concurrent.ExecutorService

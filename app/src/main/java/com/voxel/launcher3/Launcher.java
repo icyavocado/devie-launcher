@@ -114,7 +114,7 @@ import com.voxel.simplesearchlauncher.activity.SafeActivityStarter;
 import com.voxel.simplesearchlauncher.allapps.AllAppsFragment;
 import com.voxel.simplesearchlauncher.analytics.AnalyticsHandler;
 import com.voxel.simplesearchlauncher.appoptions.AppOptionsFragment;
-import com.voxel.simplesearchlauncher.fragment.Executors;
+
 import com.voxel.simplesearchlauncher.fragment.FolderFragment;
 import com.voxel.simplesearchlauncher.fragment.LauncherRestoredFragment;
 import com.voxel.simplesearchlauncher.fragment.LauncherStackableFragment;
@@ -4317,7 +4317,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             this.mWorkspace.getCustomContentCallbacks().onHide();
         }
         NotificationController.getInstance(this).pause();
-        Executors.getMainThreadExecutor().execute(this.mForgetWallpaperRunnable, 1000L);
+        MainThreadExecutor.getInstance().execute(this.mForgetWallpaperRunnable, 1000L);
         this.mSearchPresenter.clearDragSink();
     }
 
@@ -4374,7 +4374,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     protected void onResume() {
         System.currentTimeMillis();
         super.onResume();
-        Executors.getMainThreadExecutor().removeCallback(this.mForgetWallpaperRunnable);
+        MainThreadExecutor.getInstance().removeCallback(this.mForgetWallpaperRunnable);
         this.mQsbSearchView.setUseSubtleBackground(SettingsStorage.getInstance().getSearchBarStyle() == 1);
         this.mQsbSearchViewScroller.put(this, SettingsStorage.getInstance().getSearchBarDesktopEnabled() ? 0.0f : getSearchBarHiddenHeight());
         this.mAllAppsUpChevron.setVisibility(SettingsStorage.getInstance().isAppDrawerHintEnabled() ? 0 : 4);

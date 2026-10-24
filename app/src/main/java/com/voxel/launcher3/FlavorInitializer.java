@@ -3,9 +3,7 @@ package com.voxel.launcher3;
 import android.content.Context;
 import com.evie.models.frequentlyused.FrequentlyUsedAnalyticsFilter;
 import com.evie.models.frequentlyused.FrequentlyUsedModel;
-import com.voxel.simplesearchlauncher.analytics.AnalyticsFilterChain;
 import com.voxel.simplesearchlauncher.analytics.AnalyticsHandler;
-import com.voxel.simplesearchlauncher.analytics.LauncherAnalyticsFilter;
 import com.voxel.simplesearchlauncher.dagger.LauncherAppComponent;
 import com.voxel.simplesearchlauncher.iconpack.IconPackManager;
 import com.voxel.simplesearchlauncher.model.AppsInfoIconFilter;
@@ -16,7 +14,6 @@ import javax.inject.Provider;
 /* REWORK(fresco): OkHttpClient + ConnectionPoolKiller fields are gone with the
  * drawee pipeline. */
 public class FlavorInitializer {
-    private final AnalyticsFilterChain mAnalyticsFilterChain = new AnalyticsFilterChain();
     private final Context mContext;
     FrequentlyUsedModel mFrequentlyUsedModel;
     Provider<AppsInfoIconFilter> mIconFilterProvider;
@@ -30,11 +27,9 @@ public class FlavorInitializer {
 
     public void postDaggerInit() {
         LauncherApplication.getInjector(this.mContext).getLauncherAppComponent().inject(this);
-        this.mAnalyticsFilterChain.addFilter(new FrequentlyUsedAnalyticsFilter(this.mFrequentlyUsedModel));
     }
 
     public void preDaggerInit() {
-        this.mAnalyticsFilterChain.addFilter(new LauncherAnalyticsFilter());
-        AnalyticsHandler.init(this.mContext, this.mAnalyticsFilterChain);
+        AnalyticsHandler.init(this.mContext, new FrequentlyUsedAnalyticsFilter(this.mFrequentlyUsedModel));
     }
 }
