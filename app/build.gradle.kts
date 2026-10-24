@@ -29,8 +29,8 @@ android {
         applicationId = "com.ovacoda.devie"
         minSdk = 21
         targetSdk = 35
-        versionCode = 21408017
-        versionName = "2.14.8-rw5"
+        versionCode = 21408018
+        versionName = "2.14.8-rw6"
         buildConfigField("String", "GIT_SHA", "\"$gitSha\"")
     }
 
@@ -101,9 +101,12 @@ android {
     }
 
     lint {
-        // REWORK: the decompile shipped the whole merged (app + libs) resource table,
-        // so release lint trips on lib-owned cycles/decls reproduced in our res.
-        // checkReleaseBuilds stays off until the resource table is trimmed properly.
+        // REWORK: checkReleaseBuilds stays off — the decompile merged the whole
+        // lib resource tables into our res (styles.xml keeps lib-owned entries);
+        // resource pruning removed ids/colors/dimens/strings/locales, but the
+        // remaining merged style table still trips release lint on cycles that
+        // live in the libraries' own copies. Cost accepted; shrinkResources
+        // already strips dead res from the APK at link time.
         checkReleaseBuilds = false
     }
 
