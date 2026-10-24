@@ -1,7 +1,5 @@
 package com.evie.search.dagger;
 
-import com.evie.common.services.analytics.AnalyticsService;
-import com.evie.common.services.events.EventService;
 import com.evie.common.services.links.LinkResolver;
 import com.evie.search.SearchPresenter;
 import com.evie.search.SearchPresenter_MembersInjector;
@@ -22,8 +20,6 @@ import javax.inject.Provider;
 
 /* JADX INFO: loaded from: classes.dex */
 public final class DaggerSearchComponent implements SearchComponent {
-    private Provider<AnalyticsService> analyticsServiceProvider;
-    private Provider<EventService> eventServiceProvider;
     private Provider<LinkResolver> linkResolverProvider;
     private Provider<SearchShortcutHandler> searchShortcutHandlerProvider;
 
@@ -54,9 +50,7 @@ public final class DaggerSearchComponent implements SearchComponent {
 
     private void initialize(SearchModule searchModule) {
         this.searchShortcutHandlerProvider = DoubleCheck.provider(SearchModule_SearchShortcutHandlerFactory.create(searchModule));
-        this.analyticsServiceProvider = DoubleCheck.provider(SearchModule_AnalyticsServiceFactory.create(searchModule));
-        this.eventServiceProvider = DoubleCheck.provider(SearchModule_EventServiceFactory.create(searchModule, this.analyticsServiceProvider));
-        this.linkResolverProvider = DoubleCheck.provider(SearchModule_LinkResolverFactory.create(searchModule, this.eventServiceProvider, this.analyticsServiceProvider));
+        this.linkResolverProvider = DoubleCheck.provider(SearchModule_LinkResolverFactory.create(searchModule));
     }
 
     private FrequentlyUsedItemPresenter injectFrequentlyUsedItemPresenter(FrequentlyUsedItemPresenter frequentlyUsedItemPresenter) {

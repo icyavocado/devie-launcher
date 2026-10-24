@@ -84,7 +84,7 @@ import butterknife.ButterKnife;
 import com.evie.common.dragndrop.DragSink;
 import com.evie.common.dragndrop.DragSource;
 import com.evie.common.dragndrop.ItemInfoCommon;
-import com.evie.common.services.links.Link;
+
 import com.evie.models.frequentlyused.FrequentlyUsedModel;
 import com.evie.search.SearchPresenter;
 import com.evie.search.local.LocalSearchManager;

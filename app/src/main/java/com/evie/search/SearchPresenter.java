@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Handler;
 import com.evie.common.SearchSettings;
 import com.evie.common.dragndrop.DragSink;
-import com.evie.common.services.analytics.BaseAnalyticsService;
 import com.evie.models.frequentlyused.FrequentlyUsedModel;
 import com.evie.models.frequentlyused.data.FrequentlyUsedApp;
 import com.evie.search.dagger.DaggerSearchComponent;
@@ -156,7 +155,7 @@ public class SearchPresenter {
         if (this.mAppAvailabilityProvider == null) {
             this.mAppAvailabilityProvider = new AppAvailabilityProvider.DefaultProvider();
         }
-        this.searchComponent = DaggerSearchComponent.builder().searchModule(new SearchModule(applicationContext, new BaseAnalyticsService(), this.mAdapter)).build();
+        this.searchComponent = DaggerSearchComponent.builder().searchModule(new SearchModule(applicationContext, this.mAdapter)).build();
         this.searchComponent.inject(this);
         this.mContext = applicationContext;
         this.mSharedPreferencesListener = new SharedPreferences.OnSharedPreferenceChangeListener() { // from class: com.evie.search.-$$Lambda$SearchPresenter$fkUNgwFswgpz5_SYBlqwPQFpP-I

@@ -11,22 +11,13 @@ import android.net.Uri;
 import android.text.TextUtils;
 import androidx.browser.customtabs.CustomTabsIntent;
 import com.evie.common.SearchSettings;
-import com.evie.common.services.analytics.AnalyticsService;
-import com.evie.common.services.analytics.models.AnalyticsData;
-import com.evie.common.services.events.EventService;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import timber.log.Timber;
 
-/* JADX INFO: loaded from: classes.dex */
+/* REWORK: analytics + event-service plumbing removed; this resolver only
+ * opens links (custom tabs, contacts, tel, deep links, web search, apps). */
 public class LinkResolver {
-    private final AnalyticsService analytics;
-    private final EventService events;
-
-    public LinkResolver(EventService eventService, AnalyticsService analyticsService) {
-        this.events = eventService;
-        this.analytics = analyticsService;
-    }
 
     private Intent getActionViewIntent(Uri uri, String str, PackageManager packageManager) {
         Intent intent = new Intent("android.intent.action.VIEW", uri);
@@ -62,73 +53,43 @@ public class LinkResolver {
     }
 
     /* JADX WARN: Can't fix incorrect switch cases order, some code will duplicate */
-    /* JADX WARN: Code duplicated, block: B:117:0x025b  */
-    /* JADX WARN: Code duplicated, block: B:53:0x00d1  */
-    /* JADX WARN: Code duplicated, block: B:63:0x0121  */
     public boolean resolve(Context context, LinkRequest linkRequest) {
         Intent data;
-        /* REWORK: jadx left this def blank on the CustomTabs fallback path. */
-        boolean z = true;
         String str;
         boolean z2;
         String strApp = linkRequest.app();
-        AnalyticsData analyticsData = linkRequest.analyticsData();
         for (String str2 : linkRequest.links()) {
             if (!TextUtils.isEmpty(str2)) {
                 Uri uri = Uri.parse(str2);
                 String scheme = uri.getScheme();
-                if (TextUtils.isEmpty(scheme)) {
-                    continue;
-                } else {
+                if (!TextUtils.isEmpty(scheme)) {
                     PackageManager packageManager = context.getPackageManager();
                     switch (scheme) {
                         case "http":
                         case "https":
                             if (TextUtils.isEmpty(strApp)) {
                                 data = null;
-                                z = false;
                             } else {
                                 Intent intent = new Intent("android.intent.action.VIEW", uri);
                                 intent.addFlags(268435456);
                                 intent.setPackage(strApp);
-                                if (packageManager.queryIntentActivities(intent, 0).size() > 0) {
-                                    data = intent;
-                                    z = true;
-                                } else {
-                                    data = null;
-                                    z = false;
-                                }
+                                data = packageManager.queryIntentActivities(intent, 0).size() > 0 ? intent : null;
                             }
                             if (data == null) {
                                 data = new CustomTabsIntent.Builder().setShowTitle(true).build().intent.setData(uri);
-                                if (uri != null) {
-                                    this.analytics.recordScreenViewEvent("web", null, null, uri.toString(), null);
-                                }
-                                break;
                             }
                             break;
                         case "contact":
-                            // REWORK: contact card renderer removed; open the contact directly.
+                            /* REWORK: contact card renderer removed; open the contact directly. */
                             data = new Intent("android.intent.action.VIEW");
                             data.setData(Uri.parse("content://com.android.contacts/contacts/" + uri.getSchemeSpecificPart()));
-                            z = true;
                             break;
                         case "market":
                             data = new Intent("android.intent.action.VIEW", uri);
-                            z = true;
                             break;
                         case "tel":
                             data = context.checkCallingOrSelfPermission("android.permission.CALL_PHONE") == 0 ? new Intent("android.intent.action.CALL", uri) : getActionViewIntent(uri, "default.call", packageManager);
-                            z = true;
                             break;
-                        case "allapps":
-                            this.events.broadcastAllAppsEvent(analyticsData);
-                            linkRequest.callback().onResolved(null);
-                            return true;
-                        case "settings":
-                            this.events.broadcastSettingsEvent(analyticsData);
-                            linkRequest.callback().onResolved(null);
-                            return true;
                         case "settingsdeeplink":
                             String[] strArrSplit = uri.getSchemeSpecificPart().split("\\|");
                             if (strArrSplit.length == 2) {
@@ -138,12 +99,7 @@ public class LinkResolver {
                                 data = new Intent(strArrSplit[0]);
                             }
                             data.addFlags(268468224);
-                            z = false;
                             break;
-                        case "termsofservice":
-                            this.events.broadcastTermsOfServiceEvent();
-                            linkRequest.callback().onResolved(null);
-                            return true;
                         case "websearch":
                             int searchEngine = SearchSettings.getInstance(context).getSearchEngine();
                             String[] strArrSplit2 = uri.getSchemeSpecificPart().split("\\|");
@@ -170,7 +126,6 @@ public class LinkResolver {
                                     break;
                             }
                             if (data != null) {
-                                z = true;
                                 break;
                             } else {
                                 data = new Intent("android.intent.action.VIEW");
@@ -180,9 +135,8 @@ public class LinkResolver {
                                     break;
                                 } catch (UnsupportedEncodingException unused) {
                                     Timber.e("Error encoding search query", new Object[0]);
+                                    break;
                                 }
-                                z = true;
-                                break;
                             }
                         case "app":
                             String[] strArrSplit3 = uri.getSchemeSpecificPart().split("\\|");
@@ -208,17 +162,12 @@ public class LinkResolver {
                                 data = launchIntentForPackage;
                             }
                             data.addFlags(268435456);
-                            z = false;
                             break;
                         default:
                             data = getActionViewIntent(uri, strApp, packageManager);
-                            z = true;
                             break;
                     }
                     if (data != null && linkRequest.callback().onResolved(data)) {
-                        if (analyticsData != null) {
-                            this.analytics.recordLinkResolutionEvent(analyticsData, uri, data, z);
-                        }
                         if (getActivity(context) == null) {
                             data.addFlags(268435456);
                         }

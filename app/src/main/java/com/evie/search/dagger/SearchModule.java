@@ -1,35 +1,23 @@
 package com.evie.search.dagger;
 
 import android.content.Context;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import com.evie.common.services.analytics.AnalyticsService;
-import com.evie.common.services.events.EventService;
 import com.evie.common.services.links.LinkResolver;
 import com.evie.search.SearchAdapter;
 import com.evie.search.SearchShortcutHandler;
 
-/* JADX INFO: loaded from: classes.dex */
+/* REWORK: analytics + event-service providers removed; module now carries
+ * only the search adapter wiring. */
 public class SearchModule {
     private SearchAdapter adapter;
-    private AnalyticsService analyticsService;
     private Context context;
 
-    public SearchModule(Context context, AnalyticsService analyticsService, SearchAdapter searchAdapter) {
+    public SearchModule(Context context, SearchAdapter searchAdapter) {
         this.context = context;
-        this.analyticsService = analyticsService;
         this.adapter = searchAdapter;
     }
 
-    AnalyticsService analyticsService() {
-        return this.analyticsService;
-    }
-
-    EventService eventService(AnalyticsService analyticsService) {
-        return new EventService(LocalBroadcastManager.getInstance(this.context), analyticsService);
-    }
-
-    LinkResolver linkResolver(EventService eventService, AnalyticsService analyticsService) {
-        return new LinkResolver(eventService, analyticsService);
+    LinkResolver linkResolver() {
+        return new LinkResolver();
     }
 
     SearchShortcutHandler searchShortcutHandler() {
