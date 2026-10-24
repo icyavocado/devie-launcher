@@ -67,18 +67,24 @@ public class ResetLauncherActivity extends Activity {
            reflection, raw HOME startActivity) is all dead on modern Android — the
            launcher-loader/loader saw no role change and the raw HOME intent just
            foregrounded the currently-set home (the user reads this as "dEvie
-           crashed"). ROLE_HOME request gives the one-tap system dialog. */
+           crashed"). ROLE_HOME request gives the one-tap system dialog. When
+           dEvie IS already the default home there is nothing to request — the
+           row's contract is "switch to another launcher", so hand the user the
+           system default-apps page where any launcher can be picked. */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             RoleManager roleManager = (RoleManager) activity.getSystemService(RoleManager.class);
-            if (roleManager != null && roleManager.isRoleAvailable(RoleManager.ROLE_HOME)
-                    && !roleManager.isRoleHeld(RoleManager.ROLE_HOME)) {
-                try {
-                    activity.startActivityForResult(roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME), 47161);
-                } catch (Exception unused) {
-                    LaunchUtil.startActivitySafely(activity, roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME));
+            if (roleManager != null && roleManager.isRoleAvailable(RoleManager.ROLE_HOME)) {
+                if (!roleManager.isRoleHeld(RoleManager.ROLE_HOME)) {
+                    try {
+                        activity.startActivityForResult(roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME), 47161);
+                    } catch (Exception unused) {
+                        LaunchUtil.startActivitySafely(activity, roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME));
+                    }
+                } else {
+                    activity.startActivity(new Intent("android.settings.HOME_SETTINGS"));
                 }
+                return;
             }
-            return;
         }
         PackageManager packageManager = activity.getPackageManager();
         packageManager.setComponentEnabledSetting(sResetComponentName, 1, 1);
