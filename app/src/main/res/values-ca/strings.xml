@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abandoned_clean_this">Elimina</string>
+    <string name="abandoned_promise_explanation">"L'aplicació per a aquesta icona no està instal·lada. Pots eliminar la icona, o cercar la aplicació i instal·lar-la manualment."</string>
+    <string name="abandoned_promises_title">Aquesta aplicació no està instal·lada</string>
+    <string name="abandoned_search">Cerca</string>
+
+
+    <string name="abc_action_menu_overflow_description">Més opcions</string>
+    <string name="abc_action_mode_done">Fet</string>
+
+
+    <string name="abc_capital_off">DESACTIVAT</string>
+    <string name="abc_capital_on">ACTIVAT</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Cerca...</string>
+    <string name="abc_searchview_description_clear">Esborra la consulta</string>
+
+    <string name="abc_searchview_description_search">Cerca</string>
+    <string name="abc_searchview_description_submit">Envia la consulta</string>
+    <string name="abc_searchview_description_voice">Cerca per veu</string>
+
+
+    <string name="abc_toolbar_collapse_description">Replega</string>
+    <string name="activity_not_found">"L'aplicació no està instal·lada."</string>
+    <string name="admin_receiver_status_disable_warning">"Advertència: requereix permís d'administrador en el dispositiu perquè funcioni la funció \"Bloqueja\". Desactivar-lo requerirà la reactivació del permís per tal de que la funció torni a funcionar."</string>
+    <string name="all_apps">Totes les aplicacions</string>
+
+    <string name="all_apps_home_button_label">Pantalla principal</string>
+    <string name="all_apps_new_section">NOU</string>
+    <string name="all_apps_set_default_launcher_text">"Estableix dEvie com el teu llançador per defecte per obtenir una pantalla d'inici més simple i ràpida."</string>
+    <string name="announce_selection">Seleccionat %1$s</string>
+    <string name="app_name">dEvie</string>
+    <string name="app_options_app_info">"Informació de l'aplicació"</string>
+    <string name="app_options_change_icon">Canvia la icona</string>
+    <string name="app_options_label">"Opcions d'aplicació"</string>
+    <string name="app_options_uninstall">Desinstal·la</string>
+
+    <string name="app_settings_alert_dialog_double_tap_msg">"Bloqueja immediatament. Requereix el codi PIN/Partó de desbloqueig, l'empremta digital NO funciona degut a limitacions del sistema."</string>
+
+    <string name="app_settings_badge_configure_gmail">Configura Gmail</string>
+    <string name="app_settings_badge_notification_permission_button">"Habilita l'accés"</string>
+    <string name="app_settings_badge_notification_permission_description">Per habilitar el recompte de no llegits, has de concedir accés a dEvie a les teves notificacions.</string>
+    <string name="app_settings_badge_section_notification">Recompte de notificacions</string>
+    <string name="app_settings_badge_section_notification_description">"dEvie dedueix un recompte de xifres basades en el nombre de notificacions d'una aplicació."</string>
+    <string name="app_settings_badge_section_unread">Recompte de no llegits</string>
+    <string name="app_settings_badge_section_unread_description">"dEvie rep un recompte de no llegits fiable d'aquestes aplicacions."</string>
+    <string name="app_settings_badge_style">"Estil de l'indicador"</string>
+    <string name="app_settings_badge_style_count">Nombre</string>
+    <string name="app_settings_badge_style_dots">Punts</string>
+    <string name="app_settings_dock_background_alpha">Opacitat del fons</string>
+    <string name="app_settings_dock_background_blur">Fons borrós</string>
+
+
+    <string name="app_settings_gestures_dialog_lock_type">Selecciona el mètode de bloqueig de pantalla</string>
+
+
+    <string name="app_settings_gestures_double_tap_lock_type_device_admin_title">Bloqueig instantani</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_description">"Bloqueja el dispositiu després de 5-10 segons amb la pantalla apagada. L'empremta digital funciona com a mètode de desbloqueig."</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_title">Bloqueig amb temporitzador</string>
+
+
+
+
+    <string name="app_settings_hide_apps">Oculta aplicacions</string>
+    <string name="app_settings_hide_apps_dialog_confirm">"Algunes de les aplicacions que has seleccionat per ocultar són a la pantalla d'inici. Vols mantenir-les o eliminar-les?"</string>
+    <string name="app_settings_hide_apps_dialog_confirm_keep">Manté</string>
+    <string name="app_settings_hide_apps_dialog_confirm_remove">Suprimeix</string>
+    <string name="app_settings_hide_apps_hide_from_search">Amaga de la cerca</string>
+    <string name="app_settings_hide_apps_hide_from_search_subtext">No mostris apps amagades a la cerca</string>
+    <string name="app_settings_home_screen_layout_columns">Columnes</string>
+    <string name="app_settings_home_screen_layout_icon_size">"Mida d'icona"</string>
+    <string name="app_settings_home_screen_layout_rows">Files</string>
+
+    <string name="app_settings_item_app_drawer_display_style">Estil de visualització</string>
+    <string name="app_settings_item_app_drawer_display_style_dialog_title">"Selecciona l'estil de visualització"</string>
+    <string name="app_settings_item_app_drawer_display_style_grid">Quadrícula</string>
+    <string name="app_settings_item_app_drawer_display_style_list">Llista</string>
+    <string name="app_settings_item_app_drawer_error_grid_only">Disseny de quadrícula únicament</string>
+    <string name="app_settings_item_app_drawer_index_style">"Estil de l'índex"</string>
+    <string name="app_settings_item_app_drawer_index_style_classic_scrollbar">Barra de desplaçament clàssica</string>
+    <string name="app_settings_item_app_drawer_index_style_dialog_title">"Selecciona l'estil de l'índex"</string>
+    <string name="app_settings_item_app_drawer_index_style_vertical_letters">Lletres verticals</string>
+    <string name="app_settings_item_app_drawer_show_new_apps">Visualitza les noves aplicacions</string>
+    <string name="app_settings_item_app_drawer_title">"Calaix d'aplicacions"</string>
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_backup">Crea una còpia de seguretat ara</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog">La còpia de seguretat ha fallat</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_positive">"D'acord"</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_subtext">"Malauradament no s'ha pogut restablir la teva còpia de seguretat. Si us plau contacta'ns per poder-te ajudar."</string>
+    <string name="app_settings_item_backup_restore_backup_progress">Creant una còpia de de seguretat...</string>
+    <string name="app_settings_item_backup_restore_backup_subtext">"Guarda el disseny de la teva pantalla d'inici i les teves configuracions."</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog">Còpia de seguretat creada amb èxit!</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_positive">"D'acord"</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_subtext">"Ara pots restaurar les teves icones, ginys i diseny de carpetes des d'aquesta còpia de seguretat en qualsevol dispositiu."</string>
+
+
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_restore">Restableix</string>
+
+    <string name="app_settings_item_backup_restore_restore_dialog">Selecciona una còpia de seguretat</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog">Restauració fallida</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog_subtext">"Malauradament no s'ha pogut restablir la teva còpia de seguretat. Si us plau contacta'ns per poder-te ajudar."</string>
+    <string name="app_settings_item_backup_restore_restore_progress">Restaurant la teva configuració...</string>
+    <string name="app_settings_item_backup_restore_restore_subtext">Restaura les icones, ginys i el disseny de carpetes.</string>
+
+
+
+
+    <string name="app_settings_item_backup_restore_title">Còpia de seguretat i Restauració</string>
+    <string name="app_settings_item_badges_title">Recompte de no llegits</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite">Has assignat algunes aplicacions com a icones personalitzades. Vols reemplaçar aquestes icones de %1$s o conservar-les com estan?</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_keep">Manté</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_replace">Reemplaçar</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_message">Estàs segur que vols eliminar tots els elements recents?</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_title">Esborra els resultats de cerca recents?</string>
+    <string name="app_settings_item_customization_header">PERSONALITZACIÓ</string>
+    <string name="app_settings_item_desktop_app_drawer_hint_title">"Mostra un indicatiu pel calaix d'aplicacions (^)"</string>
+    <string name="app_settings_item_desktop_lock_subtitle">"Impedeix modificacions a la pantalla d'inici"</string>
+    <string name="app_settings_item_desktop_lock_title">"Bloqueja la pantalla d'inici"</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_subtitle">"El fons de pantalla es mou mentre desplaces la pantalla d'inici"</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_title">Desplaça el fons de pantalla</string>
+
+
+    <string name="app_settings_item_desktop_title">"Pantalla d'inici"</string>
+
+
+    <string name="app_settings_item_dock_title">Acoblador</string>
+
+
+    <string name="app_settings_item_feedback_title">Comentaris</string>
+    <string name="app_settings_item_folder_title">Carpetes</string>
+    <string name="app_settings_item_folders_alpha_sort">Ordenar el contingut de les carpetes alfabèticament</string>
+    <string name="app_settings_item_folders_name">Carpeta</string>
+    <string name="app_settings_item_folders_shape">Forma de la icona de carpeta</string>
+    <string name="app_settings_item_folders_shape_circle">Cercle</string>
+    <string name="app_settings_item_folders_shape_dialog_title">Selecciona la forma de la icona de la carpeta</string>
+    <string name="app_settings_item_folders_shape_square">Quadrat</string>
+    <string name="app_settings_item_folders_shape_squircle">Quadrat circular</string>
+    <string name="app_settings_item_general_header">GENERAL</string>
+    <string name="app_settings_item_gestures_title">Gestos</string>
+    <string name="app_settings_item_icon_normalization_subtext">Canvia la mida de les icones per fer que les seves mides siguin semblants</string>
+    <string name="app_settings_item_icon_normalization_text">Normalitza les icones</string>
+    <string name="app_settings_item_icon_pack_title">"Paquet d'icones"</string>
+    <string name="app_settings_item_layout_inherit_subtitle">"Ajusta la configuració amb el disseny de la pantalla d'inici"</string>
+    <string name="app_settings_item_layout_inherit_title">"Copia el disseny de la pantalla d'inici"</string>
+
+    <string name="app_settings_item_permission_required">Permissos requerits!</string>
+
+    <string name="app_settings_item_search_auto_complete_title">Obre el primer resultat al navegador</string>
+    <string name="app_settings_item_search_bar_desktop_enable">"Mostra la barra de cerques a la pantalla d'inici"</string>
+    <string name="app_settings_item_search_bar_style">Estil de la barra de cerca</string>
+
+    <string name="app_settings_item_search_bar_style_subtle">Mode subtil</string>
+    <string name="app_settings_item_search_bar_style_subtle_description">La barra de cerca es dissol amb el fons de pantalla.</string>
+    <string name="app_settings_item_search_bar_style_white">Blanc</string>
+    <string name="app_settings_item_search_bar_style_white_description">La barra de cerca és blanca.</string>
+    <string name="app_settings_item_search_clear_recent">Esborra els resultats de cerca recents</string>
+    <string name="app_settings_item_search_clear_recent_subtext">Esborra tots els elements del llistat de resultats recents.</string>
+    <string name="app_settings_item_search_done_button_close_keyboard">Oculta el teclat</string>
+    <string name="app_settings_item_search_done_button_dialog_title">Selecciona acció</string>
+    <string name="app_settings_item_search_done_button_open_first_result">Obre el primer resultat</string>
+    <string name="app_settings_item_search_done_button_title">Acció del botó Fet</string>
+    <string name="app_settings_item_search_engine">Motor de cerca</string>
+    <string name="app_settings_item_search_engine_bing">Bing</string>
+    <string name="app_settings_item_search_engine_dialog_title">Selecciona Motor de Cerca</string>
+    <string name="app_settings_item_search_engine_duck_duck_go">DuckDuckGo</string>
+    <string name="app_settings_item_search_engine_google">Google</string>
+    <string name="app_settings_item_search_include_frequently_used">Aplicacions utilitzades freqüentment</string>
+    <string name="app_settings_item_search_include_frequently_used_subtext">Mostra les aplicacions utilitzades freqüentment a la barra de cerca</string>
+    <string name="app_settings_item_search_recents_include_web_results">Inclou les cerques a la web en els resultats recents</string>
+    <string name="app_settings_item_search_title">Cerca</string>
+    <string name="app_settings_item_switch_launcher">Canvia a una altre launcher</string>
+
+    <string name="app_settings_item_toast_clear_recent_results">"S'han eliminat els resultats recents."</string>
+    <string name="app_settings_size_label">Mida</string>
+    <string name="app_settings_title">dEvie Ajustaments</string>
+
+    <string name="button_label_cancel">Cancel·la</string>
+
+
+
+
+
+    <string name="change_icon_icon_count">%1$d icones</string>
+    <string name="change_icon_loading">"Carregant suggerències d'icones, si us plau espera..."</string>
+    <string name="change_icon_packs">Paquets</string>
+    <string name="change_icon_suggested">Suggerit</string>
+    <string name="change_icon_title"><b>Escull una icona</b> per \"%1$s\"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="contact_action_call">Truca</string>
+    <string name="contact_action_call_type">Truca %1$s</string>
+    <string name="contact_action_email">Envia un correu electrònic a</string>
+    <string name="contact_action_text">Envia un missatge a</string>
+    <string name="contact_action_text_type">Envia un missatge a %1$s</string>
+
+    <string name="contact_entity_chat">Xat %1$s</string>
+    <string name="contact_entity_message">Enviar missatge a %1$s</string>
+    <string name="contact_entity_open_in_contacts">Obre a Contactes</string>
+    <string name="contact_entity_skype">Skype %1$s</string>
+    <string name="crop_wallpaper">Retalla fons de pantalla</string>
+    <string name="default_scroll_format">Pàgina %1$d de %2$d</string>
+
+
+    <string name="delete_target_cancel_label">Cancel·la</string>
+    <string name="delete_target_label">Eliminar</string>
+
+    <string name="desktop_unlock_fingerprint">Desbloqueja amb Empremta</string>
+    <string name="desktop_unlock_long_press">Manté presionat per Desbloquejar</string>
+    <string name="desktop_unlocked_message">Escriptori desbloquejat</string>
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Avança ràpidament</string>
+    <string name="exo_controls_next_description">Pista següent</string>
+    <string name="exo_controls_pause_description">Posa en pausa</string>
+    <string name="exo_controls_play_description">Reprodueix</string>
+    <string name="exo_controls_previous_description">Pista anterior</string>
+
+
+
+    <string name="exo_controls_rewind_description">Rebobina</string>
+    <string name="exo_controls_shuffle_description">Reprodueix aleatòriament</string>
+
+
+
+    <string name="folder_hint_text">Carpeta sense nom</string>
+    <string name="folder_name" />
+    <string name="folder_name_format">Carpeta: %1$s</string>
+    <string name="folder_opened">Carpeta oberta, %1$d per %2$d</string>
+    <string name="folder_renamed">Nom de la carpeta canviat a %1$s</string>
+    <string name="folder_tap_to_close">Prem per tancar la carpeta</string>
+    <string name="folder_tap_to_rename">Prem per desar el nou nom</string>
+    <string name="gadget_error_text">Problema carregant el giny</string>
+    <string name="gadget_setup_text">Configuració</string>
+    <string name="gesture_action_app_drawer">"Calaix d'aplicacions"</string>
+    <string name="gesture_action_evie_search">"Cerca d'dEvie"</string>
+    <string name="gesture_action_expand_notifications">Obre la barra de notificacions</string>
+    <string name="gesture_action_google_now">Google Now</string>
+    <string name="gesture_action_google_voice_search">Cerca de veu</string>
+    <string name="gesture_action_launch_app">"Inicia l'aplicació"</string>
+    <string name="gesture_action_launch_app_with_name">"Inicia l'aplicació: %s"</string>
+    <string name="gesture_action_none">Cap</string>
+    <string name="gesture_action_screen_lock_device_admin">Bloqueig de pantalla (instantani)</string>
+    <string name="gesture_action_screen_lock_generic">Bloqueig de pantalla</string>
+    <string name="gesture_action_screen_lock_write_settings">Bloqueig de pantalla (temporitzat)</string>
+    <string name="gesture_type_double_tap">Doble toc</string>
+    <string name="gesture_type_expand">Expandeix</string>
+    <string name="gesture_type_home_button">"Botó d'inici"</string>
+    <string name="gesture_type_pinch">Pessiga</string>
+    <string name="gesture_type_swipe_down">Llisca cap avall</string>
+    <string name="gesture_type_swipe_up">Desplaça cap amunt</string>
+    <string name="gesture_type_two_finger_swipe_down">Fes lliscar dos dits cap abaix</string>
+    <string name="gesture_type_two_finger_swipe_up">Fes lliscar dos dits cap amunt</string>
+    <string name="hotseat_out_of_space">Sense espai en la safata de preferits</string>
+    <string name="icon_pack_market_search">"Cerca més paquets d'icones..."</string>
+    <string name="image_load_fail">"No s'ha pogut carregar la imatge"</string>
+
+    <string name="launcher_restored_negative">Desfés</string>
+    <string name="launcher_restored_positive">"D'acord"</string>
+    <string name="launcher_restored_subtext">Totes les teves aplicacions, ginys i configuracions han estat restaurades!</string>
+    <string name="long_press_widget_to_add">Prem i manté per seleccionar un giny.</string>
+    <string name="manifest_label_device_admin_description">Permet al llançador dEvie bloquejar la pantalla</string>
+
+
+
+
+    <string name="msg_no_generic_permission">Aquesta aplicació no té permís per realitzar aquesta acció</string>
+    <string name="msg_no_phone_permission">%1$s no té permís per realitzar trucades telefòniques</string>
+
+
+
+    <string name="notifications_header">Notificacions</string>
+
+
+
+
+
+
+    <string name="onboarding_default_home_not_now">Ara no</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="onboarding_permission_deny_access">"Denega l'accès"</string>
+    <string name="onboarding_permission_grant_access">"Permet l'accès"</string>
+    <string name="onboarding_permission_grant_limited_access">Permet accès limitat</string>
+    <string name="onboarding_permission_title">dEvie necessita la teva ajuda.</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="out_of_space">"No queda més espai en aquesta pantalla d'inici."</string>
+
+    <string name="permdesc_install_shortcut">"Permet a una aplicació crear accessos directes sense intervenció de l'usuari."</string>
+    <string name="permdesc_read_settings">"Permet que l'aplicaió consulti els accessos directes i la configuració de la Pantalla d'Inici."</string>
+    <string name="permdesc_uninstall_shortcut">"Permet a l'aplicació eliminar accessos directes sense intervenció de l'usuari."</string>
+    <string name="permdesc_write_settings">"Permet a l'aplicació canviar la configuració i els accessos directes a la pantalla d'inici."</string>
+    <string name="permission_call_text">"dEvie necessita accès al teu marcador si vols realitzar trucades des d'dEvie."</string>
+    <string name="permission_call_title">Habilita accès al marcador?</string>
+    <string name="permission_contacts_name">contactes</string>
+    <string name="permission_contacts_text">Per trobar ràpidament amics als que trucar, enviar un correu electrònic o un missatge.</string>
+    <string name="permission_contacts_title">Contactes</string>
+    <string name="permission_location_name">ubicació</string>
+    <string name="permission_location_text">Per cercar restaurants, botigues i llocs per a tu.</string>
+    <string name="permission_location_title">Ubicació</string>
+    <string name="permission_storage_name">emmagatzematge</string>
+    <string name="permission_storage_text">Per accedir als fons de pantalla del sistema per a efectes visuals. (Requerit)</string>
+    <string name="permission_storage_title">Emmagatzematge</string>
+    <string name="permission_tip">Prem <b>PERMET</b> en el quadre de diàleg %1$s</string>
+    <string name="permlab_install_shortcut">instal·la accessos directes</string>
+    <string name="permlab_read_settings">"llegir informació de la configuració de la pantalla d'inici i els accessos directes"</string>
+    <string name="permlab_uninstall_shortcut">desinstal·la accessos directes</string>
+    <string name="permlab_write_settings">"modificar la configuració de la pantalla d'inici i dels accessos directes"</string>
+    <string name="phone_number_fax_home">Fax de casa</string>
+    <string name="phone_number_fax_work">Fax de la feina</string>
+    <string name="phone_number_home">Casa</string>
+    <string name="phone_number_mobile">Mòbil</string>
+    <string name="phone_number_work">Feina</string>
+    <string name="phone_number_work_mobile">Mòbil feina</string>
+    <string name="pick_image">Escull una imatge</string>
+    <string name="pick_wallpaper">Fons de pantalla</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="reset_default_home_failure">"No s'ha pogut fer d'dEvie el teu llançador per defecte. Vols provar-ho de nou?"</string>
+    <string name="reset_default_home_import_prompt">"Hem importat la teva pantalla d'inici anterior amb èxit! Voldries fer d'dEvie el teu llançador per defecte?"</string>
+    <string name="reset_default_home_later">Desprès</string>
+    <string name="reset_default_home_prompt">"Estableix dEvie com el teu llançador per defecte per obtenir una pantalla d'inici més simple i ràpida."</string>
+    <string name="resize_label">Canvia la mida</string>
+
+
+
+
+
+
+
+    <string name="safemode_shortcut_error">Les aplicacions baixades estan desactivades en el mode segur</string>
+    <string name="search_bar_hint">Cerca</string>
+    <string name="search_frequently_used_header">Aplicacions utilitzades freqüentment</string>
+    <string name="search_local_results_header">En el teu dispositiu</string>
+
+    <string name="search_no_recents_message">"Prova cercant la teva aplicació preferida o
+un contacte al teu telèfon"</string>
+    <string name="search_no_recents_title">Sense cerques recents</string>
+    <string name="search_recent_results_header">Resultats recents</string>
+
+    <string name="settings_button_text">Ajustaments</string>
+
+
+    <string name="settings_item_about_device">En quant al dispositiu</string>
+    <string name="settings_item_account">Configuració del compte</string>
+    <string name="settings_item_airplane_mode">"Configuració del mode d'avió"</string>
+    <string name="settings_item_applications">Aplicacions</string>
+    <string name="settings_item_apps">"Configuració de l'aplicació"</string>
+    <string name="settings_item_backup_reset">Còpia de seguretat i Restauració</string>
+    <string name="settings_item_battery">Configuració de la bateria</string>
+    <string name="settings_item_bluetooth">Configuració del Bluetooth</string>
+    <string name="settings_item_date_time">"Configuració de la data i l'hora"</string>
+    <string name="settings_item_daydream">Configuració de Daydream</string>
+    <string name="settings_item_default_apps">Configuració de les aplicacions per defecte</string>
+    <string name="settings_item_developer">Opcions per al desenvolupador</string>
+    <string name="settings_item_device_info">Informació del dispositiu</string>
+    <string name="settings_item_display">Configuració de la pantalla</string>
+    <string name="settings_item_evie">"Configuració d'dEvie"</string>
+
+    <string name="settings_item_home">Configuració de la Pantalla predefinida per defecte</string>
+    <string name="settings_item_hotspot">Tethering i connexió compartida</string>
+    <string name="settings_item_input_method">"Configuració del mètode d'entrada"</string>
+    <string name="settings_item_keyboard">Configuració del teclat</string>
+    <string name="settings_item_language">Configuració de la llengua</string>
+    <string name="settings_item_launcher">Configuració del llançador</string>
+    <string name="settings_item_location">Configuració de la ubicació</string>
+    <string name="settings_item_network_operator">"Configuració de l'operador de xarxa"</string>
+    <string name="settings_item_nfc">Configuració NFC</string>
+    <string name="settings_item_notification_access">Accés a les notificacions</string>
+    <string name="settings_item_overlay_permission">Configuració del permís de sobreposició</string>
+    <string name="settings_item_screensaver">Configuració del salvapantalles</string>
+    <string name="settings_item_security">Configuració del bloqueig de pantalla i seguretat</string>
+    <string name="settings_item_sound">Configuració de so</string>
+    <string name="settings_item_storage">"Configuració de l'emmagatzematge"</string>
+
+    <string name="settings_item_wallpaper">Configuració del fons de pantalla</string>
+    <string name="settings_item_wifi">Configuració del Wi-Fi</string>
+    <string name="settings_item_wireless">Configuració de la xarxa sense fils</string>
+    <string name="settings_show_icon_labels">"Etiquetes d'icones"</string>
+
+    <string name="shortcut_error_text">"Degut a canvis del sistema, aquest accès directe ja no està disponible.
+Si us plau torna a crear-lo."</string>
+    <string name="shortcut_not_available">"L'accés directe no està disponible"</string>
+    <string name="shortcut_uninstalled">"S'ha eliminat l'accès directe \"%s\"."</string>
+
+
+
+    <string name="toast_error_lock_permission_error">dEvie no té els permisos necessaris. Si us plau re-habilita la configuració de bloqueig per solucionar-ho.</string>
+    <string name="toast_error_workspace_still_loading">"La teva pantalla d'inici encara està carregant-se. Si us plau espera un moment..."</string>
+
+
+    <string name="uninstall_system_app_text">Aquesta aplicació és part del sistema i no pot ser desinstal·lada.</string>
+    <string name="unnamed_hint_text">Sense nom</string>
+    <string name="voice_no_assistant">"L'assistent de veu no està disponible."</string>
+
+
+
+
+    <string name="wallpaper_accessibility_name">Fons de pantalla %1$d de %2$d</string>
+    <string name="wallpaper_button_text">Fons de pantalla</string>
+    <string name="wallpaper_delete">Esborra</string>
+    <string name="wallpaper_instructions">Selecciona el fons de pantalla</string>
+    <string name="wallpaper_load_fail">"No s'ha pogut carregar la imatge com a fons de pantalla"</string>
+    <string name="wallpaper_set_fail">"No s'ha pogut establir la imatge com a fons de pantalla"</string>
+    <string name="which_wallpaper_option_home_screen">"Pantalla d'inici"</string>
+    <string name="which_wallpaper_option_home_screen_and_lock_screen">"Pantalla d'inici i pantalla de bloqueig"</string>
+    <string name="which_wallpaper_option_lock_screen">Pantalla de bloqueig</string>
+    <string name="widget_button_text">Ginys</string>
+    <string name="widget_could_not_be_added_error">"No s'ha pogut afegir el giny."</string>
+    <string name="widget_dims_format">%1$d × %2$d</string>
+    <string name="workspace_scroll_format">"Pàgina d'inici %1$d de %2$d"</string>
+</resources>

@@ -8,13 +8,8 @@ plugins {
 android {
     namespace = "com.ovacoda.devie"
 
-    /* REWORK: English-only packaging — the donor's 14 other locale string
-       tables are excluded from every variant's resource table (aapt still
-       compiles the values-dirs; the tables just don't ship). */
-    androidResources {
-        localeFilters += listOf("en")
-    }
-
+    /* REWORK: English-only packaging was reverted by user decision — the
+       donor's locale tables ship again (all values-dirs included). */
     compileSdk = 35
 
     /* REWORK: short commit id baked into BuildConfig for the settings version

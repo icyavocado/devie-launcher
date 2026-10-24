@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abandoned_clean_this">Убрать</string>
+    <string name="abandoned_promise_explanation">Приложение для этой иконки не установлено. Вы можете удалить её или найти и установить приложение вручную.</string>
+    <string name="abandoned_promises_title">Приложение не установлено</string>
+    <string name="abandoned_search">Поиск</string>
+
+
+    <string name="abc_action_menu_overflow_description">Другие параметры</string>
+    <string name="abc_action_mode_done">Готово</string>
+
+
+    <string name="abc_capital_off">ОТКЛ.</string>
+    <string name="abc_capital_on">ВКЛ.</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Поиск</string>
+    <string name="abc_searchview_description_clear">Удалить запрос</string>
+
+    <string name="abc_searchview_description_search">Поиск</string>
+    <string name="abc_searchview_description_submit">Отправить запрос</string>
+    <string name="abc_searchview_description_voice">Голосовой поиск</string>
+
+
+    <string name="abc_toolbar_collapse_description">Свернуть</string>
+    <string name="activity_not_found">Приложение не установлено.</string>
+    <string name="admin_receiver_status_disable_warning">Внимание: необходимы права администратора устройства для работы функции \"Блокировка\". При их деакцивации необходима повторная активация, чтобы функции заработали.</string>
+    <string name="all_apps">Все приложения</string>
+
+    <string name="all_apps_home_button_label">Домашний экран</string>
+    <string name="all_apps_new_section">НОВЫЕ</string>
+    <string name="all_apps_set_default_launcher_text">Установите dEvie в качестве средства запуска по умолчанию, для более простого и быстрого начального экрана.</string>
+    <string name="announce_selection">Выбрано %1$s</string>
+    <string name="app_name">dEvie</string>
+    <string name="app_options_app_info">Информация</string>
+    <string name="app_options_change_icon">Сменить иконку</string>
+    <string name="app_options_label">Параметры приложения</string>
+    <string name="app_options_uninstall">Деинсталляция</string>
+
+    <string name="app_settings_alert_dialog_double_tap_msg">Моментальная блокировка. Для разблокировки требуется ПИН/Рисунок, сканер отпечатка не поддерживается.</string>
+
+    <string name="app_settings_badge_configure_gmail">Настройка Gmail</string>
+    <string name="app_settings_badge_notification_permission_button">Разрешить доступ</string>
+    <string name="app_settings_badge_notification_permission_description">Для активации значков непрочитанного, предоставьте dEvie доступ к уведомлениям.</string>
+    <string name="app_settings_badge_section_notification">Счётчик уведомлений</string>
+    <string name="app_settings_badge_section_notification_description">dEvie показывает счетчики непрочитанных на основе уведомлений приложения.</string>
+    <string name="app_settings_badge_section_unread">Счётчик непрочитанного</string>
+    <string name="app_settings_badge_section_unread_description">dEvie покажет количество новых уведомлений в этих приложениях.</string>
+    <string name="app_settings_badge_style">Стиль счётчика</string>
+    <string name="app_settings_badge_style_count">Цифра</string>
+    <string name="app_settings_badge_style_dots">Точки</string>
+    <string name="app_settings_dock_background_alpha">Непрозрачность фона</string>
+    <string name="app_settings_dock_background_blur">Размытие фона</string>
+
+
+    <string name="app_settings_gestures_dialog_lock_type">Выбрать метод блокировки экрана</string>
+
+
+    <string name="app_settings_gestures_double_tap_lock_type_device_admin_title">Мнгновенная блокировка</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_description">Блокировка с задержкой на 5-10 секунд (чёрный экран). Сканер отпечатков работает.</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_title">Таймер блокировки</string>
+
+
+
+
+    <string name="app_settings_hide_apps">Скрыть приложения</string>
+    <string name="app_settings_hide_apps_dialog_confirm">Некоторые из скрытых вами приложений находятся на вашем домашнем экране. Вы хотите оставить или убрать их?</string>
+    <string name="app_settings_hide_apps_dialog_confirm_keep">Оставить</string>
+    <string name="app_settings_hide_apps_dialog_confirm_remove">Убрать</string>
+    <string name="app_settings_hide_apps_hide_from_search">Скрыть из поиска</string>
+    <string name="app_settings_hide_apps_hide_from_search_subtext">Не показывать скрытые приложения в поиске</string>
+    <string name="app_settings_home_screen_layout_columns">Колонны</string>
+    <string name="app_settings_home_screen_layout_icon_size">Размер иконок</string>
+    <string name="app_settings_home_screen_layout_rows">Строки</string>
+
+    <string name="app_settings_item_app_drawer_display_style">Стиль отображения</string>
+    <string name="app_settings_item_app_drawer_display_style_dialog_title">Выбрать стиль отображения</string>
+    <string name="app_settings_item_app_drawer_display_style_grid">Сетка</string>
+    <string name="app_settings_item_app_drawer_display_style_list">Список</string>
+    <string name="app_settings_item_app_drawer_error_grid_only">Только для сетки</string>
+    <string name="app_settings_item_app_drawer_index_style">Стиль алфавитного указателя</string>
+    <string name="app_settings_item_app_drawer_index_style_classic_scrollbar">Классическая полоса прокрутки</string>
+    <string name="app_settings_item_app_drawer_index_style_dialog_title">Выберите стиль алфавитного указателя</string>
+    <string name="app_settings_item_app_drawer_index_style_vertical_letters">Вертикальные буквы</string>
+    <string name="app_settings_item_app_drawer_show_new_apps">Показывать новые приложения</string>
+    <string name="app_settings_item_app_drawer_title">Меню приложений</string>
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_backup">Сделать бэкап</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog">Ошибка бэкапа</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_positive">Окей</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_subtext">К сожалению, ваша резервная копия не может быть сохранена. Пожалуйста свяжитесь с нами для помощи.</string>
+    <string name="app_settings_item_backup_restore_backup_progress">Резервное копирование настроек...</string>
+    <string name="app_settings_item_backup_restore_backup_subtext">Сохраните оформление и настройки вашего домашнего экрана.</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog">Бэкап завершён!</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_positive">Окей</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_subtext">Теперь вы можете восстановить из этого бэкапа свои иконки, виджеты и папки на любом устройстве.</string>
+
+
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_restore">Восстановление</string>
+
+    <string name="app_settings_item_backup_restore_restore_dialog">Выберите бэкап</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog">Ошибка восстановления</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog_subtext">К сожалению, ваша резервная копия не может быть восстановлена. Пожалуйста свяжитесь с нами для помощи.</string>
+    <string name="app_settings_item_backup_restore_restore_progress">Восстановление ваших настроек...</string>
+    <string name="app_settings_item_backup_restore_restore_subtext">Восстановить иконки, виджеты и папки.</string>
+
+
+
+
+    <string name="app_settings_item_backup_restore_title">Бэкап и восстановление</string>
+    <string name="app_settings_item_badges_title">Счётчик непрочитанного</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite">Вы установили отдельные иконки для некоторых приложений. Хотите заменить их иконками из %1$s или оставить их неизменными?</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_keep">Оставить</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_replace">Заменить</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_message">Вы уверены, что хотите удалить последние результаты поиска?</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_title">Очистить недавние результаты?</string>
+    <string name="app_settings_item_customization_header">КАСТОМИЗАЦИЯ</string>
+    <string name="app_settings_item_desktop_app_drawer_hint_title">Показать символ меню приложений (^)</string>
+    <string name="app_settings_item_desktop_lock_subtitle">Предотвращает изменения на рабочем столе</string>
+    <string name="app_settings_item_desktop_lock_title">Блокировка рабочего стола</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_subtitle">Обои перемещаются с домашним экраном</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_title">Прокрутка обоев</string>
+
+
+    <string name="app_settings_item_desktop_title">Домашний экран</string>
+
+
+    <string name="app_settings_item_dock_title">Док-бар</string>
+
+
+    <string name="app_settings_item_feedback_title">Оставить отзыв</string>
+    <string name="app_settings_item_folder_title">Папки</string>
+    <string name="app_settings_item_folders_alpha_sort">Сортировать элементы в папках по алфавиту</string>
+    <string name="app_settings_item_folders_name">Папка</string>
+    <string name="app_settings_item_folders_shape">Форма папки</string>
+    <string name="app_settings_item_folders_shape_circle">Круг</string>
+    <string name="app_settings_item_folders_shape_dialog_title">Выберите форму папки</string>
+    <string name="app_settings_item_folders_shape_square">Квадратная</string>
+    <string name="app_settings_item_folders_shape_squircle">Скругленный</string>
+    <string name="app_settings_item_general_header">ОБЩИЕ</string>
+    <string name="app_settings_item_gestures_title">Жесты</string>
+    <string name="app_settings_item_icon_normalization_subtext">Изменить размеры иконок, чтобы их размеры были похожи</string>
+    <string name="app_settings_item_icon_normalization_text">Нормализовать иконки</string>
+    <string name="app_settings_item_icon_pack_title">Пакет иконок</string>
+    <string name="app_settings_item_layout_inherit_subtitle">Настройки соответствия к схеме главного экрана</string>
+    <string name="app_settings_item_layout_inherit_title">Наследовать от главного экрана</string>
+
+    <string name="app_settings_item_permission_required">Необходимо разрешение!</string>
+
+    <string name="app_settings_item_search_auto_complete_title">Открывать результаты Google в браузере</string>
+    <string name="app_settings_item_search_bar_desktop_enable">Показывать строку поиска на рабочем столе</string>
+    <string name="app_settings_item_search_bar_style">Стиль строки поиска</string>
+
+    <string name="app_settings_item_search_bar_style_subtle">Режим смешивания</string>
+    <string name="app_settings_item_search_bar_style_subtle_description">Строка поиска сливается с обоями.</string>
+    <string name="app_settings_item_search_bar_style_white">Белый</string>
+    <string name="app_settings_item_search_bar_style_white_description">Белая строка поиска.</string>
+    <string name="app_settings_item_search_clear_recent">Очистить недавние результаты</string>
+    <string name="app_settings_item_search_clear_recent_subtext">Удалить все элементы из списка последних результатов.</string>
+    <string name="app_settings_item_search_done_button_close_keyboard">Закрыть клавиатуру</string>
+    <string name="app_settings_item_search_done_button_dialog_title">Выберите действие</string>
+    <string name="app_settings_item_search_done_button_open_first_result">Открыть первый результат</string>
+    <string name="app_settings_item_search_done_button_title">Действие кнопки завершения</string>
+    <string name="app_settings_item_search_engine">Поисковая система</string>
+    <string name="app_settings_item_search_engine_bing">Bing</string>
+    <string name="app_settings_item_search_engine_dialog_title">Выберите поисковую систему</string>
+    <string name="app_settings_item_search_engine_duck_duck_go">DuckDuckGo</string>
+    <string name="app_settings_item_search_engine_google">Google</string>
+    <string name="app_settings_item_search_include_frequently_used">Часто используемые приложения</string>
+    <string name="app_settings_item_search_include_frequently_used_subtext">Показывать часто используемые приложения в поиске</string>
+    <string name="app_settings_item_search_recents_include_web_results">Включить веб-поиск в последних результатах</string>
+    <string name="app_settings_item_search_title">Поиск</string>
+    <string name="app_settings_item_switch_launcher">Переключить на другой лаунчер</string>
+
+    <string name="app_settings_item_toast_clear_recent_results">История поиска очищена.</string>
+    <string name="app_settings_size_label">Размер</string>
+    <string name="app_settings_title">dEvie Настройки</string>
+
+    <string name="button_label_cancel">Отмена</string>
+
+
+
+
+
+    <string name="change_icon_icon_count">%1$d иконок</string>
+    <string name="change_icon_loading">Загрузка рекомендуемых иконок, пожалуйста подождите...</string>
+    <string name="change_icon_packs">Наборы</string>
+    <string name="change_icon_suggested">Рекомендуемые</string>
+    <string name="change_icon_title"><b>Выберите иконку</b> для \"%1$s\"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="contact_action_call">Звонок</string>
+    <string name="contact_action_call_type">Звонок %1$s</string>
+    <string name="contact_action_email">Email</string>
+    <string name="contact_action_text">Текст</string>
+    <string name="contact_action_text_type">Текст %1$s</string>
+
+    <string name="contact_entity_chat">Чат %1$s</string>
+    <string name="contact_entity_message">Сообщение %1$s</string>
+    <string name="contact_entity_open_in_contacts">Открыть в Контактах</string>
+    <string name="contact_entity_skype">Skype %1$s</string>
+    <string name="crop_wallpaper">Обрезать</string>
+    <string name="default_scroll_format">Страница %1$d из %2$d</string>
+
+
+    <string name="delete_target_cancel_label">Отмена</string>
+    <string name="delete_target_label">Убрать</string>
+
+    <string name="desktop_unlock_fingerprint">Разблокировка с помощью отпечатка пальца</string>
+    <string name="desktop_unlock_long_press">Удержите для разблокировки</string>
+    <string name="desktop_unlocked_message">Рабочий стол разблокирован</string>
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Перемотать вперед</string>
+    <string name="exo_controls_next_description">Следующий трек</string>
+    <string name="exo_controls_pause_description">Приостановить</string>
+    <string name="exo_controls_play_description">Воспроизвести</string>
+    <string name="exo_controls_previous_description">Предыдущий трек</string>
+
+
+
+    <string name="exo_controls_rewind_description">Перемотать назад</string>
+    <string name="exo_controls_shuffle_description">Перемешать</string>
+
+
+
+    <string name="folder_hint_text">Безымянная папка</string>
+    <string name="folder_name" />
+    <string name="folder_name_format">Папка: %1$s</string>
+    <string name="folder_opened">Папка открыта, %1$d x %2$d</string>
+    <string name="folder_renamed">Папка переименована в %1$s</string>
+    <string name="folder_tap_to_close">Нажмите, чтобы закрыть</string>
+    <string name="folder_tap_to_rename">Нажмите, чтобы переименовать</string>
+    <string name="gadget_error_text">Ошибка загрузки виджета</string>
+    <string name="gadget_setup_text">Настройка</string>
+    <string name="gesture_action_app_drawer">Меню приложений</string>
+    <string name="gesture_action_evie_search">Поиск dEvie</string>
+    <string name="gesture_action_expand_notifications">Раскрыть панель уведомлений</string>
+    <string name="gesture_action_google_now">Google Now</string>
+    <string name="gesture_action_google_voice_search">Голосовой поиск</string>
+    <string name="gesture_action_launch_app">Запустить приложение</string>
+    <string name="gesture_action_launch_app_with_name">Запустить приложение: %s</string>
+    <string name="gesture_action_none">Ничего</string>
+    <string name="gesture_action_screen_lock_device_admin">Блокировка экрана (мгновенная)</string>
+    <string name="gesture_action_screen_lock_generic">Блокировка экрана</string>
+    <string name="gesture_action_screen_lock_write_settings">Блокировка экрана (по таймеру)</string>
+    <string name="gesture_type_double_tap">Двойное нажатие</string>
+    <string name="gesture_type_expand">Расширить</string>
+    <string name="gesture_type_home_button">Кнопка «Домой»</string>
+    <string name="gesture_type_pinch">Щипок</string>
+    <string name="gesture_type_swipe_down">Потянуть вниз</string>
+    <string name="gesture_type_swipe_up">Потянуть вверх</string>
+    <string name="gesture_type_two_finger_swipe_down">Потянуть вниз двумя пальцами</string>
+    <string name="gesture_type_two_finger_swipe_up">Потянуть вверх двумя пальцами</string>
+    <string name="hotseat_out_of_space">В разделе \"Избранное\" больше нет места</string>
+    <string name="icon_pack_market_search">Больше иконпаков...</string>
+    <string name="image_load_fail">Не удалось загрузить изображение</string>
+
+    <string name="launcher_restored_negative">Отменить</string>
+    <string name="launcher_restored_positive">Окей</string>
+    <string name="launcher_restored_subtext">Все ваши приложения, виджеты и настройки были восстановлены!</string>
+    <string name="long_press_widget_to_add">Нажмите и удерживайте, чтобы выбрать виджет.</string>
+    <string name="manifest_label_device_admin_description">Предоставить dEvie доступ к экрану блокировки</string>
+
+
+
+
+    <string name="msg_no_generic_permission">Это приложение не позволяет выполнить такое действие</string>
+    <string name="msg_no_phone_permission">%1$s не позволяет совершать телефонные вызовы</string>
+
+
+
+    <string name="notifications_header">Уведомления</string>
+
+
+
+
+
+
+    <string name="onboarding_default_home_not_now">Не сейчас</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="onboarding_permission_deny_access">Запретить доступ</string>
+    <string name="onboarding_permission_grant_access">Разрешить доступ</string>
+    <string name="onboarding_permission_grant_limited_access">Разрешить ограниченный доступ</string>
+    <string name="onboarding_permission_title">dEvie нуждается в небольшой помощи от вас.</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="out_of_space">На этом экране все занято.</string>
+
+    <string name="permdesc_install_shortcut">Приложение сможет самостоятельно добавлять ярлыки.</string>
+    <string name="permdesc_read_settings">Приложение получит доступ к данным о настройках и ярлыках на главном экране.</string>
+    <string name="permdesc_uninstall_shortcut">Приложение сможет самостоятельно удалять ярлыки.</string>
+    <string name="permdesc_write_settings">Приложение сможет изменять настройки и ярлыки на главном экране.</string>
+    <string name="permission_call_text">dEvie требуется доступ к дозвону, если вы хотите совершать звонки с dEvie.</string>
+    <string name="permission_call_title">Включить автодозвон?</string>
+    <string name="permission_contacts_name">контакты</string>
+    <string name="permission_contacts_text">Чтобы быстро привлечь внимание друзей к телефону, электронной почте или тексту.</string>
+    <string name="permission_contacts_title">Контакты</string>
+    <string name="permission_location_name">местонахождение</string>
+    <string name="permission_location_text">Найти ближайшие рестораны, магазины и места для вас.</string>
+    <string name="permission_location_title">Местонахождение</string>
+    <string name="permission_storage_name">память</string>
+    <string name="permission_storage_text">Для доступа к системным обоям и визуальным эффектам. (Обязательно)</string>
+    <string name="permission_storage_title">Память</string>
+    <string name="permission_tip">Нажмите <b>РАЗРЕШИТЬ</b> в %1$s подсказке</string>
+    <string name="permlab_install_shortcut">Создание ярлыков</string>
+    <string name="permlab_read_settings">Доступ к настройкам и ярлыкам главного экрана</string>
+    <string name="permlab_uninstall_shortcut">Удаление ярлыков</string>
+    <string name="permlab_write_settings">Изменение настроек и ярлыков главного экрана</string>
+    <string name="phone_number_fax_home">Факс (Дом)</string>
+    <string name="phone_number_fax_work">Факс (Работа)</string>
+    <string name="phone_number_home">Домашний экран</string>
+    <string name="phone_number_mobile">Мобильный</string>
+    <string name="phone_number_work">Работа</string>
+    <string name="phone_number_work_mobile">Мобильная работа</string>
+    <string name="pick_image">Выбрать изображение</string>
+    <string name="pick_wallpaper">Обои</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="reset_default_home_failure">dEvie не был установлен как средство запуска по умолчанию. Хотите попробовать еще раз?</string>
+    <string name="reset_default_home_import_prompt">Мы успешно импортировали ваш предыдущий домашний экран! Вы хотите установить dEvie лаунчером по умолчанию?</string>
+    <string name="reset_default_home_later">Позже</string>
+    <string name="reset_default_home_prompt">Установите dEvie в качестве средства запуска по умолчанию, для более простого и быстрого начального экрана.</string>
+    <string name="resize_label">Изменить размер</string>
+
+
+
+
+
+
+
+    <string name="safemode_shortcut_error">Загруженное приложение недоступно в Безопасном режиме</string>
+    <string name="search_bar_hint">Поиск</string>
+    <string name="search_frequently_used_header">Часто используемые</string>
+    <string name="search_local_results_header">На вашем устройстве</string>
+
+    <string name="search_no_recents_message">"Попробуйте найти свое любимое приложение
+или контакт в телефоне"</string>
+    <string name="search_no_recents_title">Нет последних запросов</string>
+    <string name="search_recent_results_header">Последние результаты</string>
+
+    <string name="settings_button_text">Настройки</string>
+
+
+    <string name="settings_item_about_device">Об устройстве</string>
+    <string name="settings_item_account">Настройки аккаунта</string>
+    <string name="settings_item_airplane_mode">Настройки режима в самолёте</string>
+    <string name="settings_item_applications">Приложения</string>
+    <string name="settings_item_apps">Настройки приложений</string>
+    <string name="settings_item_backup_reset">Бэкап и восстановление</string>
+    <string name="settings_item_battery">Настройки батареи</string>
+    <string name="settings_item_bluetooth">Настройки Bluetooth</string>
+    <string name="settings_item_date_time">Настройки даты и времени</string>
+    <string name="settings_item_daydream">Настройки Daydream</string>
+    <string name="settings_item_default_apps">Настройки приложений по умолчанию</string>
+    <string name="settings_item_developer">Параметры разработчика</string>
+    <string name="settings_item_device_info">Информация об устройсте</string>
+    <string name="settings_item_display">Настройки экрана</string>
+    <string name="settings_item_evie">Настройки dEvie</string>
+
+    <string name="settings_item_home">Настройки приложений по умолчанию</string>
+    <string name="settings_item_hotspot">Настройки модема и точки доступа</string>
+    <string name="settings_item_input_method">Настройки метода ввода</string>
+    <string name="settings_item_keyboard">Настройки клавиатуры</string>
+    <string name="settings_item_language">Настройки языка</string>
+    <string name="settings_item_launcher">Настройки лаунчера</string>
+    <string name="settings_item_location">Настройки местоположения</string>
+    <string name="settings_item_network_operator">Настройки оператора связи</string>
+    <string name="settings_item_nfc">Настройки NFC</string>
+    <string name="settings_item_notification_access">Доступ к уведомлениям</string>
+    <string name="settings_item_overlay_permission">Настройки оверлея</string>
+    <string name="settings_item_screensaver">Настройки заставки</string>
+    <string name="settings_item_security">Настройки безопасности и экрана блокировки</string>
+    <string name="settings_item_sound">Настройки звука</string>
+    <string name="settings_item_storage">Настройки храналища</string>
+
+    <string name="settings_item_wallpaper">Настройки обое</string>
+    <string name="settings_item_wifi">Настройки WiFi</string>
+    <string name="settings_item_wireless">Настройки беспроводной связи</string>
+    <string name="settings_show_icon_labels">Метки иконок</string>
+
+    <string name="shortcut_error_text">"Из-за изменений системы этот ярлык больше недействителен.
+Пожалуйста, восстановите его."</string>
+    <string name="shortcut_not_available">Ярлык недоступен</string>
+    <string name="shortcut_uninstalled">Ярлык \"%s\" удален.</string>
+
+
+
+    <string name="toast_error_lock_permission_error">У dEvie нет необходимых разрешений. Повторно включите настройку блокировки.</string>
+    <string name="toast_error_workspace_still_loading">Ваш домашний экран загружается, пожалуйста подождите...</string>
+
+
+    <string name="uninstall_system_app_text">Это системное приложение и его нельзя удалить.</string>
+    <string name="unnamed_hint_text">Без названия</string>
+    <string name="voice_no_assistant">Голосовой помощник недоступен.</string>
+
+
+
+
+    <string name="wallpaper_accessibility_name">Обои %1$d из %2$d</string>
+    <string name="wallpaper_button_text">Обои</string>
+    <string name="wallpaper_delete">Удалить</string>
+    <string name="wallpaper_instructions">Установить обои</string>
+    <string name="wallpaper_load_fail">Не удалось загрузить изображение как обои</string>
+    <string name="wallpaper_set_fail">Не удалось установить изображение как обои</string>
+    <string name="which_wallpaper_option_home_screen">Домашний экран</string>
+    <string name="which_wallpaper_option_home_screen_and_lock_screen">Домашний экран и экран блокировки</string>
+    <string name="which_wallpaper_option_lock_screen">Экран блокировки</string>
+    <string name="widget_button_text">Виджеты</string>
+    <string name="widget_could_not_be_added_error">Невозможно добавить виджет.</string>
+    <string name="widget_dims_format">%1$d × %2$d</string>
+    <string name="workspace_scroll_format">Домашний экран %1$d из %2$d</string>
+</resources>

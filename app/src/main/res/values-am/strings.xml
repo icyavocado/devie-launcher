@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="abc_action_menu_overflow_description">ተጨማሪ አማራጮች</string>
+    <string name="abc_action_mode_done">ተከናውኗል</string>
+
+
+    <string name="abc_capital_off">ጠፍቷል</string>
+    <string name="abc_capital_on">በርቷል</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">ፈልግ…</string>
+    <string name="abc_searchview_description_clear">መጠይቅ አጽዳ</string>
+
+    <string name="abc_searchview_description_search">ፍለጋ</string>
+    <string name="abc_searchview_description_submit">መጠይቅ ያስረክቡ</string>
+    <string name="abc_searchview_description_voice">የድምፅ ፍለጋ</string>
+
+
+    <string name="abc_toolbar_collapse_description">ሰብስብ</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">በፍጥነት አሳልፍ</string>
+    <string name="exo_controls_next_description">ቀጣይ ትራክ</string>
+    <string name="exo_controls_pause_description">ላፍታ አቁም</string>
+    <string name="exo_controls_play_description">አጫውት</string>
+    <string name="exo_controls_previous_description">ቀዳሚ ትራክ</string>
+
+
+
+    <string name="exo_controls_rewind_description">ወደኋላ መልስ</string>
+    <string name="exo_controls_shuffle_description">በውዝ</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>

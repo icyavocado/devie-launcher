@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="abc_action_menu_overflow_description">Још опција</string>
+    <string name="abc_action_mode_done">Готово</string>
+
+
+    <string name="abc_capital_off">ИСКЉУЧИ</string>
+    <string name="abc_capital_on">УКЉУЧИ</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Претражите...</string>
+    <string name="abc_searchview_description_clear">Брисање упита</string>
+
+    <string name="abc_searchview_description_search">Претрага</string>
+    <string name="abc_searchview_description_submit">Слање упита</string>
+    <string name="abc_searchview_description_voice">Гласовна претрага</string>
+
+
+    <string name="abc_toolbar_collapse_description">Скупи</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Премотај унапред</string>
+    <string name="exo_controls_next_description">Следећа песма</string>
+    <string name="exo_controls_pause_description">Паузирај</string>
+    <string name="exo_controls_play_description">Пусти</string>
+    <string name="exo_controls_previous_description">Претходна песма</string>
+
+
+
+    <string name="exo_controls_rewind_description">Премотај уназад</string>
+    <string name="exo_controls_shuffle_description">Пусти насумично</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>

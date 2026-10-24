@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="abc_action_menu_overflow_description">Još opcija</string>
+    <string name="abc_action_mode_done">Gotovo</string>
+
+
+    <string name="abc_capital_off">ISKLJUČI</string>
+    <string name="abc_capital_on">UKLJUČI</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Pretražite...</string>
+    <string name="abc_searchview_description_clear">Brisanje upita</string>
+
+    <string name="abc_searchview_description_search">Pretraga</string>
+    <string name="abc_searchview_description_submit">Slanje upita</string>
+    <string name="abc_searchview_description_voice">Glasovna pretraga</string>
+
+
+    <string name="abc_toolbar_collapse_description">Skupi</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Premotaj unapred</string>
+    <string name="exo_controls_next_description">Sledeća pesma</string>
+    <string name="exo_controls_pause_description">Pauziraj</string>
+    <string name="exo_controls_play_description">Pusti</string>
+    <string name="exo_controls_previous_description">Prethodna pesma</string>
+
+
+
+    <string name="exo_controls_rewind_description">Premotaj unazad</string>
+    <string name="exo_controls_shuffle_description">Pusti nasumično</string>
+
+
+
+
+
+
+
+
+
+
+
+</resources>

@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="abandoned_clean_this">Ta bort</string>
+    <string name="abandoned_promise_explanation">Appen för denna ikon är inte installerad. Du kan ta bort den, eller söka efter appen och installera den manuellt.</string>
+    <string name="abandoned_promises_title">Denna app är inte installerad</string>
+    <string name="abandoned_search">Sök</string>
+
+
+    <string name="abc_action_menu_overflow_description">Fler alternativ</string>
+    <string name="abc_action_mode_done">Klart</string>
+
+
+    <string name="abc_capital_off">AV</string>
+    <string name="abc_capital_on">PÅ</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="abc_search_hint">Sök …</string>
+    <string name="abc_searchview_description_clear">Ta bort frågan</string>
+
+    <string name="abc_searchview_description_search">Sök</string>
+    <string name="abc_searchview_description_submit">Skicka fråga</string>
+    <string name="abc_searchview_description_voice">Röstsökning</string>
+
+
+    <string name="abc_toolbar_collapse_description">Komprimera</string>
+    <string name="activity_not_found">Appen är inte installerad.</string>
+    <string name="admin_receiver_status_disable_warning">Varning: enhetens administratör krävs för att \"Lås\"-funktionen ska fungera. Inaktivering av detta kräver reaktivering för att \"Lås\"-funktionen ska fungera igen.</string>
+    <string name="all_apps">Alla appar</string>
+
+    <string name="all_apps_home_button_label">Hem</string>
+    <string name="all_apps_new_section">NYTT</string>
+    <string name="all_apps_set_default_launcher_text">Ange dEvie som din standardlauncher för en enklare, snabbare hemskärm.</string>
+    <string name="announce_selection">Vald %1$s</string>
+    <string name="app_name">dEvie</string>
+    <string name="app_options_app_info">Appinformation</string>
+    <string name="app_options_change_icon">Byt ikon</string>
+    <string name="app_options_label">Appalternativ</string>
+    <string name="app_options_uninstall">Avinstallera</string>
+
+    <string name="app_settings_alert_dialog_double_tap_msg">Låser direkt. Kräver PIN/Mönster för att låsa upp, fingeravtryck fungerar INTE.</string>
+
+    <string name="app_settings_badge_configure_gmail">Konfigurera Gmail</string>
+    <string name="app_settings_badge_notification_permission_button">Tillåt åtkomst</string>
+    <string name="app_settings_badge_notification_permission_description">För att aktivera olästa brickor, måste du ge dEvie tillåtelse att läsa dina notifieringar.</string>
+    <string name="app_settings_badge_section_notification">Antal notifieringar</string>
+    <string name="app_settings_badge_section_notification_description">dEvie samlar en apps notifieringar som brickor.</string>
+    <string name="app_settings_badge_section_unread">Antal olästa</string>
+    <string name="app_settings_badge_section_unread_description">dEvie mottar tillförlitliga olästa brickor från dessa appar.</string>
+    <string name="app_settings_badge_style">Stil på bricka</string>
+    <string name="app_settings_badge_style_count">Siffra</string>
+    <string name="app_settings_badge_style_dots">Prickar</string>
+    <string name="app_settings_dock_background_alpha">Bakgrundsopacitet</string>
+    <string name="app_settings_dock_background_blur">Suddig bakgrund</string>
+
+
+    <string name="app_settings_gestures_dialog_lock_type">Välj skärmlås</string>
+
+
+    <string name="app_settings_gestures_double_tap_lock_type_device_admin_title">Direktlås</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_description">Låser efter en fördröjning med 5-10 sekunders svart skärm. Fingeravtryck fungerar.</string>
+    <string name="app_settings_gestures_double_tap_lock_type_timeout_title">Tidslås</string>
+
+
+
+
+    <string name="app_settings_hide_apps">Dölj appar</string>
+    <string name="app_settings_hide_apps_dialog_confirm">Vissa appar som du valt att dölja finns på din hemskärm. Vill du behålla eller ta bort dem?</string>
+    <string name="app_settings_hide_apps_dialog_confirm_keep">Behåll</string>
+    <string name="app_settings_hide_apps_dialog_confirm_remove">Ta bort</string>
+    <string name="app_settings_hide_apps_hide_from_search">Dölj från sökning</string>
+    <string name="app_settings_hide_apps_hide_from_search_subtext">Visa inte dolda appar i sökning</string>
+    <string name="app_settings_home_screen_layout_columns">Kolumner</string>
+    <string name="app_settings_home_screen_layout_icon_size">Ikonstorlek</string>
+    <string name="app_settings_home_screen_layout_rows">Rader</string>
+
+    <string name="app_settings_item_app_drawer_display_style">Visningsstil</string>
+    <string name="app_settings_item_app_drawer_display_style_dialog_title">Välj visningsstil</string>
+    <string name="app_settings_item_app_drawer_display_style_grid">Rutnät</string>
+    <string name="app_settings_item_app_drawer_display_style_list">Lista</string>
+    <string name="app_settings_item_app_drawer_error_grid_only">Endast rutlayout</string>
+    <string name="app_settings_item_app_drawer_index_style">Index stil</string>
+    <string name="app_settings_item_app_drawer_index_style_classic_scrollbar">Klassisk scrollbar</string>
+    <string name="app_settings_item_app_drawer_index_style_dialog_title">Välj index stil</string>
+    <string name="app_settings_item_app_drawer_index_style_vertical_letters">Vertikala bokstäver</string>
+    <string name="app_settings_item_app_drawer_show_new_apps">Visa nya appar</string>
+    <string name="app_settings_item_app_drawer_title">Applåda</string>
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_backup">Säkerhetskopiera nu</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog">Säkerhetskopiering misslyckad</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_positive">Okej</string>
+    <string name="app_settings_item_backup_restore_backup_failure_dialog_subtext">Tyvärr kunde din säkerhetskopia inte sparas. Var vänlig kontakta oss för hjälp.</string>
+    <string name="app_settings_item_backup_restore_backup_progress">Säkerhetskopierar dina inställningar...</string>
+    <string name="app_settings_item_backup_restore_backup_subtext">Spara din hemskärmslayout och inställningar.</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog">Säkerhetskopiering lyckad!</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_positive">Okej</string>
+    <string name="app_settings_item_backup_restore_backup_success_dialog_subtext">Nu kan du återställa din ikon-, widget- och mapplayout från denna säkerhetskopia på vilken enhet som helst.</string>
+
+
+
+
+
+
+
+
+    <string name="app_settings_item_backup_restore_restore">Återställ</string>
+
+    <string name="app_settings_item_backup_restore_restore_dialog">Välj en säkerhetskopia</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog">Återställning misslyckad</string>
+
+    <string name="app_settings_item_backup_restore_restore_failure_dialog_subtext">Tyvärr kunde din säkerhetskopia inte återställas. Var vänlig kontakta oss för hjälp.</string>
+    <string name="app_settings_item_backup_restore_restore_progress">Återställer dina inställningar...</string>
+    <string name="app_settings_item_backup_restore_restore_subtext">Återställ ikon-, widget- och mapplayout.</string>
+
+
+
+
+    <string name="app_settings_item_backup_restore_title">Säkerhetskopiering &amp; Återställning</string>
+    <string name="app_settings_item_badges_title">Olästa brickor</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite">Du har valt anpassade ikoner till vissa appar. Vill du ersätta de med ikoner från %1$s eller behålla dem som de är?</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_keep">Behåll</string>
+    <string name="app_settings_item_change_icon_pack_dialog_custom_icon_overwrite_replace">Ersätt</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_message">Är du säker på att du vill ta bort alla senaste artiklar?</string>
+    <string name="app_settings_item_confirm_dialog_clear_recent_results_title">Rensa senaste resultat?</string>
+    <string name="app_settings_item_customization_header">ANPASSNING</string>
+    <string name="app_settings_item_desktop_app_drawer_hint_title">Visa tips för applåda (^)</string>
+    <string name="app_settings_item_desktop_lock_subtitle">Förhindra ändringar för skrivbordet</string>
+    <string name="app_settings_item_desktop_lock_title">Lås startskärmen</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_subtitle">Bakgrunden rör sig när du scrollar på hemskärmen</string>
+    <string name="app_settings_item_desktop_scrolling_wallpaper_title">Scrolla bakgrund</string>
+
+
+    <string name="app_settings_item_desktop_title">Hemskärm</string>
+
+
+    <string name="app_settings_item_dock_title">Docka</string>
+
+
+    <string name="app_settings_item_feedback_title">Synpunkter</string>
+    <string name="app_settings_item_folder_title">Mappar</string>
+    <string name="app_settings_item_folders_alpha_sort">Sortera mappar i alfabetisk ordning</string>
+    <string name="app_settings_item_folders_name">Mapp</string>
+    <string name="app_settings_item_folders_shape">Form för mappikon</string>
+    <string name="app_settings_item_folders_shape_circle">Cirkel</string>
+    <string name="app_settings_item_folders_shape_dialog_title">Välj form för mappikon</string>
+    <string name="app_settings_item_folders_shape_square">Kvadrat</string>
+    <string name="app_settings_item_folders_shape_squircle">Rundad kvadrat</string>
+    <string name="app_settings_item_general_header">ALLMÄNT</string>
+    <string name="app_settings_item_gestures_title">Gester</string>
+    <string name="app_settings_item_icon_normalization_subtext">Ändra storlek på ikoner för att göra dem lika stora</string>
+    <string name="app_settings_item_icon_normalization_text">Normalisera ikoner</string>
+    <string name="app_settings_item_icon_pack_title">Ikonpaket</string>
+    <string name="app_settings_item_layout_inherit_subtitle">Matcha inställningar till din hemskärmslayout</string>
+    <string name="app_settings_item_layout_inherit_title">Ärv hemskärmslayout</string>
+
+    <string name="app_settings_item_permission_required">Tillstånd krävs!</string>
+
+    <string name="app_settings_item_search_auto_complete_title">Öppna resultat från Google i nytt fönster</string>
+    <string name="app_settings_item_search_bar_desktop_enable">Visa sökfält på startskärmen</string>
+    <string name="app_settings_item_search_bar_style">Stil för sökfält</string>
+
+    <string name="app_settings_item_search_bar_style_subtle">Diskret läge</string>
+    <string name="app_settings_item_search_bar_style_subtle_description">Sökfältet smälter in med bakgrunden.</string>
+    <string name="app_settings_item_search_bar_style_white">Vit</string>
+    <string name="app_settings_item_search_bar_style_white_description">Sökfältet är vitt.</string>
+    <string name="app_settings_item_search_clear_recent">Rensa senaste resultat</string>
+    <string name="app_settings_item_search_clear_recent_subtext">Radera alla resultat från söklistan.</string>
+    <string name="app_settings_item_search_done_button_close_keyboard">Stäng tangentbord</string>
+    <string name="app_settings_item_search_done_button_dialog_title">Välj åtgärd</string>
+    <string name="app_settings_item_search_done_button_open_first_result">Öppna det första resultatet</string>
+    <string name="app_settings_item_search_done_button_title">Åtgärd för Utfört-knapp</string>
+    <string name="app_settings_item_search_engine">Sökmotor</string>
+    <string name="app_settings_item_search_engine_bing">Bing</string>
+    <string name="app_settings_item_search_engine_dialog_title">Välj sökmotor</string>
+    <string name="app_settings_item_search_engine_duck_duck_go">DuckDuckGo</string>
+    <string name="app_settings_item_search_engine_google">Google</string>
+    <string name="app_settings_item_search_include_frequently_used">Ofta använda appar</string>
+    <string name="app_settings_item_search_include_frequently_used_subtext">Visa ofta använda appar i sökresultat</string>
+    <string name="app_settings_item_search_recents_include_web_results">Inkludera webbsök i senaste resultat</string>
+    <string name="app_settings_item_search_title">Sök</string>
+    <string name="app_settings_item_switch_launcher">Byt till en annan launcher</string>
+
+    <string name="app_settings_item_toast_clear_recent_results">Dina senaste resultat har rensats.</string>
+    <string name="app_settings_size_label">Storlek</string>
+    <string name="app_settings_title">dEvie Inställningar</string>
+
+    <string name="button_label_cancel">Avbryt</string>
+
+
+
+
+
+    <string name="change_icon_icon_count">%1$d ikoner</string>
+    <string name="change_icon_loading">Laddar ikonförslag, var vänlig vänta...</string>
+    <string name="change_icon_packs">Paket</string>
+    <string name="change_icon_suggested">Föreslagen</string>
+    <string name="change_icon_title"><b>Välj en ikon</b> för \"%1$s\"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="contact_action_call">Ring</string>
+    <string name="contact_action_call_type">Ring %1$s</string>
+    <string name="contact_action_email">Epost</string>
+    <string name="contact_action_text">Text</string>
+    <string name="contact_action_text_type">Text %1$s</string>
+
+    <string name="contact_entity_chat">Chatt %1$s</string>
+    <string name="contact_entity_message">Meddelande %1$s</string>
+    <string name="contact_entity_open_in_contacts">Öppna i Kontakter</string>
+    <string name="contact_entity_skype">Skype %1$s</string>
+    <string name="crop_wallpaper">Beskär bakgrund</string>
+    <string name="default_scroll_format">Sida %1$d av %2$d</string>
+
+
+    <string name="delete_target_cancel_label">Avbryt</string>
+    <string name="delete_target_label">Ta bort</string>
+
+    <string name="desktop_unlock_fingerprint">Lås upp med fingeravtryck</string>
+    <string name="desktop_unlock_long_press">Långtryck för att låsa upp</string>
+    <string name="desktop_unlocked_message">Skrivbord upplåst</string>
+
+
+
+
+
+
+    <string name="exo_controls_fastforward_description">Snabbspola framåt</string>
+    <string name="exo_controls_next_description">Nästa spår</string>
+    <string name="exo_controls_pause_description">Pausa</string>
+    <string name="exo_controls_play_description">Spela upp</string>
+    <string name="exo_controls_previous_description">Föregående spår</string>
+
+
+
+    <string name="exo_controls_rewind_description">Spola tillbaka</string>
+    <string name="exo_controls_shuffle_description">Blanda spår</string>
+
+
+
+    <string name="folder_hint_text">Namnlös mapp</string>
+    <string name="folder_name" />
+    <string name="folder_name_format">Mapp: %1$s</string>
+    <string name="folder_opened">Mapp öppnad, %1$d av %2$d</string>
+    <string name="folder_renamed">Mapp omdöpt till %1$s</string>
+    <string name="folder_tap_to_close">Rör för att stänga mapp</string>
+    <string name="folder_tap_to_rename">Rör för att spara nytt namn</string>
+    <string name="gadget_error_text">Problem med att ladda widget</string>
+    <string name="gadget_setup_text">Installation</string>
+    <string name="gesture_action_app_drawer">Applåda</string>
+    <string name="gesture_action_evie_search">dEvie-sök</string>
+    <string name="gesture_action_expand_notifications">Utöka notiser</string>
+    <string name="gesture_action_google_now">Google Nu</string>
+    <string name="gesture_action_google_voice_search">Röstsök</string>
+    <string name="gesture_action_launch_app">Starta app</string>
+    <string name="gesture_action_launch_app_with_name">Starta app: %s</string>
+    <string name="gesture_action_none">Inget</string>
+    <string name="gesture_action_screen_lock_device_admin">Skärmlås (direkt)</string>
+    <string name="gesture_action_screen_lock_generic">Skärmlås</string>
+    <string name="gesture_action_screen_lock_write_settings">Skärmlås (timer)</string>
+    <string name="gesture_type_double_tap">Dubbeltryck</string>
+    <string name="gesture_type_expand">Dra isär</string>
+    <string name="gesture_type_home_button">Hemknapp</string>
+    <string name="gesture_type_pinch">Nyp</string>
+    <string name="gesture_type_swipe_down">Svep nedåt</string>
+    <string name="gesture_type_swipe_up">Svep upp</string>
+    <string name="gesture_type_two_finger_swipe_down">Svep nedåt med två fingrar</string>
+    <string name="gesture_type_two_finger_swipe_up">Svep upp med två fingrar</string>
+    <string name="hotseat_out_of_space">Ingen mer plats i Favoriter</string>
+    <string name="icon_pack_market_search">Bläddra bland fler ikonpaket...</string>
+    <string name="image_load_fail">Kunde inte ladda bild</string>
+
+    <string name="launcher_restored_negative">Ångra</string>
+    <string name="launcher_restored_positive">Okej</string>
+    <string name="launcher_restored_subtext">Alla dina appar, widgets och inställningar har blivit återställda!</string>
+    <string name="long_press_widget_to_add">Tryck och håll för att välja en widget.</string>
+    <string name="manifest_label_device_admin_description">Tillåt dEvie Launcher att låsa skärmen</string>
+
+
+
+
+    <string name="msg_no_generic_permission">Denna app har inte tillåtelse att utföra detta</string>
+    <string name="msg_no_phone_permission">%1$s har inte tillåtelse att göra samtal</string>
+
+
+
+    <string name="notifications_header">Statusfält</string>
+
+
+
+
+
+
+    <string name="onboarding_default_home_not_now">Inte nu</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="onboarding_permission_deny_access">Neka åtkomst</string>
+    <string name="onboarding_permission_grant_access">Tillåt åtkomst</string>
+    <string name="onboarding_permission_grant_limited_access">Tillåt begränsad åtkomst</string>
+    <string name="onboarding_permission_title">dEvie behöver lite hjälp från dig.</string>
+
+
+
+
+
+
+
+
+
+
+    <string name="out_of_space">Ingen mer plats på denna hemskärm.</string>
+
+    <string name="permdesc_install_shortcut">Tillåter en app att lägga till genvägar utan användaråtgärd.</string>
+    <string name="permdesc_read_settings">Tillåter appen att läsa inställningar och genvägar för hemskärmen.</string>
+    <string name="permdesc_uninstall_shortcut">Tillåter en app att ta bort genvägar utan användaråtgärd.</string>
+    <string name="permdesc_write_settings">Tillåter appen att ändra inställningar och genvägar för hemskärmen.</string>
+    <string name="permission_call_text">dEvie behöver åtkomst till att ringa om du vill kunna göra samtal från dEvie.</string>
+    <string name="permission_call_title">Aktivera åtkomst för uppringning?</string>
+    <string name="permission_contacts_name">kontakter</string>
+    <string name="permission_contacts_text">För att snabbt hitta vänner att ringa, e-posta eller smsa.</string>
+    <string name="permission_contacts_title">Kontakter</string>
+    <string name="permission_location_name">plats</string>
+    <string name="permission_location_text">För att hitta närliggande restauranger, affärer och platser för dig.</string>
+    <string name="permission_location_title">Plats</string>
+    <string name="permission_storage_name">lagring</string>
+    <string name="permission_storage_text">Ge behörighet till visuella effekter för bakgrund (Krävs)</string>
+    <string name="permission_storage_title">Lagring</string>
+    <string name="permission_tip">Välj <b>TILLÅT</b> i %1$s rutan</string>
+    <string name="permlab_install_shortcut">installera genvägar</string>
+    <string name="permlab_read_settings">läs inställningar och genvägar för hemskärmen</string>
+    <string name="permlab_uninstall_shortcut">avinstallera genvägar</string>
+    <string name="permlab_write_settings">ändra inställningar och genvägar för hemskärmen</string>
+    <string name="phone_number_fax_home">Fax hem</string>
+    <string name="phone_number_fax_work">Fax arbete</string>
+    <string name="phone_number_home">Hem</string>
+    <string name="phone_number_mobile">Mobil</string>
+    <string name="phone_number_work">Arbete</string>
+    <string name="phone_number_work_mobile">Mobil arbete</string>
+    <string name="pick_image">Välj bild</string>
+    <string name="pick_wallpaper">Bakgrunder</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <string name="reset_default_home_failure">dEvie angavs inte som din standardlauncher. Vill du göra ett nytt försök?</string>
+    <string name="reset_default_home_import_prompt">Vi har importerat din tidigare hemskärm! Vill du ange dEvie som din standardlauncher?</string>
+    <string name="reset_default_home_later">Senare</string>
+    <string name="reset_default_home_prompt">Ange dEvie som din standardlauncher för en enklare, snabbare hemskärm.</string>
+    <string name="resize_label">Ändra storlek</string>
+
+
+
+
+
+
+
+    <string name="safemode_shortcut_error">Den nedladdade appen är inaktiverad i Säkerhetsläge</string>
+    <string name="search_bar_hint">Sök</string>
+    <string name="search_frequently_used_header">Ofta använda</string>
+    <string name="search_local_results_header">På din enhet</string>
+
+    <string name="search_no_recents_message">"Prova att söka efter din favoritapp eller
+en kontakt i din telefon"</string>
+    <string name="search_no_recents_title">Inga nya sökningar</string>
+    <string name="search_recent_results_header">Senaste resultat</string>
+
+    <string name="settings_button_text">Inställningar</string>
+
+
+    <string name="settings_item_about_device">Om enheten</string>
+    <string name="settings_item_account">Kontoinställningar</string>
+    <string name="settings_item_airplane_mode">Inställningar för flygläge</string>
+    <string name="settings_item_applications">Applikationer</string>
+    <string name="settings_item_apps">Appinställningar</string>
+    <string name="settings_item_backup_reset">Säkerhetskopiering och återställning</string>
+    <string name="settings_item_battery">Batteri</string>
+    <string name="settings_item_bluetooth">Bluetooth</string>
+    <string name="settings_item_date_time">Datum och tid</string>
+    <string name="settings_item_daydream">Dagdröm</string>
+    <string name="settings_item_default_apps">Standardinställningar för appar</string>
+    <string name="settings_item_developer">Utvecklaralternativ</string>
+    <string name="settings_item_device_info">Enhetsinformation</string>
+    <string name="settings_item_display">Skärminställningar</string>
+    <string name="settings_item_evie">Evieinställningar</string>
+
+    <string name="settings_item_home">Standard appinställningar</string>
+    <string name="settings_item_hotspot">Tethering och hotspot</string>
+    <string name="settings_item_input_method">Inmatningsmetod</string>
+    <string name="settings_item_keyboard">Tangentbordsinställningar</string>
+    <string name="settings_item_language">Språkinställningar</string>
+    <string name="settings_item_launcher">Launcherinställningar</string>
+    <string name="settings_item_location">Platsinställningar</string>
+    <string name="settings_item_network_operator">Nätverksinställningar</string>
+    <string name="settings_item_nfc">NFC Inställningar</string>
+    <string name="settings_item_notification_access">Notifieringsåtkomst</string>
+    <string name="settings_item_overlay_permission">Åtkomst</string>
+    <string name="settings_item_screensaver">Skärmsläckare</string>
+    <string name="settings_item_security">Låsskärm och säkerhet</string>
+    <string name="settings_item_sound">Ljud</string>
+    <string name="settings_item_storage">Lagring</string>
+
+    <string name="settings_item_wallpaper">Bakgrund</string>
+    <string name="settings_item_wifi">WiFi</string>
+    <string name="settings_item_wireless">Trådlöst</string>
+    <string name="settings_show_icon_labels">Etiketter</string>
+
+    <string name="shortcut_error_text">"På grund av systemändringar är denna genväg inte längre giltig.
+Var vänlig återskapa den."</string>
+    <string name="shortcut_not_available">Genvägen är inte tillgänglig</string>
+    <string name="shortcut_uninstalled">Genväg \"%s\" borttagen.</string>
+
+
+
+    <string name="toast_error_lock_permission_error">dEvie har inte det begärda tillståndet. Var vänlig återaktivera låsinställningar för att åtgärda detta.</string>
+    <string name="toast_error_workspace_still_loading">Din hemskärm laddas fortfarande, var vänlig vänta...</string>
+
+
+    <string name="uninstall_system_app_text">Detta är en systemapp och den kan inte avinstalleras.</string>
+    <string name="unnamed_hint_text">Namnlös</string>
+    <string name="voice_no_assistant">Ingen röstassistent tillgänglig.</string>
+
+
+
+
+    <string name="wallpaper_accessibility_name">Bakgrund %1$d av %2$d</string>
+    <string name="wallpaper_button_text">Bakgrunder</string>
+    <string name="wallpaper_delete">Radera</string>
+    <string name="wallpaper_instructions">Ange bakgrund</string>
+    <string name="wallpaper_load_fail">Kunde inte ladda bilden som bakgrund</string>
+    <string name="wallpaper_set_fail">Kunde inte ange bilden som bakgrund</string>
+    <string name="which_wallpaper_option_home_screen">Hemskärm</string>
+    <string name="which_wallpaper_option_home_screen_and_lock_screen">Hemskärm och låsskärm</string>
+    <string name="which_wallpaper_option_lock_screen">Låsskärm</string>
+    <string name="widget_button_text">Widgets</string>
+    <string name="widget_could_not_be_added_error">Widget kunde ej läggas till.</string>
+    <string name="widget_dims_format">%1$d × %2$d</string>
+    <string name="workspace_scroll_format">Hemskärm %1$d av %2$d</string>
+</resources>
