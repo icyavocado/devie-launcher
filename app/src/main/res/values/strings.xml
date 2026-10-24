@@ -447,7 +447,6 @@
 
 
     <string name="receive_first_load_broadcast_permission">com.voxel.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST</string>
-    <string name="receive_launch_broadcasts_permission">com.voxel.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS</string>
 
 
 

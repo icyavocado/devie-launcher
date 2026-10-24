@@ -4,7 +4,6 @@
     <permission android:description="@string/permdesc_uninstall_shortcut" android:label="@string/permlab_uninstall_shortcut" android:name="com.android.launcher.permission.UNINSTALL_SHORTCUT" android:protectionLevel="dangerous"/>
     <permission android:description="@string/permdesc_read_settings" android:label="@string/permlab_read_settings" android:name="com.ovacoda.devie.permission.READ_SETTINGS" android:protectionLevel="normal"/>
     <permission android:description="@string/permdesc_write_settings" android:label="@string/permlab_write_settings" android:name="com.ovacoda.devie.permission.WRITE_SETTINGS" android:protectionLevel="signatureOrSystem"/>
-    <permission android:name="com.ovacoda.devie.permission.RECEIVE_LAUNCH_BROADCASTS" android:protectionLevel="signature"/>
     <permission android:name="com.ovacoda.devie.permission.RECEIVE_FIRST_LOAD_BROADCAST" android:protectionLevel="signatureOrSystem"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
@@ -26,7 +25,6 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
     <uses-permission android:name="com.ovacoda.devie.permission.READ_SETTINGS"/>
     <uses-permission android:name="com.ovacoda.devie.permission.WRITE_SETTINGS"/>
-    <uses-permission android:name="com.ovacoda.devie.permission.RECEIVE_LAUNCH_BROADCASTS"/>
     <uses-permission android:name="com.ovacoda.devie.permission.RECEIVE_FIRST_LOAD_BROADCAST"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <!-- REWORK: the PermissionsSlide storage/location grant rows need these

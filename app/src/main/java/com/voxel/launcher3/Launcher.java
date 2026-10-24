@@ -286,7 +286,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     private SettingsStorage mSettingsStorage;
     private SharedPreferences mSharedPrefs;
     private AnimatorSet mStateAnimation;
-    private Stats mStats;
     private boolean mWaitingForResult;
     private BubbleTextView mWaitingForResume;
     private BroadcastReceiver mWallpaperBroadcastReceiver;
@@ -2356,7 +2355,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         }
         boolean zStartActivitySafely = this.mSearchItemShortcutHandler.handleIntent(intent) ? true : startActivitySafely(view, intent, tag);
         this.mAnalyticsHandler.recordAppLaunch(this, intent, "homescreen");
-        this.mStats.recordLaunch(intent, shortcutInfo);
         ComponentName component = intent.getComponent();
         if (component != null) {
             String packageName = component.getPackageName();
@@ -3935,7 +3933,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         this.mIconCache.flushInvalidIcons(deviceProfileInitDynamicGrid);
         this.mDragController = new DragController(this);
         this.mInflater = getLayoutInflater();
-        this.mStats = new Stats(this);
         this.mAppWidgetManager = AppWidgetManagerCompat.getInstance(this);
         this.mAppWidgetHost = new LauncherAppWidgetHost(this, 1024);
         this.mAppWidgetHost.startListening();
