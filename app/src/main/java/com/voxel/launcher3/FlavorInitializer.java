@@ -1,6 +1,5 @@
 package com.voxel.launcher3;
 
-import timber.log.Timber;
 import android.content.Context;
 import com.evie.models.frequentlyused.FrequentlyUsedAnalyticsFilter;
 import com.evie.models.frequentlyused.FrequentlyUsedModel;
@@ -27,12 +26,6 @@ public class FlavorInitializer {
 
     public FlavorInitializer(Context context) {
         this.mContext = context;
-    }
-
-    public void fabricInit() {
-        /* REWORK: Fabric/Crashlytics removed. */
-        Timber.d("Installer package name: " + this.mContext.getPackageManager().getInstallerPackageName(this.mContext.getPackageName()));
-        new MemoryCrashHandler().initPostFabric(this.mContext.getApplicationContext());
     }
 
     public void postDaggerInit() {

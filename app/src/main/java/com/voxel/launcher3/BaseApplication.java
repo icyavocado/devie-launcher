@@ -150,7 +150,6 @@ public class BaseApplication extends Application implements Injector, HasActivit
         this.mAppStartTime = SystemClock.elapsedRealtime();
         super.onCreate();
         FlavorInitializer flavorInitializer = new FlavorInitializer(getApplicationContext());
-        flavorInitializer.fabricInit();
         flavorInitializer.preDaggerInit();
         setup();
         flavorInitializer.postDaggerInit();
