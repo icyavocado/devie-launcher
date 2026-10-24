@@ -170,12 +170,4 @@ public class AnalyticsHandler {
     }
 
     /* REWORK: sync was the upload path; no-op now that upload is removed. */
-    public void requestLogsSync() {
-    }
-
-    public void requestLogsSync(boolean z) {
-    }
-
-    public void stopLogsSync() {
-    }
 }

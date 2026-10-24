@@ -1221,7 +1221,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     private void handleHomeFirstTimeEvent(boolean z) {
         Workspace workspace = this.mWorkspace;
         this.mAnalyticsHandler.logEvent("ev_home_first_time", new AnalyticsHandler.EventProp().add("is_default", z).add("num_homescreens", workspace != null ? workspace.getNumScreens() : 1));
-        this.mAnalyticsHandler.requestLogsSync(true);
         setHasLaunchedHome();
     }
 
@@ -2248,9 +2247,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return isInstrumentedRun() || this.mSharedPrefs.getBoolean("launcher.first_run_cling_displayed", false) ? false : true;
     }
 
-    private boolean shouldShowIntroScreen() {
-        return hasDismissableIntroScreen() && !this.mSharedPrefs.getBoolean("launcher.intro_screen_dismissed", false);
-    }
 
     private void showBrokenAppInstallDialog(final String str, DialogInterface.OnClickListener onClickListener) {
         new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_DeviceDefault /* REWORK: android-35 R flattens nested style classes */)).setTitle(R.string.abandoned_promises_title).setMessage(R.string.abandoned_promise_explanation).setPositiveButton(R.string.abandoned_search, onClickListener).setNeutralButton(R.string.abandoned_clean_this, new DialogInterface.OnClickListener() { // from class: com.voxel.launcher3.-$$Lambda$Launcher$J1M51etEzYVkQ2xk1sr_TZFd7eA
@@ -2261,14 +2257,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         }).create().show();
     }
 
-    private void showShortcutErrorToast() {
-        Toast toastMakeText = Toast.makeText(this, R.string.shortcut_error_text, 1);
-        TextView textView = (TextView) toastMakeText.getView().findViewById(android.R.id.message);
-        if (textView != null) {
-            textView.setGravity(17);
-        }
-        toastMakeText.show();
-    }
 
     /* JADX WARN: Code duplicated, block: B:12:0x0021  */
     private boolean startActivity(View view, Intent intent, Object obj) {
@@ -3016,13 +3004,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         }
     }
 
-    protected void changeWallpaperVisiblity(boolean z) {
-        int i = z ? 1048576 : 0;
-        if (i != (getWindow().getAttributes().flags & 1048576)) {
-            getWindow().setFlags(i, 1048576);
-        }
-        setWorkspaceBackground(z);
-    }
 
     void closeFolder(Folder folder) {
         if (folder == null) {
@@ -3286,13 +3267,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return this.mIndicatorAlpha;
     }
 
-    public View getIndicatorContainer() {
-        return this.mIndicatorContainer;
-    }
 
-    protected View getIntroScreen() {
-        return null;
-    }
 
     public AlphaSet getMainLayerDarkenAlpha() {
         return this.mMainLayerDarkenAlpha;
@@ -3329,17 +3304,8 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return this.mQsb;
     }
 
-    public SpringySearchView getQsbSearchView() {
-        return this.mQsbSearchView;
-    }
 
-    public CombinedFactorHelper getQsbSearchViewScroller() {
-        return this.mQsbSearchViewScroller;
-    }
 
-    public CombinedFactorHelper getQsbSearchViewScrollerModifier() {
-        return this.mQsbSearchViewScrollerModifier;
-    }
 
     public SearchDropTargetBar getSearchBar() {
         return this.mSearchDropTargetBar;
@@ -3349,9 +3315,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return Math.round(((-((View) this.mQsb.getParent()).getPaddingTop()) - ((View) this.mQsb.getParent().getParent()).getPaddingTop()) - (this.mQsbSearchView.getHeight() * 1.05f));
     }
 
-    public AlphaSet getSearchDropTargetBarAlpha() {
-        return this.mSearchDropTargetBarAlpha;
-    }
 
     public LauncherStackableFragment getStackFragmentAt(int i) {
         return this.mFragmentHelper.getStackFragmentAt(i);
@@ -3379,14 +3342,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return this.mWorkspace;
     }
 
-    /* REWORK: side-screen feed removed; custom left page never used now. */
-    protected boolean hasCustomContentToLeft() {
-        return false;
-    }
 
-    protected boolean hasDismissableIntroScreen() {
-        return false;
-    }
 
     protected boolean hasFirstRunActivity() {
         return true;
@@ -3870,9 +3826,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         }
     }
 
-    public void onClickPagedViewIcon(View view) {
-        startAppShortcutOrInfoActivity(view);
-    }
 
     public void onClickPendingWidget(final PendingAppWidgetHostView pendingAppWidgetHostView) {
         final LauncherAppWidgetInfo launcherAppWidgetInfo = (LauncherAppWidgetInfo) pendingAppWidgetHostView.getTag();
@@ -3929,10 +3882,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         Toast.makeText(this, getString(R.string.widget_could_not_be_added_error), 1).show();
     }
 
-    public void onClickSearchButton(View view) {
-        view.performHapticFeedback(1);
-        onSearchRequested();
-    }
 
     public void onClickSettingsButton(View view) {
         this.mOnResumeState = State.WORKSPACE;
@@ -4401,7 +4350,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         NotificationController.getInstance(this).pause();
         Executors.getMainThreadExecutor().execute(this.mForgetWallpaperRunnable, 1000L);
         this.mSearchPresenter.clearDragSink();
-        this.mAnalyticsHandler.requestLogsSync(true);
     }
 
     @Override // android.app.Activity
@@ -4505,11 +4453,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         this.isLaunchingVoiceAssist = false;
         DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "Launcher.onResume()");
         this.mQsbSearchView.setImeOptions(6);
-        if (shouldShowIntroScreen()) {
-            showIntroScreen();
-        } else {
-            this.isShowingOnboard = showFirstRunActivity();
-        }
         this.mLocalSearchManager.initContactsIfNeeded(this);
         this.mLocalSearchManager.updateRecents();
         this.mSearchPresenter.setDragSink(new DragSink() { // from class: com.voxel.launcher3.-$$Lambda$Launcher$WNdnB1SSSbgSkfr6tBGGVKORK8Y
@@ -4594,12 +4537,10 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 this.mPreviousDefaultState = UserProfileManager.LauncherDefaultState.NOT_DEFAULT;
                 UserProfileManager.getInstance().setLauncherDefaultState(this.mPreviousDefaultState);
                 this.mAnalyticsHandler.logEvent("ev_switch_to_not_default", null);
-                this.mAnalyticsHandler.requestLogsSync();
             } else if (this.mPreviousDefaultState == UserProfileManager.LauncherDefaultState.NOT_DEFAULT && zIsLauncherDefault) {
                 this.mPreviousDefaultState = UserProfileManager.LauncherDefaultState.DEFAULT;
                 UserProfileManager.getInstance().setLauncherDefaultState(this.mPreviousDefaultState);
                 this.mAnalyticsHandler.logEvent("ev_switch_to_default", null);
-                this.mAnalyticsHandler.requestLogsSync();
             }
         }
         PackageInstallerCompat.getInstance(this).onResume();
@@ -4676,7 +4617,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         this.mFragmentHelper.onStart();
         FirstFrameAnimatorHelper.setIsVisible(true);
         DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "Launcher.onStart()");
-        this.mAnalyticsHandler.stopLogsSync();
         DebugUtil.addVoxelDebugSyncLog("DEBUG-HOME-DELAY", "Launcher.onStart() DONE");
         this.sendHomeAnalyticsEventOnResume = true;
         NotificationController.getInstance(this).start();
@@ -4706,7 +4646,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             UserProfileManager.getInstance().setLauncherDefaultState(this.mPreviousDefaultState);
             this.mAnalyticsHandler.logEvent("ev_switch_to_default", null);
         }
-        this.mAnalyticsHandler.requestLogsSync();
     }
 
     @Override // android.view.View.OnTouchListener
@@ -4714,9 +4653,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return false;
     }
 
-    public void onTouchDownAllAppsButton(View view) {
-        view.performHapticFeedback(1);
-    }
 
     public void onTouchDownScrollingWidget(LauncherAppWidgetHostView launcherAppWidgetHostView) {
         MainLayerGestureListener mainLayerGestureListener = this.mMainLayerGestureListener;
@@ -4801,18 +4737,12 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return true;
     }
 
-    public void performHapticFeedbackOnTouchDown(View view) {
-        view.performHapticFeedback(1);
-    }
 
     @Override // com.voxel.simplesearchlauncher.fragment.LauncherStackableFragment.OnFragmentInteractionListener
     public void popStackFragment(LauncherStackableFragment launcherStackableFragment, boolean z) {
         this.mFragmentHelper.popStackFragment(launcherStackableFragment, z);
     }
 
-    /* REWORK: side-screen feed removed with its presenter/view-holder/factory classes. */
-    protected void populateCustomContentContainer() {
-    }
 
     void processShortcut(Intent intent) {
         Utilities.startActivityForResultSafely(this, intent, 1);
@@ -4877,9 +4807,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         getQsbBar().animate().translationY(0.0f).start();
     }
 
-    public void setAllAppsButton(View view) {
-        this.mAllAppsButton = view;
-    }
 
     @Override // com.voxel.launcher3.LauncherModel.Callbacks
     public boolean setLoadOnResume() {
@@ -4942,7 +4869,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         }
         startActivityForResult(firstRunActivity, 14);
         this.mAnalyticsHandler.logEvent("ev_onboard_initiated", null);
-        this.mAnalyticsHandler.requestLogsSync(true);
         return true;
     }
 
@@ -4959,13 +4885,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return true;
     }
 
-    protected void showIntroScreen() {
-        View introScreen = getIntroScreen();
-        changeWallpaperVisiblity(false);
-        if (introScreen != null) {
-            this.mDragLayer.showOverlayView(introScreen);
-        }
-    }
 
     void showOutOfSpaceMessage(boolean z) {
         Toast.makeText(this, getString(z ? R.string.hotseat_out_of_space : R.string.out_of_space), 0).show();
