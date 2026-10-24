@@ -7,6 +7,14 @@ plugins {
 
 android {
     namespace = "com.ovacoda.devie"
+
+    /* REWORK: English-only packaging — the donor's 14 other locale string
+       tables are excluded from every variant's resource table (aapt still
+       compiles the values-dirs; the tables just don't ship). */
+    androidResources {
+        localeFilters += listOf("en")
+    }
+
     compileSdk = 35
 
     defaultConfig {
@@ -61,6 +69,12 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            /* REWORK: ship the phone ABIs only — the donor APK carries the same
+               pair; x86/x86_64 stay available in debug builds for emulator
+               testing (release on an x86 emulator image won't install). */
+            ndk {
+                abiFilters += listOf("arm64-v8a", "armeabi-v7a")
+            }
             /* REWORK(ci): sign only when the keystore is present — CI runs without
                the git-ignored keystore and still needs to publish the APK. */
             if (rootProject.file("keystore/evie-release.properties").exists()) {
