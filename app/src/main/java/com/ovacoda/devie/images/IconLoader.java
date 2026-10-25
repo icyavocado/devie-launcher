@@ -30,7 +30,11 @@ import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.compat.UserHandleCompat;
 import com.ovacoda.devie.R;
 
+import java.io.File;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -61,6 +65,11 @@ public final class IconLoader {
     /** BitmapUtil.getUrlFromBitmap prefix. */
     private static final String DATA_PREFIX = "data:image/bmp;base64,";
     private static final int DATA_PREFIX_LENGTH = DATA_PREFIX.length();
+    /** Disk-cache bounds: decoded-icon PNGs kept across process restarts. */
+    private static final int DISK_CACHE_MAX_FILES = 64;
+    /** Disk-cache families: content-derived only (never contact photos),
+     * which may change under a stable URI. */
+    private static final String DISK_DIR_NAME = "icon_cache";
 
     /** Completion callback, always invoked on the MAIN thread. */
     public interface OnBitmapLoaded {
@@ -214,11 +223,100 @@ public final class IconLoader {
         if (cached != null && !cached.isRecycled()) {
             return cached;
         }
-        Bitmap bitmap = decode(url);
+        /* REWORK(disk): the RAM LRU dies with the process — on devices that
+         * kill the launcher while the screen is locked (OneUI app freezing),
+         * every icon re-decoded from scratch on the first pull-down after
+         * unlock and the rows pop in staggered. Magic + data URIs are
+         * content-derived and immutable per URL, so their decoded PNGs may
+         * live on disk (content:// contact photos stay excluded: their URI
+         * can persist across photo changes). */
+        Bitmap bitmap = readDisk(url);
+        if (bitmap == null) {
+            bitmap = decode(url);
+            if (bitmap != null) {
+                writeDisk(url, bitmap);
+            }
+        }
         if (bitmap != null) {
             mCache.put(url, bitmap);
         }
         return bitmap;
+    }
+
+    @Nullable
+    private File diskFile(@Nullable String url) {
+        Context context = context();
+        if (context == null || url == null
+                || !(url.startsWith(DATA_PREFIX) || isMagic(url))) {
+            return null;
+        }
+        try {
+            byte[] digest = MessageDigest.getInstance("MD5")
+                    .digest(url.getBytes("UTF-8"));
+            StringBuilder hex = new StringBuilder(digest.length * 2);
+            for (byte b : digest) {
+                hex.append(Character.forDigit((b >> 4) & 0xF, 16));
+                hex.append(Character.forDigit(b & 0xF, 16));
+            }
+            return new File(context.getDir(DISK_DIR_NAME, Context.MODE_PRIVATE),
+                    hex.toString() + ".png");
+        } catch (Exception unused) {
+            return null;
+        }
+    }
+
+    private static boolean isMagic(@Nullable String url) {
+        if (url != null) {
+            Uri uri = Uri.parse(url);
+            if (uri != null) {
+                return MAGIC_HOST.equals(uri.getHost())
+                        && MAGIC_PATH.equals(uri.getLastPathSegment());
+            }
+        }
+        return false;
+    }
+
+    @Nullable
+    private Bitmap readDisk(@Nullable String url) {
+        File file = diskFile(url);
+        if (file == null || !file.exists()) {
+            return null;
+        }
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        if (bitmap == null) {
+            file.delete();
+        }
+        return bitmap;
+    }
+
+    private void writeDisk(@Nullable String url, @NonNull Bitmap bitmap) {
+        File file = diskFile(url);
+        if (file == null) {
+            return;
+        }
+        try (java.io.FileOutputStream out = new java.io.FileOutputStream(file)) {
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        } catch (Exception unused) {
+            file.delete();
+            return;
+        }
+        mMain.post(() -> mDecoder.execute(this::trimDisk));
+    }
+
+    /** Keep the disk cache bounded; evicts oldest by modification time. */
+    private void trimDisk() {
+        Context context = context();
+        if (context == null) {
+            return;
+        }
+        File[] files = context.getDir(DISK_DIR_NAME, Context.MODE_PRIVATE).listFiles();
+        if (files == null || files.length <= DISK_CACHE_MAX_FILES) {
+            return;
+        }
+        Arrays.sort(files, Comparator.comparingLong(File::lastModified));
+        for (int i = 0; i < files.length - DISK_CACHE_MAX_FILES; i++) {
+            files[i].delete();
+        }
     }
 
     @Nullable
@@ -315,6 +413,10 @@ public final class IconLoader {
     public void evict(@Nullable String url) {
         if (url != null) {
             mCache.remove(url);
+            File file = diskFile(url);
+            if (file != null) {
+                file.delete();
+            }
         }
     }
 
