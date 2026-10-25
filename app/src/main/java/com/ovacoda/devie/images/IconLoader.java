@@ -289,13 +289,23 @@ public final class IconLoader {
         return bitmap;
     }
 
+    /** Guards all disk-cache mutations: writes take the lock too, so a
+     * trim's sort never observes a file whose mtime mutates mid-sort
+     * (TimSort throws "Comparison method violates its general contract"
+     * on those races — the crash the R8 phone build showed repeatedly). */
+    private final Object mDiskLock = new Object();
+
     private void writeDisk(@Nullable String url, @NonNull Bitmap bitmap) {
         File file = diskFile(url);
         if (file == null) {
             return;
         }
-        try (java.io.FileOutputStream out = new java.io.FileOutputStream(file)) {
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+        try {
+            synchronized (mDiskLock) {
+                try (java.io.FileOutputStream out = new java.io.FileOutputStream(file)) {
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                }
+            }
         } catch (Exception unused) {
             file.delete();
             return;
@@ -309,13 +319,24 @@ public final class IconLoader {
         if (context == null) {
             return;
         }
-        File[] files = context.getDir(DISK_DIR_NAME, Context.MODE_PRIVATE).listFiles();
-        if (files == null || files.length <= DISK_CACHE_MAX_FILES) {
-            return;
-        }
-        Arrays.sort(files, Comparator.comparingLong(File::lastModified));
-        for (int i = 0; i < files.length - DISK_CACHE_MAX_FILES; i++) {
-            files[i].delete();
+        File dir = context.getDir(DISK_DIR_NAME, Context.MODE_PRIVATE);
+        File[] files;
+        /* Snapshot the mtimes once; comparing the LIVE File::lastModified
+         * while other decode threads kept writing made the comparator flip
+         * mid-sort. */
+        synchronized (mDiskLock) {
+            files = dir.listFiles();
+            if (files == null || files.length <= DISK_CACHE_MAX_FILES) {
+                return;
+            }
+            final java.util.Map<File, Long> mtimes = new java.util.HashMap<>();
+            for (File file : files) {
+                mtimes.put(file, Long.valueOf(file.lastModified()));
+            }
+            Arrays.sort(files, Comparator.comparingLong(mtimes::get));
+            for (int i = 0; i < files.length - DISK_CACHE_MAX_FILES; i++) {
+                files[i].delete();
+            }
         }
     }
 
