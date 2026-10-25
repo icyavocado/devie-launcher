@@ -4647,14 +4647,20 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     @Override // android.app.Activity, android.content.ComponentCallbacks2
     public void onTrimMemory(int i) {
         super.onTrimMemory(i);
-        IconCache iconCache;
         if (i == 15 || i == 80) {
-            iconCache = this.mIconCache;
+            IconCache iconCache = this.mIconCache;
             if (iconCache != null) {
                 iconCache.flush();
             }
+            /* REWORK: real memory pressure only. The unconditional
+               clearMemory() ran at EVERY trim level, and
+               TRIM_MEMORY_UI_HIDDEN (20) fires when the launcher UI is
+               hidden — lock screen, app switch — so the icon LRU was wiped
+               on every lock and everything re-decoded on unlock. The LRU
+               self-trims to its byte cap; hold it for the true-pressure
+               levels above. */
+            IconLoader.getInstance().clearMemory();
         }
-        IconLoader.getInstance().clearMemory();
     }
 
     @Override // android.app.Activity, android.view.Window.Callback
