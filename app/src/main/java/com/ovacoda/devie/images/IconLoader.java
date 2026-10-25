@@ -70,7 +70,7 @@ public final class IconLoader {
     private static volatile IconLoader sInstance;
 
     private final LruCache<String, Bitmap> mCache;
-    private final Executor mDecoder = Executors.newSingleThreadExecutor(runnable -> {
+    private final Executor mDecoder = Executors.newFixedThreadPool(4, runnable -> {
         Thread thread = new Thread(runnable, "devie-icon-loader");
         thread.setPriority(Process.THREAD_PRIORITY_BACKGROUND);
         return thread;
@@ -166,7 +166,12 @@ public final class IconLoader {
             apply(view, bitmap, circular, listener);
             return;
         }
-        view.setImageDrawable(null);
+        /* REMOVED(rework): clearing the view here (was setImageDrawable(null))
+         * blanked every row whose icon re-binds before a cache miss decodes —
+         * the visible "pop-in" after opening the search overlay. Fresco drew
+         * an equally transparent placeholder, but its producers were much
+         * faster; keep the previously bound content until the new bitmap is
+         * ready (the tag guard below still rejects stale results). */
         mDecoder.execute(() -> {
             final Bitmap bitmap = resolve(url, false);
             mMain.post(() -> {

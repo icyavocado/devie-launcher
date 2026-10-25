@@ -8,8 +8,6 @@ import androidx.annotation.NonNull;
 
 import com.evie.search.local.LocalSearchManager;
 import com.evie.search.model.RecentItem;
-import com.ovacoda.devie.images.IconLoader;
-import com.voxel.launcher3.MainThreadExecutor;
 import com.voxel.launcher3.MainThreadExecutor;
 
 /**
@@ -30,13 +28,15 @@ public class IconCacheCleaner implements Application.ActivityLifecycleCallbacks 
         this.mCacheCleaner = new Runnable() {
             @Override
             public void run() {
-                /* Port of donor ImagePipelineCleaner: clears memory caches and
-                 * pre-decodes the recents rows' icon URLs so the next search
-                 * bind is a cache hit. */
+                /* REMOVED(rework): the donor ImagePipelineCleaner also called
+                 * clearMemoryCaches() here. Clearing the small LRU on pause
+                 * made every icon re-decode on the next search open — the
+                 * reported "icons pop in" on rw6. Memory-pressure trimming is
+                 * handled by Launcher.onTrimMemory instead; keep only the
+                 * recents warm-up. */
                 if (mLocalSearchManager == null) {
                     return;
                 }
-                mIconLoader.clearMemory();
                 for (RecentItem recentItem : mLocalSearchManager.getRecentItems()) {
                     mIconLoader.prefetch(recentItem.getImageUrl());
                 }
