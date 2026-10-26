@@ -65,9 +65,13 @@ public class AlphabeticIndexCompat {
             this.mAlphabeticIndex = cls.getConstructor(Locale.class).newInstance(locale);
             Method declaredMethod2 = cls.getDeclaredMethod("addLabels", Locale[].class);
             for (int i = 1; i < iIntValue; i++) {
-                declaredMethod2.invoke(this.mAlphabeticIndex, new Locale[]{(Locale) declaredMethod.invoke(objInvoke, Integer.valueOf(i))});
+                /* REWORK: donor wraps the Locale[] in Object (smali: aput-object
+                   into a new Object[]) — invoke is a varargs method, so passing the
+                   bare array made it BECOME the args array and addLabels threw
+                   IllegalArgumentException (argument 1 is Locale[], got Locale). */
+                declaredMethod2.invoke(this.mAlphabeticIndex, (Object) new Locale[]{(Locale) declaredMethod.invoke(objInvoke, Integer.valueOf(i))});
             }
-            declaredMethod2.invoke(this.mAlphabeticIndex, new Locale[]{Locale.ENGLISH});
+            declaredMethod2.invoke(this.mAlphabeticIndex, (Object) new Locale[]{Locale.ENGLISH});
             this.mAlphabeticIndex = this.mAlphabeticIndex.getClass().getDeclaredMethod("buildImmutableIndex", new Class[0]).invoke(this.mAlphabeticIndex, new Object[0]);
             this.mGetBucketIndexMethod = this.mAlphabeticIndex.getClass().getDeclaredMethod("getBucketIndex", CharSequence.class);
             this.mGetBucketMethod = this.mAlphabeticIndex.getClass().getDeclaredMethod("getBucket", Integer.TYPE);
