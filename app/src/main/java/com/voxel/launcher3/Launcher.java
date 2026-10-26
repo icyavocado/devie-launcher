@@ -2810,7 +2810,10 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                             viewCreateShortcut = createShortcut((ShortcutInfo) itemInfo);
                             if (itemInfo.container == -100 && (screenWithId = this.mWorkspace.getScreenWithId(itemInfo.screenId)) != null && screenWithId.isOccupied(itemInfo.cellX, itemInfo.cellY)) {
                                 str = "Collision while binding workspace item: " + itemInfo + ". Collides with " + screenWithId.getChildAt(itemInfo.cellX, itemInfo.cellY).getTag();
-                                if (!LauncherAppState.isDogfoodBuild()) {
+                                /* REWORK: donor polarity is dogfood→throw, release→log
+                                   (smali: if-nez isDogfoodBuild → cond_5 throw). jadx
+                                   flipped it, so release builds crashed on any collision. */
+                                if (LauncherAppState.isDogfoodBuild()) {
                                     throw new RuntimeException(str);
                                 }
                                 Log.d("Launcher", str);
@@ -2847,12 +2850,14 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                     }
                 } else {
                     viewCreateShortcut = createShortcut((ShortcutInfo) itemInfo);
-                    if (itemInfo.container == -100) {
-                        /* REWORK: the register var `screenWithId` was assigned in an earlier
-                         * pass of this loop; requery rather than read a potentially
-                         * uninitialized register. */
-                        str = "Collision while binding workspace item: " + itemInfo + ". Collides with " + this.mWorkspace.getScreenWithId(itemInfo.screenId).getChildAt(itemInfo.cellX, itemInfo.cellY).getTag();
-                        if (!LauncherAppState.isDogfoodBuild()) {
+                    if (itemInfo.container == -100 && (screenWithId = this.mWorkspace.getScreenWithId(itemInfo.screenId)) != null && screenWithId.isOccupied(itemInfo.cellX, itemInfo.cellY)) {
+                        /* REWORK: donor shares the guarded collision block with the
+                           app/shortcut case (smali cond_4:pswitch_1 — screen != null,
+                           isOccupied, skip via cond_6). jadx split the block and
+                           dropped BOTH guards here, so binding a pinned shortcut to an
+                           empty cell NPE'd at getTag() (issue #1, K-9/MIUI shortcuts). */
+                        str = "Collision while binding workspace item: " + itemInfo + ". Collides with " + screenWithId.getChildAt(itemInfo.cellX, itemInfo.cellY).getTag();
+                        if (LauncherAppState.isDogfoodBuild()) {
                             throw new RuntimeException(str);
                         }
                         Log.d("Launcher", str);
