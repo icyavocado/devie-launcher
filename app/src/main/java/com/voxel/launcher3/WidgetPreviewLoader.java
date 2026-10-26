@@ -305,10 +305,10 @@ public class WidgetPreviewLoader {
         if (iArr != null) {
             iArr[0] = intrinsicWidth;
         }
-        float f = intrinsicWidth > i2 ? (i2 - (this.mProfileBadgeMargin * 2)) / intrinsicWidth : 1.0f;
+        float f = intrinsicWidth > i2 ? (i2 - (this.mProfileBadgeMargin * 2)) / (float) intrinsicWidth : 1.0f;
         if (f != 1.0f) {
-            intrinsicWidth = (int) (intrinsicWidth * f);
-            intrinsicHeight = (int) (intrinsicHeight * f);
+            intrinsicWidth = Math.max(1, (int) (intrinsicWidth * f));
+            intrinsicHeight = Math.max(1, (int) (intrinsicHeight * f));
         }
         Canvas canvas = new Canvas();
         if (bitmapCreateBitmap == null) {
@@ -353,7 +353,10 @@ public class WidgetPreviewLoader {
             }
             int i10 = iMax;
             float f4 = i5;
-            float fMin = Math.min(Math.min(intrinsicWidth, intrinsicHeight) / (i5 + (((int) (0.25f * f4)) * 2)), f);
+            /* REWORK: donor divides as floats (int-to-float on both operands +
+               div-float in smali); jadx's int/int form truncated the icon scale
+               toward 0, shrinking widgets' fallback icons to nothing. */
+            float fMin = Math.min(Math.min(intrinsicWidth, intrinsicHeight) / (float) (i5 + (((int) (0.25f * f4)) * 2)), f);
             widgetPreviewLoader = this;
             try {
                 launcherAppWidgetProviderInfo2 = launcherAppWidgetProviderInfo;
