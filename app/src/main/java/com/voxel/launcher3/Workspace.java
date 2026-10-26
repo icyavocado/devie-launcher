@@ -1351,7 +1351,12 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                     throw new IllegalStateException("Unknown item type: " + itemInfo3.itemType);
             }
         } else {
-            if (itemInfo3.container == -1) {
+            /* REWORK: donor guards the ShortcutInfo→(AppInfo) wrap with
+               instance-of too (smali cond_d:pswitch_1 shared block: container==-1
+               AND instanceof AppInfo). jadx dropped the instanceof here, so
+               dropping a pinned shortcut (plain ShortcutInfo) to the desktop
+               crashed with ClassCastException (issue #1 repro'd live). */
+            if (itemInfo3.container == -1 && (itemInfo3 instanceof AppInfo)) {
                 ShortcutInfo shortcutInfo2 = new ShortcutInfo((AppInfo) itemInfo3);
                 dragObject.dragInfo = shortcutInfo2;
                 itemInfo3 = shortcutInfo2;
