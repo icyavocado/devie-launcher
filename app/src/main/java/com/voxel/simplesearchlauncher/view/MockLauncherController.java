@@ -159,12 +159,14 @@ public class MockLauncherController {
         }
         layoutParams.gravity = 49;
         layoutParams.width = this.mDeviceProfile.searchBarSpaceWidthPx;
-        layoutParams.height = this.mDeviceProfile.searchBarSpaceHeightPx;
-        this.mSearchBar.setPadding(this.mDeviceProfile.edgeMarginPx * 2, this.mDeviceProfile.getSearchBarTopOffset(), this.mDeviceProfile.edgeMarginPx * 2, 0);
+        int extraTopInset = this.mDeviceProfile.edgeMarginPx * 2;
+        layoutParams.height = this.mDeviceProfile.searchBarSpaceHeightPx + extraTopInset;
+        this.mSearchBar.setPadding(this.mDeviceProfile.edgeMarginPx * 2, this.mDeviceProfile.getSearchBarTopOffset() + extraTopInset, this.mDeviceProfile.edgeMarginPx * 2, 0);
         this.mSearchBar.setLayoutParams(layoutParams);
         FrameLayout.LayoutParams layoutParams2 = (FrameLayout.LayoutParams) this.mWorkspace.getLayoutParams();
         layoutParams2.gravity = 17;
         Rect workspacePadding = this.mDeviceProfile.getWorkspacePadding();
+        workspacePadding.top += extraTopInset;
         this.mWorkspace.setLayoutParams(layoutParams2);
         this.mWorkspace.setPadding(workspacePadding.left, workspacePadding.top, workspacePadding.right, workspacePadding.bottom);
         CellParams cellParamsForType = this.mDeviceProfile.getCellParamsForType(DeviceProfile.ParamType.HOTSEAT);
