@@ -248,12 +248,5 @@ public class DesktopSettingsFragment extends Fragment {
         setupControls(view);
         setupMockLauncher((FrameLayout) view);
         this.mScrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
-        this.mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$DesktopSettingsFragment$3O87P_rHrsrn83sfI5iTcC_PGoU
-            @Override // androidx.core.widget.NestedScrollView.OnScrollChangeListener
-            public final void onScrollChange(NestedScrollView nestedScrollView, int i, int i2, int i3, int i4) {
-                DesktopSettingsFragment desktopSettingsFragment = DesktopSettingsFragment.this;
-                desktopSettingsFragment.mMockLauncher.setTranslationY(desktopSettingsFragment.mMockLauncherStartTranslationY - (i2 / 2.0f));
-            }
-        });
     }
 }

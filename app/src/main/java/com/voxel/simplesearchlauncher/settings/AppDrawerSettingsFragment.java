@@ -172,13 +172,6 @@ public class AppDrawerSettingsFragment extends Fragment implements AllAppsFragme
                 AppDrawerSettingsFragment.this.mMockView.setTranslationY(AppDrawerSettingsFragment.this.mMockStartTranslationY);
             }
         });
-        this.mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$AppDrawerSettingsFragment$CN4ODrouIikbGzZQRp5wXHm7PKY
-            @Override // androidx.core.widget.NestedScrollView.OnScrollChangeListener
-            public final void onScrollChange(NestedScrollView nestedScrollView, int i, int i2, int i3, int i4) {
-                AppDrawerSettingsFragment appDrawerSettingsFragment = AppDrawerSettingsFragment.this;
-                appDrawerSettingsFragment.mMockView.setTranslationY(appDrawerSettingsFragment.mMockStartTranslationY - (i2 / 2));
-            }
-        });
     }
 
     private void updateDisplayStyle() {

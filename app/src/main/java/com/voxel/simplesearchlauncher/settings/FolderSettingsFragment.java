@@ -173,13 +173,6 @@ public class FolderSettingsFragment extends Fragment {
                 FolderSettingsFragment.this.mMockView.setTranslationY(FolderSettingsFragment.this.mMockStartTranslationY);
             }
         });
-        this.mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$FolderSettingsFragment$hT55fNRufRPTlE0OFNmHvGOiaoU
-            @Override // androidx.core.widget.NestedScrollView.OnScrollChangeListener
-            public final void onScrollChange(NestedScrollView nestedScrollView, int i2, int i3, int i4, int i5) {
-                FolderSettingsFragment folderSettingsFragment = FolderSettingsFragment.this;
-                folderSettingsFragment.mMockView.setTranslationY(folderSettingsFragment.mMockStartTranslationY - (i3 / 2.0f));
-            }
-        });
     }
 
     private void updateFolderShapeText() {

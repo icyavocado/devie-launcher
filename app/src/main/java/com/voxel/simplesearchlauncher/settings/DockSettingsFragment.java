@@ -277,12 +277,5 @@ public class DockSettingsFragment extends Fragment {
         setupControls(view);
         setupMockLauncher((FrameLayout) view);
         this.mScrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
-        this.mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$DockSettingsFragment$gGL5dkPwo-h5JbquBbgSIyAnvS4
-            @Override // androidx.core.widget.NestedScrollView.OnScrollChangeListener
-            public final void onScrollChange(NestedScrollView nestedScrollView, int i, int i2, int i3, int i4) {
-                DockSettingsFragment dockSettingsFragment = DockSettingsFragment.this;
-                dockSettingsFragment.mMockLauncher.setTranslationY(dockSettingsFragment.mMockLauncherStartTranslationY - (i2 / 2.0f));
-            }
-        });
     }
 }

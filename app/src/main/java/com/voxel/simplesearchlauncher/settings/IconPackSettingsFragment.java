@@ -340,12 +340,5 @@ public class IconPackSettingsFragment extends Fragment {
             }
         });
         this.mScrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
-        this.mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$IconPackSettingsFragment$vFJSRhvJA3Y3M55yR5OL6whRmNQ
-            @Override // androidx.core.widget.NestedScrollView.OnScrollChangeListener
-            public final void onScrollChange(NestedScrollView nestedScrollView, int i, int i2, int i3, int i4) {
-                IconPackSettingsFragment iconPackSettingsFragment = IconPackSettingsFragment.this;
-                iconPackSettingsFragment.mMockLauncher.setTranslationY(iconPackSettingsFragment.mMockLauncherStartTranslationY - (i2 / 2.0f));
-            }
-        });
     }
 }
