@@ -2540,54 +2540,20 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                     } else {
                         arrayList.add(component2);
                     }
-                    if (view instanceof FolderIcon) {
-                        folderIcon = (FolderIcon) view;
-                        itemsInReadingOrder = folderIcon.getFolder().getItemsInReadingOrder();
-                        for (i = 0; i < itemsInReadingOrder.size(); i++) {
-                            if (itemsInReadingOrder.get(i).getTag() instanceof ShortcutInfo) {
-                                shortcutInfo = (ShortcutInfo) itemsInReadingOrder.get(i).getTag();
-                                component = shortcutInfo.intent.getComponent();
-                                data = shortcutInfo.intent.getData();
-                                if (data != null || data.equals(Uri.EMPTY)) {
-                                    if (arrayList.contains(component)) {
-                                        if (z) {
-                                            folderIcon.getFolderInfo().remove(shortcutInfo);
-                                            LauncherModel.deleteItemFromDatabase(this.mLauncher, shortcutInfo);
-                                        }
-                                        if (arrayList2 != null) {
-                                            arrayList2.add(component);
-                                        }
-                                    } else {
-                                        arrayList.add(component);
-                                    }
-                                }
-                            }
-                        }
-                    }
                 }
-            } else if (view instanceof FolderIcon) {
+            }
+            if (view instanceof FolderIcon) {
                 folderIcon = (FolderIcon) view;
                 itemsInReadingOrder = folderIcon.getFolder().getItemsInReadingOrder();
-                while (i < itemsInReadingOrder.size()) {
-                    if (itemsInReadingOrder.get(i).getTag() instanceof ShortcutInfo) {
-                        shortcutInfo = (ShortcutInfo) itemsInReadingOrder.get(i).getTag();
-                        component = shortcutInfo.intent.getComponent();
-                        data = shortcutInfo.intent.getData();
-                        if (data != null) {
-                            if (arrayList.contains(component)) {
-                                arrayList.add(component);
-                            } else {
-                                if (z) {
-                                    folderIcon.getFolderInfo().remove(shortcutInfo);
-                                    LauncherModel.deleteItemFromDatabase(this.mLauncher, shortcutInfo);
-                                }
-                                if (arrayList2 != null) {
-                                    arrayList2.add(component);
-                                }
-                            }
-                        } else if (arrayList.contains(component)) {
-                            arrayList.add(component);
-                        } else {
+                for (i = 0; i < itemsInReadingOrder.size(); i++) {
+                    if (!(itemsInReadingOrder.get(i).getTag() instanceof ShortcutInfo)) {
+                        continue;
+                    }
+                    shortcutInfo = (ShortcutInfo) itemsInReadingOrder.get(i).getTag();
+                    component = shortcutInfo.intent.getComponent();
+                    data = shortcutInfo.intent.getData();
+                    if (data == null || data.equals(Uri.EMPTY)) {
+                        if (arrayList.contains(component)) {
                             if (z) {
                                 folderIcon.getFolderInfo().remove(shortcutInfo);
                                 LauncherModel.deleteItemFromDatabase(this.mLauncher, shortcutInfo);
@@ -2595,6 +2561,8 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                             if (arrayList2 != null) {
                                 arrayList2.add(component);
                             }
+                        } else {
+                            arrayList.add(component);
                         }
                     }
                 }
