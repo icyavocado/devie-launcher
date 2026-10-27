@@ -81,14 +81,14 @@ public class LoadingSpinner extends View {
             }
         });
         ofFloat.start();
-        setTag(ofFloat);
+        setTag(R.id.devie_loading_spinner_animator, ofFloat);
     }
 
     public void stopAnimation() {
-        Object tag = getTag();
+        Object tag = getTag(R.id.devie_loading_spinner_animator);
         if (tag instanceof ValueAnimator) {
             ((ValueAnimator) tag).cancel();
-            setTag(null);
+            setTag(R.id.devie_loading_spinner_animator, null);
         }
         this.mSpinning = false;
         animate().alpha(0.0f).setDuration(200L).start();
@@ -113,10 +113,10 @@ public class LoadingSpinner extends View {
 
     @Override
     protected void onDetachedFromWindow() {
-        Object tag = getTag();
+        Object tag = getTag(R.id.devie_loading_spinner_animator);
         if (tag instanceof ValueAnimator) {
             ((ValueAnimator) tag).cancel();
-            setTag(null);
+            setTag(R.id.devie_loading_spinner_animator, null);
         }
         this.mSpinning = false;
         super.onDetachedFromWindow();
