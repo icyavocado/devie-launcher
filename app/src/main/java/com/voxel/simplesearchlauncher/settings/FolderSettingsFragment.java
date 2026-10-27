@@ -33,7 +33,7 @@ import com.ovacoda.devie.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import com.ovacoda.devie.widget.DiscreteSeekBar;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class FolderSettingsFragment extends Fragment {
@@ -255,16 +255,16 @@ public class FolderSettingsFragment extends Fragment {
             }
         });
         this.mGridSettingsView.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.FolderSettingsFragment.1
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onProgressChanged(DiscreteSeekBar discreteSeekBar, int i, boolean z) {
                 FolderSettingsFragment.this.refreshLayout();
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStartTrackingTouch(DiscreteSeekBar discreteSeekBar) {
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStopTrackingTouch(DiscreteSeekBar discreteSeekBar) {
             }
         });

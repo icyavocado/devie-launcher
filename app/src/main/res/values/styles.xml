@@ -24,20 +24,6 @@
         <item name="android:windowEnterAnimation">@anim/design_bottom_sheet_slide_in</item>
         <item name="android:windowExitAnimation">@anim/design_bottom_sheet_slide_out</item>
     </style>
-    <style name="AppDiscreteSeekBarStyle">
-        <item name="dsb_indicatorColor">@color/evie_theme_green</item>
-        <item name="dsb_indicatorElevation">0.0dip</item>
-        <item name="dsb_indicatorTextAppearance">@style/AppDiscreteSeekBarTextAppearance</item>
-        <item name="dsb_progressColor">@color/evie_universal_green</item>
-        <item name="dsb_scrubberHeight">2.0dip</item>
-        <item name="dsb_trackColor">#80b8b8b8</item>
-        <item name="dsb_trackHeight">2.0dip</item>
-    </style>
-    <style name="AppDiscreteSeekBarTextAppearance">
-        <item name="android:textStyle">normal</item>
-        <item name="android:textColor">#ffffffff</item>
-        <item name="android:fontFamily">sans-serif</item>
-    </style>
     <style name="AppTextAppearance">
         <item name="android:textStyle">normal</item>
         <item name="android:textColor">#ffffffff</item>
@@ -1598,7 +1584,6 @@
         <item name="colorPrimary">@color/evie_theme_navy_blue</item>
         <item name="colorPrimaryDark">@color/evie_theme_navy_blue_dark</item>
         <item name="colorAccent">@color/evie_theme_green</item>
-        <item name="discreteSeekBarStyle">@style/AppDiscreteSeekBarStyle</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
     <style name="SettingsWallpaperTheme" parent="@style/SettingsTheme">
@@ -1610,7 +1595,6 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowShowWallpaper">true</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="discreteSeekBarStyle">@style/AppDiscreteSeekBarStyle</item>
         <item name="searchViewStyle">@style/SearchViewStyle</item>
         <item name="windowActionBar">false</item>
     </style>
@@ -2041,19 +2025,6 @@
         <item name="passwordToggleContentDescription">@string/password_toggle_content_description</item>
         <item name="passwordToggleDrawable">@drawable/design_password_eye</item>
         <item name="passwordToggleTint">@color/design_tint_password_toggle</item>
-    </style>
-    <style name="Widget.DiscreteIndicatorTextAppearance" parent="@android:style/TextAppearance.Small">
-        <item name="android:textColor">?android:textColorPrimaryInverse</item>
-        <item name="android:padding">6.0dip</item>
-    </style>
-    <style name="Widget.DiscreteSeekBar" parent="@android:style/Widget">
-        <item name="dsb_indicatorColor">@color/dsb_progress_color</item>
-        <item name="dsb_indicatorElevation">4.0dip</item>
-        <item name="dsb_indicatorTextAppearance">@style/Widget.DiscreteIndicatorTextAppearance</item>
-        <item name="dsb_mirrorForRtl">true</item>
-        <item name="dsb_progressColor">@color/dsb_progress_color_list</item>
-        <item name="dsb_rippleColor">@color/dsb_ripple_color_list</item>
-        <item name="dsb_trackColor">@color/dsb_track_color_list</item>
     </style>
     <style name="Widget.IconPageIndicator" parent="@style/Widget">
         <item name="android:layout_marginLeft">6.0dip</item>

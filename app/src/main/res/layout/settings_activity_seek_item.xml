@@ -6,7 +6,7 @@
          break after the modern type sizes). -->
     <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/search_list_item_height" android:splitMotionEvents="false" android:paddingStart="@dimen/settings_list_item_row_padding_left" android:paddingTop="12.0dip" android:paddingBottom="14.0dip" android:paddingEnd="16.0dip" android:layout_marginStart="12.0dip" android:layout_marginEnd="12.0dip" android:background="@drawable/settings_list_item_background" android:layout_marginBottom="14.0dip">
         <TextView android:textAppearance="@style/SettingsItemTextAppearance" android:id="@id/label" android:layout_width="fill_parent" android:layout_height="wrap_content" />
-        <org.adw.library.widgets.discreteseekbar.DiscreteSeekBar android:id="@id/seek_bar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6.0dip" />
+        <com.ovacoda.devie.widget.DiscreteSeekBar android:id="@id/seek_bar" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginTop="6.0dip" />
     </LinearLayout>
     <include layout="@layout/settings_activity_list_item_divider" />
 </FrameLayout>

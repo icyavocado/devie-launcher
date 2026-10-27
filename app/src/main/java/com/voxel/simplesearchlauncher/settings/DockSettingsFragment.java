@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import com.ovacoda.devie.widget.DiscreteSeekBar;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class DockSettingsFragment extends Fragment {
@@ -114,7 +114,7 @@ public class DockSettingsFragment extends Fragment {
             }
         });
         this.mGridSettingsView.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.DockSettingsFragment.1
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onProgressChanged(DiscreteSeekBar discreteSeekBar, int i, boolean z) {
                 if (z) {
                     if (discreteSeekBar == DockSettingsFragment.this.mGridSettingsView.getIconSizeViewHolder().mDiscreteSeekBar) {
@@ -125,14 +125,14 @@ public class DockSettingsFragment extends Fragment {
                 }
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStartTrackingTouch(DiscreteSeekBar discreteSeekBar) {
                 GridLineController hotseatGridLineController = DockSettingsFragment.this.mMockLauncherController.getHotseatGridLineController();
                 hotseatGridLineController.updateGridLines(1, Math.round(DockSettingsFragment.this.mCellParams.numColumns));
                 hotseatGridLineController.showGridLines();
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStopTrackingTouch(DiscreteSeekBar discreteSeekBar) {
                 DockSettingsFragment.this.mMockLauncherController.getHotseatGridLineController().hideGridLines();
             }
@@ -156,16 +156,16 @@ public class DockSettingsFragment extends Fragment {
             }
         });
         this.mBackgroundAlphaViewHolder.mDiscreteSeekBar.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.DockSettingsFragment.2
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onProgressChanged(DiscreteSeekBar discreteSeekBar, int i, boolean z) {
                 DockSettingsFragment.this.updateDockAlpha();
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStartTrackingTouch(DiscreteSeekBar discreteSeekBar) {
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStopTrackingTouch(DiscreteSeekBar discreteSeekBar) {
             }
         });

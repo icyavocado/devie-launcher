@@ -48,7 +48,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import com.ovacoda.devie.widget.DiscreteSeekBar;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class NotificationSettingsFragment extends Fragment {
@@ -207,7 +207,7 @@ public class NotificationSettingsFragment extends Fragment {
                 }
             }
             DiscreteSeekBar.OnProgressChangeListener onProgressChangeListener = new DiscreteSeekBar.OnProgressChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.NotificationSettingsFragment.ConfigSection.1
-                @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+                @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
                 public void onProgressChanged(DiscreteSeekBar discreteSeekBar, int i2, boolean z) {
                     if (discreteSeekBar == configViewHolder.mSizeSeek.mDiscreteSeekBar) {
                         float f = i2 / 100.0f;
@@ -220,11 +220,11 @@ public class NotificationSettingsFragment extends Fragment {
                     }
                 }
 
-                @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+                @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
                 public void onStartTrackingTouch(DiscreteSeekBar discreteSeekBar) {
                 }
 
-                @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+                @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
                 public void onStopTrackingTouch(DiscreteSeekBar discreteSeekBar) {
                 }
             };

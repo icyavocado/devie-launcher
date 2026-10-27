@@ -31,11 +31,6 @@
     <color name="design_default_color_primary">#ff3f51b5</color>
     <color name="design_default_color_primary_dark">#ff303f9f</color>
     <color name="design_snackbar_background_color">#ff323232</color>
-    <color name="dsb_disabled_color">#66939393</color>
-    <color name="dsb_progress_color">#ff009688</color>
-    <color name="dsb_ripple_color_focused">#99999999</color>
-    <color name="dsb_ripple_color_pressed">#77939393</color>
-    <color name="dsb_track_color">#ff939393</color>
     <color name="error_color_material_dark">#ffff7043</color>
     <color name="error_color_material_light">#ffff5722</color>
     <color name="evie_gray">#ff787878</color>

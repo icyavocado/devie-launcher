@@ -10,7 +10,7 @@ import com.voxel.launcher3.DeviceProfile;
 import com.voxel.simplesearchlauncher.settings.SettingsSeekBarViewHolder;
 import com.voxel.simplesearchlauncher.settings.SettingsSwitchViewHolder;
 import com.ovacoda.devie.R;
-import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import com.ovacoda.devie.widget.DiscreteSeekBar;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class GridSettingsView extends LinearLayout {
@@ -122,7 +122,7 @@ public class GridSettingsView extends LinearLayout {
             }
         });
         DiscreteSeekBar.OnProgressChangeListener onProgressChangeListener = new DiscreteSeekBar.OnProgressChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.gridsettings.GridSettingsView.1
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onProgressChanged(DiscreteSeekBar discreteSeekBar, int i, boolean z) {
                 if (z) {
                     if (discreteSeekBar == GridSettingsView.this.mIconSizeViewHolder.getDiscreteSeekBar()) {
@@ -136,14 +136,14 @@ public class GridSettingsView extends LinearLayout {
                 }
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStartTrackingTouch(DiscreteSeekBar discreteSeekBar) {
                 if (GridSettingsView.this.mOnProgressChangeListener != null) {
                     GridSettingsView.this.mOnProgressChangeListener.onStartTrackingTouch(discreteSeekBar);
                 }
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStopTrackingTouch(DiscreteSeekBar discreteSeekBar) {
                 if (GridSettingsView.this.mOnProgressChangeListener != null) {
                     GridSettingsView.this.mOnProgressChangeListener.onStopTrackingTouch(discreteSeekBar);

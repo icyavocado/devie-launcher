@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import com.ovacoda.devie.widget.DiscreteSeekBar;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class DesktopSettingsFragment extends Fragment {
@@ -129,21 +129,21 @@ public class DesktopSettingsFragment extends Fragment {
             }
         });
         this.mGridSettingsView.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.DesktopSettingsFragment.1
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onProgressChanged(DiscreteSeekBar discreteSeekBar, int i, boolean z) {
                 if (z) {
                     DesktopSettingsFragment.this.updateGrid();
                 }
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStartTrackingTouch(DiscreteSeekBar discreteSeekBar) {
                 GridLineController workspaceGridLineController = DesktopSettingsFragment.this.mMockLauncherController.getWorkspaceGridLineController();
                 workspaceGridLineController.updateGridLines(Math.round(DesktopSettingsFragment.this.mCellParams.numRows), Math.round(DesktopSettingsFragment.this.mCellParams.numColumns));
                 workspaceGridLineController.showGridLines();
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStopTrackingTouch(DiscreteSeekBar discreteSeekBar) {
                 DesktopSettingsFragment.this.mMockLauncherController.getWorkspaceGridLineController().hideGridLines();
             }

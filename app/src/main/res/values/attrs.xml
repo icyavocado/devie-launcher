@@ -173,23 +173,6 @@
     <attr name="drawerArrowStyle" format="reference" />
     <attr name="dropDownListViewStyle" format="reference" />
     <attr name="dropdownListPreferredItemHeight" format="dimension" />
-    <attr name="dsb_allowTrackClickToDrag" format="boolean" />
-    <attr name="dsb_indicatorColor" format="reference|color" />
-    <attr name="dsb_indicatorElevation" format="dimension" />
-    <attr name="dsb_indicatorFormatter" format="reference|string" />
-    <attr name="dsb_indicatorPopupEnabled" format="boolean" />
-    <attr name="dsb_indicatorSeparation" format="integer|dimension" />
-    <attr name="dsb_indicatorTextAppearance" format="reference" />
-    <attr name="dsb_max" format="integer|dimension" />
-    <attr name="dsb_min" format="integer|dimension" />
-    <attr name="dsb_mirrorForRtl" format="boolean" />
-    <attr name="dsb_progressColor" format="reference|color" />
-    <attr name="dsb_rippleColor" format="reference|color" />
-    <attr name="dsb_scrubberHeight" format="integer|dimension" />
-    <attr name="dsb_thumbSize" format="integer|dimension" />
-    <attr name="dsb_trackColor" format="reference|color" />
-    <attr name="dsb_trackHeight" format="integer|dimension" />
-    <attr name="dsb_value" format="integer|dimension" />
     <attr name="editTextBackground" format="reference" />
     <attr name="editTextColor" format="reference|color" />
     <attr name="editTextStyle" format="reference" />
@@ -628,21 +611,6 @@
     <attr name="y" format="string" />
 
     <!-- REWORK(vendor): styleable groups for vendored libs (originals from their res/attrs.xml) -->
-    <declare-styleable name="DiscreteSeekBar">
-        <attr name="dsb_min" />
-        <attr name="dsb_max" />
-        <attr name="dsb_value" />
-        <attr name="dsb_mirrorForRtl" />
-        <attr name="dsb_allowTrackClickToDrag" />
-        <attr name="dsb_progressColor" />
-        <attr name="dsb_trackColor" />
-        <attr name="dsb_indicatorTextAppearance" />
-        <attr name="dsb_indicatorColor" />
-        <attr name="dsb_indicatorElevation" />
-        <attr name="dsb_indicatorFormatter" />
-        <attr name="dsb_rippleColor" />
-        <attr name="dsb_indicatorPopupEnabled" />
-    </declare-styleable>
     <declare-styleable name="LoadingSpinner">
         <attr name="spinner_color" format="color" />
         <attr name="spinner_autoStart" format="boolean" />

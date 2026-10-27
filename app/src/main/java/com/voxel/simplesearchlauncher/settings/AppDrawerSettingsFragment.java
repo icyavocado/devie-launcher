@@ -23,7 +23,7 @@ import com.voxel.simplesearchlauncher.view.MockLauncherController;
 import dagger.android.support.AndroidSupportInjection;
 import com.ovacoda.devie.R;
 import java.util.ArrayList;
-import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import com.ovacoda.devie.widget.DiscreteSeekBar;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class AppDrawerSettingsFragment extends Fragment implements AllAppsFragment.OnFragmentInteractionListener {
@@ -125,18 +125,18 @@ public class AppDrawerSettingsFragment extends Fragment implements AllAppsFragme
             }
         });
         this.mGridSettingsView.setOnProgressChangeListener(new DiscreteSeekBar.OnProgressChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.AppDrawerSettingsFragment.1
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onProgressChanged(DiscreteSeekBar discreteSeekBar, int i, boolean z) {
                 if (z) {
                     AppDrawerSettingsFragment.this.refreshLayout();
                 }
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStartTrackingTouch(DiscreteSeekBar discreteSeekBar) {
             }
 
-            @Override // org.adw.library.widgets.discreteseekbar.DiscreteSeekBar.OnProgressChangeListener
+            @Override // com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener
             public void onStopTrackingTouch(DiscreteSeekBar discreteSeekBar) {
             }
         });

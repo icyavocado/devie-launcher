@@ -3,7 +3,7 @@ package com.voxel.simplesearchlauncher.settings;
 import android.view.View;
 import android.widget.TextView;
 import com.ovacoda.devie.R;
-import org.adw.library.widgets.discreteseekbar.DiscreteSeekBar;
+import com.ovacoda.devie.widget.DiscreteSeekBar;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class SettingsSeekBarViewHolder extends SettingsViewHolder {
