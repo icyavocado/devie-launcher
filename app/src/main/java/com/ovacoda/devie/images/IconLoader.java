@@ -90,7 +90,11 @@ public final class IconLoader {
     private Context mAppContext;
 
     private IconLoader() {
-        int maxSize = computeCacheSize(null);
+        this(null);
+    }
+
+    private IconLoader(@Nullable Context context) {
+        int maxSize = computeCacheSize(context);
         mCache = new LruCache<String, Bitmap>(maxSize) {
             @Override
             protected int sizeOf(String key, Bitmap value) {
@@ -116,7 +120,7 @@ public final class IconLoader {
 
     /** Must be called once from BaseApplication.setup(). */
     public static IconLoader init(Context context) {
-        IconLoader instance = getInstance();
+        IconLoader instance = getInstance(context);
         instance.mAppContext = context.getApplicationContext();
         return instance;
     }
@@ -129,7 +133,7 @@ public final class IconLoader {
         if (sInstance == null) {
             synchronized (IconLoader.class) {
                 if (sInstance == null) {
-                    sInstance = new IconLoader();
+                    sInstance = new IconLoader(context);
                 }
             }
         }
