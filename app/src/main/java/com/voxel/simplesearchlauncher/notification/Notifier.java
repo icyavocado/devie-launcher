@@ -154,7 +154,7 @@ public class Notifier implements SharedPreferences.OnSharedPreferenceChangeListe
         StatusBarNotification statusBarNotification = this.mNotifications.get(notificationKeyData.notificationKey);
         StatusBarNotification statusBarNotification2 = this.mNotifications.get(notificationKeyData2.notificationKey);
         if (statusBarNotification == null) {
-            return -1;
+            return statusBarNotification2 == null ? 0 : -1;
         }
         if (statusBarNotification2 == null) {
             return 1;
