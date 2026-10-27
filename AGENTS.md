@@ -24,9 +24,9 @@ Repo: `github.com/icyavocado/devie-launcher` (public), branch `main` = default.
 | Thing | Path |
 |---|---|
 | Repo (always here) | `/home/dai/projects/evie` |
-| Donor APK | `./evie-launcher-2.14.8.12_arm64.apk` |
-| Donor jadx source tree | `/tmp/opencode/evie-src/sources` (**session-temp — may vanish; see §3 to regenerate**) |
-| Donor smali (dex truth) | `/tmp/opencode/apktool-smali` (**may vanish; regenerate, see §3**) |
+| Donor APK | `/home/dai/Downloads/evie-launcher-2.14.8.12_arm64.apk` (symlinked into repo as `donor/evie-launcher-2.14.8.12_arm64.apk`, `donor/` is git-ignored) |
+| Donor jadx source tree | `/tmp/opencode/evie-src` (**session-temp — may vanish; see §3 to regenerate**) |
+| Donor smali (dex truth) | `/tmp/opencode/apktool-smali-src` (**may vanish; regenerate, see §3**) |
 | Donor res decode | `/tmp/opencode/apktool-out` |
 | jadx binary | `/tmp/opencode/jadx/bin/jadx` |
 | apktool jar | `/tmp/opencode/apktool.jar` (2.12.1) |
@@ -42,11 +42,13 @@ Repo: `github.com/icyavocado/devie-launcher` (public), branch `main` = default.
 
 ```sh
 cd /home/dai/projects/evie
+APK=donor/evie-launcher-2.14.8.12_arm64.apk
 # jadx (binary re-download if /tmp/opencode/jadx is gone: jadx-1.4.7 zip, unzip)
-/tmp/opencode/jadx/bin/jadx -d /tmp/opencode/evie-src evie-launcher-2.14.8.12_arm64.apk
-# smali + res (apktool jar: re-download 2.12.1 if missing)
-java -jar /tmp/opencode/apktool.jar d -s -f -o /tmp/opencode/apktool-smali evie-launcher-2.14.8.12_arm64.apk
-java -jar /tmp/opencode/apktool.jar d -r -f -o /tmp/opencode/apktool-out evie-launcher-2.14.8.12_arm64.apk
+/tmp/opencode/jadx/bin/jadx -d /tmp/opencode/evie-src "$APK"
+# smali + res (apktool jar: re-download 2.12.1 if missing; NO -s — that flag skips
+# smali and yields no dex truth)
+java -jar /tmp/opencode/apktool.jar d -f -o /tmp/opencode/apktool-smali-src "$APK"
+java -jar /tmp/opencode/apktool.jar d -r -f -o /tmp/opencode/apktool-out "$APK"
 ```
 
 ## 4. Builds — Docker only (host has NO gradle)
@@ -72,11 +74,11 @@ java -jar /tmp/opencode/apktool.jar d -r -f -o /tmp/opencode/apktool-out evie-la
 - Release = R8 minify + shrinkResources; signing only when
   `keystore/evie-release.properties` exists (CI builds unsigned without secrets).
 - Crash lines from R8 builds: symbolicate with `mapping.txt` (e.g. `r7` ↔ class via mapping).
-- R8 rules live in `proguard-rules.pro`: keepnames for `com.voxel.**`/`com.evie.**`/
-  `com.ovacoda.**` (ButterKnife 8.x binds reflectively by `Class`+`"_ViewBinding"`
-  names — renaming either side crashes bindings at runtime), Room `_Impl` + `**_Impl`
-  ctors, Fragment subclasses, `-dontoptimize` (API-36 ART VerifyError on decompiled
-  receiver classes).
+- R8 rules live in `proguard-rules.pro`: keepnames for Fragment subclasses (covers
+  `TransparentSettingsActivity`'s `"show_fragment"` reflection), Room `_Impl` +
+  `**_Impl` ctors, `-dontoptimize` (API-36 ART VerifyError on decompiled receiver
+  classes). (The old catch-all keepnames for `com.voxel.**`/`com.evie.**`/
+  `com.ovacoda.**` died with ButterKnife 8.x — removed when the dep was dropped.)
 
 ## 5. Devices
 
@@ -201,8 +203,9 @@ authenticated as `icyavocado` (HTTPS remote; ssh port 22 firewalled).
 |---|---|
 | Launcher core (4.4-era Launcher2/3) | `com.voxel.launcher3.*` — Launcher, Workspace, CellLayout, LauncherModel (+ LoaderTask, workspaceScreens reconcile), LauncherProvider (authority `com.ovacoda.devie.settings`), DeviceProfile/DynamicGrid, IconCache, dragndrop, Folder/FolderIcon, wallpaper-picker helpers (`com.android.gallery3d.*`) |
 | Evie feature layer | `com.voxel.simplesearchlauncher.*` — search overlay (SearchPresenter/SearchUiHelper + `com.evie.search.*` local fuzzy engine), settings (SettingsActivity, *SettingsFragment, gridsettings.*, MockLauncherController previews), onboarding (PermissionsSlide; IntroSlide was cut), notification/badge (NotificationListener + NotificationReceiver), app lock (DeviceAdmin/LockOverlay), backup/restore (BackupRestoreManager + BackupRestoreSettingsFragment, SAF + ProgressDialog) |
-| New code home | `com.ovacoda.devie.*` — DevieLinks (REPO_URL/ISSUES_URL → github.com/icyavocado/devie-launcher), view.LoadingSpinner (in-house spinner) |
-| Vendored | `org.adw.library...` DiscreteSeekBar (label/track), `io.github.luizgrp...` SectionedRecyclerViewAdapter (settings list), ButterKnife 8.8.1 (23 `_ViewBinding` hosts — reflection-bound) |
+| New code home | `com.ovacoda.devie.*` — DevieLinks (REPO_URL/ISSUES_URL → github.com/icyavocado/devie-launcher), widget.DiscreteSeekBar (in-house, own min/max range handling), view.LoadingSpinner (in-house spinner) |
+| Vendored (donor-carried, in use) | `com.android.gallery3d.*` + `com.android.photos.*` — AOSP Gallery2 wallpaper-crop pipeline (BitmapCropTask, EXIF, glrenderer, tiled decoding) used by WallpaperPickerActivity et al. |
+| ButterKnife/luizgrp/adw | REMOVED (branch review/vendor-removal): bindings inlined as findViewById, settings lists use flat RecyclerView adapters, seek bars are `com.ovacoda.devie.widget.DiscreteSeekBar` |
 | Dagger | Hand-maintained generated tree under `com.voxel.simplesearchlauncher.dagger/`. Deleting an injected class = update `DaggerLauncherAppComponent` (imports/fields/inner builders/map.put/ctor-assign) + the module file. |
 
 - **Workspace settings preview** = `MockLauncherController` over
@@ -212,10 +215,15 @@ authenticated as `icyavocado` (HTTPS remote; ssh port 22 firewalled).
   `iconCache.getIcon(intent, UserHandleCompat.myUserHandle())` with the component
   from `LocalAppData`. Dark "phone screen" = `@color/mock_screen_background`
   (#18212c) on the mock panel (`mock_phone_screen` drawable for the folder grid).
-- **Settings look**: opaque window, flat soft-gray `#d9dde3` top-to-bottom; rows =
-  white rounded cards (14dip radius drawable + 14dip bottom margins); seek rows =
-  label stacked above a full-width track. The divider include = spacer kept for
-  ButterKnife's `R.id.list_divider` binding — do not remove it from row layouts.
+- **Settings look**: opaque window, flat soft-gray `#d9dde3` top-to-bottom; main
+  screen = small muted section headers above one white rounded card per group with
+  thin inset dividers between text-only rows (SettingsFragment rebuilds it
+  programmatically; layouts `settings_activity_top_level_fragment/row`,
+  drawable `settings_group_divider`); sub-fragments keep the old row style (white
+  rounded cards, 14dip radius + 14dip bottom margins); seek rows = label stacked
+  above a full-width track. The divider include = spacer kept for ButterKnife's
+  `R.id.list_divider` binding (ButterKnife gone — include kept only as legacy
+  spacing) — do not remove it from row layouts.
 - **Set-default flow** = API 29+: `RoleManager.isRoleHeld(ROLE_HOME)` /
   `createRequestRoleIntent` (requestCode 47161) in `ResetLauncherActivity`; the
   2020 resolveActivity/clearHome dance only runs < Q.
