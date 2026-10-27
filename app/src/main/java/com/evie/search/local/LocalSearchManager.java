@@ -112,7 +112,7 @@ public class LocalSearchManager {
 
     /* Reopen the search database after a backup-restore replaced the file
      * underneath the open handle. */
-    public void restart(Context context) {
+    public synchronized void restart(Context context) {
         if (this.db != null) {
             this.db.close();
             this.db = null;
@@ -227,6 +227,9 @@ public class LocalSearchManager {
             @Override // java.lang.Runnable
             public final void run() {
                 LocalSearchManager localSearchManager = LocalSearchManager.this;
+                if (localSearchManager.db == null) {
+                    return;
+                }
                 localSearchManager.updateApps(localSearchManager.db.query("item", new String[]{"_id", "link"}, "type=?", new String[]{"LOCAL_APP"}, null, null, null), localSearchManager.mLocalAppsManager.getAllApps());
             }
         });
@@ -619,6 +622,9 @@ public class LocalSearchManager {
             @Override // java.lang.Runnable
             public final void run() {
                 LocalSearchManager localSearchManager = LocalSearchManager.this;
+                if (localSearchManager.db == null) {
+                    return;
+                }
                 localSearchManager.updateApps(localSearchManager.db.query("item", new String[]{"_id", "link"}, "link LIKE ?", new String[]{"app:" + str + "|%"}, null, null, null), list);
             }
         });
