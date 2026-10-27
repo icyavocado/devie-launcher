@@ -2115,10 +2115,6 @@ public class CellLayout extends ViewGroup {
     /* JADX WARN: Code duplicated, block: B:47:0x00fc  */
     /* JADX WARN: Code duplicated, block: B:53:0x010b  */
     int[] performReorder(int i, int i2, int i3, int i4, int i5, int i6, View view, int[] iArr, int[] iArr2, int i7) {
-        int i8;
-        int i9;
-        int i10 = 0; /* REWORK: jadx blank register */
-        boolean z;
         int[] iArrFindNearestArea = findNearestArea(i, i2, i5, i6, iArr);
         int[] iArr3 = iArr2 == null ? new int[2] : iArr2;
         if (i7 == 2 || i7 == 3 || i7 == 4) {
@@ -2175,61 +2171,26 @@ public class CellLayout extends ViewGroup {
             iArrFindNearestArea[1] = itemConfigurationFindConfigurationNoShuffle.dragViewY;
             iArr3[0] = itemConfigurationFindConfigurationNoShuffle.dragViewSpanX;
             iArr3[1] = itemConfigurationFindConfigurationNoShuffle.dragViewSpanY;
-            if (i7 != 1) {
-                i9 = 2;
-                if (i7 != 2) {
-                    i10 = 3;
-                    if (i7 == 3) {
-                    }
-                    i8 = 2;
-                }
+            if (i7 == 1 || i7 == 2 || i7 == 3) {
                 copySolutionToTempState(itemConfigurationFindConfigurationNoShuffle, view);
                 setItemPlacementDirty(true);
-                if (i7 == i9) {
-                    z = true;
-                } else {
-                    z = false;
-                }
-                animateItemsToSolution(itemConfigurationFindConfigurationNoShuffle, view, z);
-                if (i7 != i9 || i7 == i10) {
+                animateItemsToSolution(itemConfigurationFindConfigurationNoShuffle, view, i7 == 2);
+                if (i7 == 2 || i7 == 3) {
                     commitTempPlacement();
                     completeAndClearReorderPreviewAnimations();
                     setItemPlacementDirty(false);
                 } else {
                     beginOrAdjustReorderPreviewAnimations(itemConfigurationFindConfigurationNoShuffle, view, 150, 1);
                 }
-                i8 = 2;
-            } else {
-                i9 = 2;
             }
-            i10 = 3;
-            copySolutionToTempState(itemConfigurationFindConfigurationNoShuffle, view);
-            setItemPlacementDirty(true);
-            if (i7 == i9) {
-                z = true;
-            } else {
-                z = false;
-            }
-            animateItemsToSolution(itemConfigurationFindConfigurationNoShuffle, view, z);
-            if (i7 != i9) {
-                commitTempPlacement();
-                completeAndClearReorderPreviewAnimations();
-                setItemPlacementDirty(false);
-            } else {
-                commitTempPlacement();
-                completeAndClearReorderPreviewAnimations();
-                setItemPlacementDirty(false);
-            }
-            i8 = 2;
         } else {
             iArr3[1] = -1;
             iArr3[0] = -1;
             iArrFindNearestArea[1] = -1;
             iArrFindNearestArea[0] = -1;
-            i8 = 2;
             z2 = false;
         }
-        if (i7 == i8 || !z2) {
+        if (i7 == 2 || !z2) {
             setUseTempCoords(false);
         }
         this.mShortcutsAndWidgets.requestLayout();
