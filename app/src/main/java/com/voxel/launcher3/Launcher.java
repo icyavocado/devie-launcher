@@ -1601,10 +1601,10 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                     int intrinsicHeight = drawable.getIntrinsicHeight();
                     float f3 = 0.0f;
                     if (intrinsicWidth * iCeil2 > iCeil * intrinsicHeight) {
-                        f = iCeil2 / intrinsicHeight;
+                        f = (float) iCeil2 / intrinsicHeight;
                         f2 = (iCeil - (intrinsicWidth * f)) * 0.5f;
                     } else {
-                        float f4 = iCeil / intrinsicWidth;
+                        float f4 = (float) iCeil / intrinsicWidth;
                         f3 = (iCeil2 - (intrinsicHeight * f4)) * 0.5f;
                         f = f4;
                         f2 = 0.0f;

@@ -159,7 +159,7 @@ public final class Utilities {
             int intrinsicWidth = drawable.getIntrinsicWidth();
             int intrinsicHeight = drawable.getIntrinsicHeight();
             if (intrinsicWidth > 0 && intrinsicHeight > 0) {
-                float f2 = intrinsicWidth / intrinsicHeight;
+                float f2 = (float) intrinsicWidth / intrinsicHeight;
                 if (intrinsicWidth > intrinsicHeight) {
                     i2 = (int) (i / f2);
                 } else if (intrinsicHeight > intrinsicWidth) {
