@@ -164,7 +164,7 @@ public abstract class BaseRecyclerView extends RecyclerView implements RecyclerV
         if (availableScrollHeight <= 0) {
             this.mScrollbar.setThumbOffset(-1, -1);
         } else {
-            this.mScrollbar.setThumbOffset(Utilities.isRtl(getResources()) ? this.mBackgroundPadding.left : (getWidth() - this.mBackgroundPadding.right) - this.mScrollbar.getThumbWidth(), this.mBackgroundPadding.top + ((int) ((getScrollTop(scrollPositionState) / availableScrollHeight) * availableScrollBarHeight)));
+            this.mScrollbar.setThumbOffset(Utilities.isRtl(getResources()) ? this.mBackgroundPadding.left : (getWidth() - this.mBackgroundPadding.right) - this.mScrollbar.getThumbWidth(), this.mBackgroundPadding.top + ((int) (((float) getScrollTop(scrollPositionState) / (float) availableScrollHeight) * (float) availableScrollBarHeight)));
         }
     }
 }
