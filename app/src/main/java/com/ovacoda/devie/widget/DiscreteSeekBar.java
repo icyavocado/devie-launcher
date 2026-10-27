@@ -91,7 +91,7 @@ public class DiscreteSeekBar extends SeekBar {
     private void setRange(int i, int i2) {
         int i3;
         if (i > i2) {
-            i3 = i;
+            i3 = i2;
             i2 = i;
         } else {
             i3 = i;
