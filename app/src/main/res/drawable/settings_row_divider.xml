@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/settings_group_divider"
+    android:insetLeft="25.0dip"
+    android:insetRight="15.0dip" />
