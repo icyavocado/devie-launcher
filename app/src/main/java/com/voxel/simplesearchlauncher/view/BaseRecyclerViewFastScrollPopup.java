@@ -49,9 +49,10 @@ public class BaseRecyclerViewFastScrollPopup {
             }
             float[] fArr = new float[1];
             fArr[0] = z ? 1.0f : 0.0f;
-            this.mAlphaAnimator = ObjectAnimator.ofFloat(this, "alpha", fArr);
-            this.mAlphaAnimator.setDuration(z ? 200L : 150L);
-            this.mAlphaAnimator.start();
+            ObjectAnimator ofFloat = ObjectAnimator.ofFloat(this, "alpha", fArr);
+            ofFloat.setDuration(z ? 200L : 150L);
+            ofFloat.start();
+            this.mAlphaAnimator = ofFloat;
         }
     }
 
