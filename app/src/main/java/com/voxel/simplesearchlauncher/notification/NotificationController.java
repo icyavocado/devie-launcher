@@ -101,29 +101,18 @@ public class NotificationController implements INotificationController, Extracto
                     if (!widgetExtractor.isConfigured() && !widgetExtractor.requiresConfig()) {
                         InterceptingWidgetHost interceptingWidgetHost = InterceptingWidgetHost.getInstance(this.mContext);
                         int iAllocateAppWidgetId = interceptingWidgetHost.allocateAppWidgetId();
-                        boolean z = false;
                         try {
-                            try {
-                                ComponentName widgetComponent = widgetExtractor.getWidgetComponent();
-                                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.mContext);
-                                if (appWidgetManager.bindAppWidgetIdIfAllowed(iAllocateAppWidgetId, widgetComponent)) {
-                                    if (appWidgetManager.getAppWidgetInfo(iAllocateAppWidgetId).configure == null) {
-                                        widgetExtractor.createWidget(iAllocateAppWidgetId);
-                                        setAppEnabled(widgetExtractor.getPackageId(), true);
-                                        z = true;
-                                        if (!z) {
-                                        }
-                                    }
-                                    interceptingWidgetHost.deleteAppWidgetId(iAllocateAppWidgetId);
-                                } else if (!z) {
-                                    interceptingWidgetHost.deleteAppWidgetId(iAllocateAppWidgetId);
-                                }
-                            } catch (Exception e) {
-                                Timber.e(e);
+                            ComponentName widgetComponent = widgetExtractor.getWidgetComponent();
+                            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.mContext);
+                            if (appWidgetManager.bindAppWidgetIdIfAllowed(iAllocateAppWidgetId, widgetComponent)
+                                    && appWidgetManager.getAppWidgetInfo(iAllocateAppWidgetId).configure == null) {
+                                widgetExtractor.createWidget(iAllocateAppWidgetId);
+                                setAppEnabled(widgetExtractor.getPackageId(), true);
                             }
-                        } catch (Throwable th) {
+                        } catch (Exception e) {
+                            Timber.e(e);
+                        } finally {
                             interceptingWidgetHost.deleteAppWidgetId(iAllocateAppWidgetId);
-                            throw th;
                         }
                     }
                 }
