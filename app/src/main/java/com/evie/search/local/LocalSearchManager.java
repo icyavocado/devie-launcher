@@ -497,12 +497,11 @@ public class LocalSearchManager {
             return arrayList;
         }
         HashMap map = new HashMap();
-        int i = 0;
         List<LocalSearchItem> list = arrayList;
         int i2 = 0;
         while (i2 < strArr.length) {
             String str2 = strArr[i2];
-            String strSubstring = str2.length() > 6 ? str2.substring(i, 6) : str2;
+            String strSubstring = str2.length() > 6 ? str2.substring(0, 6) : str2;
             HashSet hashSet = new HashSet();
             int i3 = 1;
             LocalSearchUtil.addKeywordWithDeletions(hashSet, strSubstring, LocalSearchUtil.maxDistance(strSubstring), true);
@@ -531,7 +530,6 @@ public class LocalSearchManager {
                             float f = cursorRawQuery.getFloat(cursorRawQuery.getColumnIndexOrThrow("usage"));
                             switch (localSearchItem.getType()) {
                                 case "LOCAL_APP":
-                                    i = 0;
                                     f += 2.0f;
                                     map.put(localSearchItem.getLink(), Float.valueOf(f));
                                     arrayList2.add(localSearchItem);
@@ -545,13 +543,11 @@ public class LocalSearchManager {
                                             && LocalSearchUtil.distance(str2, string, false) > iMaxDistance) {
                                         continue;
                                     }
-                                    i = 0;
                                     map.put(localSearchItem.getLink(), Float.valueOf(f));
                                     arrayList2.add(localSearchItem);
                                     iIndexOf = arrayList2.indexOf(localSearchItem);
                                     break;
                                 default:
-                                    i = 0;
                                     map.put(localSearchItem.getLink(), Float.valueOf(f));
                                     arrayList2.add(localSearchItem);
                                     iIndexOf = arrayList2.indexOf(localSearchItem);
