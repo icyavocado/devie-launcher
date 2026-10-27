@@ -3164,103 +3164,22 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                 boolean z5 = iArr2[0] >= 0 && iArr2[1] >= 0;
                 if (z5) {
                     view3 = view4;
-                    /* REWORK: the dex reloads v12 = the dragged view (v40) on both
-                       paths (smali :goto_7/:cond_e) before the tag read; jadx kept
-                       the assignment only inside the widget-branch, so app-icon
-                       drops NPE'd on view2.getTag(). */
                     view2 = view4;
                     if ((view3 instanceof AppWidgetHostView) && (iArr[0] != itemInfo2.spanX || iArr[1] != itemInfo2.spanY)) {
-                        view = view3;
-                        view = view3;
-                        view = view3;
                         itemInfo2.spanX = iArr[0];
                         itemInfo2.spanY = iArr[1];
                         AppWidgetResizeFrame.updateWidgetSizeRanges((AppWidgetHostView) view3, this.mLauncher, iArr[0], iArr[1]);
                         z2 = true;
-                        view2 = view3;
-                    }
-                    if (getScreenIdForPageIndex(this.mCurrentPage) != j2 || zIsHotseatLayout) {
-                        i = -1;
-                    } else {
-                        int pageIndexForScreenId = getPageIndexForScreenId(j2);
-                        snapToPage(pageIndexForScreenId);
-                        i = pageIndexForScreenId;
-                    }
-                    if (z5) {
-                        itemInfo = (ItemInfo) view2.getTag();
-                        if (z4) {
-                            parentCellLayoutForView = getParentCellLayoutForView(view2);
-                            if (parentCellLayoutForView != null) {
-                                parentCellLayoutForView.removeView(view2);
-                            } else if (LauncherAppState.isDogfoodBuild()) {
-                                throw new NullPointerException("mDragInfo.cell has null parent");
-                            }
-                            int[] iArr3 = this.mTargetCell;
-                            z = true;
-                            z3 = false;
-                            addInScreen(view2, j, j2, iArr3[0], iArr3[1], itemInfo.spanX, itemInfo.spanY);
-                        } else {
-                            z = true;
-                            z3 = false;
-                        }
-                        CellLayout.LayoutParams layoutParams = (CellLayout.LayoutParams) view2.getLayoutParams();
-                        int[] iArr4 = this.mTargetCell;
-                        int i7 = iArr4[z3 ? 1 : 0];
-                        layoutParams.tmpCellX = i7;
-                        layoutParams.cellX = i7;
-                        int i8 = iArr4[z ? 1 : 0];
-                        layoutParams.tmpCellY = i8;
-                        layoutParams.cellY = i8;
-                        layoutParams.cellHSpan = itemInfo2.spanX;
-                        layoutParams.cellVSpan = itemInfo2.spanY;
-                        layoutParams.isLockedToGrid = z;
-                        if (j == -101 && (view2 instanceof LauncherAppWidgetHostView)) {
-                            final LauncherAppWidgetHostView launcherAppWidgetHostView = (LauncherAppWidgetHostView) view2;
-                            if (launcherAppWidgetHostView.getAppWidgetInfo() != null) {
-                                final ItemInfo itemInfoCapture = itemInfo;
-                                final Runnable runnable2 = new Runnable() { // from class: com.voxel.launcher3.-$$Lambda$Workspace$Yzg-EHYHNKtY2aLNe087JrtxgAQ
-                                    @Override // java.lang.Runnable
-                                    public final void run() {
-                                        Workspace.this.mLauncher.getDragLayer().addResizeFrame(itemInfoCapture, launcherAppWidgetHostView, cellLayout);
-                                    }
-                                };
-                                runnable = new Runnable() { // from class: com.voxel.launcher3.-$$Lambda$Workspace$WuXbCNZfUrKJJfPciR70Di3_o_g
-                                    @Override // java.lang.Runnable
-                                    public final void run() {
-                                        Workspace.this.lambda$onDrop$5( runnable2);
-                                    }
-                                };
-                            } else {
-                                runnable = null;
-                            }
-                        } else {
-                            runnable = null;
-                        }
-                        LauncherModel.modifyItemInDatabase(this.mLauncher, itemInfo, j, j2, layoutParams.cellX, layoutParams.cellY, itemInfo2.spanX, itemInfo2.spanY);
-                        r12 = view2;
-                        r15 = 0;
-                    } else {
-                        z = true;
-                        r15 = 0;
-                        CellLayout.LayoutParams layoutParams2 = (CellLayout.LayoutParams) view2.getLayoutParams();
-                        this.mTargetCell[0] = layoutParams2.cellX;
-                        this.mTargetCell[1] = layoutParams2.cellY;
-                        ((CellLayout) view2.getParent().getParent()).markCellsAsOccupiedForView(view2);
-                        runnable = null;
-                        r12 = view2;
                     }
                 } else {
-                    view = view4;
+                    view2 = view4;
                 }
-                view = view3;
-                view = view3;
-                view = view3;
-                z2 = false;
-                view2 = view;
-                if (getScreenIdForPageIndex(this.mCurrentPage) != j2) {
+                if (getScreenIdForPageIndex(this.mCurrentPage) != j2 || zIsHotseatLayout) {
                     i = -1;
                 } else {
-                    i = -1;
+                    int pageIndexForScreenId = getPageIndexForScreenId(j2);
+                    snapToPage(pageIndexForScreenId);
+                    i = pageIndexForScreenId;
                 }
                 if (z5) {
                     itemInfo = (ItemInfo) view2.getTag();
@@ -3271,39 +3190,56 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                         } else if (LauncherAppState.isDogfoodBuild()) {
                             throw new NullPointerException("mDragInfo.cell has null parent");
                         }
-                        int[] iArr5 = this.mTargetCell;
+                        int[] iArr3 = this.mTargetCell;
                         z = true;
                         z3 = false;
-                        addInScreen(view2, j, j2, iArr5[0], iArr5[1], itemInfo.spanX, itemInfo.spanY);
+                        addInScreen(view2, j, j2, iArr3[0], iArr3[1], itemInfo.spanX, itemInfo.spanY);
                     } else {
                         z = true;
                         z3 = false;
                     }
-                    CellLayout.LayoutParams layoutParams3 = (CellLayout.LayoutParams) view2.getLayoutParams();
-                    int[] iArr6 = this.mTargetCell;
-                    int i9 = iArr6[z3 ? 1 : 0];
-                    layoutParams3.tmpCellX = i9;
-                    layoutParams3.cellX = i9;
-                    int i10 = iArr6[z ? 1 : 0];
-                    layoutParams3.tmpCellY = i10;
-                    layoutParams3.cellY = i10;
-                    layoutParams3.cellHSpan = itemInfo2.spanX;
-                    layoutParams3.cellVSpan = itemInfo2.spanY;
-                    layoutParams3.isLockedToGrid = z;
-                    if (j == -101) {
-                        runnable = null;
+                    CellLayout.LayoutParams layoutParams = (CellLayout.LayoutParams) view2.getLayoutParams();
+                    int[] iArr4 = this.mTargetCell;
+                    int i7 = iArr4[z3 ? 1 : 0];
+                    layoutParams.tmpCellX = i7;
+                    layoutParams.cellX = i7;
+                    int i8 = iArr4[z ? 1 : 0];
+                    layoutParams.tmpCellY = i8;
+                    layoutParams.cellY = i8;
+                    layoutParams.cellHSpan = itemInfo2.spanX;
+                    layoutParams.cellVSpan = itemInfo2.spanY;
+                    layoutParams.isLockedToGrid = z;
+                    if (j == -101 && (view2 instanceof LauncherAppWidgetHostView)) {
+                        final LauncherAppWidgetHostView launcherAppWidgetHostView = (LauncherAppWidgetHostView) view2;
+                        if (launcherAppWidgetHostView.getAppWidgetInfo() != null) {
+                            final ItemInfo itemInfoCapture = itemInfo;
+                            final Runnable runnable2 = new Runnable() { // from class: com.voxel.launcher3.-$$Lambda$Workspace$Yzg-EHYHNKtY2aLNe087JrtxgAQ
+                                @Override // java.lang.Runnable
+                                public final void run() {
+                                    Workspace.this.mLauncher.getDragLayer().addResizeFrame(itemInfoCapture, launcherAppWidgetHostView, cellLayout);
+                                }
+                            };
+                            runnable = new Runnable() { // from class: com.voxel.launcher3.-$$Lambda$Workspace$WuXbCNZfUrKJJfPciR70Di3_o_g
+                                @Override // java.lang.Runnable
+                                public final void run() {
+                                    Workspace.this.lambda$onDrop$5( runnable2);
+                                }
+                            };
+                        } else {
+                            runnable = null;
+                        }
                     } else {
                         runnable = null;
                     }
-                    LauncherModel.modifyItemInDatabase(this.mLauncher, itemInfo, j, j2, layoutParams3.cellX, layoutParams3.cellY, itemInfo2.spanX, itemInfo2.spanY);
+                    LauncherModel.modifyItemInDatabase(this.mLauncher, itemInfo, j, j2, layoutParams.cellX, layoutParams.cellY, itemInfo2.spanX, itemInfo2.spanY);
                     r12 = view2;
                     r15 = 0;
                 } else {
                     z = true;
                     r15 = 0;
-                    CellLayout.LayoutParams layoutParams4 = (CellLayout.LayoutParams) view2.getLayoutParams();
-                    this.mTargetCell[0] = layoutParams4.cellX;
-                    this.mTargetCell[1] = layoutParams4.cellY;
+                    CellLayout.LayoutParams layoutParams2 = (CellLayout.LayoutParams) view2.getLayoutParams();
+                    this.mTargetCell[0] = layoutParams2.cellX;
+                    this.mTargetCell[1] = layoutParams2.cellY;
                     ((CellLayout) view2.getParent().getParent()).markCellsAsOccupiedForView(view2);
                     runnable = null;
                     r12 = view2;
