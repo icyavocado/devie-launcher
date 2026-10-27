@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import androidx.fragment.app.FragmentActivity;
 import com.voxel.launcher3.LauncherAppState;
 import com.evie.search.local.LocalSearchManager;
@@ -293,17 +295,17 @@ public class BackupRestoreManager {
             createBackup(context, outputStream);
             outputStream.close();
             if (callbacks != null) {
-                callbacks.onBackupSuccess();
+                postUi(callbacks::onBackupSuccess);
             }
         } catch (IOException unused) {
             Log.e(TAG, "Could not finish backup zip");
             if (callbacks != null) {
-                callbacks.onBackupFailure();
+                postUi(callbacks::onBackupFailure);
             }
         } catch (JSONException e) {
             Log.e(TAG, "Could not generate backup user data.", e);
             if (callbacks != null) {
-                callbacks.onBackupFailure();
+                postUi(callbacks::onBackupFailure);
             }
         }
     }
@@ -312,19 +314,23 @@ public class BackupRestoreManager {
         try {
             restoreFromZipInputStream(activity, inputStream);
             if (callbacks != null) {
-                callbacks.onRestoreSuccess();
+                postUi(callbacks::onRestoreSuccess);
             }
         } catch (IOException e) {
             Log.e(TAG, "Restore error while reading zip file. ", e);
             if (callbacks != null) {
-                callbacks.onRestoreFailure();
+                postUi(callbacks::onRestoreFailure);
             }
         } catch (JSONException e2) {
             Log.e(TAG, "Restore error while reading shared prefs. ", e2);
             if (callbacks != null) {
-                callbacks.onRestoreFailure();
+                postUi(callbacks::onRestoreFailure);
             }
         }
+    }
+
+    private static void postUi(final Runnable runnable) {
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 
     public boolean restoreFromLocalBackup(Activity activity, String str) {
