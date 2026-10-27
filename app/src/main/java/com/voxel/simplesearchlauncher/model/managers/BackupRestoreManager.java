@@ -8,6 +8,8 @@ import android.util.Log;
 import android.os.Environment;
 import androidx.fragment.app.FragmentActivity;
 import com.voxel.launcher3.LauncherAppState;
+import com.evie.search.local.LocalSearchManager;
+import com.evie.search.local.SearchDbHelper;
 import com.voxel.launcher3.LauncherApplication;
 import com.voxel.launcher3.LauncherBackupHelper;
 import com.voxel.simplesearchlauncher.iconpack.IconPackManager;
@@ -43,7 +45,7 @@ public class BackupRestoreManager {
     SettingsStorage mSettingsStorage;
     private BackupRestoreUI mUICallbacks;
     public static final String KEY_LAUNCHER_RESTORED = BackupRestoreManager.class.getCanonicalName() + ".launcher_restored";
-    private static final String[] DB_BACKUP_FILES = {"apps_info.db", "launcher.db", "search_item_data.db"};
+    private static final String[] DB_BACKUP_FILES = {"apps_info.db", "launcher.db", "LocalSearch.db"};
 
     public interface BackupRestoreUI {
         void onBackupFailure();
@@ -155,10 +157,14 @@ public class BackupRestoreManager {
         switch (str) {
             case "apps_info.db":
                 AppsInfoProvider.closeDB(context);
-                break;
+                return;
             case "launcher.db":
                 LauncherProvider.closeDB(context);
-                break;
+                return;
+            case "LocalSearch.db":
+                SearchDbHelper.closeDB(context);
+                return;
+            default:
         }
     }
 
@@ -168,6 +174,8 @@ public class BackupRestoreManager {
                 return AppsInfoProvider.getDbPath(context);
             case "launcher.db":
                 return LauncherProvider.getDbPath(context);
+            case "LocalSearch.db":
+                return SearchDbHelper.getDbPath(context);
             default:
                 return "";
         }
@@ -328,7 +336,15 @@ public class BackupRestoreManager {
                 if (((name.hashCode() == -1121668762 && name.equals("prefs.json")) ? (byte) 0 : (byte) -1) != 0) {
                     String strDBfileNameToLocation = dBfileNameToLocation(activity, name);
                     if (!strDBfileNameToLocation.isEmpty()) {
-                        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File(Environment.getDataDirectory(), strDBfileNameToLocation), false), 1024);
+                        File file = new File(Environment.getDataDirectory(), strDBfileNameToLocation);
+                        closeDb(activity, name);
+                        for (String suffix : new String[]{"-wal", "-shm", "-journal"}) {
+                            File sidecar = new File(file.getParentFile(), name + suffix);
+                            if (sidecar.exists()) {
+                                sidecar.delete();
+                            }
+                        }
+                        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file, false), 1024);
                         while (true) {
                             int i = zipInputStream.read(bArr, 0, 1024);
                             if (i == -1) {
@@ -339,7 +355,6 @@ public class BackupRestoreManager {
                         }
                         bufferedOutputStream.flush();
                         bufferedOutputStream.close();
-                        closeDb(activity, name);
                     }
                 } else {
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -359,6 +374,10 @@ public class BackupRestoreManager {
 
     public void lambda$restoreFromZipInputStream$4(Activity activity) {
         this.mLocalAppsManager.restart();
+        LocalSearchManager localSearchManager = LocalSearchManager.getInstance();
+        if (localSearchManager != null) {
+            localSearchManager.restart(activity);
+        }
         LauncherBackupHelper.postRestoreWidgets(activity);
         AppsInfoProvider.getInstance().dispatchChange(false, AppsInfoProvider.getContentUri());
         this.mIconPackManager.verifyAndReload();

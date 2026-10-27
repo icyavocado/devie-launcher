@@ -5,9 +5,31 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /* JADX INFO: loaded from: classes.dex */
-class SearchDbHelper extends SQLiteOpenHelper {
+public class SearchDbHelper extends SQLiteOpenHelper {
+    private static final String DB_NAME = "LocalSearch.db";
+    private static volatile SearchDbHelper sInstance;
+
     SearchDbHelper(Context context) {
-        super(context, "LocalSearch.db", (SQLiteDatabase.CursorFactory) null, 4);
+        super(context, DB_NAME, (SQLiteDatabase.CursorFactory) null, 4);
+    }
+
+    public static synchronized SearchDbHelper getInstance(Context context) {
+        if (sInstance == null) {
+            sInstance = new SearchDbHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+    public static String getDbPath(Context context) {
+        return context.getDatabasePath(DB_NAME).getPath();
+    }
+
+    public static void closeDB(Context context) {
+        SearchDbHelper searchDbHelper = sInstance;
+        if (searchDbHelper != null) {
+            searchDbHelper.close();
+            sInstance = null;
+        }
     }
 
     @Override // android.database.sqlite.SQLiteOpenHelper

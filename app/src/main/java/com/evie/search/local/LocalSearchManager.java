@@ -54,7 +54,7 @@ public class LocalSearchManager {
     private int mShortcutSizeInPixels;
 
     private LocalSearchManager(Context context, boolean z) {
-        this.db = new SearchDbHelper(context).getWritableDatabase();
+        this.db = SearchDbHelper.getInstance(context).getWritableDatabase();
         double length = new File(this.db.getPath()).length();
         Double.isNaN(length);
         Timber.d("Search DB size: %f MB", Double.valueOf(length / 1000000.0d));
@@ -105,6 +105,17 @@ public class LocalSearchManager {
 
     public static synchronized LocalSearchManager getInstance() {
         return instance;
+    }
+
+    /* Reopen the search database after a backup-restore replaced the file
+     * underneath the open handle. */
+    public void restart(Context context) {
+        if (this.db != null) {
+            this.db.close();
+            this.db = null;
+        }
+        this.db = SearchDbHelper.getInstance(context).getWritableDatabase();
+        this.mRecentSubject.onNext(getRecentItems());
     }
 
     public static synchronized LocalSearchManager getInstance(Context context, boolean z) {
