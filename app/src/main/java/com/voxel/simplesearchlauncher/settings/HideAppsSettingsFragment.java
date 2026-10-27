@@ -6,34 +6,28 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import butterknife.internal.Utils;
-import android.widget.ImageView;
+import com.evie.common.HybridNetworkFetcherCommon;
+import com.ovacoda.devie.R;
 import com.ovacoda.devie.images.IconLoader;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.LauncherModel;
 import com.voxel.launcher3.compat.UserHandleCompat;
-import com.evie.common.HybridNetworkFetcherCommon;
 import com.voxel.simplesearchlauncher.hideapps.HideAppsModel;
 import com.voxel.simplesearchlauncher.model.AppsInfoDataHelper;
 import dagger.android.support.AndroidSupportInjection;
-import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
-import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
-import com.ovacoda.devie.R;
 import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,107 +41,27 @@ import java.util.Set;
 /* JADX INFO: loaded from: classes2.dex */
 public class HideAppsSettingsFragment extends Fragment implements SettingsActivity.OnSettingsBackButtonPressedListener {
     private static final String DIALOG_TAG = HideAppsSettingsFragment.class.getCanonicalName() + ".dialog";
+    private static final int TYPE_CONFIG = 0;
+    private static final int TYPE_HEADER = 1;
+    private static final int TYPE_APP = 2;
+
     private List<AppsInfoDataHelper.AppInfo> mAppInfos;
-    private AppListSection mAppListSection;
     Context mApplicationContext;
     private Set<AppsInfoDataHelper.AppInfo> mChosenApps;
-    private ConfigSection mConfigSection;
     HideAppsModel mHideAppsModel;
+    private LayoutInflater mLayoutInflater;
     private RecyclerView mRecyclerView;
-    private SectionedRecyclerViewAdapter mSectionedAdapter;
     private boolean mSkipOnDestroy;
 
-    class AppListSection extends StatelessSection {
-        private View.OnClickListener mItemClickListener;
-
-        class HeaderViewHolder extends RecyclerView.ViewHolder {
-
-            TextView mName;
-
-            TextView mSubtext;
-
-            SwitchCompat mSwitch;
-
-            public HeaderViewHolder(View view) {
-                super(view);
-                ButterKnife.bind(this, view);
+    private class AppListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+        private final View.OnClickListener mItemClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppListAdapter.this.lambda$new$1(view);
             }
-        }
+        };
 
-        /* REWORK: must be static — non-static nested binding carries an implicit
-           enclosing instance that breaks ButterKnife's (target, View) reflection. */
-        public static class HeaderViewHolder_ViewBinding implements Unbinder {
-            private HeaderViewHolder target;
-
-            public HeaderViewHolder_ViewBinding(HeaderViewHolder headerViewHolder, View view) {
-                this.target = headerViewHolder;
-                headerViewHolder.mName = (TextView) Utils.findRequiredViewAsType(view, R.id.name, "field 'mName'", TextView.class);
-                headerViewHolder.mSubtext = (TextView) Utils.findRequiredViewAsType(view, R.id.subtext, "field 'mSubtext'", TextView.class);
-                headerViewHolder.mSwitch = (SwitchCompat) Utils.findRequiredViewAsType(view, R.id.item_switch, "field 'mSwitch'", SwitchCompat.class);
-            }
-
-            @Override // butterknife.Unbinder
-            public void unbind() {
-                HeaderViewHolder headerViewHolder = this.target;
-                if (headerViewHolder == null) {
-                    throw new IllegalStateException("Bindings already cleared.");
-                }
-                this.target = null;
-                headerViewHolder.mName = null;
-                headerViewHolder.mSubtext = null;
-                headerViewHolder.mSwitch = null;
-            }
-        }
-
-        class ItemViewHolder extends RecyclerView.ViewHolder {
-
-            ImageView mApplicationIcon;
-
-            CheckBox mCheckBox;
-
-            TextView mLabel;
-
-            public ItemViewHolder(View view) {
-                super(view);
-                ButterKnife.bind(this, view);
-            }
-        }
-
-        /* REWORK: must be static — see HeaderViewHolder_ViewBinding. */
-        public static class ItemViewHolder_ViewBinding implements Unbinder {
-            private ItemViewHolder target;
-
-            public ItemViewHolder_ViewBinding(ItemViewHolder itemViewHolder, View view) {
-                this.target = itemViewHolder;
-                itemViewHolder.mCheckBox = (CheckBox) Utils.findRequiredViewAsType(view, R.id.checkbox, "field 'mCheckBox'", CheckBox.class);
-                itemViewHolder.mApplicationIcon = (ImageView) Utils.findRequiredViewAsType(view, R.id.application_icon, "field 'mApplicationIcon'", ImageView.class);
-                itemViewHolder.mLabel = (TextView) Utils.findRequiredViewAsType(view, R.id.label, "field 'mLabel'", TextView.class);
-            }
-
-            @Override // butterknife.Unbinder
-            public void unbind() {
-                ItemViewHolder itemViewHolder = this.target;
-                if (itemViewHolder == null) {
-                    throw new IllegalStateException("Bindings already cleared.");
-                }
-                this.target = null;
-                itemViewHolder.mCheckBox = null;
-                itemViewHolder.mApplicationIcon = null;
-                itemViewHolder.mLabel = null;
-            }
-        }
-
-        public AppListSection() {
-            super(R.layout.settings_activity_notification_section_header, R.layout.hide_app_picker_list_item);
-            this.mItemClickListener = new View.OnClickListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$HideAppsSettingsFragment$AppListSection$13MXngTTj5OD6SobU6OKxF-lcUU
-                @Override // android.view.View.OnClickListener
-                public final void onClick(View view) {
-                    AppListSection.this.lambda$new$0( view);
-                }
-            };
-        }
-
-        public void lambda$new$0(View view) {
+        public void lambda$new$1(View view) {
             AppsInfoDataHelper.AppInfo appInfo = (AppsInfoDataHelper.AppInfo) view.getTag();
             if (appInfo == null) {
                 return;
@@ -164,38 +78,72 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             }
         }
 
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public int getContentItemsTotal() {
-            return HideAppsSettingsFragment.this.mAppInfos.size();
+        @Override
+        public int getItemViewType(int position) {
+            if (position == 0) {
+                return TYPE_CONFIG;
+            }
+            if (position == 1) {
+                return TYPE_HEADER;
+            }
+            return TYPE_APP;
         }
 
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
-            return new HeaderViewHolder(view);
+        @Override
+        public int getItemCount() {
+            return HideAppsSettingsFragment.this.mAppInfos.size() + 2;
         }
 
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public RecyclerView.ViewHolder getItemViewHolder(View view) {
-            ItemViewHolder itemViewHolder = new ItemViewHolder(view);
-            itemViewHolder.itemView.setOnClickListener(this.mItemClickListener);
-            itemViewHolder.mCheckBox.setClickable(false);
-            return itemViewHolder;
+        @Override
+        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            switch (viewType) {
+                case TYPE_CONFIG:
+                    return new ConfigViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.settings_activity_hide_apps_config, parent, false));
+                case TYPE_HEADER:
+                    return new HeaderViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.settings_activity_notification_section_header, parent, false));
+                default:
+                    ItemViewHolder itemViewHolder = new ItemViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.hide_app_picker_list_item, parent, false));
+                    itemViewHolder.itemView.setOnClickListener(this.mItemClickListener);
+                    itemViewHolder.mCheckBox.setClickable(false);
+                    return itemViewHolder;
+            }
         }
 
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public void onBindHeaderViewHolder(RecyclerView.ViewHolder viewHolder) {
-            HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+            int itemViewType = getItemViewType(position);
+            if (itemViewType == TYPE_CONFIG) {
+                bindConfig((ConfigViewHolder) viewHolder);
+            } else if (itemViewType == TYPE_HEADER) {
+                bindAppListHeader((HeaderViewHolder) viewHolder);
+            } else {
+                bindItem((ItemViewHolder) viewHolder, position - 2);
+            }
+        }
+
+        private void bindConfig(ConfigViewHolder configViewHolder) {
+            configViewHolder.mHideFromSearch.mLabel.setText(R.string.app_settings_hide_apps_hide_from_search);
+            configViewHolder.mHideFromSearch.mSubLabel.setVisibility(0);
+            configViewHolder.mHideFromSearch.mSubLabel.setText(R.string.app_settings_hide_apps_hide_from_search_subtext);
+            configViewHolder.mHideFromSearch.mSwitch.setChecked(!HideAppsSettingsFragment.this.mHideAppsModel.isHiddenSearchable());
+            configViewHolder.mHideFromSearch.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public final void onCheckedChanged(CompoundButton compoundButton, boolean z) {
+                    HideAppsSettingsFragment.this.mHideAppsModel.setHiddenSearchable(!z);
+                }
+            });
+        }
+
+        private void bindAppListHeader(HeaderViewHolder headerViewHolder) {
             headerViewHolder.mName.setText(R.string.app_settings_hide_apps);
             headerViewHolder.mSubtext.setVisibility(8);
             headerViewHolder.mSwitch.setVisibility(8);
         }
 
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public void onBindItemViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
-            AppsInfoDataHelper.AppInfo appInfo = (AppsInfoDataHelper.AppInfo) HideAppsSettingsFragment.this.mAppInfos.get(i);
+        private void bindItem(ItemViewHolder itemViewHolder, int position) {
+            AppsInfoDataHelper.AppInfo appInfo = (AppsInfoDataHelper.AppInfo) HideAppsSettingsFragment.this.mAppInfos.get(position);
             boolean zContains = HideAppsSettingsFragment.this.mChosenApps.contains(appInfo);
-            viewHolder.itemView.setTag(appInfo);
-            ItemViewHolder itemViewHolder = (ItemViewHolder) viewHolder;
+            itemViewHolder.itemView.setTag(appInfo);
             itemViewHolder.mCheckBox.setChecked(zContains);
             itemViewHolder.mLabel.setText(appInfo.appLabel);
             itemViewHolder.mApplicationIcon.setImageDrawable(null);
@@ -203,54 +151,44 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
         }
     }
 
-    class ConfigSection extends StatelessSection {
+    class HeaderViewHolder extends RecyclerView.ViewHolder {
 
-        class ConfigViewHolder extends RecyclerView.ViewHolder {
-            SettingsSwitchViewHolder mHideFromSearch;
+        TextView mName;
 
-            public ConfigViewHolder(View view) {
-                super(view);
-                this.mHideFromSearch = new SettingsSwitchViewHolder(view.findViewById(R.id.hide_from_search));
-            }
+        TextView mSubtext;
+
+        SwitchCompat mSwitch;
+
+        public HeaderViewHolder(View view) {
+            super(view);
+            this.mName = (TextView) view.findViewById(R.id.name);
+            this.mSubtext = (TextView) view.findViewById(R.id.subtext);
+            this.mSwitch = (SwitchCompat) view.findViewById(R.id.item_switch);
         }
+    }
 
-        public ConfigSection() {
-            super(R.layout.settings_activity_hide_apps_config, R.layout.settings_activity_icon_switch_item);
+    class ItemViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView mApplicationIcon;
+
+        CheckBox mCheckBox;
+
+        TextView mLabel;
+
+        public ItemViewHolder(View view) {
+            super(view);
+            this.mApplicationIcon = (ImageView) view.findViewById(R.id.application_icon);
+            this.mCheckBox = (CheckBox) view.findViewById(R.id.checkbox);
+            this.mLabel = (TextView) view.findViewById(R.id.label);
         }
+    }
 
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public int getContentItemsTotal() {
-            return 0;
-        }
+    class ConfigViewHolder extends RecyclerView.ViewHolder {
+        SettingsSwitchViewHolder mHideFromSearch;
 
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public RecyclerView.ViewHolder getHeaderViewHolder(View view) {
-            return new ConfigViewHolder(view);
-        }
-
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public RecyclerView.ViewHolder getItemViewHolder(View view) {
-            return new RecyclerView.ViewHolder(view) { // from class: com.voxel.simplesearchlauncher.settings.HideAppsSettingsFragment.ConfigSection.1
-            };
-        }
-
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public void onBindHeaderViewHolder(RecyclerView.ViewHolder viewHolder) {
-            ConfigViewHolder configViewHolder = (ConfigViewHolder) viewHolder;
-            configViewHolder.mHideFromSearch.mLabel.setText(R.string.app_settings_hide_apps_hide_from_search);
-            configViewHolder.mHideFromSearch.mSubLabel.setVisibility(0);
-            configViewHolder.mHideFromSearch.mSubLabel.setText(R.string.app_settings_hide_apps_hide_from_search_subtext);
-            configViewHolder.mHideFromSearch.mSwitch.setChecked(!HideAppsSettingsFragment.this.mHideAppsModel.isHiddenSearchable());
-            configViewHolder.mHideFromSearch.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$HideAppsSettingsFragment$ConfigSection$drkk_IJYBErGysoQmbYo1HHCp2I
-                @Override // android.widget.CompoundButton.OnCheckedChangeListener
-                public final void onCheckedChanged(CompoundButton compoundButton, boolean z) {
-                    HideAppsSettingsFragment.this.mHideAppsModel.setHiddenSearchable(!z);
-                }
-            });
-        }
-
-        @Override // io.github.luizgrp.sectionedrecyclerviewadapter.Section
-        public void onBindItemViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+        public ConfigViewHolder(View view) {
+            super(view);
+            this.mHideFromSearch = new SettingsSwitchViewHolder(view.findViewById(R.id.hide_from_search));
         }
     }
 
@@ -273,18 +211,18 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             return new ConfirmHideAppDialog();
         }
 
-        @Override // androidx.fragment.app.DialogFragment
+        @Override
         public Dialog onCreateDialog(Bundle bundle) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), 5);
             builder.setMessage(getResources().getString(R.string.app_settings_hide_apps_dialog_confirm));
-            builder.setPositiveButton(R.string.app_settings_hide_apps_dialog_confirm_keep, new DialogInterface.OnClickListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$HideAppsSettingsFragment$ConfirmHideAppDialog$jyNknLyt_RvZ9UgXZ01ecjCg4uM
-                @Override // android.content.DialogInterface.OnClickListener
+            builder.setPositiveButton(R.string.app_settings_hide_apps_dialog_confirm_keep, new DialogInterface.OnClickListener() {
+                @Override
                 public final void onClick(DialogInterface dialogInterface, int i) {
                     ConfirmHideAppDialog.this.lambda$onCreateDialog$0( dialogInterface, i);
                 }
             });
-            builder.setNegativeButton(R.string.app_settings_hide_apps_dialog_confirm_remove, new DialogInterface.OnClickListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$HideAppsSettingsFragment$ConfirmHideAppDialog$I2AkpzWXOkP6s6_04EP8DBaXd0I
-                @Override // android.content.DialogInterface.OnClickListener
+            builder.setNegativeButton(R.string.app_settings_hide_apps_dialog_confirm_remove, new DialogInterface.OnClickListener() {
+                @Override
                 public final void onClick(DialogInterface dialogInterface, int i) {
                     ConfirmHideAppDialog.this.lambda$onCreateDialog$1( dialogInterface, i);
                 }
@@ -292,7 +230,7 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             return builder.create();
         }
 
-        @Override // androidx.fragment.app.DialogFragment, androidx.fragment.app.Fragment
+        @Override
         public void onSaveInstanceState(Bundle bundle) {
             if (getTargetFragment() != null) {
                 getTargetFragment().onActivityResult(getTargetRequestCode(), 1, null);
@@ -345,7 +283,7 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
         }
     }
 
-    @Override // androidx.fragment.app.Fragment
+    @Override
     public void onActivityResult(int i, int i2, Intent intent) {
         if (i == 1000) {
             if (i2 == 1) {
@@ -356,13 +294,13 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
         }
     }
 
-    @Override // androidx.fragment.app.Fragment
+    @Override
     public void onAttach(Context context) {
         AndroidSupportInjection.inject(this);
         super.onAttach(context);
     }
 
-    @Override // com.voxel.simplesearchlauncher.settings.SettingsActivity.OnSettingsBackButtonPressedListener
+    @Override
     public void onBackPressed() {
         Fragment fragmentFindFragmentByTag = getFragmentManager().findFragmentByTag(DIALOG_TAG);
         if (fragmentFindFragmentByTag != null && (fragmentFindFragmentByTag instanceof ConfirmHideAppDialog)) {
@@ -372,7 +310,7 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
         this.mSkipOnDestroy = true;
     }
 
-    @Override // androidx.fragment.app.Fragment
+    @Override
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         this.mApplicationContext = getContext().getApplicationContext();
@@ -383,14 +321,14 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
                 this.mChosenApps.add(appInfo);
             }
         }
-        Collections.sort(this.mAppInfos, new Comparator<AppsInfoDataHelper.AppInfo>() { // from class: com.voxel.simplesearchlauncher.settings.HideAppsSettingsFragment.1
+        Collections.sort(this.mAppInfos, new Comparator<AppsInfoDataHelper.AppInfo>() {
             final Collator mCollator = Collator.getInstance(Locale.getDefault());
 
             {
                 this.mCollator.setStrength(0);
             }
 
-            @Override // java.util.Comparator
+            @Override
             public int compare(AppsInfoDataHelper.AppInfo appInfo2, AppsInfoDataHelper.AppInfo appInfo3) {
                 boolean zContains = HideAppsSettingsFragment.this.mChosenApps.contains(appInfo2);
                 boolean zContains2 = HideAppsSettingsFragment.this.mChosenApps.contains(appInfo3);
@@ -406,12 +344,12 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
         this.mSkipOnDestroy = false;
     }
 
-    @Override // androidx.fragment.app.Fragment
+    @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         return layoutInflater.inflate(R.layout.settings_activity_hide_apps_fragment, viewGroup, false);
     }
 
-    @Override // androidx.fragment.app.Fragment
+    @Override
     public void onDestroy() {
         if (!this.mSkipOnDestroy) {
             saveChangesImpl(false);
@@ -419,15 +357,11 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
         super.onDestroy();
     }
 
-    @Override // androidx.fragment.app.Fragment
+    @Override
     public void onViewCreated(View view, Bundle bundle) {
+        this.mLayoutInflater = LayoutInflater.from(view.getContext());
         this.mRecyclerView = (RecyclerView) view;
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-        this.mAppListSection = new AppListSection();
-        this.mConfigSection = new ConfigSection();
-        this.mSectionedAdapter = new SectionedRecyclerViewAdapter();
-        this.mSectionedAdapter.addSection(this.mConfigSection);
-        this.mSectionedAdapter.addSection(this.mAppListSection);
-        this.mRecyclerView.setAdapter(this.mSectionedAdapter);
+        this.mRecyclerView.setAdapter(new AppListAdapter());
     }
 }
