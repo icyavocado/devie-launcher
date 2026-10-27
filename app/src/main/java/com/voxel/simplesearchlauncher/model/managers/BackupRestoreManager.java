@@ -85,20 +85,39 @@ public class BackupRestoreManager {
         }
     }
 
-    /* REWORK: SAF document-picker results (backup/restore) instead of Google Drive/SignIn results. */
+    /* REWORK: SAF document-picker results (backup/restore) instead of Google Drive/SignIn results.
+       The zip/db work runs on a worker thread: doing it in onActivityResult froze the
+       ProgressDialog and ANRed on multi-DB restores. UI callbacks are synchronized and
+       restoreFromZipInputStream already hops to the UI thread before touching views/music. */
     public void handleActivityResult(int i, int i2, Intent intent, Activity activity) {
         switch (i) {
-            case REQUEST_CODE_BACKUP:
+            case REQUEST_CODE_BACKUP: {
                 if (i2 == -1) {
-                    try (OutputStream outputStream = activity.getContentResolver().openOutputStream(intent.getData())) {
-                        backupToStream(activity.getApplicationContext(), outputStream, getUICallbacks());
+                    final OutputStream outputStream;
+                    try {
+                        outputStream = activity.getContentResolver().openOutputStream(intent.getData());
                     } catch (IOException e) {
                         Log.e(TAG, "Could not open backup destination", e);
                         BackupRestoreUI uICallbacks = getUICallbacks();
                         if (uICallbacks != null) {
                             uICallbacks.onBackupFailure();
                         }
+                        return;
                     }
+                    final Activity activity2 = activity;
+                    new Thread(new Runnable() { // from class: ...handleActivityResult$1
+                        @Override // java.lang.Runnable
+                        public final void run() {
+                            try {
+                                backupToStream(activity2.getApplicationContext(), outputStream, getUICallbacks());
+                            } finally {
+                                try {
+                                    outputStream.close();
+                                } catch (IOException e) {
+                                }
+                            }
+                        }
+                    }).start();
                 } else {
                     Log.d(TAG, "User backup cancelled.");
                     BackupRestoreUI uICallbacks2 = getUICallbacks();
@@ -107,18 +126,36 @@ public class BackupRestoreManager {
                     }
                 }
                 break;
-            case REQUEST_CODE_RESTORE:
+            }
+            case REQUEST_CODE_RESTORE: {
                 if (i2 == -1) {
-                    try (InputStream inputStream = activity.getContentResolver().openInputStream(intent.getData())) {
-                        createLocalBackup(activity.getApplicationContext(), UNDO_RESTORE_FILE);
-                        restoreFromStream(activity, inputStream, getUICallbacks());
+                    final InputStream inputStream;
+                    try {
+                        inputStream = activity.getContentResolver().openInputStream(intent.getData());
                     } catch (IOException e2) {
                         Log.e(TAG, "Could not open backup source", e2);
                         BackupRestoreUI uICallbacks3 = getUICallbacks();
                         if (uICallbacks3 != null) {
                             uICallbacks3.onRestoreFailure();
                         }
+                        return;
                     }
+                    final Activity activity3 = activity;
+                    new Thread(new Runnable() {
+                        @Override // java.lang.Runnable
+                        public final void run() {
+                            try {
+                                createLocalBackup(activity3.getApplicationContext(), UNDO_RESTORE_FILE);
+                                restoreFromStream(activity3, inputStream, getUICallbacks());
+                            } catch (Exception e3) {
+                                Log.e(TAG, "Restore failed", e3);
+                                BackupRestoreUI uICallbacks = getUICallbacks();
+                                if (uICallbacks != null) {
+                                    uICallbacks.onRestoreFailure();
+                                }
+                            }
+                        }
+                    }).start();
                 } else {
                     Log.d(TAG, "User restore cancelled.");
                     BackupRestoreUI uICallbacks4 = getUICallbacks();
@@ -127,6 +164,7 @@ public class BackupRestoreManager {
                     }
                 }
                 break;
+            }
         }
     }
 
