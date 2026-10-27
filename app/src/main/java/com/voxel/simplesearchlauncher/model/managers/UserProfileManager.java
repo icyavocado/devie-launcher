@@ -3,6 +3,7 @@ package com.voxel.simplesearchlauncher.model.managers;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.LauncherBackupHelper;
 import com.voxel.simplesearchlauncher.iconpack.IconPackManager;
@@ -18,6 +19,7 @@ import org.json.JSONObject;
 /* JADX INFO: loaded from: classes.dex */
 @Deprecated
 public class UserProfileManager {
+    private static final String TAG = "UserProfileManager";
     private static UserProfileManager instance;
     private Context context;
 
@@ -171,10 +173,16 @@ public class UserProfileManager {
 
     public void saveRestoredUserData(JSONObject jSONObject) {
         try {
+            /* Whitelist shared-pref file names coming from a restore zip: only the
+               prefs files the four managers actually own may be cleared/written. */
             String string = jSONObject.getString("dataType");
             JSONObject jSONObject2 = new JSONObject(jSONObject.getString("data"));
             if (string.equals("launcher_data_favorites")) {
                 saveRestoreLauncherFavoritesData(jSONObject2);
+                return;
+            }
+            if (!java.util.Arrays.asList(getRestorableUserDataTypeIds()).contains(string)) {
+                Log.w(TAG, "Refusing to restore unlisted user data type " + string);
                 return;
             }
             SharedPreferences.Editor editorEdit = this.context.getSharedPreferences(string, 0).edit();

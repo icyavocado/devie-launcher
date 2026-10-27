@@ -1168,12 +1168,16 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                 if (itemsToRemove.size() > 0) {
                     // Remove dead items
                     ContentProviderClient providerClient = contentResolver.acquireContentProviderClient(contentUri);
-                    for (Long removedId : itemsToRemove) {
-                        try {
-                            providerClient.delete(LauncherSettings.Favorites.getContentUri(removedId.longValue(), false), null, null);
-                        } catch (RemoteException e) {
-                            Log.w("Launcher.Model", "Could not remove id = " + removedId);
+                    try {
+                        for (Long removedId : itemsToRemove) {
+                            try {
+                                providerClient.delete(LauncherSettings.Favorites.getContentUri(removedId.longValue(), false), null, null);
+                            } catch (RemoteException e) {
+                                Log.w("Launcher.Model", "Could not remove id = " + removedId);
+                            }
                         }
+                    } finally {
+                        providerClient.release();
                     }
                 }
 
@@ -1196,6 +1200,8 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                         restoredRowsClient.update(LauncherSettings.Favorites.CONTENT_URI_NO_NOTIFICATION, values, restoredSelection, null);
                     } catch (RemoteException e) {
                         Log.w("Launcher.Model", "Could not update restored rows");
+                    } finally {
+                        restoredRowsClient.release();
                     }
                 }
 

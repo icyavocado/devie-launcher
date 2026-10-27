@@ -177,7 +177,7 @@ public class LauncherScroller {
                     this.mCurrY = this.mStartY + Math.round(fViscousFluid * this.mDeltaY);
                     break;
                 case 1:
-                    float f2 = iCurrentAnimationTimeMillis / i;
+                    float f2 = (float) iCurrentAnimationTimeMillis / i;
                     int i2 = (int) (f2 * 100.0f);
                     float f3 = 1.0f;
                     float f4 = 0.0f;

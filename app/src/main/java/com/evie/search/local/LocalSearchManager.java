@@ -54,7 +54,7 @@ public class LocalSearchManager {
     private int mShortcutSizeInPixels;
 
     private LocalSearchManager(Context context, boolean z) {
-        this.db = new SearchDbHelper(context).getWritableDatabase();
+        this.db = SearchDbHelper.getInstance(context).getWritableDatabase();
         double length = new File(this.db.getPath()).length();
         Double.isNaN(length);
         Timber.d("Search DB size: %f MB", Double.valueOf(length / 1000000.0d));
@@ -75,21 +75,24 @@ public class LocalSearchManager {
     private void addToRecents(String str, String str2, String str3, String str4) {
         long jCurrentTimeMillis = System.currentTimeMillis();
         this.db.beginTransaction();
-        if (str.startsWith("places:")) {
-            String str5 = str.split("\\|")[0];
-            this.db.delete("recents", "link LIKE ?", new String[]{str5 + "|%"});
-        } else {
-            this.db.delete("recents", "link=?", new String[]{str});
+        try {
+            if (str.startsWith("places:")) {
+                String str5 = str.split("\\|")[0];
+                this.db.delete("recents", "link LIKE ?", new String[]{str5 + "|%"});
+            } else {
+                this.db.delete("recents", "link=?", new String[]{str});
+            }
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("last_used", Long.valueOf(jCurrentTimeMillis));
+            contentValues.put("link", str);
+            contentValues.put("label", str2);
+            contentValues.put("item_type", str3);
+            contentValues.put("image_url", str4);
+            this.db.insert("recents", null, contentValues);
+            this.db.setTransactionSuccessful();
+        } finally {
+            this.db.endTransaction();
         }
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("last_used", Long.valueOf(jCurrentTimeMillis));
-        contentValues.put("link", str);
-        contentValues.put("label", str2);
-        contentValues.put("item_type", str3);
-        contentValues.put("image_url", str4);
-        this.db.insert("recents", null, contentValues);
-        this.db.setTransactionSuccessful();
-        this.db.endTransaction();
         this.mRecentSubject.onNext(getRecentItems());
         trimRecents();
     }
@@ -105,6 +108,17 @@ public class LocalSearchManager {
 
     public static synchronized LocalSearchManager getInstance() {
         return instance;
+    }
+
+    /* Reopen the search database after a backup-restore replaced the file
+     * underneath the open handle. */
+    public void restart(Context context) {
+        if (this.db != null) {
+            this.db.close();
+            this.db = null;
+        }
+        this.db = SearchDbHelper.getInstance(context).getWritableDatabase();
+        this.mRecentSubject.onNext(getRecentItems());
     }
 
     public static synchronized LocalSearchManager getInstance(Context context, boolean z) {
@@ -363,22 +377,19 @@ public class LocalSearchManager {
                     ResolveInfo resolveInfoResolveActivity = this.mPackageManager.resolveActivity(new Intent(schemeSpecificPart), 0);
                     if (resolveInfoResolveActivity == null || resolveInfoResolveActivity.activityInfo == null) {
                         Timber.e("Error resolving intent action %s", schemeSpecificPart);
-                    } else {
-                        str = resolveInfoResolveActivity.activityInfo.packageName;
-                        str2 = resolveInfoResolveActivity.activityInfo.name;
+                        return null;
                     }
-                    return null;
+                    str = resolveInfoResolveActivity.activityInfo.packageName;
+                    str2 = resolveInfoResolveActivity.activityInfo.name;
+                } else {
+                    String[] strArrSplit2 = schemeSpecificPart.split("\\|");
+                    str = strArrSplit2[0];
+                    str2 = strArrSplit2[1];
                 }
-                String[] strArrSplit2 = schemeSpecificPart.split("\\|");
-                String str3 = strArrSplit2[0];
-                str2 = strArrSplit2[1];
-                str = str3;
                 try {
                     return HybridNetworkFetcherCommon.getMagicResourceUri(str, str2, this.mPackageManager.getPackageInfo(str, 0).versionCode).toString();
                 } catch (PackageManager.NameNotFoundException unused2) {
                     Timber.e("Error retrieving package info for %s", localSearchItem.getLink());
-                    /* REWORK: return like every other failure branch; removes the
-                     * unreachable fall-through that killed the switch's completeness. */
                     return null;
                 }
             case 3:
@@ -439,7 +450,7 @@ public class LocalSearchManager {
     }
 
     public void itemAccessed(LocalSearchItem localSearchItem, boolean z) {
-        this.db.execSQL("UPDATE \"item\" SET \"usage\"=\"usage\"+1 WHERE \"link\"='" + localSearchItem.getLink() + "'");
+        this.db.execSQL("UPDATE \"item\" SET \"usage\"=\"usage\"+1 WHERE \"link\"= ?", new Object[]{localSearchItem.getLink()});
         if (z) {
             addToRecents(localSearchItem.getLink(), localSearchItem.getLabel(), localSearchItem.getType(), null);
         }
@@ -495,19 +506,17 @@ public class LocalSearchManager {
             StringBuilder sb = new StringBuilder("SELECT * FROM search JOIN item ON item_id=item._id WHERE search_keyword IN (");
             String[] strArr2 = (String[]) hashSet.toArray(new String[hashSet.size()]);
             for (int i4 = 0; i4 < strArr2.length; i4++) {
-                sb.append("'");
-                sb.append(strArr2[i4]);
                 if (i4 < strArr2.length - 1) {
-                    sb.append("',");
+                    sb.append("?,");
                 } else {
-                    sb.append("')");
+                    sb.append("?)");
                 }
             }
             /* REWORK: jadx raw list; all rows are LocalSearchItem */
             ArrayList<LocalSearchItem> arrayList2 = new ArrayList<>();
             Cursor cursorRawQuery = null;
             try {
-                cursorRawQuery = this.db.rawQuery(sb.toString(), null);
+                cursorRawQuery = this.db.rawQuery(sb.toString(), strArr2);
                 int iMaxDistance = LocalSearchUtil.maxDistance(str2);
                 while (cursorRawQuery.moveToNext()) {
                     String string = cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("match_keyword"));

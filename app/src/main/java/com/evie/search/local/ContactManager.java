@@ -99,7 +99,7 @@ public class ContactManager {
         return sb.toString();
     }
 
-    public static ContactManager getInstance(Context context) {
+    public static synchronized ContactManager getInstance(Context context) {
         if (instance == null) {
             instance = new ContactManager(context);
         }

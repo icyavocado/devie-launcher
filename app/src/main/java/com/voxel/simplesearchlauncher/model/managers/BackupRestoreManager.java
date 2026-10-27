@@ -6,8 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import androidx.fragment.app.FragmentActivity;
 import com.voxel.launcher3.LauncherAppState;
+import com.evie.search.local.LocalSearchManager;
+import com.evie.search.local.SearchDbHelper;
 import com.voxel.launcher3.LauncherApplication;
 import com.voxel.launcher3.LauncherBackupHelper;
 import com.voxel.simplesearchlauncher.iconpack.IconPackManager;
@@ -43,7 +47,8 @@ public class BackupRestoreManager {
     SettingsStorage mSettingsStorage;
     private BackupRestoreUI mUICallbacks;
     public static final String KEY_LAUNCHER_RESTORED = BackupRestoreManager.class.getCanonicalName() + ".launcher_restored";
-    private static final String[] DB_BACKUP_FILES = {"apps_info.db", "launcher.db", "search_item_data.db"};
+    private static final String[] DB_BACKUP_FILES = {"apps_info.db", "launcher.db", "LocalSearch.db"};
+    private static final int MAX_PREFS_JSON_BYTES = 8 * 1024 * 1024;
 
     public interface BackupRestoreUI {
         void onBackupFailure();
@@ -83,20 +88,39 @@ public class BackupRestoreManager {
         }
     }
 
-    /* REWORK: SAF document-picker results (backup/restore) instead of Google Drive/SignIn results. */
+    /* REWORK: SAF document-picker results (backup/restore) instead of Google Drive/SignIn results.
+       The zip/db work runs on a worker thread: doing it in onActivityResult froze the
+       ProgressDialog and ANRed on multi-DB restores. UI callbacks are synchronized and
+       restoreFromZipInputStream already hops to the UI thread before touching views/music. */
     public void handleActivityResult(int i, int i2, Intent intent, Activity activity) {
         switch (i) {
-            case REQUEST_CODE_BACKUP:
+            case REQUEST_CODE_BACKUP: {
                 if (i2 == -1) {
-                    try (OutputStream outputStream = activity.getContentResolver().openOutputStream(intent.getData())) {
-                        backupToStream(activity.getApplicationContext(), outputStream, getUICallbacks());
+                    final OutputStream outputStream;
+                    try {
+                        outputStream = activity.getContentResolver().openOutputStream(intent.getData());
                     } catch (IOException e) {
                         Log.e(TAG, "Could not open backup destination", e);
                         BackupRestoreUI uICallbacks = getUICallbacks();
                         if (uICallbacks != null) {
                             uICallbacks.onBackupFailure();
                         }
+                        return;
                     }
+                    final Activity activity2 = activity;
+                    new Thread(new Runnable() { // from class: ...handleActivityResult$1
+                        @Override // java.lang.Runnable
+                        public final void run() {
+                            try {
+                                backupToStream(activity2.getApplicationContext(), outputStream, getUICallbacks());
+                            } finally {
+                                try {
+                                    outputStream.close();
+                                } catch (IOException e) {
+                                }
+                            }
+                        }
+                    }).start();
                 } else {
                     Log.d(TAG, "User backup cancelled.");
                     BackupRestoreUI uICallbacks2 = getUICallbacks();
@@ -105,18 +129,36 @@ public class BackupRestoreManager {
                     }
                 }
                 break;
-            case REQUEST_CODE_RESTORE:
+            }
+            case REQUEST_CODE_RESTORE: {
                 if (i2 == -1) {
-                    try (InputStream inputStream = activity.getContentResolver().openInputStream(intent.getData())) {
-                        createLocalBackup(activity.getApplicationContext(), UNDO_RESTORE_FILE);
-                        restoreFromStream(activity, inputStream, getUICallbacks());
+                    final InputStream inputStream;
+                    try {
+                        inputStream = activity.getContentResolver().openInputStream(intent.getData());
                     } catch (IOException e2) {
                         Log.e(TAG, "Could not open backup source", e2);
                         BackupRestoreUI uICallbacks3 = getUICallbacks();
                         if (uICallbacks3 != null) {
                             uICallbacks3.onRestoreFailure();
                         }
+                        return;
                     }
+                    final Activity activity3 = activity;
+                    new Thread(new Runnable() {
+                        @Override // java.lang.Runnable
+                        public final void run() {
+                            try {
+                                createLocalBackup(activity3.getApplicationContext(), UNDO_RESTORE_FILE);
+                                restoreFromStream(activity3, inputStream, getUICallbacks());
+                            } catch (Exception e3) {
+                                Log.e(TAG, "Restore failed", e3);
+                                BackupRestoreUI uICallbacks = getUICallbacks();
+                                if (uICallbacks != null) {
+                                    uICallbacks.onRestoreFailure();
+                                }
+                            }
+                        }
+                    }).start();
                 } else {
                     Log.d(TAG, "User restore cancelled.");
                     BackupRestoreUI uICallbacks4 = getUICallbacks();
@@ -125,6 +167,7 @@ public class BackupRestoreManager {
                     }
                 }
                 break;
+            }
         }
     }
 
@@ -155,10 +198,14 @@ public class BackupRestoreManager {
         switch (str) {
             case "apps_info.db":
                 AppsInfoProvider.closeDB(context);
-                break;
+                return;
             case "launcher.db":
                 LauncherProvider.closeDB(context);
-                break;
+                return;
+            case "LocalSearch.db":
+                SearchDbHelper.closeDB(context);
+                return;
+            default:
         }
     }
 
@@ -168,6 +215,8 @@ public class BackupRestoreManager {
                 return AppsInfoProvider.getDbPath(context);
             case "launcher.db":
                 return LauncherProvider.getDbPath(context);
+            case "LocalSearch.db":
+                return SearchDbHelper.getDbPath(context);
             default:
                 return "";
         }
@@ -247,17 +296,17 @@ public class BackupRestoreManager {
             createBackup(context, outputStream);
             outputStream.close();
             if (callbacks != null) {
-                callbacks.onBackupSuccess();
+                postUi(callbacks::onBackupSuccess);
             }
         } catch (IOException unused) {
             Log.e(TAG, "Could not finish backup zip");
             if (callbacks != null) {
-                callbacks.onBackupFailure();
+                postUi(callbacks::onBackupFailure);
             }
         } catch (JSONException e) {
             Log.e(TAG, "Could not generate backup user data.", e);
             if (callbacks != null) {
-                callbacks.onBackupFailure();
+                postUi(callbacks::onBackupFailure);
             }
         }
     }
@@ -266,19 +315,23 @@ public class BackupRestoreManager {
         try {
             restoreFromZipInputStream(activity, inputStream);
             if (callbacks != null) {
-                callbacks.onRestoreSuccess();
+                postUi(callbacks::onRestoreSuccess);
             }
         } catch (IOException e) {
             Log.e(TAG, "Restore error while reading zip file. ", e);
             if (callbacks != null) {
-                callbacks.onRestoreFailure();
+                postUi(callbacks::onRestoreFailure);
             }
         } catch (JSONException e2) {
             Log.e(TAG, "Restore error while reading shared prefs. ", e2);
             if (callbacks != null) {
-                callbacks.onRestoreFailure();
+                postUi(callbacks::onRestoreFailure);
             }
         }
+    }
+
+    private static void postUi(final Runnable runnable) {
+        new Handler(Looper.getMainLooper()).post(runnable);
     }
 
     public boolean restoreFromLocalBackup(Activity activity, String str) {
@@ -309,56 +362,74 @@ public class BackupRestoreManager {
 
     public void restoreFromZipInputStream(final Activity activity, InputStream inputStream) throws JSONException, IOException {
         ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-        while (true) {
-            ZipEntry nextEntry = zipInputStream.getNextEntry();
-            if (nextEntry == null) {
-                zipInputStream.close();
-                Log.d(TAG, "User data successfully restored.");
-                activity.runOnUiThread(new Runnable() { // from class: com.voxel.simplesearchlauncher.model.managers.-$$Lambda$BackupRestoreManager$1duhM9BN_LhOUzZrRHF5NFIoP0k
-                    @Override // java.lang.Runnable
-                    public final void run() {
-                        BackupRestoreManager.this.lambda$restoreFromZipInputStream$4( activity);
-                    }
-                });
-                return;
-            }
-            if (!nextEntry.isDirectory()) {
+        try {
+            ZipEntry nextEntry;
+            while ((nextEntry = zipInputStream.getNextEntry()) != null) {
+                if (nextEntry.isDirectory()) {
+                    continue;
+                }
                 String name = nextEntry.getName();
                 byte[] bArr = new byte[1024];
-                if (((name.hashCode() == -1121668762 && name.equals("prefs.json")) ? (byte) 0 : (byte) -1) != 0) {
-                    String strDBfileNameToLocation = dBfileNameToLocation(activity, name);
-                    if (!strDBfileNameToLocation.isEmpty()) {
-                        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(new File(Environment.getDataDirectory(), strDBfileNameToLocation), false), 1024);
-                        while (true) {
-                            int i = zipInputStream.read(bArr, 0, 1024);
-                            if (i == -1) {
-                                break;
-                            } else {
-                                bufferedOutputStream.write(bArr, 0, i);
-                            }
-                        }
-                        bufferedOutputStream.flush();
-                        bufferedOutputStream.close();
-                        closeDb(activity, name);
-                    }
-                } else {
+                if (name.equals("prefs.json")) {
                     ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    int total = 0;
                     while (true) {
                         int i2 = zipInputStream.read(bArr, 0, 1024);
                         if (i2 == -1) {
                             break;
-                        } else {
-                            byteArrayOutputStream.write(bArr, 0, i2);
                         }
+                        total += i2;
+                        if (total > MAX_PREFS_JSON_BYTES) {
+                            throw new IOException("prefs.json exceeds " + MAX_PREFS_JSON_BYTES + " bytes");
+                        }
+                        byteArrayOutputStream.write(bArr, 0, i2);
                     }
                     restorePrefs(byteArrayOutputStream.toString());
+                } else {
+                    String strDBfileNameToLocation = dBfileNameToLocation(activity, name);
+                    if (!strDBfileNameToLocation.isEmpty()) {
+                        File file = new File(Environment.getDataDirectory(), strDBfileNameToLocation);
+                        closeDb(activity, name);
+                        for (String suffix : new String[]{"-wal", "-shm", "-journal"}) {
+                            File sidecar = new File(file.getParentFile(), name + suffix);
+                            if (sidecar.exists()) {
+                                sidecar.delete();
+                            }
+                        }
+                        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file, false), 1024);
+                        try {
+                            while (true) {
+                                int i = zipInputStream.read(bArr, 0, 1024);
+                                if (i == -1) {
+                                    break;
+                                }
+                                bufferedOutputStream.write(bArr, 0, i);
+                            }
+                            bufferedOutputStream.flush();
+                        } finally {
+                            bufferedOutputStream.close();
+                        }
+                    }
                 }
             }
+            Log.d(TAG, "User data successfully restored.");
+            activity.runOnUiThread(new Runnable() { // from class: com.voxel.simplesearchlauncher.model.managers.-$$Lambda$BackupRestoreManager$1duhM9BN_LhOUzZrRHF5NFIoP0k
+                @Override // java.lang.Runnable
+                public final void run() {
+                    BackupRestoreManager.this.lambda$restoreFromZipInputStream$4( activity);
+                }
+            });
+        } finally {
+            zipInputStream.close();
         }
     }
 
     public void lambda$restoreFromZipInputStream$4(Activity activity) {
         this.mLocalAppsManager.restart();
+        LocalSearchManager localSearchManager = LocalSearchManager.getInstance();
+        if (localSearchManager != null) {
+            localSearchManager.restart(activity);
+        }
         LauncherBackupHelper.postRestoreWidgets(activity);
         AppsInfoProvider.getInstance().dispatchChange(false, AppsInfoProvider.getContentUri());
         this.mIconPackManager.verifyAndReload();

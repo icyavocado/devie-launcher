@@ -47,26 +47,28 @@ class LocalSearchUtil {
         }
     }
 
+    private static final int NON_ASCII_BUCKETS = 200;
+
+    static int charToBucket(char c) {
+        if (c == ' ') {
+            return 0;
+        }
+        if (c > '`' && c < '{') {
+            return c - '`';
+        }
+        return 26 + (Character.toLowerCase(c) % NON_ASCII_BUCKETS) + 1;
+    }
+
     static int distance(String str, String str2, boolean z) {
         ArrayList arrayList = new ArrayList();
         ArrayList arrayList2 = new ArrayList();
         for (int i = 0; i < str.length(); i++) {
-            char cCharAt = str.charAt(i);
-            if (cCharAt == ' ') {
-                arrayList.add(0);
-            } else if (cCharAt > '`' && cCharAt < '{') {
-                arrayList.add(Integer.valueOf(cCharAt - '`'));
-            }
+            arrayList.add(Integer.valueOf(charToBucket(str.charAt(i))));
         }
         for (int i2 = 0; i2 < str2.length(); i2++) {
-            char cCharAt2 = str2.charAt(i2);
-            if (cCharAt2 == ' ') {
-                arrayList2.add(0);
-            } else if (cCharAt2 > '`' && cCharAt2 < '{') {
-                arrayList2.add(Integer.valueOf(cCharAt2 - '`'));
-            }
+            arrayList2.add(Integer.valueOf(charToBucket(str2.charAt(i2))));
         }
-        int[] iArr = new int[27];
+        int[] iArr = new int[27 + NON_ASCII_BUCKETS];
         int[][] iArr2 = (int[][]) Array.newInstance((Class<?>) int.class, arrayList.size() + 2, arrayList2.size() + 2);
         int size = arrayList.size() + arrayList2.size();
         iArr2[0][0] = size;
@@ -126,26 +128,32 @@ class LocalSearchUtil {
         contentValues.put("type", localSearchItem.getType());
         contentValues.put("usage", Float.valueOf(f));
         sQLiteDatabase.beginTransaction();
-        long jInsert = sQLiteDatabase.insert("item", null, contentValues);
-        for (SearchKeywordItem searchKeywordItem : localSearchItem.getKeywords()) {
-            String keyword = searchKeywordItem.getKeyword();
-            HashSet<String> hashSet = new HashSet();
-            int iMin = Math.min(6, keyword.length());
-            for (int i = 1; i <= iMin; i++) {
-                String strSubstring = keyword.substring(0, i);
-                addKeywordWithDeletions(hashSet, strSubstring, maxDistance(strSubstring), false);
+        try {
+            long jInsert = sQLiteDatabase.insert("item", null, contentValues);
+            if (jInsert == -1) {
+                return;
             }
-            for (String str : hashSet) {
-                ContentValues contentValues2 = new ContentValues();
-                contentValues2.put("search_keyword", str);
-                contentValues2.put("match_keyword", keyword);
-                contentValues2.put("keyword_type", searchKeywordItem.getKeywordType());
-                contentValues2.put("item_id", Long.valueOf(jInsert));
-                sQLiteDatabase.insert("search", null, contentValues2);
+            for (SearchKeywordItem searchKeywordItem : localSearchItem.getKeywords()) {
+                String keyword = searchKeywordItem.getKeyword();
+                HashSet<String> hashSet = new HashSet();
+                int iMin = Math.min(6, keyword.length());
+                for (int i = 1; i <= iMin; i++) {
+                    String strSubstring = keyword.substring(0, i);
+                    addKeywordWithDeletions(hashSet, strSubstring, maxDistance(strSubstring), false);
+                }
+                for (String str : hashSet) {
+                    ContentValues contentValues2 = new ContentValues();
+                    contentValues2.put("search_keyword", str);
+                    contentValues2.put("match_keyword", keyword);
+                    contentValues2.put("keyword_type", searchKeywordItem.getKeywordType());
+                    contentValues2.put("item_id", Long.valueOf(jInsert));
+                    sQLiteDatabase.insert("search", null, contentValues2);
+                }
             }
+            sQLiteDatabase.setTransactionSuccessful();
+        } finally {
+            sQLiteDatabase.endTransaction();
         }
-        sQLiteDatabase.setTransactionSuccessful();
-        sQLiteDatabase.endTransaction();
     }
 
     static boolean keywordMatches(SQLiteDatabase sQLiteDatabase, long j, String str, String str2) {
