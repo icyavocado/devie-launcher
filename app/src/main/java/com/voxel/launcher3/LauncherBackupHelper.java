@@ -65,12 +65,7 @@ public class LauncherBackupHelper implements BackupHelper {
         this.mRestoreEnabled = z;
     }
 
-    /* JADX WARN: Code duplicated, block: B:18:0x008d A[Catch: all -> 0x00bc, TryCatch #0 {all -> 0x00bc, blocks: (B:3:0x002d, B:4:0x0030, B:6:0x0036, B:16:0x0087, B:18:0x008d, B:21:0x0094, B:22:0x009b, B:26:0x00a1), top: B:36:0x002d, inners: #1 }] */
-    /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    private void backupFavorites(BackupProtos.Journal journal, BackupDataOutput backupDataOutput, BackupProtos.Journal journal2, ArrayList<BackupProtos.Key> arrayList, JSONObject jSONObject, boolean z) throws Throwable {
-        /* REWORK: jadx lost an exception-flow local across catch scopes. */
-        Throwable thReflow = null;
-        byte[] bArrPackFavorite;
+    private void backupFavorites(BackupProtos.Journal journal, BackupDataOutput backupDataOutput, BackupProtos.Journal journal2, ArrayList<BackupProtos.Key> arrayList, JSONObject jSONObject, boolean z) throws IOException {
         LauncherBackupHelper launcherBackupHelper = this;
         int i = 1;
         Set<String> savedIdsByType = launcherBackupHelper.getSavedIdsByType(1, journal);
@@ -85,37 +80,20 @@ public class LauncherBackupHelper implements BackupHelper {
                 arrayList.add(key);
                 String strKeyToBackupKey = launcherBackupHelper.keyToBackupKey(key);
                 hashSet.add(strKeyToBackupKey);
-                if (savedIdsByType.contains(strKeyToBackupKey)) {
-                    try {
-                        if (j2 >= journal.t) {
-                            launcherBackupHelper = this;
-                            bArrPackFavorite = launcherBackupHelper.packFavorite(cursorQuery, z);
-                            if (journal2 != null) {
-                                launcherBackupHelper.writeRowToBackup(key, bArrPackFavorite, journal2, backupDataOutput);
-                            }
-                            if (jSONObject == null && bArrPackFavorite != null) {
-                                try {
-                                    jSONObject.put(strKeyToBackupKey, Base64.encodeToString(bArrPackFavorite, 0, bArrPackFavorite.length, 2));
-                                } catch (JSONException e) {
-                                    Log.e("LauncherBackupHelper", "Error creating favorites json output.", e);
-                                }
-                            }
-                        } else {
-                            Log.v("LauncherBackupHelper", "favorite " + j + " was too old: " + j2);
-                            launcherBackupHelper = this;
-                        }
-                    } catch (Throwable th) {
-                        th = th;
-                        cursorQuery.close();
-                        throw th;
-                    }
+                if (savedIdsByType.contains(strKeyToBackupKey) && j2 < journal.t) {
+                    Log.v("LauncherBackupHelper", "favorite " + j + " was too old: " + j2);
                 } else {
                     launcherBackupHelper = this;
-                    bArrPackFavorite = launcherBackupHelper.packFavorite(cursorQuery, z);
+                    byte[] bArrPackFavorite = launcherBackupHelper.packFavorite(cursorQuery, z);
                     if (journal2 != null) {
                         launcherBackupHelper.writeRowToBackup(key, bArrPackFavorite, journal2, backupDataOutput);
                     }
-                    if (jSONObject == null) {
+                    if (jSONObject != null && bArrPackFavorite != null) {
+                        try {
+                            jSONObject.put(strKeyToBackupKey, Base64.encodeToString(bArrPackFavorite, 0, bArrPackFavorite.length, 2));
+                        } catch (JSONException e) {
+                            Log.e("LauncherBackupHelper", "Error creating favorites json output.", e);
+                        }
                     }
                 }
                 i = 1;
@@ -126,7 +104,8 @@ public class LauncherBackupHelper implements BackupHelper {
                 journal2.rows += launcherBackupHelper.removeDeletedKeysFromBackup(savedIdsByType, backupDataOutput);
             }
         } catch (Throwable th2) {
-            thReflow = th2;
+            cursorQuery.close();
+            throw th2;
         }
     }
 
@@ -783,7 +762,7 @@ public class LauncherBackupHelper implements BackupHelper {
         Log.v("LauncherBackupHelper", "saving " + geKeyType(key) + " " + strKeyToBackupKey + ": " + getKeyName(key) + "/" + bArr.length);
     }
 
-    public JSONObject getSerializedFavorites() throws Throwable {
+    public JSONObject getSerializedFavorites() throws IOException {
         JSONObject jSONObject = new JSONObject();
         backupFavorites(new BackupProtos.Journal(), null, null, new ArrayList<>(), jSONObject, true);
         return jSONObject;

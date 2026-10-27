@@ -79,10 +79,7 @@ public class UserProfileManager {
             if (str.equals("launcher_data_favorites")) {
                 try {
                     serializedFavorites = new LauncherBackupHelper(this.context, true).getSerializedFavorites();
-                } catch (Throwable e) {
-                    /* REWORK: the decompiled helper's chains throw Throwable; the dex
-                     * level only surfaced IOException to the framework, which swallows
-                     * it after logging. */
+                } catch (IOException e) {
                     e.printStackTrace();
                     serializedFavorites = null;
                 }
