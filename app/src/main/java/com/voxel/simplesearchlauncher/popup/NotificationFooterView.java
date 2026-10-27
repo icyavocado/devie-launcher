@@ -105,7 +105,7 @@ public class NotificationFooterView extends FrameLayout {
         }
         Rect rect2 = sTempRect;
         childAt.getGlobalVisibleRect(rect2);
-        float fHeight = rect.height() / rect2.height();
+        float fHeight = rect.height() / (float) rect2.height();
         ObjectAnimator objectAnimatorOfPropertyValuesHolder = LauncherAnimUtils.ofPropertyValuesHolder(childAt, new PropertyListBuilder().scale(fHeight).translationY((rect.top - rect2.top) + (((rect2.height() * fHeight) - rect2.height()) / 2.0f)).build());
         objectAnimatorOfPropertyValuesHolder.addListener(new AnimatorListenerAdapter() { // from class: com.voxel.simplesearchlauncher.popup.NotificationFooterView.1
             @Override // android.animation.AnimatorListenerAdapter, android.animation.Animator.AnimatorListener

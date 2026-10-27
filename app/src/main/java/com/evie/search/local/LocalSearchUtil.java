@@ -208,7 +208,7 @@ class LocalSearchUtil {
         if (localSearchItem == null) {
             return;
         }
-        float length = (str.length() - i) / str.length();
+        float length = (str.length() - i) / (float) str.length();
         HashSet hashSet = new HashSet();
         HashSet hashSet2 = new HashSet();
         for (char c : normalizeString(localSearchItem.getLabel()).toLowerCase().toCharArray()) {

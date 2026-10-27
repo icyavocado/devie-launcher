@@ -34,7 +34,7 @@ public class PendingItemPreviewProvider extends DragPreviewProvider {
         Bitmap bitmapCreateBitmap = Bitmap.createBitmap(i, i2, Bitmap.Config.ALPHA_8);
         canvas.setBitmap(bitmapCreateBitmap);
         Rect rect = new Rect(0, 0, this.mPreviewBitmap.getWidth(), this.mPreviewBitmap.getHeight());
-        float fMin = Math.min((i - 2) / this.mPreviewBitmap.getWidth(), (i2 - 2) / this.mPreviewBitmap.getHeight());
+        float fMin = Math.min((i - 2) / (float) this.mPreviewBitmap.getWidth(), (i2 - 2) / (float) this.mPreviewBitmap.getHeight());
         int width = (int) (this.mPreviewBitmap.getWidth() * fMin);
         int height = (int) (fMin * this.mPreviewBitmap.getHeight());
         Rect rect2 = new Rect(0, 0, width, height);

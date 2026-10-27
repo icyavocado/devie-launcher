@@ -52,7 +52,7 @@ public class BitmapUtil {
             i2 = i;
             i3 = i2;
         } else {
-            float f = intrinsicWidth / intrinsicHeight;
+            float f = intrinsicWidth / (float) intrinsicHeight;
             if (intrinsicWidth > intrinsicHeight) {
                 i3 = (int) (i / f);
                 i2 = i;

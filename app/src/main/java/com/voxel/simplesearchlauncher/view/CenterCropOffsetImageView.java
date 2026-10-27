@@ -35,11 +35,11 @@ public class CenterCropOffsetImageView extends ImageView {
         int height = (getHeight() - getPaddingTop()) - getPaddingBottom();
         float f3 = 0.0f;
         if (intrinsicWidth * height > width * intrinsicHeight) {
-            float f4 = height / intrinsicHeight;
+            float f4 = height / (float) intrinsicHeight;
             f2 = width - (intrinsicWidth * f4);
             f = f4;
         } else {
-            f = width / intrinsicWidth;
+            f = width / (float) intrinsicWidth;
             f3 = height - (intrinsicHeight * f);
             f2 = 0.0f;
         }
