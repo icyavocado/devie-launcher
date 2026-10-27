@@ -363,22 +363,19 @@ public class LocalSearchManager {
                     ResolveInfo resolveInfoResolveActivity = this.mPackageManager.resolveActivity(new Intent(schemeSpecificPart), 0);
                     if (resolveInfoResolveActivity == null || resolveInfoResolveActivity.activityInfo == null) {
                         Timber.e("Error resolving intent action %s", schemeSpecificPart);
-                    } else {
-                        str = resolveInfoResolveActivity.activityInfo.packageName;
-                        str2 = resolveInfoResolveActivity.activityInfo.name;
+                        return null;
                     }
-                    return null;
+                    str = resolveInfoResolveActivity.activityInfo.packageName;
+                    str2 = resolveInfoResolveActivity.activityInfo.name;
+                } else {
+                    String[] strArrSplit2 = schemeSpecificPart.split("\\|");
+                    str = strArrSplit2[0];
+                    str2 = strArrSplit2[1];
                 }
-                String[] strArrSplit2 = schemeSpecificPart.split("\\|");
-                String str3 = strArrSplit2[0];
-                str2 = strArrSplit2[1];
-                str = str3;
                 try {
                     return HybridNetworkFetcherCommon.getMagicResourceUri(str, str2, this.mPackageManager.getPackageInfo(str, 0).versionCode).toString();
                 } catch (PackageManager.NameNotFoundException unused2) {
                     Timber.e("Error retrieving package info for %s", localSearchItem.getLink());
-                    /* REWORK: return like every other failure branch; removes the
-                     * unreachable fall-through that killed the switch's completeness. */
                     return null;
                 }
             case 3:
