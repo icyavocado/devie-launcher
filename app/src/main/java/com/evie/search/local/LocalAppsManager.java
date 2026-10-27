@@ -40,7 +40,7 @@ public class LocalAppsManager {
         return new AppData(resolveInfoForIntent.activityInfo.packageName, resolveInfoForIntent.activityInfo.name, resolveInfoForIntent.activityInfo.loadLabel(this.mPackageManager).toString());
     }
 
-    public static LocalAppsManager getInstance(Context context) {
+    public static synchronized LocalAppsManager getInstance(Context context) {
         if (instance == null) {
             instance = new LocalAppsManager(context);
         }

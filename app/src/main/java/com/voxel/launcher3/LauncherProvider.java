@@ -624,7 +624,11 @@ public class LauncherProvider extends ContentProvider {
                     return false;
                 }
             }
-            return addScreenIdIfNecessary(contentValues.getAsLong("screen").longValue());
+            Long screen = contentValues.getAsLong("screen");
+            if (screen == null) {
+                return false;
+            }
+            return addScreenIdIfNecessary(screen.longValue());
         }
 
         private long initializeMaxItemId(SQLiteDatabase sQLiteDatabase) {
@@ -1775,7 +1779,7 @@ public class LauncherProvider extends ContentProvider {
 
         SqlArguments(Uri uri) {
             if (uri.getPathSegments().size() == 1) {
-                this.table = uri.getPathSegments().get(0);
+                this.table = tableName(uri);
                 this.where = null;
                 this.args = null;
             } else {
@@ -1785,7 +1789,7 @@ public class LauncherProvider extends ContentProvider {
 
         SqlArguments(Uri uri, String str, String[] strArr) {
             if (uri.getPathSegments().size() == 1) {
-                this.table = uri.getPathSegments().get(0);
+                this.table = tableName(uri);
                 this.where = str;
                 this.args = strArr;
                 return;
@@ -1796,9 +1800,17 @@ public class LauncherProvider extends ContentProvider {
             if (!TextUtils.isEmpty(str)) {
                 throw new UnsupportedOperationException("WHERE clause not supported: " + uri);
             }
-            this.table = uri.getPathSegments().get(0);
+            this.table = tableName(uri);
             this.where = "_id=" + ContentUris.parseId(uri);
             this.args = null;
+        }
+
+        private static String tableName(Uri uri) {
+            String str = uri.getPathSegments().get(0);
+            if (!"favorites".equals(str) && !"workspaceScreens".equals(str)) {
+                throw new IllegalArgumentException("Invalid table: " + str);
+            }
+            return str;
         }
     }
 
@@ -1934,8 +1946,10 @@ public class LauncherProvider extends ContentProvider {
         if (((str.hashCode() == 1092825125 && str.equals("close_db")) ? (byte) 0 : (byte) -1) != 0) {
             return super.call(str, str2, bundle);
         }
-        this.mOpenHelper.close();
-        this.mOpenHelper = new DatabaseHelper(getContext());
+        synchronized (this) {
+            this.mOpenHelper.close();
+            this.mOpenHelper = new DatabaseHelper(getContext());
+        }
         return null;
     }
 
