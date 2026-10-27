@@ -1722,23 +1722,23 @@ public class LauncherProvider extends ContentProvider {
         /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
         boolean updateFolderItemsRank(SQLiteDatabase sQLiteDatabase, boolean z) {
             sQLiteDatabase.beginTransaction();
-            if (z) {
-                try {
+            try {
+                if (z) {
                     sQLiteDatabase.execSQL("ALTER TABLE favorites ADD COLUMN rank INTEGER NOT NULL DEFAULT 0;");
-                } catch (SQLException e) {
-                    Log.e("LauncherProvider", e.getMessage(), e);
-                    return false;
-                } finally {
-                    sQLiteDatabase.endTransaction();
                 }
+                Cursor cursorRawQuery = sQLiteDatabase.rawQuery("SELECT container, MAX(cellX) FROM favorites WHERE container IN (SELECT _id FROM favorites WHERE itemType = ?) GROUP BY container;", new String[]{Integer.toString(2)});
+                while (cursorRawQuery.moveToNext()) {
+                    sQLiteDatabase.execSQL("UPDATE favorites SET rank=cellX+(cellY*?) WHERE container=? AND cellX IS NOT NULL AND cellY IS NOT NULL;", new Object[]{Long.valueOf(cursorRawQuery.getLong(1) + 1), Long.valueOf(cursorRawQuery.getLong(0))});
+                }
+                cursorRawQuery.close();
+                sQLiteDatabase.setTransactionSuccessful();
+                return true;
+            } catch (SQLException e) {
+                Log.e("LauncherProvider", e.getMessage(), e);
+                return false;
+            } finally {
+                sQLiteDatabase.endTransaction();
             }
-            Cursor cursorRawQuery = sQLiteDatabase.rawQuery("SELECT container, MAX(cellX) FROM favorites WHERE container IN (SELECT _id FROM favorites WHERE itemType = ?) GROUP BY container;", new String[]{Integer.toString(2)});
-            while (cursorRawQuery.moveToNext()) {
-                sQLiteDatabase.execSQL("UPDATE favorites SET rank=cellX+(cellY*?) WHERE container=? AND cellX IS NOT NULL AND cellY IS NOT NULL;", new Object[]{Long.valueOf(cursorRawQuery.getLong(1) + 1), Long.valueOf(cursorRawQuery.getLong(0))});
-            }
-            cursorRawQuery.close();
-            sQLiteDatabase.setTransactionSuccessful();
-            return true;
         }
 
         public void updateMaxItemId(long j) {
