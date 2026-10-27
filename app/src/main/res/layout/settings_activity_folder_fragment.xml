@@ -10,7 +10,7 @@
     <androidx.core.widget.NestedScrollView android:id="@id/scroll_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true">
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
             <LinearLayout android:orientation="horizontal" android:id="@id/mock_target" android:layout_width="fill_parent" android:layout_height="@dimen/settings_mock_screen_height" />
-            <LinearLayout android:orientation="vertical" android:background="@color/settings_activity_background" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <LinearLayout android:orientation="vertical" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
                 <LinearLayout android:orientation="vertical" android:background="@drawable/settings_list_item_background" android:layout_marginStart="12.0dip" android:layout_marginTop="10.0dip" android:layout_marginEnd="12.0dip" android:layout_marginBottom="10.0dip" android:divider="@drawable/settings_row_divider" android:showDividers="middle" android:layout_width="fill_parent" android:layout_height="wrap_content">
                     <include android:id="@id/grid_settings" layout="@layout/settings_grid_settings_view" />
                     <include android:id="@id/icon_label_switch" layout="@layout/settings_activity_switch_item" />
