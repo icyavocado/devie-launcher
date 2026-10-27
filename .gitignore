@@ -19,3 +19,4 @@ app/build/
 
 # Signing material (keystore + recorded passwords) stays out of the repo
 keystore/
+/donor/
