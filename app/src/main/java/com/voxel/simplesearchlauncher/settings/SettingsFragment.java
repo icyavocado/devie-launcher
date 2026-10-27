@@ -29,8 +29,7 @@ public class SettingsFragment extends Fragment {
     private enum SettingsGroup {
         ALERT(0, false),
         CUSTOMIZATION(R.string.app_settings_item_customization_header, true),
-        GENERAL(R.string.app_settings_item_general_header, true),
-        SWITCH(0, true);
+        GENERAL(R.string.app_settings_item_general_header, true);
 
         int headerTextResId;
         boolean showHeader;
@@ -56,7 +55,7 @@ public class SettingsFragment extends Fragment {
         FEEDBACK(SettingsGroup.GENERAL, R.string.app_settings_item_feedback_title),
         /* REWORK: privacy-policy web page cut; the row now shows the no-tracking copy. */
         PRIVACY_POLICY(SettingsGroup.GENERAL, R.string.app_settings_item_no_tracking_title),
-        SWITCH_LAUNCHER(SettingsGroup.SWITCH, R.string.app_settings_item_switch_launcher);
+        SWITCH_LAUNCHER(SettingsGroup.GENERAL, R.string.app_settings_item_switch_launcher);
 
         SettingsGroup group;
         int mainTextResId;
