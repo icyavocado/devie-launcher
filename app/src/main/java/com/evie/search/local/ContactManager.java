@@ -161,8 +161,6 @@ public class ContactManager {
 
     /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     private void updateContactAppLinks(ContactData contactData) throws Throwable {
-        /* REWORK: jadx lost an exception-flow local across catch scopes. */
-        Throwable thReflow = null;
         Cursor cursorQuery;
         try {
             ActionData[] actionDataArr = new ActionData[7];
@@ -359,14 +357,11 @@ public class ContactManager {
                 cursorQuery.close();
             }
         } catch (Throwable th2) {
-            thReflow = th2;
-            cursorQuery = null;
+            Timber.e(th2);
         }
     }
 
     private void updateContactNameAndImage(ContactData contactData) throws Throwable {
-        /* REWORK: jadx lost an exception-flow local across catch scopes. */
-        Throwable thReflow = null;
         Cursor cursorQuery;
         String strBuildInitialsUri = null;
         try {
@@ -414,8 +409,7 @@ public class ContactManager {
                 cursorQuery.close();
             }
         } catch (Throwable th2) {
-            thReflow = th2;
-            cursorQuery = null;
+            Timber.e(th2);
         }
     }
 
