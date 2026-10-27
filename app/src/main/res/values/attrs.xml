@@ -647,7 +647,7 @@
         <attr name="customShadows" />
     </declare-styleable>
     <declare-styleable name="PagedView">
-        <attr name="pageIndicatorViewId" />
+        <attr name="pageIndicator" />
         <attr name="pageLayoutHeightGap" />
         <attr name="pageLayoutWidthGap" />
     </declare-styleable>
