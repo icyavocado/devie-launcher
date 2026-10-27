@@ -664,7 +664,7 @@
     </declare-styleable>
     <!-- REWORK(vendor): styleables referenced by decompiled framework-ish views -->
     <attr name="pageIndicatorViewId" format="reference" />
-    <attr name="pageIndicatorMaxWindowSize" format="integer" />
+    <attr name="pageLayoutHeightGap" format="dimension" />
     <attr name="workspaceDefaultPage" format="integer" />
     <attr name="preloadIconBg" format="reference" />
     <attr name="preloadIconStroke" format="dimension" />
@@ -679,6 +679,7 @@
     </declare-styleable>
     <declare-styleable name="PagedView">
         <attr name="pageIndicatorViewId" />
+        <attr name="pageLayoutHeightGap" />
         <attr name="pageLayoutWidthGap" />
     </declare-styleable>
     <declare-styleable name="PreloadIconDrawable">
@@ -687,7 +688,7 @@
         <attr name="preloadIconRingOutset" />
     </declare-styleable>
     <declare-styleable name="PageIndicator">
-        <attr name="pageIndicatorMaxWindowSize" />
+        <attr name="windowSize" />
     </declare-styleable>
     <declare-styleable name="CellLayout">
         <attr name="cellWidth" />
