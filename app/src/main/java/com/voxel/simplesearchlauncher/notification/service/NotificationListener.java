@@ -27,7 +27,6 @@ public class NotificationListener extends NotificationListenerService {
     boolean mHasChanged;
     boolean mIsConnected;
     Set<String> mRemoved = new HashSet();
-    Map<String, Boolean> mBadgeEnabled = new HashMap();
     BroadcastReceiver mListener = new BroadcastReceiver() { // from class: com.voxel.simplesearchlauncher.notification.service.NotificationListener.1
         /* JADX WARN: Code duplicated, block: B:13:0x0027  */
         @Override // android.content.BroadcastReceiver
@@ -85,7 +84,6 @@ public class NotificationListener extends NotificationListenerService {
             return;
         }
         super.onNotificationChannelModified(str, userHandle, notificationChannel, i);
-        this.mBadgeEnabled.remove(str + ":" + notificationChannel.getId());
     }
 
     @Override // android.service.notification.NotificationListenerService
