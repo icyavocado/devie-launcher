@@ -216,14 +216,21 @@ authenticated as `icyavocado` (HTTPS remote; ssh port 22 firewalled).
   from `LocalAppData`. Dark "phone screen" = `@color/mock_screen_background`
   (#18212c) on the mock panel (`mock_phone_screen` drawable for the folder grid).
 - **Settings look**: opaque window, flat soft-gray `#d9dde3` top-to-bottom; main
-  screen = small muted section headers above one white rounded card per group with
-  thin inset dividers between text-only rows (SettingsFragment rebuilds it
-  programmatically; layouts `settings_activity_top_level_fragment/row`,
-  drawable `settings_group_divider`); sub-fragments keep the old row style (white
-  rounded cards, 14dip radius + 14dip bottom margins); seek rows = label stacked
-  above a full-width track. The divider include = spacer kept for ButterKnife's
-  `R.id.list_divider` binding (ButterKnife gone — include kept only as legacy
-  spacing) — do not remove it from row layouts.
+  screen AND submenus = small muted section headers above one white rounded card
+  per group with thin inset dividers (drawable `settings_group_divider`, inset
+  wrapper `settings_row_divider`; SettingsFragment rebuilds the main screen
+  programmatically — layouts `settings_activity_top_level_fragment/row`;
+  sub-fragment rows come from the flattened `settings_activity_{switch,text,seek}_item`
+  layouts inside per-fragment card wrappers); seek rows = label stacked above a
+  full-width track. Preview submenus (desktop/dock/folder/app_drawer/icon_pack):
+  the mock preview is pinned behind the activity root; keep the rows container
+  background-free so the card slides over the preview instead of an opaque grey
+  sheet, and do NOT re-add the parallax scroll listeners (removed deliberately).
+  The divider include = spacer kept for ButterKnife's `R.id.list_divider` binding
+  (ButterKnife gone — include kept only as legacy spacing) — do not remove it
+  from row layouts. `settings_activity_app_drawer_fragment` MUST keep the donor
+  mock block (`RoundedFrameLayout id=mock` + embedded AllAppsFragment
+  `<fragment>`); removing it NPEs `AppDrawerSettingsFragment.setupMock`.
 - **Set-default flow** = API 29+: `RoleManager.isRoleHeld(ROLE_HOME)` /
   `createRequestRoleIntent` (requestCode 47161) in `ResetLauncherActivity`; the
   2020 resolveActivity/clearHome dance only runs < Q.
@@ -234,7 +241,7 @@ authenticated as `icyavocado` (HTTPS remote; ssh port 22 firewalled).
 ## 9. Decompile-trap catalog (all fixed; treat every oddity as a suspect)
 
 The codebase = a jadx decompile rebuilt by hand. When logic misbehaves, diff
-against donor smali (`/tmp/opencode/apktool-smali`) or the upstream 4.4 sources
+against donor smali (`/tmp/opencode/apktool-smali-src`) or the upstream 4.4 sources
 (`android-4.4.4_r2` via googlesource, format=TEXT + base64 -d) BEFORE inventing a
 patch. Known trap classes + the fixes:
 
