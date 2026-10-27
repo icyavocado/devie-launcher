@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
   xmlns:android="http://schemas.android.com/apk/res/android">
+    <com.voxel.simplesearchlauncher.view.RoundedFrameLayout android:id="@id/mock" android:fitsSystemWindows="false" android:layout_width="fill_parent" android:layout_height="fill_parent" app:vxl_radius="10.0dip"
+      xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+        <View android:background="@color/mock_screen_background" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+        <fragment android:name="com.voxel.simplesearchlauncher.allapps.AllAppsFragment" android:id="@id/all_apps_fragment" android:background="#ffff0000" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </com.voxel.simplesearchlauncher.view.RoundedFrameLayout>
     <androidx.core.widget.NestedScrollView android:id="@id/scroll_view" android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true">
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
             <FrameLayout android:orientation="horizontal" android:id="@id/mock_target" android:layout_width="fill_parent" android:layout_height="@dimen/settings_mock_screen_height" />
