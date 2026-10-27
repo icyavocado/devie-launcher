@@ -62,11 +62,10 @@ public class SettingsActivity extends AppCompatActivity implements SafeActivityS
     @Override // androidx.fragment.app.FragmentActivity, android.app.Activity
     public void onBackPressed() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments != null) {
-            for (LifecycleOwner lifecycleOwner : fragments) {
-                if (lifecycleOwner instanceof OnSettingsBackButtonPressedListener) {
-                    ((OnSettingsBackButtonPressedListener) lifecycleOwner).onBackPressed();
-                }
+        if (fragments != null && !fragments.isEmpty()) {
+            Fragment top = fragments.get(fragments.size() - 1);
+            if (top instanceof OnSettingsBackButtonPressedListener) {
+                ((OnSettingsBackButtonPressedListener) top).onBackPressed();
             }
         }
         super.onBackPressed();
@@ -105,11 +104,10 @@ public class SettingsActivity extends AppCompatActivity implements SafeActivityS
     @Override // androidx.appcompat.app.AppCompatActivity
     public boolean onSupportNavigateUp() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments != null) {
-            for (LifecycleOwner lifecycleOwner : fragments) {
-                if (lifecycleOwner instanceof OnSettingsBackButtonPressedListener) {
-                    ((OnSettingsBackButtonPressedListener) lifecycleOwner).onBackPressed();
-                }
+        if (fragments != null && !fragments.isEmpty()) {
+            Fragment top = fragments.get(fragments.size() - 1);
+            if (top instanceof OnSettingsBackButtonPressedListener) {
+                ((OnSettingsBackButtonPressedListener) top).onBackPressed();
             }
         }
         if (getSupportFragmentManager().popBackStackImmediate()) {
