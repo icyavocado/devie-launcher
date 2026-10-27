@@ -27,14 +27,17 @@ public class BackupRestoreSettingsFragment extends Fragment implements BackupRes
 
     private void stopProgressDialog() {
         ProgressDialog progressDialog = this.mProgressDialog;
-        if (progressDialog != null) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
-            this.mProgressDialog.setMessage("");
         }
     }
 
     private void showFailureDialog(int i, int i2) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        FragmentActivity activity = getActivity();
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(i).setMessage(i2).setPositiveButton(R.string.app_settings_item_backup_restore_backup_failure_dialog_positive, new DialogInterface.OnClickListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$BackupRestoreSettingsFragment$SLKRP6DFrQEZdI0_OwEPTFgAOwo
             @Override // android.content.DialogInterface.OnClickListener
             public final void onClick(DialogInterface dialogInterface, int i1) {
@@ -63,7 +66,11 @@ public class BackupRestoreSettingsFragment extends Fragment implements BackupRes
     @Override // com.voxel.simplesearchlauncher.model.managers.BackupRestoreManager.BackupRestoreUI
     public void onBackupSuccess() {
         stopProgressDialog();
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        FragmentActivity activity = getActivity();
+        if (activity == null || activity.isFinishing()) {
+            return;
+        }
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(R.string.app_settings_item_backup_restore_backup_success_dialog).setMessage(R.string.app_settings_item_backup_restore_backup_success_dialog_subtext).setPositiveButton(R.string.app_settings_item_backup_restore_backup_success_dialog_positive, new DialogInterface.OnClickListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$BackupRestoreSettingsFragment$xiBDoCHz61J1mvydVe79RN7qBZ0
             @Override // android.content.DialogInterface.OnClickListener
             public final void onClick(DialogInterface dialogInterface, int i) {
@@ -82,11 +89,14 @@ public class BackupRestoreSettingsFragment extends Fragment implements BackupRes
     @Override // com.voxel.simplesearchlauncher.model.managers.BackupRestoreManager.BackupRestoreUI
     public void onRestoreSuccess() {
         stopProgressDialog();
+        FragmentActivity activity = getActivity();
+        if (activity == null) {
+            return;
+        }
         Intent intent = new Intent("android.intent.action.MAIN");
         intent.addCategory("android.intent.category.HOME");
         intent.putExtra(BackupRestoreManager.KEY_LAUNCHER_RESTORED, true);
         intent.setComponent(new ComponentName(getContext(), (Class<?>) Launcher.class));
-        FragmentActivity activity = getActivity();
         if (activity instanceof SafeActivityStarter) {
             ((SafeActivityStarter) activity).startActivitySafely(intent);
         } else {
@@ -118,6 +128,8 @@ public class BackupRestoreSettingsFragment extends Fragment implements BackupRes
     @Override // androidx.fragment.app.Fragment
     public void onDetach() {
         super.onDetach();
+        stopProgressDialog();
+        this.mProgressDialog = null;
         BackupRestoreManager backupRestoreManager = this.mBackupManager;
         if (backupRestoreManager == null) {
             return;
