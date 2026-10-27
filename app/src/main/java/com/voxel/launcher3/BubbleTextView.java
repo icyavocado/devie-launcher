@@ -181,6 +181,8 @@ public class BubbleTextView extends TextView implements Notifier.OnNotificationC
             this.mBadgeDrawable = new BadgeDrawable(getContext(), fastBitmapDrawableCreateIconDrawable.getIconPalette());
             this.mBadgeDrawable.setBadge(count);
             this.mBadgeDrawable.setCallback(this);
+        } else {
+            this.mBadgeDrawable = null;
         }
         setCompoundDrawables(null, fastBitmapDrawableCreateIconDrawable, null, null);
         if (shortcutInfo.contentDescription != null) {
