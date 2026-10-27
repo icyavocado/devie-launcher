@@ -25,4 +25,29 @@
 # Room: the runtime reflects "<db>_Impl" by name and its constructor.
 -keepnames class * extends androidx.room.RoomDatabase
 -keep class **_Impl { <init>(...); }
+
+# ObjectAnimator.of*(this, "property", ...) resolves accessors reflectively by
+# name at runtime; R8 renames/removes them (donor APK is unminified, so this
+# only broke release/phoneDebug).
+-keepclassmembers class com.voxel.simplesearchlauncher.view.BaseRecyclerViewFastScrollPopup {
+    public float getAlpha();
+    public void setAlpha(float);
+}
+-keepclassmembers class com.voxel.simplesearchlauncher.view.BaseRecyclerViewFastScrollBar {
+    public int getTrackWidth();
+    public void setTrackWidth(int);
+    public int getThumbWidth();
+    public void setThumbWidth(int);
+}
+-keepclassmembers class com.voxel.launcher3.PreloadIconDrawable {
+    public void setAnimationProgress(float);
+}
+-keepclassmembers class com.voxel.launcher3.Workspace {
+    public float getChildrenOutlineAlpha();
+    public void setChildrenOutlineAlpha(float);
+}
+-keepclassmembers class com.voxel.launcher3.FastBitmapDrawable {
+    public void setBrightness(int);
+}
+
 -dontoptimize
