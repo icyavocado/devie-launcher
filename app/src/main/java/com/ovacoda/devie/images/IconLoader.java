@@ -169,10 +169,11 @@ public final class IconLoader {
             apply(view, cached, circular, listener);
             return;
         }
-        if (Looper.myLooper() == null || Looper.myLooper() != Looper.getMainLooper()) {
-            // Background bind (widget adapters, BadgedIcons callers).
-            Bitmap bitmap = resolve(url, false);
-            apply(view, bitmap, circular, listener);
+        if (Looper.myLooper() != Looper.getMainLooper() && Looper.myLooper() != null && listener == null) {
+            // Background bind without a listener (BadgedIcons callers);
+            // listener callbacks must stay on the main thread per the
+            // OnBitmapLoaded contract.
+            apply(view, resolve(url, false), circular, null);
             return;
         }
         /* REMOVED(rework): clearing the view here (was setImageDrawable(null))
