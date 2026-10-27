@@ -1,3 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView android:id="@id/recycler_view" android:background="@color/settings_activity_background" android:layout_width="fill_parent" android:layout_height="fill_parent"
-  xmlns:android="http://schemas.android.com/apk/res/android" />
+<!-- Brave-style grouped settings: section header above one rounded card,
+     rows separated by an inset 1px divider. Colors unchanged (soft-gray
+     background, white cards, existing text colors). -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/scroll_container"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:id="@id/list_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+</ScrollView>
