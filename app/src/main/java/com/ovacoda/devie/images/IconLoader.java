@@ -459,17 +459,19 @@ public final class IconLoader {
     /** Circle-crop used for contact avatars (was drawee RoundingParams). */
     @NonNull
     public static Bitmap toCircle(@NonNull Bitmap bitmap) {
-        int side = Math.min(bitmap.getWidth(), bitmap.getHeight());
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        int side = Math.min(width, height);
         Bitmap out = Bitmap.createBitmap(side, side, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(out);
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        Rect rect = new Rect(0, 0, side, side);
-        RectF rectF = new RectF(rect);
+        Rect rect = width > height ? new Rect((width - side) / 2, 0, ((width - side) / 2) + side, height) : new Rect(0, (height - side) / 2, width, ((height - side) / 2) + side);
+        RectF rectF = new RectF(0, 0, side, side);
         canvas.drawARGB(0, 0, 0, 0);
         paint.setColor(0xFFFF0000);
         canvas.drawOval(rectF, paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
-        canvas.drawBitmap(bitmap, rect, rect, paint);
+        canvas.drawBitmap(bitmap, rect, rectF, paint);
         paint.setXfermode(null);
         return out;
     }
