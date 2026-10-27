@@ -47,26 +47,28 @@ class LocalSearchUtil {
         }
     }
 
+    private static final int NON_ASCII_BUCKETS = 200;
+
+    static int charToBucket(char c) {
+        if (c == ' ') {
+            return 0;
+        }
+        if (c > '`' && c < '{') {
+            return c - '`';
+        }
+        return 26 + (Character.toLowerCase(c) % NON_ASCII_BUCKETS) + 1;
+    }
+
     static int distance(String str, String str2, boolean z) {
         ArrayList arrayList = new ArrayList();
         ArrayList arrayList2 = new ArrayList();
         for (int i = 0; i < str.length(); i++) {
-            char cCharAt = str.charAt(i);
-            if (cCharAt == ' ') {
-                arrayList.add(0);
-            } else if (cCharAt > '`' && cCharAt < '{') {
-                arrayList.add(Integer.valueOf(cCharAt - '`'));
-            }
+            arrayList.add(Integer.valueOf(charToBucket(str.charAt(i))));
         }
         for (int i2 = 0; i2 < str2.length(); i2++) {
-            char cCharAt2 = str2.charAt(i2);
-            if (cCharAt2 == ' ') {
-                arrayList2.add(0);
-            } else if (cCharAt2 > '`' && cCharAt2 < '{') {
-                arrayList2.add(Integer.valueOf(cCharAt2 - '`'));
-            }
+            arrayList2.add(Integer.valueOf(charToBucket(str2.charAt(i2))));
         }
-        int[] iArr = new int[27];
+        int[] iArr = new int[27 + NON_ASCII_BUCKETS];
         int[][] iArr2 = (int[][]) Array.newInstance((Class<?>) int.class, arrayList.size() + 2, arrayList2.size() + 2);
         int size = arrayList.size() + arrayList2.size();
         iArr2[0][0] = size;
