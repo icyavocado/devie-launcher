@@ -93,7 +93,7 @@ public class NotificationSettingsFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return NotificationSettingsFragment.this.mCommonApps.size() + NotificationSettingsFragment.this.mAllApps.size() + 2;
+            return NotificationSettingsFragment.this.mCommonApps.size() + NotificationSettingsFragment.this.mAllApps.size() + 3;
         }
 
         @Override
