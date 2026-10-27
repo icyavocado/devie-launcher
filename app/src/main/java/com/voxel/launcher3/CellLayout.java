@@ -1069,7 +1069,11 @@ public class CellLayout extends ViewGroup {
             int i10 = 0;
             while (i10 < i5 - (i3 - 1)) {
                 int i11 = 0;
+                boolean z3 = false;
                 while (true) {
+                    if (z3) {
+                        break;
+                    }
                     if (i11 >= i3) {
                         int i12 = i10 - i;
                         int i13 = i7 - i2;
@@ -1090,6 +1094,7 @@ public class CellLayout extends ViewGroup {
                     }
                     for (int i15 = 0; i15 < i4; i15++) {
                         if (zArr[i10 + i11][i7 + i15] && (zArr2 == null || zArr2[i11][i15])) {
+                            z3 = true;
                             break;
                         }
                     }
