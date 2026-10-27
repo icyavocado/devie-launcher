@@ -196,6 +196,7 @@
     
     
     <attr name="fadeBottom" format="boolean" />
+    <attr name="fadeTop" format="boolean" />
     <attr name="fadeDelay" format="integer" />
     <attr name="fadeDuration" format="integer" />
     <attr name="fadeLength" format="integer" />
@@ -673,5 +674,6 @@
     </declare-styleable>
     <declare-styleable name="SpringFadingEdgeRecyclerView">
         <attr name="fadeBottom" />
+        <attr name="fadeTop" />
     </declare-styleable>
 </resources>
