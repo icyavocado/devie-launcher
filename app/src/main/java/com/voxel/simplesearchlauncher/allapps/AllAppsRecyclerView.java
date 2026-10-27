@@ -55,6 +55,9 @@ public class AllAppsRecyclerView extends BaseRecyclerView {
             return;
         }
         View viewFindViewByPosition = getLayoutManager().findViewByPosition(currentRecyclerViewPosition);
+        if (viewFindViewByPosition == null) {
+            return;
+        }
         scrollPositionState.rowIndex = getAdapter().getRowIndex(currentRecyclerViewPosition);
         scrollPositionState.rowTopOffset = getLayoutManager().getDecoratedTop(viewFindViewByPosition);
         scrollPositionState.itemPos = currentRecyclerViewPosition;
@@ -92,7 +95,6 @@ public class AllAppsRecyclerView extends BaseRecyclerView {
             this.mScrollbar.setThumbOffset(-1, -1);
             return;
         }
-        getAvailableScrollBarHeight();
         if (getAvailableScrollHeight(rowCount) <= 0) {
             this.mScrollbar.setThumbOffset(-1, -1);
         } else {
