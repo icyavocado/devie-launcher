@@ -85,11 +85,11 @@ public class PermissionHelper {
     }
 
     public boolean handleRequestPermissionsResult(Activity activity, int i, String[] strArr, int[] iArr) {
-        Intent intent = this.mPendingCallIntent;
-        this.mPendingCallIntent = null;
         if (i != this.mCallRequestCode) {
             return false;
         }
+        Intent intent = this.mPendingCallIntent;
+        this.mPendingCallIntent = null;
         if (iArr.length <= 0 || iArr[0] != 0) {
             return true;
         }
