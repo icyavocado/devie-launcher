@@ -112,9 +112,9 @@ public class Notifier implements SharedPreferences.OnSharedPreferenceChangeListe
         return 0;
     }
 
-    public static Notifier getInstance(Context context) {
+    public static synchronized Notifier getInstance(Context context) {
         if (sInstance == null) {
-            sInstance = new Notifier(context);
+            sInstance = new Notifier(context.getApplicationContext());
         }
         synchronized (sInstance) {
             if (!sInstance.mReceiverRegistered) {

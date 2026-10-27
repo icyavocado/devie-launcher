@@ -22,14 +22,20 @@ public class TimeoutLockScreenActivity extends Activity {
         } else {
             getWindow().getDecorView().setSystemUiVisibility(4102);
         }
-        this.mExistingScreenTimeout = Settings.System.getInt(getContentResolver(), "screen_off_timeout", -1);
-        Settings.System.putInt(getContentResolver(), "screen_off_timeout", 10);
+        /* Guard WRITE_SETTINGS: without it Settings.System.putInt throws a
+           SecurityException on every gesture invocation (revoked permission). */
+        if (Build.VERSION.SDK_INT < 23 || Settings.System.canWrite(this)) {
+            this.mExistingScreenTimeout = Settings.System.getInt(getContentResolver(), "screen_off_timeout", -1);
+            Settings.System.putInt(getContentResolver(), "screen_off_timeout", 10);
+        } else {
+            this.mExistingScreenTimeout = -1;
+        }
     }
 
     @Override // android.app.Activity
     protected void onStop() {
         super.onStop();
-        if (this.mExistingScreenTimeout >= 0) {
+        if (this.mExistingScreenTimeout >= 0 && (Build.VERSION.SDK_INT < 23 || Settings.System.canWrite(this))) {
             Settings.System.putInt(getContentResolver(), "screen_off_timeout", this.mExistingScreenTimeout);
         }
         finish();

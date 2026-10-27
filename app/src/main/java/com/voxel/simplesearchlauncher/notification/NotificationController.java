@@ -74,7 +74,7 @@ public class NotificationController implements INotificationController, Extracto
         UpgradeUtil.processUpgrade(this.mPrefs, this, 3);
     }
 
-    public static NotificationController getInstance(Context context) {
+    public static synchronized NotificationController getInstance(Context context) {
         if (sInstance == null) {
             sInstance = new NotificationController(context.getApplicationContext());
         }
@@ -147,7 +147,9 @@ public class NotificationController implements INotificationController, Extracto
     }
 
     public Style getBadgeStyle() {
-        return Style.values()[this.mPrefs.getInt("badge_style", Style.DOTS.ordinal())];
+        Style[] styles = Style.values();
+        int i = this.mPrefs.getInt("badge_style", Style.DOTS.ordinal());
+        return styles[i >= 0 && i < styles.length ? i : Style.DOTS.ordinal()];
     }
 
     public Extractor getExtractor(String str) {
