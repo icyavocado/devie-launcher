@@ -128,26 +128,32 @@ class LocalSearchUtil {
         contentValues.put("type", localSearchItem.getType());
         contentValues.put("usage", Float.valueOf(f));
         sQLiteDatabase.beginTransaction();
-        long jInsert = sQLiteDatabase.insert("item", null, contentValues);
-        for (SearchKeywordItem searchKeywordItem : localSearchItem.getKeywords()) {
-            String keyword = searchKeywordItem.getKeyword();
-            HashSet<String> hashSet = new HashSet();
-            int iMin = Math.min(6, keyword.length());
-            for (int i = 1; i <= iMin; i++) {
-                String strSubstring = keyword.substring(0, i);
-                addKeywordWithDeletions(hashSet, strSubstring, maxDistance(strSubstring), false);
+        try {
+            long jInsert = sQLiteDatabase.insert("item", null, contentValues);
+            if (jInsert == -1) {
+                return;
             }
-            for (String str : hashSet) {
-                ContentValues contentValues2 = new ContentValues();
-                contentValues2.put("search_keyword", str);
-                contentValues2.put("match_keyword", keyword);
-                contentValues2.put("keyword_type", searchKeywordItem.getKeywordType());
-                contentValues2.put("item_id", Long.valueOf(jInsert));
-                sQLiteDatabase.insert("search", null, contentValues2);
+            for (SearchKeywordItem searchKeywordItem : localSearchItem.getKeywords()) {
+                String keyword = searchKeywordItem.getKeyword();
+                HashSet<String> hashSet = new HashSet();
+                int iMin = Math.min(6, keyword.length());
+                for (int i = 1; i <= iMin; i++) {
+                    String strSubstring = keyword.substring(0, i);
+                    addKeywordWithDeletions(hashSet, strSubstring, maxDistance(strSubstring), false);
+                }
+                for (String str : hashSet) {
+                    ContentValues contentValues2 = new ContentValues();
+                    contentValues2.put("search_keyword", str);
+                    contentValues2.put("match_keyword", keyword);
+                    contentValues2.put("keyword_type", searchKeywordItem.getKeywordType());
+                    contentValues2.put("item_id", Long.valueOf(jInsert));
+                    sQLiteDatabase.insert("search", null, contentValues2);
+                }
             }
+            sQLiteDatabase.setTransactionSuccessful();
+        } finally {
+            sQLiteDatabase.endTransaction();
         }
-        sQLiteDatabase.setTransactionSuccessful();
-        sQLiteDatabase.endTransaction();
     }
 
     static boolean keywordMatches(SQLiteDatabase sQLiteDatabase, long j, String str, String str2) {

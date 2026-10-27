@@ -75,21 +75,24 @@ public class LocalSearchManager {
     private void addToRecents(String str, String str2, String str3, String str4) {
         long jCurrentTimeMillis = System.currentTimeMillis();
         this.db.beginTransaction();
-        if (str.startsWith("places:")) {
-            String str5 = str.split("\\|")[0];
-            this.db.delete("recents", "link LIKE ?", new String[]{str5 + "|%"});
-        } else {
-            this.db.delete("recents", "link=?", new String[]{str});
+        try {
+            if (str.startsWith("places:")) {
+                String str5 = str.split("\\|")[0];
+                this.db.delete("recents", "link LIKE ?", new String[]{str5 + "|%"});
+            } else {
+                this.db.delete("recents", "link=?", new String[]{str});
+            }
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("last_used", Long.valueOf(jCurrentTimeMillis));
+            contentValues.put("link", str);
+            contentValues.put("label", str2);
+            contentValues.put("item_type", str3);
+            contentValues.put("image_url", str4);
+            this.db.insert("recents", null, contentValues);
+            this.db.setTransactionSuccessful();
+        } finally {
+            this.db.endTransaction();
         }
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("last_used", Long.valueOf(jCurrentTimeMillis));
-        contentValues.put("link", str);
-        contentValues.put("label", str2);
-        contentValues.put("item_type", str3);
-        contentValues.put("image_url", str4);
-        this.db.insert("recents", null, contentValues);
-        this.db.setTransactionSuccessful();
-        this.db.endTransaction();
         this.mRecentSubject.onNext(getRecentItems());
         trimRecents();
     }
@@ -447,7 +450,7 @@ public class LocalSearchManager {
     }
 
     public void itemAccessed(LocalSearchItem localSearchItem, boolean z) {
-        this.db.execSQL("UPDATE \"item\" SET \"usage\"=\"usage\"+1 WHERE \"link\"='" + localSearchItem.getLink() + "'");
+        this.db.execSQL("UPDATE \"item\" SET \"usage\"=\"usage\"+1 WHERE \"link\"= ?", new Object[]{localSearchItem.getLink()});
         if (z) {
             addToRecents(localSearchItem.getLink(), localSearchItem.getLabel(), localSearchItem.getType(), null);
         }
@@ -503,19 +506,17 @@ public class LocalSearchManager {
             StringBuilder sb = new StringBuilder("SELECT * FROM search JOIN item ON item_id=item._id WHERE search_keyword IN (");
             String[] strArr2 = (String[]) hashSet.toArray(new String[hashSet.size()]);
             for (int i4 = 0; i4 < strArr2.length; i4++) {
-                sb.append("'");
-                sb.append(strArr2[i4]);
                 if (i4 < strArr2.length - 1) {
-                    sb.append("',");
+                    sb.append("?,");
                 } else {
-                    sb.append("')");
+                    sb.append("?)");
                 }
             }
             /* REWORK: jadx raw list; all rows are LocalSearchItem */
             ArrayList<LocalSearchItem> arrayList2 = new ArrayList<>();
             Cursor cursorRawQuery = null;
             try {
-                cursorRawQuery = this.db.rawQuery(sb.toString(), null);
+                cursorRawQuery = this.db.rawQuery(sb.toString(), strArr2);
                 int iMaxDistance = LocalSearchUtil.maxDistance(str2);
                 while (cursorRawQuery.moveToNext()) {
                     String string = cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("match_keyword"));
