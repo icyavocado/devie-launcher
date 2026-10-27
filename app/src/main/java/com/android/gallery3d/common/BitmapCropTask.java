@@ -104,9 +104,22 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
             }
             return this.mInImageBytes != null ? new BufferedInputStream(new ByteArrayInputStream(this.mInImageBytes)) : new BufferedInputStream(this.mResources.openRawResource(this.mInResId));
         } catch (FileNotFoundException e) {
-            Log.w("BitmapCropTask", "cannot read file: " + this.mInUri.toString(), e);
+            Log.w("BitmapCropTask", "cannot read file: " + inputDescription(), e);
             return null;
         }
+    }
+
+    private String inputDescription() {
+        if (this.mInUri != null) {
+            return this.mInUri.toString();
+        }
+        if (this.mInFilePath != null) {
+            return this.mInFilePath;
+        }
+        if (this.mInResId != 0) {
+            return "resource #" + this.mInResId;
+        }
+        return "image bytes";
     }
 
     private void setWallpaper(InputStream inputStream, Rect rect, int i) throws IOException {
@@ -147,7 +160,7 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
             try {
                 in = regenerateInputStream();
                 if (in == null) {
-                    Log.w("BitmapCropTask", "cannot get input stream for uri=" + this.mInUri.toString());
+                    Log.w("BitmapCropTask", "cannot get input stream for " + inputDescription());
                     return false;
                 }
                 WallpaperManager.getInstance(this.mContext.getApplicationContext()).suggestDesiredDimensions(this.mOutWidth, this.mOutHeight);
@@ -156,7 +169,7 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
                     this.mOnBitmapCroppedHandler.onBitmapCropped(null, rect);
                 }
             } catch (IOException e2) {
-                Log.w("BitmapCropTask", "cannot open region decoder for file: " + this.mInUri.toString(), e2);
+                Log.w("BitmapCropTask", "cannot open region decoder for file: " + inputDescription(), e2);
             } finally {
                 Utils.closeSilently(in);
             }
@@ -166,16 +179,16 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
         Matrix matrix = new Matrix();
         Matrix matrix2 = new Matrix();
         Point imageBounds = getImageBounds();
+        if (imageBounds == null) {
+            Log.w("BitmapCropTask", "cannot get bounds for image");
+            return false;
+        }
         int i2 = this.mRotation;
         if (i2 > 0) {
             matrix.setRotate(i2);
             matrix2.setRotate(-this.mRotation);
             this.mCropBounds.roundOut(rect2);
             this.mCropBounds = new RectF(rect2);
-            if (imageBounds == null) {
-                Log.w("BitmapCropTask", "cannot get bounds for image");
-                return false;
-            }
             float[] fArr = {imageBounds.x, imageBounds.y};
             matrix.mapPoints(fArr);
             fArr[0] = Math.abs(fArr[0]);
@@ -195,14 +208,14 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
         try {
             in = regenerateInputStream();
             if (in == null) {
-                Log.w("BitmapCropTask", "cannot get input stream for uri=" + this.mInUri.toString());
+                Log.w("BitmapCropTask", "cannot get input stream for " + inputDescription());
                 return false;
             }
             BitmapRegionDecoder decoder = null;
             try {
                 decoder = BitmapRegionDecoder.newInstance(in, false);
             } catch (IOException e4) {
-                Log.w("BitmapCropTask", "cannot open region decoder for file: " + this.mInUri.toString(), e4);
+                Log.w("BitmapCropTask", "cannot open region decoder for file: " + inputDescription(), e4);
             }
             Utils.closeSilently(in);
             Bitmap bitmapCreateBitmap = decoder != null ? decoder.decodeRegion(rect2, this.optionsFor(iMax)) : null;
@@ -212,7 +225,7 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
             if (bitmapCreateBitmap == null) {
                 InputStream in2 = regenerateInputStream();
                 if (in2 == null) {
-                    Log.w("BitmapCropTask", "cannot get input stream for uri=" + this.mInUri.toString());
+                    Log.w("BitmapCropTask", "cannot get input stream for " + inputDescription());
                     return false;
                 }
                 try {
@@ -244,7 +257,7 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
                 bitmapCreateBitmap = Bitmap.createBitmap(bitmapCreateBitmap, rect2.left, rect2.top, rect2.width(), rect2.height());
             }
             if (bitmapCreateBitmap == null) {
-                Log.w("BitmapCropTask", "cannot decode file: " + this.mInUri.toString());
+                Log.w("BitmapCropTask", "cannot decode file: " + inputDescription());
                 return false;
             }
             if ((this.mOutWidth > 0 && this.mOutHeight > 0) || this.mRotation > 0) {
