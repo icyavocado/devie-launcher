@@ -1580,100 +1580,64 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                             ItemInfo next = it2.next();
                             if ((next instanceof ShortcutInfo) && this.mUser.equals(next.user)) {
                                 ShortcutInfo shortcutInfo2 = (ShortcutInfo) next;
-                                if (shortcutInfo2.iconResource == null || !stringFilterOf.matches(shortcutInfo2.iconResource.packageName) || (bitmapCreateIconBitmap = Utilities.createIconBitmap(shortcutInfo2.iconResource.packageName, shortcutInfo2.iconResource.resourceName, context)) == null) {
-                                    z = false;
-                                } else {
-                                    shortcutInfo2.setIcon(bitmapCreateIconBitmap);
-                                    shortcutInfo2.usingFallbackIcon = false;
-                                    z = true;
+                                boolean infoUpdated = false;
+                                if (shortcutInfo2.iconResource != null && stringFilterOf.matches(shortcutInfo2.iconResource.packageName)) {
+                                    Bitmap iconBitmap = Utilities.createIconBitmap(shortcutInfo2.iconResource.packageName, shortcutInfo2.iconResource.resourceName, context);
+                                    if (iconBitmap != null) {
+                                        shortcutInfo2.setIcon(iconBitmap);
+                                        shortcutInfo2.usingFallbackIcon = false;
+                                        infoUpdated = true;
+                                    }
                                 }
                                 ComponentName targetComponent = shortcutInfo2.getTargetComponent();
-                                if (targetComponent != null) {
-                                    z2 = z;
-                                    if (stringFilterOf.matches(targetComponent.getPackageName())) {
-                                        AppInfo appInfo4 = (AppInfo) map.get(targetComponent);
-                                        if (shortcutInfo2.isPromise()) {
-                                            AppInfo appInfo5 = appInfo4;
-                                            if (shortcutInfo2.hasStatusFlag(2)) {
-                                                PackageManager packageManager = context.getPackageManager();
-                                                it = it2;
-                                                callbacks2 = callbacks4;
-                                                if (packageManager.resolveActivity(new Intent("android.intent.action.MAIN").setComponent(targetComponent).addCategory("android.intent.category.LAUNCHER"), 65536) == null) {
-                                                    Intent launchIntentForPackage = packageManager.getLaunchIntentForPackage(targetComponent.getPackageName());
-                                                    if (launchIntentForPackage != null) {
-                                                        appInfo5 = (AppInfo) map.get(launchIntentForPackage.getComponent());
-                                                    }
-                                                    if (launchIntentForPackage == null || appInfo5 == null) {
-                                                        arrayList5.add(shortcutInfo2);
-                                                        it2 = it;
-                                                        // REWORK: jadx register-shuffle round-trip; net effect is nothing (callbacks2 == callbacks4).
-                                                    } else {
-                                                        shortcutInfo2.promisedIntent = launchIntentForPackage;
-                                                        appInfo4 = appInfo5;
-                                                        if (appInfo4 != null) {
-                                                            shortcutInfo2.flags = appInfo4.flags;
-                                                        }
-                                                        shortcutInfo2.intent = shortcutInfo2.promisedIntent;
-                                                        shortcutInfo2.promisedIntent = null;
-                                                        shortcutInfo2.status = 0;
-                                                        shortcutInfo2.updateIcon(LauncherModel.this.mIconCache);
-                                                        z2 = true;
-                                                    }
+                                if (targetComponent == null || !stringFilterOf.matches(targetComponent.getPackageName())) {
+                                    z3 = infoUpdated;
+                                    z4 = false;
+                                } else {
+                                    AppInfo appInfo4 = (AppInfo) map.get(targetComponent);
+                                    if (shortcutInfo2.isPromise()) {
+                                        Intent promisedIntent = null;
+                                        if (shortcutInfo2.hasStatusFlag(2)) {
+                                            PackageManager packageManager = context.getPackageManager();
+                                            if (packageManager.resolveActivity(new Intent("android.intent.action.MAIN").setComponent(targetComponent).addCategory("android.intent.category.LAUNCHER"), 65536) == null) {
+                                                Intent launchIntentForPackage = packageManager.getLaunchIntentForPackage(targetComponent.getPackageName());
+                                                if (launchIntentForPackage != null) {
+                                                    appInfo4 = (AppInfo) map.get(launchIntentForPackage.getComponent());
                                                 }
-                                            } else {
-                                                callbacks2 = callbacks4;
-                                                it = it2;
+                                                if (launchIntentForPackage == null || appInfo4 == null) {
+                                                    arrayList5.add(shortcutInfo2);
+                                                    continue;
+                                                }
+                                                promisedIntent = launchIntentForPackage;
                                             }
-                                            appInfo4 = appInfo5;
-                                            if (appInfo4 != null) {
-                                                shortcutInfo2.flags = appInfo4.flags;
-                                            }
-                                            shortcutInfo2.intent = shortcutInfo2.promisedIntent;
-                                            shortcutInfo2.promisedIntent = null;
-                                            shortcutInfo2.status = 0;
-                                            shortcutInfo2.updateIcon(LauncherModel.this.mIconCache);
-                                            z2 = true;
-                                        } else {
-                                            callbacks2 = callbacks4;
-                                            it = it2;
                                         }
-                                        if (appInfo4 != null && "android.intent.action.MAIN".equals(shortcutInfo2.intent.getAction()) && shortcutInfo2.itemType == 0) {
-                                            shortcutInfo2.updateIcon(LauncherModel.this.mIconCache);
-                                            shortcutInfo2.title = Utilities.trim(appInfo4.title);
-                                            shortcutInfo2.contentDescription = appInfo4.contentDescription;
-                                            z3 = true;
-                                        } else {
-                                            z3 = z2;
+                                        if (appInfo4 != null) {
+                                            shortcutInfo2.flags = appInfo4.flags;
                                         }
-                                        int i = shortcutInfo2.isDisabled;
-                                        shortcutInfo2.isDisabled = flagOpRemoveFlag.apply(shortcutInfo2.isDisabled);
-                                        z4 = shortcutInfo2.isDisabled != i;
-                                        if (z3 || z4) {
-                                            arrayList4.add(shortcutInfo2);
-                                        }
-                                        if (z3) {
-                                            LauncherModel.updateItemInDatabase(context, shortcutInfo2);
-                                        }
-                                        it2 = it;
-                                        // REWORK: jadx register-shuffle round-trip; net effect is nothing (callbacks2 == callbacks4).
+                                        shortcutInfo2.intent = promisedIntent != null ? promisedIntent : shortcutInfo2.promisedIntent;
+                                        shortcutInfo2.promisedIntent = null;
+                                        shortcutInfo2.status = 0;
+                                        shortcutInfo2.updateIcon(LauncherModel.this.mIconCache);
+                                        infoUpdated = true;
                                     }
-                                } else {
-                                    z2 = z;
+                                    if (appInfo4 != null && "android.intent.action.MAIN".equals(shortcutInfo2.intent.getAction()) && shortcutInfo2.itemType == 0) {
+                                        shortcutInfo2.updateIcon(LauncherModel.this.mIconCache);
+                                        shortcutInfo2.title = Utilities.trim(appInfo4.title);
+                                        shortcutInfo2.contentDescription = appInfo4.contentDescription;
+                                        z3 = true;
+                                    } else {
+                                        z3 = infoUpdated;
+                                    }
+                                    int i6 = shortcutInfo2.isDisabled;
+                                    shortcutInfo2.isDisabled = flagOpRemoveFlag.apply(shortcutInfo2.isDisabled);
+                                    z4 = shortcutInfo2.isDisabled != i6;
                                 }
-                                callbacks2 = callbacks4;
-                                it = it2;
-                                z3 = z2;
-                                z4 = false;
-                                if (z3) {
-                                    arrayList4.add(shortcutInfo2);
-                                } else {
+                                if (z3 || z4) {
                                     arrayList4.add(shortcutInfo2);
                                 }
                                 if (z3) {
                                     LauncherModel.updateItemInDatabase(context, shortcutInfo2);
                                 }
-                                it2 = it;
-                                // REWORK: jadx register-shuffle round-trip; net effect is nothing (callbacks2 == callbacks4).
                             } else {
                                 callbacks2 = callbacks4;
                                 it = it2;
