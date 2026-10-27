@@ -1,13 +1,4 @@
 # Custom R8 rules (rework base):
-# ButterKnife 8.8.1 binds views reflectively: Class.forName(host + "_ViewBinding").
--keep class **_ViewBinding { *; }
--keep class **_ViewBinding$* { *; }
--keepclasseswithmembernames class * {
-    @butterknife.* <fields>;
-}
--keepclasseswithmembernames class * {
-    @butterknife.* <methods>;
-}
 
 # Launcher items cross process/bundle boundaries.
 -if class * implements android.os.Parcelable
@@ -35,12 +26,3 @@
 -keepnames class * extends androidx.room.RoomDatabase
 -keep class **_Impl { <init>(...); }
 -dontoptimize
-
-# ButterKnife 8.x binds reflectively at runtime: Class.forName(host.getName() + "_ViewBinding").
-# R8 renamed holder/fragment classes while the *_ViewBinding classes kept their original
-# names, so the lookups missed and view fields stayed null (settings list NPE).
-# Keeping all our class names keeps every runtime name-lookup intact; size savings come
-# from tree-shaking + resource shrink, not renaming.
--keepnames class com.voxel.**
--keepnames class com.evie.**
--keepnames class com.ovacoda.**

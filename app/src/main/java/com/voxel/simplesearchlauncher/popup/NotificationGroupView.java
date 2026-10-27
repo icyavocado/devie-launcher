@@ -8,7 +8,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import androidx.core.content.ContextCompat;
-import butterknife.ButterKnife;
 import com.voxel.launcher3.anim.PillHeightRevealOutlineProvider;
 import com.voxel.launcher3.graphics.IconPalette;
 import com.voxel.simplesearchlauncher.notification.NotificationContent;
@@ -89,7 +88,10 @@ public class NotificationGroupView extends PopupGroupBaseView {
     @Override // android.view.View
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
+        this.mHeaderCount = (TextView) this.findViewById(R.id.notification_count);
+        this.mItemView = (NotificationItemView) this.findViewById(R.id.main_view);
+        this.mFooter = (NotificationFooterView) this.findViewById(R.id.footer);
+        this.mIconView = this.findViewById(R.id.popup_item_icon);
         this.mSwipeHelper = new SwipeHelper(0, this.mItemView.getSwipeHelperCallback(), getContext());
         this.mSwipeHelper.setDisableHardwareLayers(true);
     }

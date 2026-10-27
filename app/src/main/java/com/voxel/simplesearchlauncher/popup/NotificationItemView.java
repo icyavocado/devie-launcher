@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import butterknife.ButterKnife;
 import com.voxel.launcher3.ItemInfo;
 import com.voxel.launcher3.util.Themes;
 import com.voxel.simplesearchlauncher.notification.NotificationContent;
@@ -126,7 +125,9 @@ public class NotificationItemView extends FrameLayout {
     @Override // android.view.View
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
+        this.mTextAndBackground = (ViewGroup) this.findViewById(R.id.text_and_background);
+        this.mTitleView = (TextView) this.findViewById(R.id.title);
+        this.mTextView = (TextView) this.findViewById(R.id.text);
         ColorDrawable colorDrawable = (ColorDrawable) this.mTextAndBackground.getBackground();
         this.mBackgroundColor = colorDrawable.getColor();
         this.mTextAndBackground.setBackground(new RippleDrawable(ColorStateList.valueOf(Themes.getAttrColor(getContext(), android.R.attr.colorControlHighlight)), colorDrawable, null));

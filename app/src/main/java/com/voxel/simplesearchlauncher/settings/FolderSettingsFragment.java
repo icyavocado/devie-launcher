@@ -13,7 +13,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import butterknife.ButterKnife;
 import com.voxel.launcher3.CellParams;
 import com.voxel.launcher3.DeviceProfile;
 import com.voxel.launcher3.Folder;
@@ -229,7 +228,9 @@ public class FolderSettingsFragment extends Fragment {
 
     @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
-        ButterKnife.bind(this, view);
+        this.mScrollView = (NestedScrollView) view.findViewById(R.id.scroll_view);
+        this.mMockView = (ViewGroup) view.findViewById(R.id.mock);
+        this.mMockTarget = (LinearLayout) view.findViewById(R.id.mock_target);
         DeviceProfile deviceProfile = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile();
         ArrayList arrayList = new ArrayList();
         arrayList.add(deviceProfile);

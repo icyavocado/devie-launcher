@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import butterknife.ButterKnife;
 import com.voxel.simplesearchlauncher.allapps.AllAppsListAdapter;
 import com.voxel.simplesearchlauncher.allapps.AllAppsRecyclerView;
 import com.voxel.simplesearchlauncher.allapps.AlphabeticalAppsSectionsHelper;
@@ -211,7 +210,7 @@ public class SelectAppFragment extends Fragment {
 
     @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
-        ButterKnife.bind(this, view);
+        this.mAllAppsRecyclerView = (AllAppsRecyclerView) view.findViewById(R.id.recycler_view);
         this.mAllAppsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.mAllAppsRecyclerView.setAdapter(this.mAllAppsAdapter);
     }

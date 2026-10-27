@@ -20,7 +20,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.FragmentActivity;
-import butterknife.ButterKnife;
 import com.voxel.launcher3.AppInfo;
 import com.voxel.launcher3.ExtendedEditText;
 import com.voxel.launcher3.ItemInfo;
@@ -431,7 +430,15 @@ public class AppOptionsFragment extends RecyclerViewCardFragment {
     public void onViewCreated(final View view, Bundle bundle) {
         this.mBackground.setVisibility(8);
         this.mIconTextGroup = LayoutInflater.from(view.getContext()).inflate(R.layout.app_options_icon_text, (ViewGroup) view, false);
-        ButterKnife.bind(this, this.mIconTextGroup);
+        this.mIconImageView = (ImageView) this.mIconTextGroup.findViewById(R.id.icon);
+        this.mIconLabel = (ExtendedEditText) this.mIconTextGroup.findViewById(R.id.text);
+        this.mRevertButton = this.mIconTextGroup.findViewById(R.id.close);
+        this.mRevertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCloseClick();
+            }
+        });
         ItemInfo itemInfo = this.mItemInfo;
         if (itemInfo instanceof AppInfo) {
             this.mIconImageView.setImageBitmap(((AppInfo) itemInfo).iconBitmap);

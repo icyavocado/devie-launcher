@@ -18,7 +18,6 @@ import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.core.os.CancellationSignal;
 import androidx.core.view.animation.PathInterpolatorCompat;
 import androidx.fragment.app.FragmentActivity;
-import butterknife.ButterKnife;
 import com.voxel.simplesearchlauncher.fragment.LauncherStackableFragment;
 import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 import com.ovacoda.devie.R;
@@ -156,7 +155,12 @@ public class LockOverlayFragment extends LauncherStackableFragment {
     @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
         super.onViewCreated(view, bundle);
-        ButterKnife.bind(this, view);
+        this.mBackground = view.findViewById(R.id.background);
+        this.mGroupContainer = view.findViewById(R.id.container);
+        this.mControlGroup = view.findViewById(R.id.control_group);
+        this.mFingerprintIcon = (ImageView) view.findViewById(R.id.fingerprint_icon);
+        this.mUnlockIcon = (ImageView) view.findViewById(R.id.unlock_icon);
+        this.mText = (TextView) view.findViewById(R.id.text);
         this.mView = view;
         this.mHandler = new Handler();
         this.mView.setOnClickListener(new View.OnClickListener() { // from class: com.voxel.simplesearchlauncher.lock.-$$Lambda$LockOverlayFragment$Nc6ea21zOP9qDFt-DDp6tdsWVcc

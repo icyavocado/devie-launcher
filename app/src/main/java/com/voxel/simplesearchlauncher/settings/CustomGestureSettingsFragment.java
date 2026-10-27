@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.ButterKnife;
 import com.voxel.simplesearchlauncher.gestures.GestureType;
 import com.voxel.simplesearchlauncher.gestures.action.CustomGestureAction;
 import com.voxel.simplesearchlauncher.model.itemdata.LocalAppData;
@@ -122,7 +121,7 @@ public class CustomGestureSettingsFragment extends Fragment {
 
     @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
-        ButterKnife.bind(this, view);
+        this.mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         this.mAdapter = new GesturesAdapter();
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         this.mRecyclerView.setAdapter(this.mAdapter);

@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.core.content.ContextCompat;
-import butterknife.ButterKnife;
 import com.voxel.launcher3.LauncherAnimUtils;
 import com.voxel.launcher3.anim.PropertyListBuilder;
 import com.ovacoda.devie.R;
@@ -126,6 +125,6 @@ public class ShortcutsGroupView extends PopupGroupBaseView {
     @Override // android.view.View
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
+        this.mShortcutsLayout = (LinearLayout) this.findViewById(R.id.deep_shortcuts);
     }
 }

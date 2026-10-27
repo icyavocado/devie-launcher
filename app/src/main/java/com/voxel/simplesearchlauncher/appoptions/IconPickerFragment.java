@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.fragment.app.FragmentActivity;
-import butterknife.ButterKnife;
 import com.evie.common.iconpack.IconPackFilter;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.Utilities;
@@ -316,7 +315,17 @@ public class IconPickerFragment extends LauncherStackableFragment {
 
     @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
-        ButterKnife.bind(this, view);
+        this.mRecyclerView = (SpringRecyclerView) view.findViewById(R.id.recycler_view);
+        this.mTitleBar = view.findViewById(R.id.title_bar);
+        this.mSearchBar = view.findViewById(R.id.search_bar);
+        this.mSearchEditText = (EditText) view.findViewById(R.id.search_src_text);
+        this.mLoadingIndicator = view.findViewById(R.id.loading);
+        view.findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSearchButtonClick();
+            }
+        });
         view.setOnClickListener(new View.OnClickListener() { // from class: com.voxel.simplesearchlauncher.appoptions.-$$Lambda$IconPickerFragment$xPhg3e3nroTKVg5JBZJOLC5wJj0
             @Override // android.view.View.OnClickListener
             public final void onClick(View view2) {

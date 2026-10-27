@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import butterknife.ButterKnife;
+import com.ovacoda.devie.R;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.launcher3.ShortcutInfo;
 import com.voxel.launcher3.Utilities;
@@ -91,7 +91,10 @@ public class ShortcutItemView extends ConstraintLayout {
     @Override // android.view.View
     protected void onFinishInflate() {
         super.onFinishInflate();
-        ButterKnife.bind(this);
+        this.mIconView = (ImageView) this.findViewById(R.id.icon);
+        this.mTextView = (TextView) this.findViewById(R.id.text);
+        this.mHandleView = this.findViewById(R.id.handle);
+        this.mDividerView = this.findViewById(R.id.divider);
     }
 
     @Override // android.view.View

@@ -12,7 +12,6 @@ import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
-import butterknife.ButterKnife;
 import com.voxel.launcher3.CellParams;
 import com.voxel.launcher3.DeviceProfile;
 import com.voxel.launcher3.ItemInfo;
@@ -241,8 +240,7 @@ public class DesktopSettingsFragment extends Fragment {
     @Override // androidx.fragment.app.Fragment
     public void onViewCreated(View view, Bundle bundle) {
         super.onViewCreated(view, bundle);
-        ButterKnife.bind(this, view);
-        DeviceProfile deviceProfile = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile();
+                DeviceProfile deviceProfile = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile();
         ArrayList arrayList = new ArrayList();
         arrayList.add(deviceProfile);
         this.mDeviceProfile = new DeviceProfile(getActivity(), (ArrayList<DeviceProfile>) arrayList, deviceProfile.minWidthDps, deviceProfile.minHeightDps, deviceProfile.widthPx, deviceProfile.heightPx, deviceProfile.availableWidthPx, deviceProfile.availableHeightPx, deviceProfile.getCellParamsMap(), getActivity().getResources(), SettingsStorage.getInstance().getSearchBarDesktopEnabled());

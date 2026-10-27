@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.fragment.app.FragmentActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import butterknife.ButterKnife;
 import com.evie.common.dragndrop.DragObjectAbstraction;
 import com.evie.common.dragndrop.DragSource;
 import com.voxel.launcher3.BubbleTextView;
@@ -458,7 +457,8 @@ public class PopupFragment extends LauncherStackableFragment implements PopupCon
         if (getContext() == null || getActivity() == null) {
             throw new RuntimeException();
         }
-        ButterKnife.bind(this, view);
+        this.mPopupContainer = (PopupContainerWithArrow) view.findViewById(R.id.popup_container);
+        this.mBackgroundWash = view.findViewById(R.id.background_wash);
         this.mLauncher = (Launcher) getActivity();
         this.mBackgroundWash.setOnClickListener(new View.OnClickListener() { // from class: com.voxel.simplesearchlauncher.popup.-$$Lambda$PopupFragment$ECUxpG8xO8JgDH2Tl5QuJM6QRds
             @Override // android.view.View.OnClickListener

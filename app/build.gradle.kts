@@ -151,7 +151,6 @@ dependencies {
     // REWORK(fresco): Fresco + okhttp + ReLinker dropped — all image loads are
     // now handled by com.ovacoda.devie.images.IconLoader (local URIs only).
     implementation("com.facebook.rebound:rebound:0.3.8")
-    implementation("com.jakewharton:butterknife:8.8.1")
     implementation("com.google.dagger:dagger:2.22.1")
     implementation("com.google.dagger:dagger-android:2.22.1")
     implementation("com.google.dagger:dagger-android-support:2.22.1")
