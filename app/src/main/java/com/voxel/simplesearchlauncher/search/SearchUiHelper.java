@@ -225,6 +225,7 @@ public class SearchUiHelper {
     }
 
     public void cleanup() {
+        this.mSearchDelayHandler.removeCallbacks(this.mSearchRunnable);
         this.mSearchPresenter.setSearchListExpandListener(null);
         this.mSearchPresenter.setSearchStateChangeListener(null);
         this.mSearchPresenter.setSearchQueryChangeListener(null);

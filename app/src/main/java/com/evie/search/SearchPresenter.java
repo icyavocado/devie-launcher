@@ -529,6 +529,7 @@ public class SearchPresenter {
             this.mRecentDisposable.dispose();
             this.mRecentDisposable = null;
         }
+        this.mContext.getSharedPreferences("com.evie.search", 0).unregisterOnSharedPreferenceChangeListener(this.mSharedPreferencesListener);
     }
 
     public void expandLocalResults() {
