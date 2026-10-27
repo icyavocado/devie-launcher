@@ -48,6 +48,7 @@ public class BackupRestoreManager {
     private BackupRestoreUI mUICallbacks;
     public static final String KEY_LAUNCHER_RESTORED = BackupRestoreManager.class.getCanonicalName() + ".launcher_restored";
     private static final String[] DB_BACKUP_FILES = {"apps_info.db", "launcher.db", "LocalSearch.db"};
+    private static final int MAX_PREFS_JSON_BYTES = 8 * 1024 * 1024;
 
     public interface BackupRestoreUI {
         void onBackupFailure();
@@ -361,23 +362,30 @@ public class BackupRestoreManager {
 
     public void restoreFromZipInputStream(final Activity activity, InputStream inputStream) throws JSONException, IOException {
         ZipInputStream zipInputStream = new ZipInputStream(inputStream);
-        while (true) {
-            ZipEntry nextEntry = zipInputStream.getNextEntry();
-            if (nextEntry == null) {
-                zipInputStream.close();
-                Log.d(TAG, "User data successfully restored.");
-                activity.runOnUiThread(new Runnable() { // from class: com.voxel.simplesearchlauncher.model.managers.-$$Lambda$BackupRestoreManager$1duhM9BN_LhOUzZrRHF5NFIoP0k
-                    @Override // java.lang.Runnable
-                    public final void run() {
-                        BackupRestoreManager.this.lambda$restoreFromZipInputStream$4( activity);
-                    }
-                });
-                return;
-            }
-            if (!nextEntry.isDirectory()) {
+        try {
+            ZipEntry nextEntry;
+            while ((nextEntry = zipInputStream.getNextEntry()) != null) {
+                if (nextEntry.isDirectory()) {
+                    continue;
+                }
                 String name = nextEntry.getName();
                 byte[] bArr = new byte[1024];
-                if (((name.hashCode() == -1121668762 && name.equals("prefs.json")) ? (byte) 0 : (byte) -1) != 0) {
+                if (name.equals("prefs.json")) {
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    int total = 0;
+                    while (true) {
+                        int i2 = zipInputStream.read(bArr, 0, 1024);
+                        if (i2 == -1) {
+                            break;
+                        }
+                        total += i2;
+                        if (total > MAX_PREFS_JSON_BYTES) {
+                            throw new IOException("prefs.json exceeds " + MAX_PREFS_JSON_BYTES + " bytes");
+                        }
+                        byteArrayOutputStream.write(bArr, 0, i2);
+                    }
+                    restorePrefs(byteArrayOutputStream.toString());
+                } else {
                     String strDBfileNameToLocation = dBfileNameToLocation(activity, name);
                     if (!strDBfileNameToLocation.isEmpty()) {
                         File file = new File(Environment.getDataDirectory(), strDBfileNameToLocation);
@@ -389,30 +397,30 @@ public class BackupRestoreManager {
                             }
                         }
                         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file, false), 1024);
-                        while (true) {
-                            int i = zipInputStream.read(bArr, 0, 1024);
-                            if (i == -1) {
-                                break;
-                            } else {
+                        try {
+                            while (true) {
+                                int i = zipInputStream.read(bArr, 0, 1024);
+                                if (i == -1) {
+                                    break;
+                                }
                                 bufferedOutputStream.write(bArr, 0, i);
                             }
-                        }
-                        bufferedOutputStream.flush();
-                        bufferedOutputStream.close();
-                    }
-                } else {
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    while (true) {
-                        int i2 = zipInputStream.read(bArr, 0, 1024);
-                        if (i2 == -1) {
-                            break;
-                        } else {
-                            byteArrayOutputStream.write(bArr, 0, i2);
+                            bufferedOutputStream.flush();
+                        } finally {
+                            bufferedOutputStream.close();
                         }
                     }
-                    restorePrefs(byteArrayOutputStream.toString());
                 }
             }
+            Log.d(TAG, "User data successfully restored.");
+            activity.runOnUiThread(new Runnable() { // from class: com.voxel.simplesearchlauncher.model.managers.-$$Lambda$BackupRestoreManager$1duhM9BN_LhOUzZrRHF5NFIoP0k
+                @Override // java.lang.Runnable
+                public final void run() {
+                    BackupRestoreManager.this.lambda$restoreFromZipInputStream$4( activity);
+                }
+            });
+        } finally {
+            zipInputStream.close();
         }
     }
 
