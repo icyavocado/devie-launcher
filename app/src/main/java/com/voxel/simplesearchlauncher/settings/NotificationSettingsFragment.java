@@ -261,7 +261,7 @@ public class NotificationSettingsFragment extends Fragment {
             configViewHolder.mSizeSeek.mLabel.setText(R.string.app_settings_size_label);
             configViewHolder.mSizeSeek.mDiscreteSeekBar.setMin(60);
             configViewHolder.mSizeSeek.mDiscreteSeekBar.setMax(100);
-            configViewHolder.mSizeSeek.mDiscreteSeekBar.setProgress((int) (NotificationSettingsFragment.this.mController.getBadgeScale() * 100.0f));
+            configViewHolder.mSizeSeek.mDiscreteSeekBar.setValue((int) (NotificationSettingsFragment.this.mController.getBadgeScale() * 100.0f));
             configViewHolder.mSizeSeek.mDiscreteSeekBar.setOnProgressChangeListener(onProgressChangeListener);
             configViewHolder.mBadgeStyle.mLabel.setText(R.string.app_settings_badge_style);
             final NotificationController.Style badgeStyle = NotificationSettingsFragment.this.mController.getBadgeStyle();

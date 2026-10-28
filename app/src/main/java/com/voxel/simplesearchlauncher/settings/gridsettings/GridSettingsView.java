@@ -32,9 +32,9 @@ public class GridSettingsView extends LinearLayout {
     public void lambda$onFinishInflate$0(CompoundButton compoundButton, boolean z) {
         this.mCellParams.inheritWorkspace = z;
         this.mDeviceProfile.updateCellParams(this.getContext(), this.mParamType, this.mCellParams);
-        this.mRowsViewHolder.getDiscreteSeekBar().setProgress((int) this.mCellParams.numRows);
-        this.mColumnsViewHolder.getDiscreteSeekBar().setProgress((int) this.mCellParams.numColumns);
-        this.mIconSizeViewHolder.getDiscreteSeekBar().setProgress((int) (this.mCellParams.iconScale * 100.0f));
+        this.mRowsViewHolder.getDiscreteSeekBar().setValue((int) this.mCellParams.numRows);
+        this.mColumnsViewHolder.getDiscreteSeekBar().setValue((int) this.mCellParams.numColumns);
+        this.mIconSizeViewHolder.getDiscreteSeekBar().setValue((int) (this.mCellParams.iconScale * 100.0f));
         this.setControlsEnabled(this.mInheritViewHolder.itemView.isEnabled());
         CompoundButton.OnCheckedChangeListener onCheckedChangeListener = this.mOnInheritChangeListener;
         if (onCheckedChangeListener != null) {
@@ -47,12 +47,12 @@ public class GridSettingsView extends LinearLayout {
     }
 
     private void updateIconScaleLimits() {
-        int progress = this.mIconSizeViewHolder.getDiscreteSeekBar().getProgress();
+        int progress = this.mIconSizeViewHolder.getDiscreteSeekBar().getValue();
         float maxIconScaleForType = this.mDeviceProfile.getMaxIconScaleForType(getContext(), this.mParamType) * 100.0f;
         this.mIconSizeViewHolder.getDiscreteSeekBar().setMin((int) (maxIconScaleForType * 0.2f));
         this.mIconSizeViewHolder.getDiscreteSeekBar().setMax((int) (1.0f * maxIconScaleForType));
         if (limitIconScale(progress) != progress) {
-            this.mIconSizeViewHolder.getDiscreteSeekBar().setProgress(progress);
+            this.mIconSizeViewHolder.getDiscreteSeekBar().setValue(progress);
         }
     }
 
@@ -178,12 +178,12 @@ public class GridSettingsView extends LinearLayout {
         this.mInheritViewHolder.getSwitch().setChecked(this.mCellParams.inheritWorkspace);
         this.mColumnsViewHolder.getDiscreteSeekBar().setMin(Math.round(Math.min(this.mDeviceProfile.numBaseColumns, 3.0f)));
         this.mColumnsViewHolder.getDiscreteSeekBar().setMax(12);
-        this.mColumnsViewHolder.getDiscreteSeekBar().setProgress(Math.round(this.mCellParams.numColumns));
+        this.mColumnsViewHolder.getDiscreteSeekBar().setValue(Math.round(this.mCellParams.numColumns));
         this.mRowsViewHolder.getDiscreteSeekBar().setMin(Math.round(Math.min(this.mDeviceProfile.numBaseRows, 4.0f)));
         this.mRowsViewHolder.getDiscreteSeekBar().setMax(12);
-        this.mRowsViewHolder.getDiscreteSeekBar().setProgress(Math.round(this.mCellParams.numRows));
+        this.mRowsViewHolder.getDiscreteSeekBar().setValue(Math.round(this.mCellParams.numRows));
         updateIconScaleLimits();
-        this.mIconSizeViewHolder.getDiscreteSeekBar().setProgress(limitIconScale(this.mCellParams.iconScale * 100.0f));
+        this.mIconSizeViewHolder.getDiscreteSeekBar().setValue(limitIconScale(this.mCellParams.iconScale * 100.0f));
     }
 
     public void showErrorText(int i) {
@@ -192,8 +192,8 @@ public class GridSettingsView extends LinearLayout {
     }
 
     public void updateGrid() {
-        int progress = this.mRowsViewHolder.getDiscreteSeekBar().getProgress();
-        int progress2 = this.mColumnsViewHolder.getDiscreteSeekBar().getProgress();
+        int progress = this.mRowsViewHolder.getDiscreteSeekBar().getValue();
+        int progress2 = this.mColumnsViewHolder.getDiscreteSeekBar().getValue();
         CellParams cellParams = this.mCellParams;
         cellParams.numRows = progress;
         cellParams.numColumns = progress2;
@@ -203,7 +203,7 @@ public class GridSettingsView extends LinearLayout {
     }
 
     public void updateIconSize() {
-        this.mCellParams.iconScale = this.mIconSizeViewHolder.getDiscreteSeekBar().getProgress() / 100.0f;
+        this.mCellParams.iconScale = this.mIconSizeViewHolder.getDiscreteSeekBar().getValue() / 100.0f;
         this.mDeviceProfile.updateCellParams(getContext(), this.mParamType, this.mCellParams);
     }
 }

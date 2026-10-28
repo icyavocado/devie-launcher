@@ -104,7 +104,7 @@ public class DockSettingsFragment extends Fragment {
         this.mBackgroundAlphaViewHolder.mLabel.setText(R.string.app_settings_dock_background_alpha);
         this.mBackgroundAlphaViewHolder.mDiscreteSeekBar.setMin(0);
         this.mBackgroundAlphaViewHolder.mDiscreteSeekBar.setMax(100);
-        this.mBackgroundAlphaViewHolder.mDiscreteSeekBar.setProgress(iRound);
+        this.mBackgroundAlphaViewHolder.mDiscreteSeekBar.setValue(iRound);
         this.mBackgroundBlurViewHolder.mLabel.setText(R.string.app_settings_dock_background_blur);
         this.mBackgroundBlurViewHolder.mSwitch.setChecked(this.mCellParams.backgroundBlur);
         this.mGridSettingsView.setOnInheritChangeListener(new CompoundButton.OnCheckedChangeListener() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$DockSettingsFragment$FtTN6y1eIfMbIXCDsEEUdyBn-s8
@@ -201,7 +201,7 @@ public class DockSettingsFragment extends Fragment {
 
     /* JADX INFO: Access modifiers changed from: private */
     public void updateDockAlpha() {
-        this.mCellParams.backgroundAlpha = Math.max(0.0f, Math.min(this.mBackgroundAlphaViewHolder.mDiscreteSeekBar.getProgress() / 100.0f, 1.0f));
+        this.mCellParams.backgroundAlpha = Math.max(0.0f, Math.min(this.mBackgroundAlphaViewHolder.mDiscreteSeekBar.getValue() / 100.0f, 1.0f));
         this.mMockLauncherController.layout();
     }
 
