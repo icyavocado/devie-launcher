@@ -221,7 +221,7 @@ public class DiscreteSeekBar extends View {
             if (actionMasked == 1) {
                 setValueFromTouch(motionEvent.getX(), true);
             }
-            dismissBubble();
+            hideBubble();
             if (mListener != null) {
                 mListener.onStopTrackingTouch(this);
             }
@@ -260,19 +260,12 @@ public class DiscreteSeekBar extends View {
             mBubblePopup = new PopupWindow(mBubbleView, (36 * density), (26 * density), false);
             mBubblePopup.setTouchable(false);
             mBubblePopup.setClippingEnabled(false);
+            mBubblePopup.showAtLocation(getRootView(), Gravity.NO_GRAVITY, 0, -9999);
         }
-        if (!mBubblePopup.isShowing()) {
-            mBubblePopup.showAtLocation(getRootView(), Gravity.NO_GRAVITY, 0, 0);
-            mBubblePopup.setClippingEnabled(false);
-        }
-        updateBubble();
     }
 
     private void updateBubble() {
-        if (mBubblePopup == null) {
-            ensureBubble();
-            return;
-        }
+        ensureBubble();
         int[] locationOnScreen = new int[2];
         getLocationOnScreen(locationOnScreen);
         int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
@@ -289,19 +282,19 @@ public class DiscreteSeekBar extends View {
             x = 0;
         }
         mBubbleView.setValue(mValue, density);
-        mBubblePopup.update(x, (thumbScreenY - (24 * density)) - pillHeight, (-1), (-1));
+        mBubblePopup.update(x, (thumbScreenY - (10 * density)) - pillHeight, (-1), (-1));
     }
 
-    private void dismissBubble() {
+    private void hideBubble() {
         PopupWindow popupWindow = this.mBubblePopup;
         if (popupWindow != null && popupWindow.isShowing()) {
-            popupWindow.dismiss();
+            popupWindow.update(0, -9999, (-1), (-1));
         }
     }
 
     @Override // android.view.View
     protected void onDetachedFromWindow() {
-        dismissBubble();
+        hideBubble();
         super.onDetachedFromWindow();
     }
 
@@ -363,9 +356,9 @@ public class DiscreteSeekBar extends View {
             canvas.drawRoundRect(DiscreteSeekBar.this.mRect, 3 * density, 3 * density, DiscreteSeekBar.this.mBubblePaint);
             DiscreteSeekBar.this.mBubblePath.reset();
             float centerX = (36 * density) / 2.0f;
-            DiscreteSeekBar.this.mBubblePath.moveTo(centerX - (3 * density), (18 * density) - 1);
-            DiscreteSeekBar.this.mBubblePath.lineTo(centerX, 26 * density);
-            DiscreteSeekBar.this.mBubblePath.lineTo(centerX + (3 * density), (18 * density) - 1);
+            DiscreteSeekBar.this.mBubblePath.moveTo(centerX - (3 * density), (17 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(centerX - (3 * density), 22 * density, centerX - (1.5f * density), (23.5f * density), centerX, 26 * density);
+            DiscreteSeekBar.this.mBubblePath.cubicTo(centerX + (1.5f * density), (23.5f * density), centerX + (3 * density), 22 * density, centerX + (3 * density), (17 * density));
             DiscreteSeekBar.this.mBubblePath.close();
             canvas.drawPath(DiscreteSeekBar.this.mBubblePath, DiscreteSeekBar.this.mBubblePaint);
             DiscreteSeekBar.this.mBubbleTextPaint.setTextSize(13 * density);
