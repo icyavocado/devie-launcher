@@ -826,31 +826,17 @@ public class LauncherProvider extends ContentProvider {
 
         /* JADX INFO: Access modifiers changed from: private */
         public void migrateLauncher2Shortcuts(SQLiteDatabase sQLiteDatabase, Uri uri) {
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
-            Throwable thReflow = null;
             Cursor cursorQuery;
-            /* REWORK: jadx left the migration counters blank; defaults keep the catch paths definite. */
-            int i = 0;
-            int i2 = 0;
-            SparseArray sparseArray;
-            int i3 = 0; /* REWORK: jadx blank register */
-            int i4 = 0; /* REWORK: jadx blank register */
-            int i5 = 0; /* REWORK: jadx blank register */
-            long serialNumberForUser;
-            UserHandleCompat userForSerialNumber;
-            SparseArray sparseArray2;
-            int i6 = 0; /* REWORK: jadx blank register */
-            ArrayList arrayList;
-            ArrayList arrayList2;
-            int i7 = 0; /* REWORK: jadx blank register */
             try {
                 cursorQuery = this.mContext.getContentResolver().query(uri, null, null, null, "title ASC");
             } catch (Exception unused) {
                 cursorQuery = null;
             }
-            if (cursorQuery != null) {
-                try {
-                    if (cursorQuery.getCount() > 0) {
+            int i = 0;
+            int i2 = 0;
+            int i3 = 0;
+            try {
+                if (cursorQuery != null && cursorQuery.getCount() > 0) {
                         int columnIndexOrThrow = cursorQuery.getColumnIndexOrThrow("_id");
                         int columnIndexOrThrow2 = cursorQuery.getColumnIndexOrThrow("intent");
                         int columnIndexOrThrow3 = cursorQuery.getColumnIndexOrThrow("title");
@@ -866,52 +852,35 @@ public class LauncherProvider extends ContentProvider {
                         int columnIndexOrThrow13 = cursorQuery.getColumnIndexOrThrow("uri");
                         int columnIndexOrThrow14 = cursorQuery.getColumnIndexOrThrow("displayMode");
                         int columnIndex = cursorQuery.getColumnIndex("profileId");
-                        int i8 = columnIndexOrThrow13;
                         DeviceProfile deviceProfile = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile();
-                        int i9 = columnIndexOrThrow7;
                         int i10 = (int) deviceProfile.getCellParamsForType(DeviceProfile.ParamType.WORKSPACE).numColumns;
                         int i11 = (int) deviceProfile.getCellParamsForType(DeviceProfile.ParamType.WORKSPACE).numRows;
                         int i12 = (int) deviceProfile.getCellParamsForType(DeviceProfile.ParamType.HOTSEAT).numColumns;
-                        DeviceProfile deviceProfile2 = deviceProfile;
-                        HashSet hashSet = new HashSet(cursorQuery.getCount());
-                        ArrayList arrayList3 = new ArrayList();
-                        ArrayList arrayList4 = new ArrayList();
-                        SparseArray sparseArray3 = new SparseArray();
-                        while (true) {
-                            sparseArray = sparseArray3;
-                            if (!cursorQuery.moveToNext()) {
-                                break;
-                            }
+                        int hotseatAllAppsRank = deviceProfile.hotseatAllAppsRank;
+                        HashSet<String> hashSet = new HashSet<>(cursorQuery.getCount());
+                        ArrayList<ContentValues> arrayList = new ArrayList<>();
+                        ArrayList<ContentValues> arrayList2 = new ArrayList<>();
+                        SparseArray<ContentValues> sparseArray = new SparseArray<>();
+                        while (cursorQuery.moveToNext()) {
                             int i13 = cursorQuery.getInt(columnIndexOrThrow9);
-                            columnIndexOrThrow9 = columnIndexOrThrow9;
-                            if (i13 != 0) {
-                                i5 = columnIndexOrThrow6;
-                                if (i13 != 1 && i13 != 2) {
-                                    sparseArray3 = sparseArray;
-                                    columnIndexOrThrow6 = i5;
-                                }
-                            } else {
-                                i5 = columnIndexOrThrow6;
+                            if (i13 != 0 && i13 != 1 && i13 != 2) {
+                                continue;
                             }
                             int i14 = cursorQuery.getInt(columnIndexOrThrow11);
                             int i15 = cursorQuery.getInt(columnIndexOrThrow12);
-                            int i16 = columnIndexOrThrow11;
                             int i17 = cursorQuery.getInt(columnIndexOrThrow10);
-                            int i18 = columnIndexOrThrow12;
                             int i19 = cursorQuery.getInt(columnIndexOrThrow8);
-                            int i20 = columnIndexOrThrow8;
                             String string = cursorQuery.getString(columnIndexOrThrow2);
-                            int i21 = columnIndexOrThrow2;
                             UserManagerCompat userManagerCompat = UserManagerCompat.getInstance(this.mContext);
-                            int i22 = columnIndexOrThrow10;
-                            if (columnIndex == -1 || cursorQuery.isNull(columnIndex)) {
-                                UserHandleCompat userHandleCompatMyUserHandle = UserHandleCompat.myUserHandle();
-                                serialNumberForUser = userManagerCompat.getSerialNumberForUser(userHandleCompatMyUserHandle);
-                                userForSerialNumber = userHandleCompatMyUserHandle;
-                            } else {
+                            long serialNumberForUser;
+                            UserHandleCompat userForSerialNumber;
+                            if (columnIndex != -1 && !cursorQuery.isNull(columnIndex)) {
                                 long j = cursorQuery.getInt(columnIndex);
                                 userForSerialNumber = userManagerCompat.getUserForSerialNumber(j);
                                 serialNumberForUser = j;
+                            } else {
+                                userForSerialNumber = UserHandleCompat.myUserHandle();
+                                serialNumberForUser = userManagerCompat.getSerialNumberForUser(userForSerialNumber);
                             }
                             Launcher.addDumpLog("LauncherProvider", "migrating \"" + cursorQuery.getString(columnIndexOrThrow3) + "\" (" + i14 + "," + i15 + "@" + LauncherSettings.Favorites.containerToString(i19) + "/" + i17 + "): " + string, true);
                             if (i13 != 2) {
@@ -920,166 +889,82 @@ public class LauncherProvider extends ContentProvider {
                                     ComponentName component = uri2.getComponent();
                                     if (TextUtils.isEmpty(string)) {
                                         Launcher.addDumpLog("LauncherProvider", "skipping empty intent", true);
-                                        sparseArray3 = sparseArray;
-                                        columnIndexOrThrow6 = i5;
-                                        columnIndexOrThrow11 = i16;
-                                        columnIndexOrThrow12 = i18;
-                                        columnIndexOrThrow8 = i20;
-                                        columnIndexOrThrow2 = i21;
-                                        columnIndexOrThrow10 = i22;
-                                        columnIndexOrThrow4 = columnIndexOrThrow4;
-                                        columnIndexOrThrow5 = columnIndexOrThrow5;
+                                        continue;
+                                    }
+                                    int i7;
+                                    if (component == null) {
+                                        i7 = -100;
+                                    } else if (LauncherModel.isValidPackageActivity(this.mContext, component, userForSerialNumber)) {
+                                        i7 = -100;
                                     } else {
-                                        if (component == null) {
-                                            i7 = -100;
-                                        } else if (LauncherModel.isValidPackageActivity(this.mContext, component, userForSerialNumber)) {
-                                            i7 = -100;
-                                        } else {
-                                            Launcher.addDumpLog("LauncherProvider", "skipping item whose component no longer exists.", true);
-                                            sparseArray3 = sparseArray;
-                                            columnIndexOrThrow6 = i5;
-                                            columnIndexOrThrow11 = i16;
-                                            columnIndexOrThrow12 = i18;
-                                            columnIndexOrThrow8 = i20;
-                                            columnIndexOrThrow2 = i21;
-                                            columnIndexOrThrow10 = i22;
-                                            columnIndexOrThrow4 = columnIndexOrThrow4;
-                                            columnIndexOrThrow5 = columnIndexOrThrow5;
+                                        Launcher.addDumpLog("LauncherProvider", "skipping item whose component no longer exists.", true);
+                                        continue;
+                                    }
+                                    if (i19 == i7) {
+                                        uri2.setPackage(null);
+                                        String uri3 = uri2.toUri(0);
+                                        if (hashSet.contains(uri3)) {
+                                            Launcher.addDumpLog("LauncherProvider", "skipping duplicate", true);
+                                            continue;
                                         }
-                                        if (i19 == i7) {
-                                            uri2.setPackage(null);
-                                            String uri3 = uri2.toUri(0);
-                                            if (hashSet.contains(uri3)) {
-                                                Launcher.addDumpLog("LauncherProvider", "skipping duplicate", true);
-                                                sparseArray3 = sparseArray;
-                                                columnIndexOrThrow6 = i5;
-                                                columnIndexOrThrow11 = i16;
-                                                columnIndexOrThrow12 = i18;
-                                                columnIndexOrThrow8 = i20;
-                                                columnIndexOrThrow2 = i21;
-                                                columnIndexOrThrow10 = i22;
-                                                columnIndexOrThrow4 = columnIndexOrThrow4;
-                                                columnIndexOrThrow5 = columnIndexOrThrow5;
-                                            } else {
-                                                hashSet.add(uri3);
-                                            }
-                                        }
+                                        hashSet.add(uri3);
                                     }
                                 } catch (URISyntaxException unused2) {
                                     Launcher.addDumpLog("LauncherProvider", "skipping invalid intent uri", true);
-                                    sparseArray3 = sparseArray;
-                                    columnIndexOrThrow6 = i5;
-                                    columnIndexOrThrow11 = i16;
-                                    columnIndexOrThrow12 = i18;
-                                    columnIndexOrThrow8 = i20;
-                                    columnIndexOrThrow2 = i21;
-                                    columnIndexOrThrow10 = i22;
-                                    columnIndexOrThrow4 = columnIndexOrThrow4;
-                                    columnIndexOrThrow5 = columnIndexOrThrow5;
+                                    continue;
                                 }
                             }
                             ContentValues contentValues = new ContentValues(cursorQuery.getColumnCount());
                             contentValues.put("_id", Integer.valueOf(cursorQuery.getInt(columnIndexOrThrow)));
                             contentValues.put("intent", string);
                             contentValues.put("title", cursorQuery.getString(columnIndexOrThrow3));
-                            int i23 = columnIndexOrThrow4;
-                            contentValues.put("iconType", Integer.valueOf(cursorQuery.getInt(i23)));
-                            int i24 = columnIndexOrThrow5;
-                            contentValues.put("icon", cursorQuery.getBlob(i24));
-                            int i25 = i5;
-                            int i26 = columnIndex;
-                            contentValues.put("iconPackage", cursorQuery.getString(i25));
-                            int i27 = i9;
-                            int i28 = columnIndexOrThrow;
-                            contentValues.put("iconResource", cursorQuery.getString(i27));
+                            contentValues.put("iconType", Integer.valueOf(cursorQuery.getInt(columnIndexOrThrow4)));
+                            contentValues.put("icon", cursorQuery.getBlob(columnIndexOrThrow5));
+                            contentValues.put("iconPackage", cursorQuery.getString(columnIndexOrThrow6));
+                            contentValues.put("iconResource", cursorQuery.getString(columnIndexOrThrow7));
                             contentValues.put("itemType", Integer.valueOf(i13));
                             contentValues.put("appWidgetId", (Integer) (-1));
-                            int i29 = i8;
-                            int i30 = columnIndexOrThrow3;
-                            contentValues.put("uri", cursorQuery.getString(i29));
-                            int i31 = columnIndexOrThrow14;
-                            contentValues.put("displayMode", Integer.valueOf(cursorQuery.getInt(i31)));
+                            contentValues.put("uri", cursorQuery.getString(columnIndexOrThrow13));
+                            contentValues.put("displayMode", Integer.valueOf(cursorQuery.getInt(columnIndexOrThrow14)));
                             contentValues.put("profileId", Long.valueOf(serialNumberForUser));
                             if (i19 == -101) {
-                                sparseArray2 = sparseArray;
-                                sparseArray2.put(i17, contentValues);
-                                i6 = -100;
-                            } else {
-                                sparseArray2 = sparseArray;
-                                i6 = -100;
+                                sparseArray.put(i17, contentValues);
                             }
-                            if (i19 != i6) {
+                            if (i19 != -100) {
                                 contentValues.put("screen", Integer.valueOf(i17));
                                 contentValues.put("cellX", Integer.valueOf(i14));
                                 contentValues.put("cellY", Integer.valueOf(i15));
                             }
                             contentValues.put("container", Integer.valueOf(i19));
                             if (i13 != 2) {
-                                arrayList = arrayList3;
                                 arrayList.add(contentValues);
-                                arrayList2 = arrayList4;
                             } else {
-                                arrayList = arrayList3;
-                                arrayList2 = arrayList4;
                                 arrayList2.add(contentValues);
                             }
-                            arrayList3 = arrayList;
-                            sparseArray3 = sparseArray2;
-                            arrayList4 = arrayList2;
-                            columnIndexOrThrow14 = i31;
-                            columnIndexOrThrow6 = i25;
-                            columnIndexOrThrow5 = i24;
-                            columnIndexOrThrow = i28;
-                            columnIndexOrThrow3 = i30;
-                            columnIndex = i26;
-                            columnIndexOrThrow11 = i16;
-                            columnIndexOrThrow12 = i18;
-                            columnIndexOrThrow2 = i21;
-                            columnIndexOrThrow10 = i22;
-                            i8 = i29;
-                            i9 = i27;
-                            columnIndexOrThrow4 = i23;
-                            columnIndexOrThrow8 = i20;
-                            cursorQuery.close();
-                            throw thReflow;
                         }
-                        ArrayList arrayList5 = arrayList3;
-                        ArrayList arrayList6 = arrayList4;
-                        int size = sparseArray.size();
-                        int i32 = 0;
-                        while (i32 < size) {
-                            int iKeyAt = sparseArray.keyAt(i32);
-                            ContentValues contentValues2 = (ContentValues) sparseArray.valueAt(i32);
-                            DeviceProfile deviceProfile3 = deviceProfile2;
-                            if (iKeyAt == deviceProfile3.hotseatAllAppsRank) {
-                                int i33 = 1;
+                        int i4 = i12;
+                        for (int i5 = 0; i5 < sparseArray.size(); i5++) {
+                            int iKeyAt = sparseArray.keyAt(i5);
+                            ContentValues contentValues2 = sparseArray.valueAt(i5);
+                            if (iKeyAt == hotseatAllAppsRank) {
                                 while (true) {
-                                    iKeyAt += i33;
-                                    i4 = i12;
+                                    iKeyAt++;
                                     if (iKeyAt >= i4) {
                                         break;
                                     }
                                     if (sparseArray.get(iKeyAt) == null) {
                                         contentValues2.put("screen", Integer.valueOf(iKeyAt));
                                         break;
-                                    } else {
-                                        i12 = i4;
-                                        i33 = 1;
                                     }
                                 }
-                            } else {
-                                i4 = i12;
                             }
                             if (iKeyAt >= i4) {
                                 contentValues2.put("container", (Integer) (-100));
                             }
-                            i32++;
-                            deviceProfile2 = deviceProfile3;
-                            i12 = i4;
                         }
-                        ArrayList<ContentValues> arrayList7 = new ArrayList();
-                        arrayList7.addAll(arrayList6);
-                        arrayList7.addAll(arrayList5);
+                        ArrayList<ContentValues> arrayList7 = new ArrayList<>();
+                        arrayList7.addAll(arrayList2);
+                        arrayList7.addAll(arrayList);
                         int iGenerateNewScreenId = 0;
                         int i34 = 0;
                         int i35 = 0;
@@ -1101,76 +986,43 @@ public class LauncherProvider extends ContentProvider {
                         if (arrayList7.size() > 0) {
                             sQLiteDatabase.beginTransaction();
                             try {
-                                i3 = 0;
                                 for (ContentValues contentValues4 : arrayList7) {
-                                    if (contentValues4 != null) {
-                                        try {
-                                            if (LauncherProvider.dbInsertAndCheck(this, sQLiteDatabase, "favorites", null, contentValues4) < 0) {
-                                                sQLiteDatabase.endTransaction();
-                                                cursorQuery.close();
-                                                return;
-                                            }
-                                            i3++;
-                                        } catch (Throwable th) {
-                                            th = th;
-                                            sQLiteDatabase.endTransaction();
-                                            throw th;
-                                        }
+                                    if (LauncherProvider.dbInsertAndCheck(this, sQLiteDatabase, "favorites", null, contentValues4) < 0) {
+                                        sQLiteDatabase.endTransaction();
+                                        return;
                                     }
+                                    i3++;
                                 }
                                 sQLiteDatabase.setTransactionSuccessful();
                                 sQLiteDatabase.endTransaction();
                             } catch (Throwable th2) {
-                                thReflow = th2;
                             }
-                        } else {
-                            i3 = 0;
                         }
                         sQLiteDatabase.beginTransaction();
                         for (int i36 = 0; i36 <= iGenerateNewScreenId; i36++) {
-                            try {
-                                ContentValues contentValues5 = new ContentValues();
-                                contentValues5.put("_id", Integer.valueOf(i36));
-                                contentValues5.put("screenRank", Integer.valueOf(i36));
-                                if (LauncherProvider.dbInsertAndCheck(this, sQLiteDatabase, "workspaceScreens", null, contentValues5) < 0) {
-                                    sQLiteDatabase.endTransaction();
-                                    cursorQuery.close();
-                                    return;
-                                }
-                            } catch (Throwable th3) {
+                            ContentValues contentValues5 = new ContentValues();
+                            contentValues5.put("_id", Integer.valueOf(i36));
+                            contentValues5.put("screenRank", Integer.valueOf(i36));
+                            if (LauncherProvider.dbInsertAndCheck(this, sQLiteDatabase, "workspaceScreens", null, contentValues5) < 0) {
                                 sQLiteDatabase.endTransaction();
-                                throw th3;
+                                return;
                             }
                         }
                         sQLiteDatabase.setTransactionSuccessful();
                         sQLiteDatabase.endTransaction();
                         i = iGenerateNewScreenId;
                         i2 = i3;
-                    } else {
-                        i = 0;
-                        i2 = 0;
                     }
+            } finally {
+                if (cursorQuery != null) {
                     cursorQuery.close();
-                } catch (Throwable th4) {
-                    /* REWORK: the dex had no throws on this method, so the throwable
-                     * stopped here; log it and continue the migration. */
-                    android.util.Log.e("LauncherProvider", "launcher2 shortcut migration failed", th4);
-                    i = 0;
-                    i2 = 0;
                 }
-            } else {
-                i = 0;
-                i2 = 0;
             }
             Launcher.addDumpLog("LauncherProvider", "migrated " + i2 + " icons from Launcher2 into " + (i + 1) + " screens", true);
             setFlagJustLoadedOldDb();
             this.mMaxItemId = initializeMaxItemId(sQLiteDatabase);
             this.mMaxScreenId = initializeMaxScreenId(sQLiteDatabase);
         }
-
-        /* JADX WARN: Code duplicated, block: B:46:0x00c2  */
-        /* JADX WARN: Code duplicated, block: B:48:0x00c7  */
-        /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
         private void normalizeIcons(SQLiteDatabase sQLiteDatabase) throws Throwable {
             /* REWORK: jadx lost an exception-flow local across catch scopes. */
             Throwable thReflow = null;
