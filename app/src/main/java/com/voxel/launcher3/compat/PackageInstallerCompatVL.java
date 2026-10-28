@@ -150,7 +150,6 @@ public class PackageInstallerCompatVL extends PackageInstallerCompat implements 
 
     @Override // com.voxel.launcher3.compat.PackageInstallerCompat
     public void onStop() {
-        this.mInstaller.unregisterSessionCallback(this.mCallback);
     }
 
     @Override // java.lang.Runnable
