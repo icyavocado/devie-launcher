@@ -32,6 +32,7 @@ public class DiscreteSeekBar extends View {
     private final Paint mThumbPaint = new Paint(1);
     private final Paint mHaloPaint = new Paint(1);
     private final Paint mBubblePaint = new Paint(1);
+    private final Paint mKnobPaint = new Paint(1);
     private final Paint mBubbleTextPaint = new Paint(1);
     private final Paint.FontMetrics mBubbleFontMetrics = new Paint.FontMetrics();
     private final Path mBubblePath = new Path();
@@ -74,6 +75,7 @@ public class DiscreteSeekBar extends View {
         mBubblePaint.setColor(mThumbColorPressed);
         mBubbleTextPaint.setColor(0xff1f2a38);
         mBubbleTextPaint.setTextAlign(Paint.Align.CENTER);
+        mKnobPaint.setStyle(Paint.Style.FILL);
     }
 
     public int getMin() {
@@ -259,7 +261,7 @@ public class DiscreteSeekBar extends View {
         int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
         if (mOverlayPopup == null) {
             mOverlayView = new OverlayView(getContext(), density);
-            mOverlayPopup = new PopupWindow(mOverlayView, (60 * density), (86 * density), false);
+            mOverlayPopup = new PopupWindow(mOverlayView, (56 * density), (106 * density), false);
             mOverlayPopup.setTouchable(false);
             mOverlayPopup.setClippingEnabled(false);
             mOverlayPopup.showAtLocation(getRootView(), Gravity.NO_GRAVITY, 0, -9999);
@@ -272,12 +274,12 @@ public class DiscreteSeekBar extends View {
         getLocationOnScreen(locationOnScreen);
         int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
         mOverlayView.setValue(mValue, density);
-        int overlayWidth = 60 * density;
-        int overlayHeight = 86 * density;
+        int overlayWidth = 56 * density;
+        int overlayHeight = 106 * density;
         int thumbScreenX = locationOnScreen[0] + ((int) thumbCenterX());
-        /* halo center sits 76d above the overlay bottom; put that point on the
-         * thumb center: overlay top = trackCenterY - 76d */
-        int y = (locationOnScreen[1] + ((int) trackCenterY())) - (76 * density);
+        /* overlay bottom edge (106d) = the thumb's top edge: the halo center
+         * sits at the overlay bottom; the pin's tip touches the same point */
+        int y = (locationOnScreen[1] + ((int) trackCenterY())) - (106 * density);
         int x = thumbScreenX - (overlayWidth / 2);
         int max = getResources().getDisplayMetrics().widthPixels;
         if (x + overlayWidth > max) {
@@ -355,28 +357,26 @@ public class DiscreteSeekBar extends View {
         @Override // android.view.View
         protected void onDraw(Canvas canvas) {
             int density = this.mDensity;
-            int cx = 30 * density;
-            /* halo center = 76d below the overlay top = exactly the thumb
-             * center; overlay height 86d = halo bottom + 10d margin */
-            int haloY = 76 * density;
-            /* press halo: full circle (never clipped, overlay is sized for it) */
-            DiscreteSeekBar.this.mHaloPaint.setColor(DiscreteSeekBar.this.mThumbPaint.getColor());
-            DiscreteSeekBar.this.mHaloPaint.setAlpha(64);
-            canvas.drawCircle(cx, haloY, 15 * density, DiscreteSeekBar.this.mHaloPaint);
-            DiscreteSeekBar.this.mHaloPaint.setAlpha(255);
-            /* pin-drop: circle head + drop tail whose tip lands on the thumb's
-             * top edge (halo top = haloY - 14d). */
-            int headY = haloY - (26 * density);
+            int cx = 28 * density;
+            int tipY = 106 * density;
+            /* location-pin silhouette in one path: tip at the bottom center,
+             * sides sweep up and out into the round head */
             DiscreteSeekBar.this.mBubblePath.reset();
-            DiscreteSeekBar.this.mBubblePath.moveTo(cx - (6 * density), headY + (7 * density));
-            DiscreteSeekBar.this.mBubblePath.cubicTo(cx - (6 * density), headY + (13 * density), cx - (3 * density), headY + (15 * density), cx, haloY - (14 * density));
-            DiscreteSeekBar.this.mBubblePath.cubicTo(cx + (3 * density), headY + (15 * density), cx + (6 * density), headY + (13 * density), cx + (6 * density), headY + (7 * density));
+            DiscreteSeekBar.this.mBubblePath.moveTo(cx, tipY);
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx - (2 * density), tipY - (8 * density), cx - (13 * density), tipY - (22 * density), cx - (13 * density), tipY - (40 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx - (13 * density), tipY - (47 * density), cx - (7 * density), tipY - (53 * density), cx, tipY - (53 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx + (7 * density), tipY - (53 * density), cx + (13 * density), tipY - (47 * density), cx + (13 * density), tipY - (40 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx + (13 * density), tipY - (22 * density), cx + (2 * density), tipY - (8 * density), cx, tipY);
             DiscreteSeekBar.this.mBubblePath.close();
-            canvas.drawCircle(cx, headY, 11 * density, DiscreteSeekBar.this.mBubblePaint);
+            DiscreteSeekBar.this.mBubblePaint.setColor(DiscreteSeekBar.this.mThumbColorPressed);
             canvas.drawPath(DiscreteSeekBar.this.mBubblePath, DiscreteSeekBar.this.mBubblePaint);
-            DiscreteSeekBar.this.mBubbleTextPaint.setTextSize(13 * density);
+            /* hollow knob: white circle in the head + the value inside it */
+            int knobY = tipY - (40 * density);
+            DiscreteSeekBar.this.mKnobPaint.setColor(0xffffffff);
+            canvas.drawCircle(cx, knobY, 9 * density, DiscreteSeekBar.this.mKnobPaint);
+            DiscreteSeekBar.this.mBubbleTextPaint.setTextSize(12 * density);
             DiscreteSeekBar.this.mBubbleTextPaint.getFontMetrics(DiscreteSeekBar.this.mBubbleFontMetrics);
-            canvas.drawText(this.mLabel, cx, headY - ((DiscreteSeekBar.this.mBubbleFontMetrics.ascent + DiscreteSeekBar.this.mBubbleFontMetrics.descent) / 2), DiscreteSeekBar.this.mBubbleTextPaint);
+            canvas.drawText(this.mLabel, cx, knobY - ((DiscreteSeekBar.this.mBubbleFontMetrics.ascent + DiscreteSeekBar.this.mBubbleFontMetrics.descent) / 2), DiscreteSeekBar.this.mBubbleTextPaint);
         }
     }
 }
