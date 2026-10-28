@@ -162,8 +162,7 @@ def main():
     run(serial, 'shell', 'input', 'text', args.query)
     time.sleep(2)
     x = dump_ui(serial)
-    shot = None
-    data = subprocess.run([ADB, '-s', serial, 'shell', 'screencap', '-p', '/sdcard/smoke.png'], timeout=30)
+    subprocess.run([ADB, '-s', serial, 'shell', 'screencap', '-p', '/sdcard/smoke.png'], timeout=30)
     png = subprocess.run([ADB, '-s', serial, 'exec-out', 'cat', '/sdcard/smoke.png'], capture_output=True, timeout=30).stdout
     shot = os.path.join(args.outdir, '02_search_results.png')
     open(shot, 'wb').write(png)
@@ -174,13 +173,17 @@ def main():
         tap(serial, got[1], got[2])
     else:
         res = nodes(x)
-        rows = [(t, cx, cy) for (t, cx, cy) in res if cy < 1500 and cy > 260]
+        _, h = screen_size(serial)
+        # result rows live between the top hint and the bottom of the overlay
+        # list (fractions so the gate works on any device)
+        rows = [(t, cx, cy) for (t, cx, cy) in res
+                if 0.11 * h < cy < 0.66 * h]
         if not rows:
             raise RuntimeError('no tappable result rows found in overlay')
         step(f'tapped first row: {rows[0]!r}')
         tap(serial, rows[0][1], rows[0][2])
     time.sleep(2)
-    data = subprocess.run([ADB, '-s', serial, 'shell', 'screencap', '-p', '/sdcard/smoke.png'], timeout=30)
+    subprocess.run([ADB, '-s', serial, 'shell', 'screencap', '-p', '/sdcard/smoke.png'], timeout=30)
     png = subprocess.run([ADB, '-s', serial, 'exec-out', 'cat', '/sdcard/smoke.png'], capture_output=True, timeout=30).stdout
     open(os.path.join(args.outdir, '03_after_result_tap.png'), 'wb').write(png)
     run(serial, 'shell', 'rm', '-f', '/sdcard/smoke.png')
