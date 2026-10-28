@@ -36,8 +36,8 @@ public class DiscreteSeekBar extends View {
     private final Paint.FontMetrics mBubbleFontMetrics = new Paint.FontMetrics();
     private final Path mBubblePath = new Path();
     private final RectF mRect = new RectF();
-    private PopupWindow mBubblePopup;
-    private BubbleView mBubbleView;
+    private PopupWindow mOverlayPopup;
+    private OverlayView mOverlayView;
 
     public interface OnProgressChangeListener {
         void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser);
@@ -221,7 +221,7 @@ public class DiscreteSeekBar extends View {
             if (actionMasked == 1) {
                 setValueFromTouch(motionEvent.getX(), true);
             }
-            hideBubble();
+            hideOverlay();
             if (mListener != null) {
                 mListener.onStopTrackingTouch(this);
             }
@@ -249,44 +249,49 @@ public class DiscreteSeekBar extends View {
             mListener.onProgressChanged(this, mValue, z);
         }
         if (mTracking) {
-            updateBubble();
+            updateOverlay();
         }
     }
 
-    private void ensureBubble() {
+    /* Overlay (popup layer) draws the press halo + the pin-drop value bubble so
+     * neither is clipped by this view's ~27-dip-tall canvas. */
+    private void ensureOverlay() {
         int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
-        if (mBubblePopup == null) {
-            mBubbleView = new BubbleView(getContext(), density);
-            mBubblePopup = new PopupWindow(mBubbleView, (36 * density), (26 * density), false);
-            mBubblePopup.setTouchable(false);
-            mBubblePopup.setClippingEnabled(false);
-            mBubblePopup.showAtLocation(getRootView(), Gravity.NO_GRAVITY, 0, -9999);
+        if (mOverlayPopup == null) {
+            mOverlayView = new OverlayView(getContext(), density);
+            mOverlayPopup = new PopupWindow(mOverlayView, (60 * density), (86 * density), false);
+            mOverlayPopup.setTouchable(false);
+            mOverlayPopup.setClippingEnabled(false);
+            mOverlayPopup.showAtLocation(getRootView(), Gravity.NO_GRAVITY, 0, -9999);
         }
     }
 
-    private void updateBubble() {
-        ensureBubble();
+    private void updateOverlay() {
+        ensureOverlay();
         int[] locationOnScreen = new int[2];
         getLocationOnScreen(locationOnScreen);
         int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
-        int pillWidth = 36 * density;
-        int pillHeight = 26 * density;
+        mOverlayView.setValue(mValue, density);
+        int overlayWidth = 60 * density;
+        int overlayHeight = 86 * density;
         int thumbScreenX = locationOnScreen[0] + ((int) thumbCenterX());
-        int thumbScreenY = locationOnScreen[1] + ((int) trackCenterY()) - thumbRadius();
-        int x = thumbScreenX - (pillWidth / 2);
+        /* halo center sits 76d above the overlay bottom; put that point on the
+         * thumb center: overlay top = trackCenterY - 76d */
+        int y = (locationOnScreen[1] + ((int) trackCenterY())) - (76 * density);
+        int x = thumbScreenX - (overlayWidth / 2);
         int max = getResources().getDisplayMetrics().widthPixels;
-        if (x + pillWidth > max) {
-            x = max - pillWidth;
+        if (x + overlayWidth > max) {
+            x = max - overlayWidth;
         }
         if (x < 0) {
             x = 0;
         }
-        mBubbleView.setValue(mValue, density);
-        mBubblePopup.update(x, (thumbScreenY - (10 * density)) - pillHeight, (-1), (-1));
+        mOverlayPopup.update(x, y, (-1), (-1));
+        mOverlayView.invalidate();
     }
 
-    private void hideBubble() {
-        PopupWindow popupWindow = this.mBubblePopup;
+    private void hideOverlay() {
+        PopupWindow popupWindow = this.mOverlayPopup;
         if (popupWindow != null && popupWindow.isShowing()) {
             popupWindow.update(0, -9999, (-1), (-1));
         }
@@ -294,7 +299,7 @@ public class DiscreteSeekBar extends View {
 
     @Override // android.view.View
     protected void onDetachedFromWindow() {
-        hideBubble();
+        hideOverlay();
         super.onDetachedFromWindow();
     }
 
@@ -325,20 +330,18 @@ public class DiscreteSeekBar extends View {
             mRect.set(trackStart, centerY - trackHalf, thumbX, centerY + trackHalf);
             canvas.drawRoundRect(mRect, trackHalf, trackHalf, mProgressPaint);
         }
-        if (isPressed() && isEnabled()) {
-            mHaloPaint.setColor(mThumbPaint.getColor());
-            mHaloPaint.setAlpha(64);
-            canvas.drawCircle(thumbX, centerY, thumbRadius * 3.0f, mHaloPaint);
-            mHaloPaint.setAlpha(255);
-        }
         canvas.drawCircle(thumbX, centerY, thumbRadius, mThumbPaint);
     }
 
-    private final class BubbleView extends View {
+    /* Draws, relative to its own canvas: the press halo (a full circle, not
+     * clipped) behind the thumb, and the pin-drop value bubble pinned so its
+     * tail tip touches the thumb's top. Overlay canvas = 56d x 34d; the seek
+     * row itself is anchored at the overlay's bottom edge. */
+    private final class OverlayView extends View {
         private int mDensity;
         private String mLabel = "";
 
-        BubbleView(Context context, int density) {
+        OverlayView(Context context, int density) {
             super(context);
             this.mDensity = density;
         }
@@ -352,18 +355,28 @@ public class DiscreteSeekBar extends View {
         @Override // android.view.View
         protected void onDraw(Canvas canvas) {
             int density = this.mDensity;
-            DiscreteSeekBar.this.mRect.set(0.0f, 0.0f, 36 * density, 18 * density);
-            canvas.drawRoundRect(DiscreteSeekBar.this.mRect, 3 * density, 3 * density, DiscreteSeekBar.this.mBubblePaint);
+            int cx = 30 * density;
+            /* halo center = 76d below the overlay top = exactly the thumb
+             * center; overlay height 86d = halo bottom + 10d margin */
+            int haloY = 76 * density;
+            /* press halo: full circle (never clipped, overlay is sized for it) */
+            DiscreteSeekBar.this.mHaloPaint.setColor(DiscreteSeekBar.this.mThumbPaint.getColor());
+            DiscreteSeekBar.this.mHaloPaint.setAlpha(64);
+            canvas.drawCircle(cx, haloY, 15 * density, DiscreteSeekBar.this.mHaloPaint);
+            DiscreteSeekBar.this.mHaloPaint.setAlpha(255);
+            /* pin-drop: circle head + drop tail whose tip lands on the thumb's
+             * top edge (halo top = haloY - 14d). */
+            int headY = haloY - (26 * density);
             DiscreteSeekBar.this.mBubblePath.reset();
-            float centerX = (36 * density) / 2.0f;
-            DiscreteSeekBar.this.mBubblePath.moveTo(centerX - (3 * density), (17 * density));
-            DiscreteSeekBar.this.mBubblePath.cubicTo(centerX - (3 * density), 22 * density, centerX - (1.5f * density), (23.5f * density), centerX, 26 * density);
-            DiscreteSeekBar.this.mBubblePath.cubicTo(centerX + (1.5f * density), (23.5f * density), centerX + (3 * density), 22 * density, centerX + (3 * density), (17 * density));
+            DiscreteSeekBar.this.mBubblePath.moveTo(cx - (6 * density), headY + (7 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx - (6 * density), headY + (13 * density), cx - (3 * density), headY + (15 * density), cx, haloY - (14 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx + (3 * density), headY + (15 * density), cx + (6 * density), headY + (13 * density), cx + (6 * density), headY + (7 * density));
             DiscreteSeekBar.this.mBubblePath.close();
+            canvas.drawCircle(cx, headY, 11 * density, DiscreteSeekBar.this.mBubblePaint);
             canvas.drawPath(DiscreteSeekBar.this.mBubblePath, DiscreteSeekBar.this.mBubblePaint);
             DiscreteSeekBar.this.mBubbleTextPaint.setTextSize(13 * density);
             DiscreteSeekBar.this.mBubbleTextPaint.getFontMetrics(DiscreteSeekBar.this.mBubbleFontMetrics);
-            canvas.drawText(this.mLabel, centerX, (9 * density) - ((DiscreteSeekBar.this.mBubbleFontMetrics.ascent + DiscreteSeekBar.this.mBubbleFontMetrics.descent) / 2), DiscreteSeekBar.this.mBubbleTextPaint);
+            canvas.drawText(this.mLabel, cx, headY - ((DiscreteSeekBar.this.mBubbleFontMetrics.ascent + DiscreteSeekBar.this.mBubbleFontMetrics.descent) / 2), DiscreteSeekBar.this.mBubbleTextPaint);
         }
     }
 }
