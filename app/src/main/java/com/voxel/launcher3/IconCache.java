@@ -22,7 +22,6 @@ import com.voxel.launcher3.compat.LauncherActivityInfoCompat;
 import com.voxel.launcher3.compat.LauncherAppsCompat;
 import com.voxel.launcher3.compat.UserHandleCompat;
 import com.voxel.launcher3.compat.UserManagerCompat;
-import com.voxel.launcher3.util.ComponentKey;
 import com.voxel.simplesearchlauncher.model.AppsInfoIconFilter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -272,7 +271,7 @@ public class IconCache {
 
     private void updateCacheAndGetContentValues(LauncherActivityInfoCompat launcherActivityInfoCompat, boolean z) {
         CacheEntry cacheEntry;
-        ComponentKey componentKey = new ComponentKey(launcherActivityInfoCompat.getComponentName(), launcherActivityInfoCompat.getUser());
+        CacheKey componentKey = new CacheKey(launcherActivityInfoCompat.getComponentName(), launcherActivityInfoCompat.getUser());
         if (z || (cacheEntry = this.mCache.get(componentKey)) == null || cacheEntry.icon == null) {
             cacheEntry = null;
         }
