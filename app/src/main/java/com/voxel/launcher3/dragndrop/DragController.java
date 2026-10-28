@@ -198,7 +198,8 @@ public class DragController implements DragDriver.EventListener {
     }
 
     private float getAngleBetweenVectors(PointF pointF, PointF pointF2) {
-        return (float) Math.acos(((pointF.x * pointF2.x) + (pointF.y * pointF2.y)) / (pointF.length() * pointF2.length()));
+        double d = ((pointF.x * pointF2.x) + (pointF.y * pointF2.y)) / (pointF.length() * pointF2.length());
+        return (float) Math.acos(Math.max(-1.0d, Math.min(1.0d, d)));
     }
 
     private int[] getClampedDragLayerPos(float f, float f2) {
