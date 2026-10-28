@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,7 +90,7 @@ public class MockLauncherController {
                                 bubbleTextView.setCellParams(cellLayout.getCellParams());
                                 bubbleTextView.applyFromShortcutInfo((ShortcutInfo) itemInfo, iconCache, false, false);
                                 if (itemInfo.container == -100 && cellLayout != null && cellLayout.isOccupied(itemInfo.cellX, itemInfo.cellY)) {
-                                    String str = "Collision while binding workspace item: " + itemInfo + ". Collides with " + cellLayout.getChildAt(itemInfo.cellX, itemInfo.cellY).getTag();
+                                    Log.w("MockLauncher", "Collision while binding workspace item: " + itemInfo + ". Collides with " + cellLayout.getChildAt(itemInfo.cellX, itemInfo.cellY).getTag());
                                 } else {
                                     CellLayout.LayoutParams layoutParams = new CellLayout.LayoutParams(itemInfo.cellX, itemInfo.cellY, itemInfo.spanX, itemInfo.spanY);
                                     bubbleTextView.setLayoutParams(layoutParams);
