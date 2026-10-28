@@ -70,10 +70,12 @@ public class AppWidgetResizeFrame extends FrameLayout {
         this.mLauncher = (Launcher) context;
         this.mCellLayout = cellLayout;
         this.mWidgetView = launcherAppWidgetHostView;
-        this.mResizeMode = 3;
+        int i2 = launcherAppWidgetHostView.getAppWidgetInfo().resizeMode;
+        this.mResizeMode = (i2 & 6) == 6 ? 3 : (i2 & 2) != 0 ? 1 : (i2 & 4) != 0 ? 2 : 0;
         this.mDragLayer = dragLayer;
-        this.mMinHSpan = 1;
-        this.mMinVSpan = 1;
+        int[] minSpanForWidget = Launcher.getMinSpanForWidget(this.mLauncher, launcherAppWidgetHostView.getAppWidgetInfo());
+        this.mMinHSpan = minSpanForWidget[0];
+        this.mMinVSpan = minSpanForWidget[1];
         setBackgroundResource(R.drawable.widget_resize_frame_holo);
         setPadding(0, 0, 0, 0);
         this.mLeftHandle = new ImageView(context);
@@ -100,6 +102,11 @@ public class AppWidgetResizeFrame extends FrameLayout {
         } else if (i == 2) {
             this.mLeftHandle.setVisibility(8);
             this.mRightHandle.setVisibility(8);
+        } else if (i == 0) {
+            this.mLeftHandle.setVisibility(8);
+            this.mRightHandle.setVisibility(8);
+            this.mTopHandle.setVisibility(8);
+            this.mBottomHandle.setVisibility(8);
         }
         this.mBackgroundPadding = (int) Math.ceil(this.mLauncher.getResources().getDisplayMetrics().density * 24.0f);
         this.mTouchTargetWidth = this.mBackgroundPadding * 2;
