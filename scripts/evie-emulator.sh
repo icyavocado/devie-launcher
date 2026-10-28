@@ -10,9 +10,6 @@ EMU_LOG="${HOME}/.local/share/evie-emu/emulator.log"
 adb() { "$SDK/platform-tools/adb" "$@"; }
 adb_e() { "$SDK/platform-tools/adb" -s emulator-5554 "$@"; }
 
-running() { adb devices | grep -q 'emulator-\|device$'; }
-
-
 case "${1:-status}" in
   boot)
     if adb devices 2>/dev/null | grep -q emulator; then echo "already running"; exit 0; fi
@@ -36,7 +33,7 @@ case "${1:-status}" in
   adb) shift; adb_e "$@" ;;
   shell) shift; adb_e shell "$@" ;;
   install) shift; adb_e install -r "$@" ;;
-  screencap) shift; adb_e exec-out screencap -p > "${1:-/tmp/opencode/emu.png}" ;;
+  screencap) shift; adb_e shell screencap -p /sdcard/evie-shot.png; adb_e exec-out cat /sdcard/evie-shot.png > "${1:-/tmp/opencode/emu.png}"; adb_e shell rm -f /sdcard/evie-shot.png ;;
   logcat) shift; adb_e logcat "$@" ;;
   kill) adb_e emu kill ;;
   *) echo "usage: $0 [boot|wait|status|adb|shell|install|screencap|logcat|kill]" >&2; exit 2 ;;
