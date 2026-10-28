@@ -6,9 +6,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
+import android.widget.PopupWindow;
 
 public class DiscreteSeekBar extends View {
     private static final int DEFAULT_TRACK_COLOR = 0x80b8b8b8;
@@ -34,6 +36,8 @@ public class DiscreteSeekBar extends View {
     private final Paint.FontMetrics mBubbleFontMetrics = new Paint.FontMetrics();
     private final Path mBubblePath = new Path();
     private final RectF mRect = new RectF();
+    private PopupWindow mBubblePopup;
+    private BubbleView mBubbleView;
 
     public interface OnProgressChangeListener {
         void onProgressChanged(DiscreteSeekBar seekBar, int value, boolean fromUser);
@@ -217,6 +221,7 @@ public class DiscreteSeekBar extends View {
             if (actionMasked == 1) {
                 setValueFromTouch(motionEvent.getX(), true);
             }
+            dismissBubble();
             if (mListener != null) {
                 mListener.onStopTrackingTouch(this);
             }
@@ -243,6 +248,61 @@ public class DiscreteSeekBar extends View {
         if (mValue != original && mListener != null) {
             mListener.onProgressChanged(this, mValue, z);
         }
+        if (mTracking) {
+            updateBubble();
+        }
+    }
+
+    private void ensureBubble() {
+        int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
+        if (mBubblePopup == null) {
+            mBubbleView = new BubbleView(getContext(), density);
+            mBubblePopup = new PopupWindow(mBubbleView, (36 * density), (26 * density), false);
+            mBubblePopup.setTouchable(false);
+            mBubblePopup.setClippingEnabled(false);
+        }
+        if (!mBubblePopup.isShowing()) {
+            mBubblePopup.showAtLocation(getRootView(), Gravity.NO_GRAVITY, 0, 0);
+            mBubblePopup.setClippingEnabled(false);
+        }
+        updateBubble();
+    }
+
+    private void updateBubble() {
+        if (mBubblePopup == null) {
+            ensureBubble();
+            return;
+        }
+        int[] locationOnScreen = new int[2];
+        getLocationOnScreen(locationOnScreen);
+        int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
+        int pillWidth = 36 * density;
+        int pillHeight = 26 * density;
+        int thumbScreenX = locationOnScreen[0] + ((int) thumbCenterX());
+        int thumbScreenY = locationOnScreen[1] + ((int) trackCenterY()) - thumbRadius();
+        int x = thumbScreenX - (pillWidth / 2);
+        int max = getResources().getDisplayMetrics().widthPixels;
+        if (x + pillWidth > max) {
+            x = max - pillWidth;
+        }
+        if (x < 0) {
+            x = 0;
+        }
+        mBubbleView.setValue(mValue, density);
+        mBubblePopup.update(x, (thumbScreenY - (24 * density)) - pillHeight, (-1), (-1));
+    }
+
+    private void dismissBubble() {
+        PopupWindow popupWindow = this.mBubblePopup;
+        if (popupWindow != null && popupWindow.isShowing()) {
+            popupWindow.dismiss();
+        }
+    }
+
+    @Override // android.view.View
+    protected void onDetachedFromWindow() {
+        dismissBubble();
+        super.onDetachedFromWindow();
     }
 
     @Override // android.view.View
@@ -277,39 +337,40 @@ public class DiscreteSeekBar extends View {
             mHaloPaint.setAlpha(64);
             canvas.drawCircle(thumbX, centerY, thumbRadius * 3.0f, mHaloPaint);
             mHaloPaint.setAlpha(255);
-            drawValueBubble(canvas, thumbX, centerY - thumbRadius - (4 * density), density);
         }
         canvas.drawCircle(thumbX, centerY, thumbRadius, mThumbPaint);
     }
 
-    private void drawValueBubble(Canvas canvas, float f, float f2, int density) {
-        String label = String.valueOf(mValue);
-        mBubbleTextPaint.setTextSize(13 * density);
-        float width = mBubbleTextPaint.measureText(label);
-        mBubbleTextPaint.getFontMetrics(mBubbleFontMetrics);
-        int bubbleWidth = ((int) width) + (8 * density);
-        int bubbleHeight = 15 * density;
-        int arrowHalf = 2 * density;
-        int arrowHeight = 3 * density;
-        int left = ((int) f) - (bubbleWidth / 2);
-        if (left < 0) {
-            left = 0;
-        } else if (left + bubbleWidth > getWidth()) {
-            left = getWidth() - bubbleWidth;
+    private final class BubbleView extends View {
+        private int mDensity;
+        private String mLabel = "";
+
+        BubbleView(Context context, int density) {
+            super(context);
+            this.mDensity = density;
         }
-        int top = ((int) f2) - arrowHeight - bubbleHeight;
-        if (top < 0) {
-            top = 0;
+
+        void setValue(int value, int density) {
+            this.mDensity = density;
+            this.mLabel = String.valueOf(value);
+            invalidate();
         }
-        int bottom = top + bubbleHeight;
-        mRect.set(left, top, left + bubbleWidth, bottom);
-        canvas.drawRoundRect(mRect, 3 * density, 3 * density, mBubblePaint);
-        mBubblePath.reset();
-        mBubblePath.moveTo(f - arrowHalf, bottom - 1);
-        mBubblePath.lineTo(f, bottom + arrowHeight);
-        mBubblePath.lineTo(f + arrowHalf, bottom - 1);
-        mBubblePath.close();
-        canvas.drawPath(mBubblePath, mBubblePaint);
-        canvas.drawText(label, f, top + (bubbleHeight / 2) - ((mBubbleFontMetrics.ascent + mBubbleFontMetrics.descent) / 2), mBubbleTextPaint);
+
+        @Override // android.view.View
+        protected void onDraw(Canvas canvas) {
+            int density = this.mDensity;
+            DiscreteSeekBar.this.mRect.set(0.0f, 0.0f, 36 * density, 18 * density);
+            canvas.drawRoundRect(DiscreteSeekBar.this.mRect, 3 * density, 3 * density, DiscreteSeekBar.this.mBubblePaint);
+            DiscreteSeekBar.this.mBubblePath.reset();
+            float centerX = (36 * density) / 2.0f;
+            DiscreteSeekBar.this.mBubblePath.moveTo(centerX - (3 * density), (18 * density) - 1);
+            DiscreteSeekBar.this.mBubblePath.lineTo(centerX, 26 * density);
+            DiscreteSeekBar.this.mBubblePath.lineTo(centerX + (3 * density), (18 * density) - 1);
+            DiscreteSeekBar.this.mBubblePath.close();
+            canvas.drawPath(DiscreteSeekBar.this.mBubblePath, DiscreteSeekBar.this.mBubblePaint);
+            DiscreteSeekBar.this.mBubbleTextPaint.setTextSize(13 * density);
+            DiscreteSeekBar.this.mBubbleTextPaint.getFontMetrics(DiscreteSeekBar.this.mBubbleFontMetrics);
+            canvas.drawText(this.mLabel, centerX, (9 * density) - ((DiscreteSeekBar.this.mBubbleFontMetrics.ascent + DiscreteSeekBar.this.mBubbleFontMetrics.descent) / 2), DiscreteSeekBar.this.mBubbleTextPaint);
+        }
     }
 }
