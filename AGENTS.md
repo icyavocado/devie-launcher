@@ -266,6 +266,17 @@ patch. Known trap classes + the fixes:
 5. **Styleable-index reads** (`getInt(2,1)` → home-page bug), blank registers /
    `this.f$0` lambda artifacts, WeakReference holder (`sLauncherProvider` — now a
    strong static; a GC'd ref silently disabled workspaceScreens reconcile).
+6. **Donor default-app probes resolve the system resolver** (Xiaomi/HyperOS
+   report): donor's `ACTION_CALL tel:` / `SENDTO sms:` / contact-VIEW-without-MIME
+   probes match arbitrary handlers (WhatsApp registers sms:; messaging apps
+   register tel:), and OEM resolvers aren't always class
+   `com.android.internal.app.ResolverActivity` (any package `android` counts).
+   Default-app detection now: dialer = `TelecomManager.getDefaultDialerPackage()`,
+   SMS = `Telephony.Sms.getDefaultSmsPackage(Context)`, contacts = VIEW +
+   `CONTENT_ITEM_TYPE` (NOT the Secure key `sms_default_application` — Samsung
+   doesn't populate it; roles live in RoleManager: check via
+   `cmd role get-role-holders android.app.role.SMS`). See
+   `com.evie.search.local.LocalAppsManager` + `LinkResolver` (b844ee8).
 
 ## 10. Known quirks / open items (see docs/roadmap.md)
 
