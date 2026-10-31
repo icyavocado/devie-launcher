@@ -467,3 +467,42 @@ Both variants green (assembleDebug 25s, assemblePhoneDebug 51s). Tree
 clean after 8499fc4; branch fix/full-review-3, ~67 commits ahead of
 origin/main; nothing pushed (push/release blocked on explicit
 go-ahead).
+
+## 2026-10-31 (gesture-strand fix build + settings card restyle)
+
+### Gesture-strand fix (Launcher.java, UNCOMMITTED — pending user
+phone re-test)
+- Fix: main-layer router now settles the QSB/all-apps springy trackers
+  when a custom-gesture claim starves the stream mid-gesture (inline
+  CANCEL to each active tracker, springs settle to the nearest end) and
+  onDown heals already-stranded drawer states (factor<0.5 with no end
+  value locks to the drawer again).
+- Emulator-5554 verification: drawer opens (chevron 539,1855); slow
+  swipe follows and springs back FULLY open; fast fling leaves no
+  strand; workspace pull-down still engages search; 0 FATAL/ANR.
+- Phone R5CT60JX7FM: phoneDebug in-place install Success, relaunch
+  0 FATAL. AWAITING the user's hand re-test of the drawer recipe.
+
+### Settings card restyle (7a808b8)
+- Gestures: one white card with all 8 rows + inset dividers
+  (set-gestures2.png); first attempt drew no dividers — the inset
+  divider drawable has no intrinsic width, so SettingsListDividerDecoration
+  must setBounds(parent L/R) (set-gestures.png shows the missing-
+  divider state).
+- Gesture action-picker (Double tap, shared layout): same one-card
+  style, rows None → Screen lock (set-picker.png).
+- Hide apps: muted heading + single card (Hide from search + app rows),
+  adapter header type removed / positions shifted (set-hideapps.png,
+  set-hideapps-bottom.png).
+- Badges: dark card (mock_screen_background #18212c) behind the demo
+  icon strip, white labels readable (set-badges5.png). The "Unread
+  count"/"Notification count" section headers remain green (out of
+  scope as asked).
+- Notification-listener access was granted on the emulator via the
+  system page (row taps; dialog ALLOW @ (540,1693)).
+- All screens 0 FATAL while driving; launcher restored to workspace.
+
+Phone R5CT60JX7FM: assemblePhoneDebug green (53s), in-place install
+Success, relaunch 0 FATAL (pid 6520). Launcher.java gesture fix still
+UNCOMMITTED (tree has only that file modified). Branch main, 1 ahead
+of the released 811fcd4; nothing new pushed.
