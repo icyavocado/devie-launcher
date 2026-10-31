@@ -531,3 +531,20 @@ list in the second.
   0 FATAL (pid 10468). Launcher.java gesture fix still UNCOMMITTED,
   pending the user's phone re-test. Branch main at 7dc423d (2 ahead
   of released 811fcd4); nothing new pushed.
+
+## 2026-10-31 — Badge demo card tightened (7133458)
+
+User: the Unread badges dark card had too much space top and bottom
+behind the demo icons — keep the spacing, only shrink the background.
+
+- Cause: the demo strip kept the donor's fixed 150dip height while the
+  BadgeableAppIcon content is ~61dip (8dip pads + 26dip icon + label);
+  the restyle's dark card made that dead space visible.
+- Fix: strip height 150dip -> 62dip (content measured via uiautomator:
+  icon nodes 168px, density 2.75 px/dip). Icons, label and spacing
+  untouched; card went 470px -> 227px (82dip incl. the 10dip paddings).
+- Emulator: card [33,248][1047,475] vs icons [*,277][*,445] — 10dip
+  dark above/below, icons unchanged (badges-tight.png); 0 FATAL.
+- Phone R5CT60JX7FM: phoneDebug in-place install Success, relaunch
+  0 FATAL (pid 11794). Launcher.java gesture fix still uncommitted
+  (pending phone re-test). Branch main at 7133458; nothing pushed.
