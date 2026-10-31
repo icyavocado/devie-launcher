@@ -387,3 +387,42 @@ reproduced identically on a build without the fix; the launcher main
 thread was IDLE in nativePollOnce in the traces. AVD display also went
 black/wedged late in the session (black screencaps, empty dumps,
 0 FATAL). Verify via FATAL grep only on this AVD.
+
+## 2026-10-30 (later): contact-row tap opens unrelated apps — fixed on-device
+
+User report ("It doesn't work that way") → drove the REAL phone
+(R5CT60JX7FM): search overlay → "adam" → tap contact row.
+
+Reproduced the Xiaomi reporter's bug exactly: tapping the contact row
+fired `START u0 {act=VIEW dat=content://com.android.contacts/...}`
+resolving to `android/com.android.internal.app.ResolverActivity` —
+"Open with" offered **Google / Lichess / Messages** (generic content
+handlers; screenshot /tmp/opencode/phone-tap1.png). No CALL/TEXT chip
+rows exist on this device for a tapped contact — the contact row is the
+only tap path (earlier chip claims were wrong).
+
+Two-layer root cause in LinkResolver case "contact":
+1. Index stores links as
+   `contact:<URL-encoded FULL contacts URI>` (LocalSearch.db item.link,
+   e.g. `contact:content%3A%2F%2Fcom.android.contacts%2Fcontacts%2F
+   lookup%2F3312i...%2F1`); the code prepended
+   `content://com.android.contacts/contacts/` onto the ALREADY-full
+   decoded ssp → double-prefix garbage URI (contacts app opened, found
+   nothing, auto-finished back to the launcher).
+2. No MIME type + no package targeting → resolver with unrelated
+   handlers.
+
+Fix (commit 3e4f3e0): ssp already starting with `content://` is used
+directly (bare-id legacy form still prefixed); VIEW + contact MIME
+`vnd.android.cursor.item/contact`; queryIntentActivities(VIEW+mime)
+→ prefer system app (skip `android`-package resolver) → setPackage so
+no chooser ever appears; LocalAppsManager.getResolveInfoForIntent
+fallback also prefers system apps (user-installed file managers claim
+every MIME via generic content VIEW). Verified on phone by am start
+probe (pkg=com.samsung.android.app.contacts → contact card) then
+re-driving the tap: `cmp=com.samsung.android.app.contacts/
+com.samsung.android.contacts.detail.ContactDetailActivity` directly,
+Adam Lowell card stays open (screenshot /tmp/opencode/phone-tap5.png),
+0 real FATAL (logcat "FATAL EXCEPTION" matches were adbd echo of the
+grep commands themselves). assembleDebug + assemblePhoneDebug green.
+
