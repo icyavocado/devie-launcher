@@ -8,6 +8,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.Telephony;
+import android.telecom.TelecomManager;
+import android.text.TextUtils;
 import com.evie.search.model.AppData;
 import com.evie.search.model.LocalSearchItem;
 import java.util.ArrayList;
@@ -20,10 +23,15 @@ import timber.log.Timber;
 /* JADX INFO: loaded from: classes.dex */
 public class LocalAppsManager {
     private static LocalAppsManager instance;
+    /* REWORK (Xiaomi 17 / HyperOS report): kept for the telecom/Secure-setting
+     * default lookups; always the application context to avoid leaking the
+     * caller. */
+    private Context mContext;
     private Set<String> mBlacklist;
     private PackageManager mPackageManager;
 
     private LocalAppsManager(Context context) {
+        this.mContext = context.getApplicationContext();
         this.mPackageManager = context.getPackageManager();
         this.mBlacklist = getSystemLauncherPackageNames(context);
     }
@@ -52,12 +60,20 @@ public class LocalAppsManager {
         if (intent == null || (resolveInfoResolveActivity = this.mPackageManager.resolveActivity(intent, 65536)) == null) {
             return null;
         }
-        if (!resolveInfoResolveActivity.activityInfo.name.equals("com.android.internal.app.ResolverActivity")) {
+        /* REWORK: also skip OEM resolver activities — they live in the
+         * "android" package but use a different class name on some ROMs
+         * (e.g. MIUI/HyperOS). */
+        if (!resolveInfoResolveActivity.activityInfo.name.equals("com.android.internal.app.ResolverActivity") && !"android".equals(resolveInfoResolveActivity.activityInfo.packageName)) {
             return resolveInfoResolveActivity;
         }
         List<ResolveInfo> listQueryIntentActivities = this.mPackageManager.queryIntentActivities(intent, 65536);
         if (listQueryIntentActivities.isEmpty()) {
             return null;
+        }
+        for (ResolveInfo resolveInfo : listQueryIntentActivities) {
+            if (resolveInfo.activityInfo != null && !"android".equals(resolveInfo.activityInfo.packageName)) {
+                return resolveInfo;
+            }
         }
         return listQueryIntentActivities.get(0);
     }
@@ -114,10 +130,40 @@ public class LocalAppsManager {
         }
     }
 
+    /* REWORK: first hop of the text default — the default-SMS package via the
+     * public Telephony API (consults the SMS role on Q+; null when unset). */
+    private String getDefaultSmsApplication() {
+        try {
+            String strDefaultSmsPackage = Telephony.Sms.getDefaultSmsPackage(this.mContext);
+            if (TextUtils.isEmpty(strDefaultSmsPackage)) {
+                return null;
+            }
+            return strDefaultSmsPackage;
+        } catch (Exception unused) {
+            return null;
+        }
+    }
+
     AppData getDefaultContactsApp() {
+        /* REWORK (Xiaomi 17 / HyperOS report): donor's probe lacked the
+         * contact MIME type, so the resolver was returned (or an unrelated
+         * messaging app via its generic content VIEW handler) and the
+         * fallback picked list.get(0). Probe with the contact item type and
+         * fall back to the APP_CONTACTS category. */
+        Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, "1234");
         Intent intent = new Intent("android.intent.action.VIEW");
-        intent.setData(Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, "1234"));
-        return getAppDataForIntent(intent);
+        intent.setDataAndType(uri, ContactsContract.Contacts.CONTENT_ITEM_TYPE);
+        AppData appData = getAppDataForIntent(intent);
+        if (appData != null) {
+            return appData;
+        }
+        Intent intent2 = new Intent("android.intent.action.MAIN");
+        intent2.addCategory("android.intent.category.APP_CONTACTS");
+        ResolveInfo resolveInfo = this.mPackageManager.resolveActivity(intent2, 0);
+        if (resolveInfo != null && resolveInfo.activityInfo != null && !"android".equals(resolveInfo.activityInfo.packageName)) {
+            return new AppData(resolveInfo.activityInfo.packageName, resolveInfo.activityInfo.name, resolveInfo.activityInfo.loadLabel(this.mPackageManager).toString());
+        }
+        return null;
     }
 
     AppData getDefaultEmailApp() {
@@ -129,6 +175,23 @@ public class LocalAppsManager {
     }
 
     AppData getDefaultPhoneApp() {
+        /* REWORK (Xiaomi 17 / HyperOS report): donor's raw ACTION_CALL probe
+         * resolved the system resolver on OEM devices and the fallback picked
+         * an arbitrary handler (Zoiper, etc.), ignoring the user's default
+         * dialer. Ask TelecomManager first, then the donor probe. */
+        TelecomManager telecomManager = (TelecomManager) this.mContext.getSystemService(TelecomManager.class);
+        if (telecomManager != null) {
+            try {
+                String strDialerPackage = telecomManager.getDefaultDialerPackage();
+                if (!TextUtils.isEmpty(strDialerPackage)) {
+                    AppData appData = getAppDataByPackage(strDialerPackage);
+                    if (appData != null) {
+                        return appData;
+                    }
+                }
+            } catch (Exception unused) {
+            }
+        }
         Intent intent = new Intent("android.intent.action.CALL");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(268468224);
@@ -137,6 +200,16 @@ public class LocalAppsManager {
     }
 
     AppData getDefaultTextApp() {
+        /* REWORK: donor's SENDTO sms: probe also matches WhatsApp (it
+         * registers sms: with DEFAULT), so the fallback could pick either
+         * app. Consult the default-SMS setting first. */
+        String strDefaultSmsPackage = getDefaultSmsApplication();
+        if (strDefaultSmsPackage != null) {
+            AppData appData = getAppDataByPackage(strDefaultSmsPackage);
+            if (appData != null) {
+                return appData;
+            }
+        }
         Intent intent = new Intent("android.intent.action.SENDTO");
         intent.addCategory("android.intent.category.DEFAULT");
         intent.addFlags(268468224);

@@ -8,6 +8,8 @@ import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.provider.Telephony;
+import android.telecom.TelecomManager;
 import android.text.TextUtils;
 import androidx.browser.customtabs.CustomTabsIntent;
 import com.evie.common.SearchSettings;
@@ -38,6 +40,14 @@ public class LinkResolver {
             context = ((ContextWrapper) context).getBaseContext();
         }
         return null;
+    }
+
+    /* REWORK: ACTION_DIAL targeted at a specific dialer (no CALL_PHONE
+     * needed); null when that package has no dial activity. */
+    private Intent getDialIntent(Uri uri, String str, PackageManager packageManager) {
+        Intent intent = new Intent("android.intent.action.DIAL", uri);
+        intent.setPackage(str);
+        return packageManager.queryIntentActivities(intent, 0).size() > 0 ? intent : null;
     }
 
     private Intent getAppLaunchIntent(Uri uri, PackageManager packageManager) {
@@ -87,8 +97,53 @@ public class LinkResolver {
                         case "market":
                             data = new Intent("android.intent.action.VIEW", uri);
                             break;
+                        case "sms":
+                            /* REWORK (Xiaomi 17 / HyperOS report): WhatsApp
+                             * registers sms: too, so a plain SENDTO pops the
+                             * system chooser. Target the default SMS app
+                             * (public Telephony API, consults the SMS role),
+                             * then any sms handler. */
+                            data = null;
+                            try {
+                                String strSmsPackage = Telephony.Sms.getDefaultSmsPackage(context);
+                                if (!TextUtils.isEmpty(strSmsPackage)) {
+                                    Intent intentSms = new Intent("android.intent.action.SENDTO", uri);
+                                    intentSms.setPackage(strSmsPackage);
+                                    if (packageManager.queryIntentActivities(intentSms, 0).size() > 0) {
+                                        data = intentSms;
+                                    }
+                                }
+                            } catch (Exception unused) {
+                            }
+                            if (data == null) {
+                                data = new Intent("android.intent.action.SENDTO", uri);
+                            }
+                            break;
                         case "tel":
-                            data = context.checkCallingOrSelfPermission("android.permission.CALL_PHONE") == 0 ? new Intent("android.intent.action.CALL", uri) : getActionViewIntent(uri, "default.call", packageManager);
+                            /* REWORK (Xiaomi 17 / HyperOS report): donor's
+                             * non-CALL_PHONE path fell back to a plain VIEW
+                             * tel: intent, which pops the system chooser with
+                             * unrelated handlers (messaging apps register
+                             * tel:/sms: VIEW). Open the user's default dialer
+                             * directly, then any dialer via ACTION_DIAL. */
+                            if (context.checkCallingOrSelfPermission("android.permission.CALL_PHONE") == 0) {
+                                data = new Intent("android.intent.action.CALL", uri);
+                            } else {
+                                data = null;
+                                TelecomManager telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
+                                if (telecomManager != null) {
+                                    try {
+                                        String strDialerPackage = telecomManager.getDefaultDialerPackage();
+                                        if (!TextUtils.isEmpty(strDialerPackage)) {
+                                            data = getDialIntent(uri, strDialerPackage, packageManager);
+                                        }
+                                    } catch (Exception unused) {
+                                    }
+                                }
+                                if (data == null) {
+                                    data = new Intent("android.intent.action.DIAL", uri);
+                                }
+                            }
                             break;
                         case "settingsdeeplink":
                             String[] strArrSplit = uri.getSchemeSpecificPart().split("\\|");
