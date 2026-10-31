@@ -426,3 +426,44 @@ Adam Lowell card stays open (screenshot /tmp/opencode/phone-tap5.png),
 0 real FATAL (logcat "FATAL EXCEPTION" matches were adbd echo of the
 grep commands themselves). assembleDebug + assemblePhoneDebug green.
 
+
+## 2026-10-30 (late): tiered contact-app resolution (8499fc4)
+
+Code-review follow-up on 3e4f3e0 (plan-mode review findings, user
+approved; comments removed from code — rationale lives in the commit
+message). LinkResolver case "contact" now resolves in tiers:
+1) resolveActivity(VIEW+contact-mime, MATCH_DEFAULT_ONLY) honors the
+   user's actual default ("android"-package = system resolver = none
+   set → falls through);
+2) flag-0 list query, prefer FLAG_SYSTEM non-"android" then any
+   non-"android" — flag 0 kept deliberately: MATCH_DEFAULT_ONLY could
+   drop OEM handlers lacking CATEGORY_DEFAULT (Samsung's
+   ContactDetailActivity is launchable via setPackage, verified);
+3) nothing claims the typed VIEW → setData drops the MIME type so the
+   legacy untyped query still matches (launcher's
+   ActivityNotFoundException path covers "neither").
+Also removed the (overlapping) comment blocks this branch had added to
+case "contact" and inlined the java.util.List import.
+
+Verify:
+- Phone R5CT60JX7FM (phoneDebug in-place install, 0 FATAL, pid alive):
+  wake → HOME → search bar (540,180) → "adam" → Adam Lowell row
+  [212,373][488,438] tap → START shows
+  `dat=content://com.android.contacts/... typ=vnd.android.cursor.item/
+  contact pkg=com.samsung.android.app.contacts
+  cmp=...detail.ContactDetailActivity`, mCurrentFocus = contact card,
+  stays open (screenshot /tmp/opencode/phone-contact-tier.png). No
+  resolver/chooser.
+- Emulator-5554: was gone from adb (died after the black-screencap
+  wedge) → cold boot + reinstall + HOME role re-added; relaunch
+  0 FATAL; overlay (540,146) → "ada" → Ada row [194,335][457,394] tap
+  → resolved `pkg=com.android.contacts
+  cmp=.quickcontact.QuickContactActivity` directly (tier 1/2 found the
+  AOSP system handler; tier-3 untyped fallback not exercised here),
+  0 FATAL. The "focused window" ANR under scripted input remains the
+  known environment artifact — not seen this round.
+
+Both variants green (assembleDebug 25s, assemblePhoneDebug 51s). Tree
+clean after 8499fc4; branch fix/full-review-3, ~67 commits ahead of
+origin/main; nothing pushed (push/release blocked on explicit
+go-ahead).
