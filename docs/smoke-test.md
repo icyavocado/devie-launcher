@@ -506,3 +506,28 @@ Phone R5CT60JX7FM: assemblePhoneDebug green (53s), in-place install
 Success, relaunch 0 FATAL (pid 6520). Launcher.java gesture fix still
 UNCOMMITTED (tree has only that file modified). Branch main, 1 ahead
 of the released 811fcd4; nothing new pushed.
+
+## 2026-10-31 — Hide apps split tuning (7dc423d)
+
+User tweak of the card restyle: remove the small in-content "Hide apps"
+heading (the submenu title bar already names the screen) and split the
+single card into two — "Hide from search" alone in the first, the app
+list in the second.
+
+- settings_activity_hide_apps_fragment.xml: heading include removed;
+  card 1 wraps settings_activity_hide_apps_config (the switch row);
+  card 2 keeps the RecyclerView. Cards at 12/10/12/10 margins like the
+  badge screen's stacked cards.
+- HideAppsSettingsFragment: switch binding moved from a RecyclerView
+  row (TYPE_CONFIG) to onViewCreated via the predeclared
+  R.id.hide_from_search; adapter is app rows only now (itemCount =
+  size(), positions map 1:1). ConfigViewHolder removed; stale
+  heading TextView bind dropped; unused hide_apps_heading id removed.
+- Emulator (emulator-5554): screencap set-hideapps-split.png —
+  title bar + switch card + app-list card, no in-content heading;
+  scroll reaches the last rows (…/TMoble/WebView Browser Tester);
+  checked-state and sort (selected first) unchanged. 0 FATAL.
+- Phone R5CT60JX7FM: phoneDebug in-place install Success, relaunch
+  0 FATAL (pid 10468). Launcher.java gesture fix still UNCOMMITTED,
+  pending the user's phone re-test. Branch main at 7dc423d (2 ahead
+  of released 811fcd4); nothing new pushed.
