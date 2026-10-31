@@ -689,7 +689,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             this.intercepting = false;
             this.touchDownScrollingWidget = false;
             this.searchLocked = Launcher.this.mQsbSearchView.getCurrentFactor() <= 0.0f || (Launcher.this.mQsbSearchView.getEndValueIfAvailable() != null && Launcher.this.mQsbSearchView.getEndValueIfAvailable().floatValue() <= 0.0f);
-            this.allAppsLocked = Launcher.this.mAllAppsMotionTracker.getCurrentFactor() <= 0.0f || (Launcher.this.mAllAppsMotionTracker.getEndValueIfAvailable() != null && Launcher.this.mAllAppsMotionTracker.getEndValueIfAvailable().floatValue() <= 0.0f);
+            this.allAppsLocked = Launcher.this.mAllAppsMotionTracker.getCurrentFactor() <= 0.0f || (Launcher.this.mAllAppsMotionTracker.getEndValueIfAvailable() != null && Launcher.this.mAllAppsMotionTracker.getEndValueIfAvailable().floatValue() <= 0.0f) || (Launcher.this.mAllAppsMotionTracker.getEndValueIfAvailable() == null && Launcher.this.mAllAppsMotionTracker.getCurrentFactor() < 0.5f);
             if (this.isDoubleTapping) {
                 this.disallowTouches = true;
             }
@@ -2183,6 +2183,8 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             boolean mMultiTouchSwipeDownActive = false;
             boolean mMultiTouchSwipeUpCancelSent = false;
             boolean mMultiTouchSwipeDownCancelSent = false;
+            boolean mQsbLockedActive = false;
+            boolean mAllAppsLockedActive = false;
 
             @Override // android.view.View.OnTouchListener
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -2207,8 +2209,10 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 if (!Launcher.this.mCustomGestureListener.isGestureHandled() && ((zOnTouchEvent || (motionEvent.getAction() != 2 && motionEvent.getAction() != 0)) && !Launcher.this.mMainLayerGestureListener.horizontal)) {
                     if (Launcher.this.mMainLayerGestureListener.searchLocked) {
                         Launcher.this.mQsbSearchView.sendMotionEvent(motionEvent);
+                        this.mQsbLockedActive = true;
                     } else if (Launcher.this.mMainLayerGestureListener.allAppsLocked) {
                         Launcher.this.mAllAppsMotionTracker.sendMotionEvent(motionEvent);
+                        this.mAllAppsLockedActive = true;
                     } else if (Launcher.this.mMainLayerGestureListener.swipeUp) {
                         if (this.mSingleTouchSwipeUpAllApps && motionEvent.getPointerCount() == 1) {
                             Launcher.this.mAllAppsMotionTracker.sendMotionEvent(motionEvent);
@@ -2238,6 +2242,21 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                         Launcher.this.mCustomGestureDetector.onTouchEvent(motionEvent);
                         this.mCustomDetectorActive = true;
                     }
+                } else if (Launcher.this.mCustomGestureListener.isGestureHandled()) {
+                    if (this.mAllAppsLockedActive) {
+                        int lockedAction = motionEvent.getAction();
+                        motionEvent.setAction(3);
+                        Launcher.this.mAllAppsMotionTracker.sendMotionEvent(motionEvent);
+                        motionEvent.setAction(lockedAction);
+                        this.mAllAppsLockedActive = false;
+                    }
+                    if (this.mQsbLockedActive) {
+                        int lockedAction = motionEvent.getAction();
+                        motionEvent.setAction(3);
+                        Launcher.this.mQsbSearchView.sendMotionEvent(motionEvent);
+                        motionEvent.setAction(lockedAction);
+                        this.mQsbLockedActive = false;
+                    }
                 }
                 if (motionEvent.getAction() == 1 || motionEvent.getAction() == 3) {
                     this.mEventStreamStart = true;
@@ -2245,6 +2264,8 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                     this.mSingleTouchSwipeUpActive = false;
                     this.mMultiTouchSwipeDownActive = false;
                     this.mMultiTouchSwipeUpActive = false;
+                    this.mQsbLockedActive = false;
+                    this.mAllAppsLockedActive = false;
                 }
                 return true;
             }
