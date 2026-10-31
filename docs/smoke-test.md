@@ -336,3 +336,54 @@ list without changing the value; 0 FATAL. Widget resize-frame path not
 UI-verified on emulator (no widget on the desktop) — donor-smali verified.
 DiscreteSeekBar setMin/setMax untested in UI (no current call site
 depends on inverted bounds).
+
+## 2026-10-30 (later): Xiaomi contact-action fix
+
+Report (Portuguese Xiaomi 17 / HyperOS 16): contact rows fine, but tapping
+CALL/TEXT actions offered unrelated apps; reporter suspected
+`com.android.contacts`.
+
+Cause (verified on Samsung): `com.android.contacts` in the link is the
+contacts PROVIDER authority, present on Xiaomi too — not the bug. Real
+cause = donor default-app probes: contacts VIEW probe lacked the contact
+MIME type (resolver / generic messaging VIEW handler could win), phone
+probe used raw ACTION_CALL (bypasses the dialer role → resolver or Zoiper),
+text probe used SENDTO sms: which WhatsApp also registers (get(0)
+nondeterministic), and resolver detection only matched the AOSP
+ResolverActivity class name (MIUI's lives in package `android` with a
+different class).
+
+Fix (b844ee8, 2 files: LinkResolver + com.evie.search.local.LocalAppsManager):
+- Contacts: VIEW + CONTENT_ITEM_TYPE probe → APP_CONTACTS category
+  fallback (both with `android`-package guard); OPEN_CONTACT rows are
+  filtered by the rework so this path is hardening only.
+- Phone: TelecomManager.getDefaultDialerPackage() tier → donor probe.
+- Text: Telephony.Sms.getDefaultSmsPackage(Context) (public API; consults
+  the SMS role on Q+) → donor SENDTO probe. NOTE: first implementation
+  used the Secure setting `sms_default_application`, which is ABSENT on
+  the Samsung (`settings list secure` has no such key) even though
+  `cmd role get-role-holders android.app.role.SMS` = Google Messages —
+  role state is not mirrored into that Secure key there, hence the
+  Telephony API.
+- Resolver hardening in both LocalAppsManager classes: skip resolves
+  whose package is `android` (OEM resolvers), in resolveActivity and in
+  the queryIntentActivities fallback list.
+- LinkResolver: tel: without CALL_PHONE → ACTION_DIAL targeted at the
+  telecom default dialer, else bare ACTION_DIAL (no chooser); sms: →
+  SENDTO targeted at the Telephony default, else bare SENDTO.
+
+Verification: emulator chips cannot render (no recently-used contacts:
+provider `last_time_contacted` returns 0 and ignores all writes — AOSP
+gap), so contact-row tap path only: 0 FATAL. Phone R5CT60JX7FM: in-place
+phoneDebug install → relaunch → 0 FATAL, pid 6193; roles verified
+(SMS=Google Messages, DIALER=Google Dialer). HAND TEST ON PHONE STILL
+PENDING (user): search a recently-contacted person, tap CALL → default
+dialer prefilled, no chooser; tap TEXT → default SMS app.
+
+Known environment artifact (not a regression): the evie-test AVD
+(Android 13, sdk_phone64_x86_64) intermittently ANRs with "Application
+does not have a focused window" under scripted tap/type input —
+reproduced identically on a build without the fix; the launcher main
+thread was IDLE in nativePollOnce in the traces. AVD display also went
+black/wedged late in the session (black screencaps, empty dumps,
+0 FATAL). Verify via FATAL grep only on this AVD.
