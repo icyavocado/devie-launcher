@@ -6,7 +6,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.provider.Telephony;
 import android.telecom.TelecomManager;
@@ -90,9 +92,53 @@ public class LinkResolver {
                             }
                             break;
                         case "contact":
-                            /* REWORK: contact card renderer removed; open the contact directly. */
+                            /* REWORK: contact card renderer removed; open the
+                             * contact directly. (Xiaomi 17 / HyperOS report,
+                             * reproduced on Samsung): resolving a contacts
+                             * content: URI — with or without the contact MIME
+                             * type — still matches generic content handlers
+                             * (file "save as" viewers claim every MIME, web
+                             * browsers claim plain content VIEW) and pops the
+                             * chooser. Pick a real contacts app from the
+                             * matches — prefer a system app — and target it so
+                             * no chooser appears. */
                             data = new Intent("android.intent.action.VIEW");
-                            data.setData(Uri.parse("content://com.android.contacts/contacts/" + uri.getSchemeSpecificPart()));
+                            /* REWORK (Xiaomi 17 / HyperOS report): the index
+                             * stores the link as
+                             * contact:<URI-encoded full contacts URI> — the
+                             * ssp is ALREADY a content://com.android.contacts
+                             * URI, so only prefix the legacy bare-id form.
+                             * (Earlier code always prefixed, producing a
+                             * double-prefix URI the contacts app can't open.)
+                             * Attach the contact MIME type + target a real
+                             * contacts app so no chooser appears. */
+                            String strContactUri = uri.getSchemeSpecificPart();
+                            Uri contactUriData = strContactUri.startsWith("content://")
+                                    ? Uri.parse(strContactUri)
+                                    : Uri.parse("content://com.android.contacts/contacts/" + strContactUri);
+                            data.setDataAndType(contactUriData, "vnd.android.cursor.item/contact");
+                            ResolveInfo resolveInfoPick = null;
+                            try {
+                                java.util.List<ResolveInfo> listContactHandlers = packageManager.queryIntentActivities(data, 0);
+                                for (ResolveInfo resolveInfo : listContactHandlers) {
+                                    if (resolveInfo.activityInfo != null && !"android".equals(resolveInfo.activityInfo.packageName) && (resolveInfo.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                                        resolveInfoPick = resolveInfo;
+                                        break;
+                                    }
+                                }
+                                if (resolveInfoPick == null) {
+                                    for (ResolveInfo resolveInfo : listContactHandlers) {
+                                        if (resolveInfo.activityInfo != null && !"android".equals(resolveInfo.activityInfo.packageName)) {
+                                            resolveInfoPick = resolveInfo;
+                                            break;
+                                        }
+                                    }
+                                }
+                            } catch (Exception unused) {
+                            }
+                            if (resolveInfoPick != null) {
+                                data.setPackage(resolveInfoPick.activityInfo.packageName);
+                            }
                             break;
                         case "market":
                             data = new Intent("android.intent.action.VIEW", uri);

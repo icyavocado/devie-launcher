@@ -70,6 +70,13 @@ public class LocalAppsManager {
         if (listQueryIntentActivities.isEmpty()) {
             return null;
         }
+        /* REWORK: prefer a system app over user-installed wildcard handlers
+         * (file managers claim every MIME via generic content VIEW). */
+        for (ResolveInfo resolveInfo : listQueryIntentActivities) {
+            if (resolveInfo.activityInfo != null && (resolveInfo.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && !"android".equals(resolveInfo.activityInfo.packageName)) {
+                return resolveInfo;
+            }
+        }
         for (ResolveInfo resolveInfo : listQueryIntentActivities) {
             if (resolveInfo.activityInfo != null && !"android".equals(resolveInfo.activityInfo.packageName)) {
                 return resolveInfo;
