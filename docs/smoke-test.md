@@ -267,3 +267,27 @@ Deliberately not done (audit findings kept as notes):
   phone R5CT60JX7FM (fixed release installed in-place; versionCode 21408018).
 - rw6 tag on GitHub still carries the pre-fix NPE for downloaders — rw7
   re-tag pending go-ahead.
+## 2026-10-30 — recents long-press NPE (rw8, user's phone)
+
+Phone crash 14:20:12 MDT: NPE Drawable.setBounds in BitmapUtil.getBitmap:85
+← SearchShortcutHandler.createShortcut(:163) ← RecentItemPresenter.onItemLongClick:140.
+Long-press a recents row BEFORE the async icon decode lands (or on failed
+resolve) — Fresco used to always hold a hierarchy drawable; the rework's
+plain ImageView leaves view.getDrawable() null. Donor has the same latent
+unguarded code.
+
+Fix (b4c43a4): BitmapUtil.getBitmap(Drawable,int) null-guards → null;
+SearchShortcutHandler gets simpleDraweeView==null guards in LocalSearchSubitem
++ LocalSearchItem overloads and a bitmap null-check inside the
+FrequentlyUsedItem try/catch (null = skip shortcut, not crash).
+
+Phone note: rw8 on the phone is RELEASE-signed (cert = evie-release.jks) —
+unobfuscated trace came from the old catch-all keepnames still present at
+build time, NOT from a debug build. app-debug.apk install
+→ INSTALL_FAILED_UPDATE_INCOMPATIBLE; app-phoneDebug.apk installs in-place.
+Phone channel going forward = phoneDebug APK.
+
+Verified: emulator-5554 (overlay recents long-press → deep-shortcut popup,
+frequently-used long-press → App options popup, 0 FATAL) + phone R5CT60JX7FM
+(in-place phoneDebug install, logcat -c → relaunch → 0 FATAL, pid alive).
+DiscreteSeekBar WIP deliberately left uncommitted (not part of this fix).
