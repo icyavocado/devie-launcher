@@ -49,5 +49,19 @@
 -keepclassmembers class com.voxel.launcher3.FastBitmapDrawable {
     public void setBrightness(int);
 }
+-keepclassmembers class com.voxel.launcher3.dragndrop.DragLayer$LayoutParams {
+    public int getWidth();
+    public void setWidth(int);
+    public int getHeight();
+    public void setHeight(int);
+    public int getX();
+    public void setX(int);
+    public int getY();
+    public void setY(int);
+}
+-keepclassmembers class com.voxel.launcher3.CellLayout {
+    public float getBackgroundAlpha();
+    public void setBackgroundAlpha(float);
+}
 
 -dontoptimize
