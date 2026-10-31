@@ -261,7 +261,7 @@ public class DiscreteSeekBar extends View {
         int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
         if (mOverlayPopup == null) {
             mOverlayView = new OverlayView(getContext(), density);
-            mOverlayPopup = new PopupWindow(mOverlayView, (56 * density), (106 * density), false);
+            mOverlayPopup = new PopupWindow(mOverlayView, (56 * density), (96 * density), false);
             mOverlayPopup.setTouchable(false);
             mOverlayPopup.setClippingEnabled(false);
             mOverlayPopup.showAtLocation(getRootView(), Gravity.NO_GRAVITY, 0, -9999);
@@ -275,11 +275,11 @@ public class DiscreteSeekBar extends View {
         int density = (int) (getResources().getDisplayMetrics().density + 0.5f);
         mOverlayView.setValue(mValue, density);
         int overlayWidth = 56 * density;
-        int overlayHeight = 106 * density;
+        int overlayHeight = 96 * density;
         int thumbScreenX = locationOnScreen[0] + ((int) thumbCenterX());
-        /* overlay bottom edge (106d) = the thumb's top edge: the halo center
+        /* overlay bottom edge (96d) = the thumb's top edge: the halo center
          * sits at the overlay bottom; the pin's tip touches the same point */
-        int y = (locationOnScreen[1] + ((int) trackCenterY())) - (106 * density);
+        int y = (locationOnScreen[1] + ((int) trackCenterY())) - (96 * density);
         int x = thumbScreenX - (overlayWidth / 2);
         int max = getResources().getDisplayMetrics().widthPixels;
         if (x + overlayWidth > max) {
@@ -358,20 +358,20 @@ public class DiscreteSeekBar extends View {
         protected void onDraw(Canvas canvas) {
             int density = this.mDensity;
             int cx = 28 * density;
-            int tipY = 106 * density;
+            int tipY = 96 * density;
             /* location-pin silhouette in one path: tip at the bottom center,
              * sides sweep up and out into the round head */
             DiscreteSeekBar.this.mBubblePath.reset();
             DiscreteSeekBar.this.mBubblePath.moveTo(cx, tipY);
-            DiscreteSeekBar.this.mBubblePath.cubicTo(cx - (2 * density), tipY - (8 * density), cx - (13 * density), tipY - (22 * density), cx - (13 * density), tipY - (40 * density));
-            DiscreteSeekBar.this.mBubblePath.cubicTo(cx - (13 * density), tipY - (47 * density), cx - (7 * density), tipY - (53 * density), cx, tipY - (53 * density));
-            DiscreteSeekBar.this.mBubblePath.cubicTo(cx + (7 * density), tipY - (53 * density), cx + (13 * density), tipY - (47 * density), cx + (13 * density), tipY - (40 * density));
-            DiscreteSeekBar.this.mBubblePath.cubicTo(cx + (13 * density), tipY - (22 * density), cx + (2 * density), tipY - (8 * density), cx, tipY);
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx - (2 * density), tipY - (7 * density), cx - (13 * density), tipY - (19 * density), cx - (13 * density), tipY - (32 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx - (13 * density), tipY - (38 * density), cx - (7 * density), tipY - (44 * density), cx, tipY - (44 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx + (7 * density), tipY - (44 * density), cx + (13 * density), tipY - (38 * density), cx + (13 * density), tipY - (32 * density));
+            DiscreteSeekBar.this.mBubblePath.cubicTo(cx + (13 * density), tipY - (19 * density), cx + (2 * density), tipY - (7 * density), cx, tipY);
             DiscreteSeekBar.this.mBubblePath.close();
             DiscreteSeekBar.this.mBubblePaint.setColor(DiscreteSeekBar.this.mThumbColorPressed);
             canvas.drawPath(DiscreteSeekBar.this.mBubblePath, DiscreteSeekBar.this.mBubblePaint);
             /* hollow knob: white circle in the head + the value inside it */
-            int knobY = tipY - (40 * density);
+            int knobY = tipY - (31 * density);
             DiscreteSeekBar.this.mKnobPaint.setColor(0xffffffff);
             canvas.drawCircle(cx, knobY, 9 * density, DiscreteSeekBar.this.mKnobPaint);
             DiscreteSeekBar.this.mBubbleTextPaint.setTextSize(12 * density);
