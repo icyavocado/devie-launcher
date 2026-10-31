@@ -24,8 +24,8 @@ android {
         applicationId = "com.ovacoda.devie"
         minSdk = 21
         targetSdk = 35
-        versionCode = 21408022
-        versionName = "2.14.8-rw9"
+        versionCode = 21408023
+        versionName = "2.14.8-rw9.1"
         buildConfigField("String", "GIT_SHA", "\"$gitSha\"")
     }
 
