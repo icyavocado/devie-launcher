@@ -291,3 +291,48 @@ Verified: emulator-5554 (overlay recents long-press → deep-shortcut popup,
 frequently-used long-press → App options popup, 0 FATAL) + phone R5CT60JX7FM
 (in-place phoneDebug install, logcat -c → relaunch → 0 FATAL, pid alive).
 DiscreteSeekBar WIP deliberately left uncommitted (not part of this fix).
+
+## 2026-10-30 — code-review sweep of the 50 unpushed commits (9 fixes)
+
+Reviewed origin/main..HEAD (50 commits, 122 files) with donor-smali ground
+truth. Found + fixed, one commit each:
+
+1. 4e42f91 fix(widgets): map provider resize modes — AppWidgetResizeFrame
+   tested framework-unassigned bits 2/4; both-way widgets were
+   horizontal-only, horizontal-only non-resizable. Framework 0/1/2/3
+   already match the class encoding; donor hardcodes mode 3.
+2. 18742f8 fix(badges): keep extractor widget id on success — the new
+   finally deleted the appwidget id on every path (donor keeps it after
+   createWidget+setAppEnabled); badge extractors died after first bind.
+3. b22221f fix(desktop): restore drop snap and resize guards — two donor
+   conditions inverted in Workspace.onDrop: frame only for j != -101
+   (desktop); snap only when page != target && !hotseat (donor smali
+   :2967/:2992 verified).
+4. d4de946 fix(settings): rework slider touch gestures — DiscreteSeekBar
+   now fires onStartTrackingTouch (grid-line previews), defers claiming
+   the drag until sideways move > touch slop (vertical swipes scroll the
+   page), tap-jumps on up, Math.round mapping (last step was half-width),
+   setMin/setMax push the other bound instead of inverting.
+5. 0e30c7e fix(settings): dismiss slider popup on detach — WindowLeaked.
+6. 60fdac2 fix(r8): keep animated layout accessors — DragLayer$LayoutParams
+   width/height/x/y + CellLayout backgroundAlpha (by-name animators were
+   stripped in release).
+7. 6c0df80 fix(search): refresh outline after resize — SpringySearchView
+   outline provider re-installed on every size change (a33ba96 only
+   re-indented; block still sat inside the background==null gate).
+8. 27bc173 fix(search): snapshot db handle in readers — LocalSearchManager
+   readers race restart() (backup restore): snapshot once + isOpen check.
+9. da9680a fix(provider): end migration transaction on error — donor's
+   catchall ends + rethrows; the empty swallow left the tx open and
+   nested the workspaceScreens one inside it.
+
+Verified: assembleDebug/assemblePhoneDebug green; phone R5CT60JX7FM
+in-place phoneDebug install → relaunch → 0 FATAL, pid alive (phone went
+off-USB afterwards; a stray `cmd notification post` testtag notification
+may remain in its tray — dismissable). Emulator: Homescreen settings —
+drag Columns → grid lines + pin bubble show during drag, preview reflows,
+lines hide on release; swipe-up started on a slider row scrolls the
+list without changing the value; 0 FATAL. Widget resize-frame path not
+UI-verified on emulator (no widget on the desktop) — donor-smali verified.
+DiscreteSeekBar setMin/setMax untested in UI (no current call site
+depends on inverted bounds).
