@@ -984,32 +984,36 @@ public class LauncherProvider extends ContentProvider {
                             }
                         }
                         if (arrayList7.size() > 0) {
+                            /* REWORK(donor-parity): ended on every path, like
+                             * the donor's catchall; the bare swallow left the
+                             * transaction open (jadx lost the reflow edge). */
                             sQLiteDatabase.beginTransaction();
                             try {
                                 for (ContentValues contentValues4 : arrayList7) {
                                     if (LauncherProvider.dbInsertAndCheck(this, sQLiteDatabase, "favorites", null, contentValues4) < 0) {
-                                        sQLiteDatabase.endTransaction();
                                         return;
                                     }
                                     i3++;
                                 }
                                 sQLiteDatabase.setTransactionSuccessful();
+                            } finally {
                                 sQLiteDatabase.endTransaction();
-                            } catch (Throwable th2) {
                             }
                         }
                         sQLiteDatabase.beginTransaction();
-                        for (int i36 = 0; i36 <= iGenerateNewScreenId; i36++) {
-                            ContentValues contentValues5 = new ContentValues();
-                            contentValues5.put("_id", Integer.valueOf(i36));
-                            contentValues5.put("screenRank", Integer.valueOf(i36));
-                            if (LauncherProvider.dbInsertAndCheck(this, sQLiteDatabase, "workspaceScreens", null, contentValues5) < 0) {
-                                sQLiteDatabase.endTransaction();
-                                return;
+                        try {
+                            for (int i36 = 0; i36 <= iGenerateNewScreenId; i36++) {
+                                ContentValues contentValues5 = new ContentValues();
+                                contentValues5.put("_id", Integer.valueOf(i36));
+                                contentValues5.put("screenRank", Integer.valueOf(i36));
+                                if (LauncherProvider.dbInsertAndCheck(this, sQLiteDatabase, "workspaceScreens", null, contentValues5) < 0) {
+                                    return;
+                                }
                             }
+                            sQLiteDatabase.setTransactionSuccessful();
+                        } finally {
+                            sQLiteDatabase.endTransaction();
                         }
-                        sQLiteDatabase.setTransactionSuccessful();
-                        sQLiteDatabase.endTransaction();
                         i = iGenerateNewScreenId;
                         i2 = i3;
                     }
