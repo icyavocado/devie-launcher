@@ -79,7 +79,16 @@ public class BitmapUtil {
         return bitmapCreateBitmap;
     }
 
+    /* REWORK(icon-loader): a plain ImageView has no drawable until IconLoader's
+     * async decode lands (or at all when the icon cannot be resolved — uninstalled
+     * app, dead content:// photo). Fresco's SimpleDraweeView always held a
+     * hierarchy drawable, so the donor never hit this, but long-press → create
+     * shortcut crashed with an NPE from drawable.setBounds. Callers treat a null
+     * return as "no shortcut" (all checked). */
     public static Bitmap getBitmap(Drawable drawable, int i) {
+        if (drawable == null || i <= 0) {
+            return null;
+        }
         Bitmap bitmapCreateBitmap = Bitmap.createBitmap(i, i, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmapCreateBitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());

@@ -60,6 +60,9 @@ public class SearchShortcutHandler {
         if (simpleDraweeView == null) {
             simpleDraweeView = (ImageView) view.findViewById(R.id.search_item_image);
         }
+        if (simpleDraweeView == null) {
+            return false; /* REWORK(icon-loader): no icon row to lift the image from */
+        }
         if (localSearchSubitem.getLink().startsWith("tel:")) {
             intent = new Intent("android.intent.action.CALL", Uri.parse(localSearchSubitem.getLink()));
         } else {
@@ -81,7 +84,16 @@ public class SearchShortcutHandler {
             Intent intent = frequentlyUsedItem.getIntent();
             ResolveInfo resolveInfoResolveActivity = this.mPackageManager.resolveActivity(intent, 0);
             if (resolveInfoResolveActivity != null) {
-                return createShortcut(simpleDraweeView, new ItemInfoCommon(resolveInfoResolveActivity.loadLabel(this.mPackageManager).toString(), intent, BitmapUtil.getBitmap(simpleDraweeView.getDrawable(), simpleDraweeView.getWidth()), "shortcut"));
+                /* REWORK(icon-loader): getBitmap now returns null instead of
+                 * throwing on a missing drawable, so the guard belongs here
+                 * (BitmapUtil.getBitmap's NPE used to be swallowed by this
+                 * try/catch) — never start a drag with no icon bitmap. */
+                Bitmap bitmap = BitmapUtil.getBitmap(simpleDraweeView.getDrawable(), simpleDraweeView.getWidth());
+                if (bitmap == null) {
+                    Timber.e("Invalid view passed to createShortcut: %s", "null icon drawable");
+                    return false;
+                }
+                return createShortcut(simpleDraweeView, new ItemInfoCommon(resolveInfoResolveActivity.loadLabel(this.mPackageManager).toString(), intent, bitmap, "shortcut"));
             }
             Timber.e("Failed to resolve intent for package %s", frequentlyUsedItem.getIntent().getComponent().getPackageName());
             return false;
@@ -100,6 +112,9 @@ public class SearchShortcutHandler {
             return false;
         }
         ImageView simpleDraweeView = (ImageView) view.findViewById(R.id.search_item_image);
+        if (simpleDraweeView == null) {
+            return false; /* REWORK(icon-loader): no icon row to lift the image from */
+        }
         Uri uri = Uri.parse(localSearchItem.getLink());
         String type = localSearchItem.getType();
         int iHashCode = type.hashCode();
