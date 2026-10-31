@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- REWORK: dark preview card for the badges style strip; matches the mock
+     phone-screen color used by the settings previews. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/mock_screen_background" />
+    <corners android:radius="14dip" />
+</shape>

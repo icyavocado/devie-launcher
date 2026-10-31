@@ -124,6 +124,7 @@ public class CustomGestureSettingsFragment extends Fragment {
         this.mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         this.mAdapter = new GesturesAdapter();
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        this.mRecyclerView.addItemDecoration(new SettingsListDividerDecoration(getContext()));
         this.mRecyclerView.setAdapter(this.mAdapter);
     }
 }

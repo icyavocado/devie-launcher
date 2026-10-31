@@ -183,6 +183,7 @@
     <item type="id" name="rate_app" />
     <item type="id" name="recents_include_web_results" />
     <item type="id" name="recycler_view" />
+    <item type="id" name="hide_apps_heading" />
     <item type="id" name="remove_target_text" />
     <item type="id" name="restore" />
     <item type="id" name="root" />

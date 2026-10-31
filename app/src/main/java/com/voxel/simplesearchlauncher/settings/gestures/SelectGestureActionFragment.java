@@ -169,6 +169,7 @@ public class SelectGestureActionFragment extends Fragment {
         this.mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         this.mAdapter = new ActionsAdapter();
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        this.mRecyclerView.addItemDecoration(new com.voxel.simplesearchlauncher.settings.SettingsListDividerDecoration(getContext()));
         this.mRecyclerView.setAdapter(this.mAdapter);
     }
 }

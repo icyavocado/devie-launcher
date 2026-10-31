@@ -14,7 +14,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -42,7 +41,6 @@ import java.util.Set;
 public class HideAppsSettingsFragment extends Fragment implements SettingsActivity.OnSettingsBackButtonPressedListener {
     private static final String DIALOG_TAG = HideAppsSettingsFragment.class.getCanonicalName() + ".dialog";
     private static final int TYPE_CONFIG = 0;
-    private static final int TYPE_HEADER = 1;
     private static final int TYPE_APP = 2;
 
     private List<AppsInfoDataHelper.AppInfo> mAppInfos;
@@ -80,18 +78,12 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
 
         @Override
         public int getItemViewType(int position) {
-            if (position == 0) {
-                return TYPE_CONFIG;
-            }
-            if (position == 1) {
-                return TYPE_HEADER;
-            }
-            return TYPE_APP;
+            return position == 0 ? TYPE_CONFIG : TYPE_APP;
         }
 
         @Override
         public int getItemCount() {
-            return HideAppsSettingsFragment.this.mAppInfos.size() + 2;
+            return HideAppsSettingsFragment.this.mAppInfos.size() + 1;
         }
 
         @Override
@@ -99,8 +91,6 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             switch (viewType) {
                 case TYPE_CONFIG:
                     return new ConfigViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.settings_activity_hide_apps_config, parent, false));
-                case TYPE_HEADER:
-                    return new HeaderViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.settings_activity_notification_section_header, parent, false));
                 default:
                     ItemViewHolder itemViewHolder = new ItemViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.hide_app_picker_list_item, parent, false));
                     itemViewHolder.itemView.setOnClickListener(this.mItemClickListener);
@@ -114,10 +104,8 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             int itemViewType = getItemViewType(position);
             if (itemViewType == TYPE_CONFIG) {
                 bindConfig((ConfigViewHolder) viewHolder);
-            } else if (itemViewType == TYPE_HEADER) {
-                bindAppListHeader((HeaderViewHolder) viewHolder);
             } else {
-                bindItem((ItemViewHolder) viewHolder, position - 2);
+                bindItem((ItemViewHolder) viewHolder, position - 1);
             }
         }
 
@@ -134,12 +122,6 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             });
         }
 
-        private void bindAppListHeader(HeaderViewHolder headerViewHolder) {
-            headerViewHolder.mName.setText(R.string.app_settings_hide_apps);
-            headerViewHolder.mSubtext.setVisibility(8);
-            headerViewHolder.mSwitch.setVisibility(8);
-        }
-
         private void bindItem(ItemViewHolder itemViewHolder, int position) {
             AppsInfoDataHelper.AppInfo appInfo = (AppsInfoDataHelper.AppInfo) HideAppsSettingsFragment.this.mAppInfos.get(position);
             boolean zContains = HideAppsSettingsFragment.this.mChosenApps.contains(appInfo);
@@ -148,22 +130,6 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             itemViewHolder.mLabel.setText(appInfo.appLabel);
             itemViewHolder.mApplicationIcon.setImageDrawable(null);
             IconLoader.getInstance().loadInto(itemViewHolder.mApplicationIcon, HybridNetworkFetcherCommon.getMagicResourceUri(appInfo.packageName, appInfo.activityName, appInfo.appVersion));
-        }
-    }
-
-    class HeaderViewHolder extends RecyclerView.ViewHolder {
-
-        TextView mName;
-
-        TextView mSubtext;
-
-        SwitchCompat mSwitch;
-
-        public HeaderViewHolder(View view) {
-            super(view);
-            this.mName = (TextView) view.findViewById(R.id.name);
-            this.mSubtext = (TextView) view.findViewById(R.id.subtext);
-            this.mSwitch = (SwitchCompat) view.findViewById(R.id.item_switch);
         }
     }
 
@@ -360,8 +326,10 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
     @Override
     public void onViewCreated(View view, Bundle bundle) {
         this.mLayoutInflater = LayoutInflater.from(view.getContext());
-        this.mRecyclerView = (RecyclerView) view;
+        this.mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        this.mRecyclerView.addItemDecoration(new SettingsListDividerDecoration(view.getContext()));
         this.mRecyclerView.setAdapter(new AppListAdapter());
+        ((TextView) view.findViewById(R.id.text)).setText(R.string.app_settings_hide_apps);
     }
 }
