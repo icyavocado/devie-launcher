@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewParent;
+import android.view.ViewConfiguration;
 import android.widget.PopupWindow;
 
 public class DiscreteSeekBar extends View {
@@ -23,6 +24,8 @@ public class DiscreteSeekBar extends View {
     private int mValue;
     private OnProgressChangeListener mListener;
     private boolean mTracking;
+    private float mTouchDownX;
+    private float mTouchDownY;
     private int mTrackColor = DEFAULT_TRACK_COLOR;
     private int mProgressColor = DEFAULT_PROGRESS_COLOR;
     private int mThumbColorNormal = DEFAULT_THUMB_COLOR;
@@ -87,23 +90,20 @@ public class DiscreteSeekBar extends View {
     }
 
     public void setMin(int i) {
-        setRange(i, mMax);
+        /* adw-parity: a bound setter never silently inverts the range; the
+         * other bound only moves if it would be left outside. */
+        if (mMax < i) {
+            mMax = i;
+        }
+        mMin = i;
+        setValue(mValue);
     }
 
     public void setMax(int i) {
-        setRange(mMin, i);
-    }
-
-    private void setRange(int i, int i2) {
-        int i3;
-        if (i > i2) {
-            i3 = i2;
-            i2 = i;
-        } else {
-            i3 = i;
+        if (mMin > i) {
+            mMin = i;
         }
-        mMin = i3;
-        mMax = i2;
+        mMax = i;
         setValue(mValue);
     }
 
@@ -202,6 +202,10 @@ public class DiscreteSeekBar extends View {
         }
     }
 
+    private int touchSlop() {
+        return ViewConfiguration.get(getContext()).getScaledTouchSlop();
+    }
+
     @Override // android.view.View
     public boolean onTouchEvent(MotionEvent motionEvent) {
         if (!isEnabled()) {
@@ -209,28 +213,55 @@ public class DiscreteSeekBar extends View {
         }
         int actionMasked = motionEvent.getActionMasked();
         if (actionMasked == 0) {
-            attemptClaimDrag();
-            mTracking = true;
+            /* Remember the down point; the drag only starts once a sideways
+             * move past the touch slop arrives (see the MOVE branch). */
+            mTouchDownX = motionEvent.getX();
+            mTouchDownY = motionEvent.getY();
+            mTracking = false;
             setPressed(true);
-            setValueFromTouch(motionEvent.getX(), true);
             return true;
         } else if (actionMasked == 1 || actionMasked == 3) {
-            if (!mTracking) {
-                return false;
-            }
-            mTracking = false;
             setPressed(false);
-            if (actionMasked == 1) {
-                setValueFromTouch(motionEvent.getX(), true);
+            if (mTracking) {
+                mTracking = false;
+                if (actionMasked == 1) {
+                    setValueFromTouch(motionEvent.getX(), true);
+                }
+                hideOverlay();
+                if (mListener != null) {
+                    mListener.onStopTrackingTouch(this);
+                }
+                return true;
             }
-            hideOverlay();
-            if (mListener != null) {
-                mListener.onStopTrackingTouch(this);
+            if (actionMasked == 1) {
+                /* Tap without drag: jump to the tapped value, bracketed by
+                 * the start/stop callbacks so previews react too. */
+                if (mListener != null) {
+                    mListener.onStartTrackingTouch(this);
+                }
+                setValueFromTouch(motionEvent.getX(), true);
+                if (mListener != null) {
+                    mListener.onStopTrackingTouch(this);
+                }
             }
             return true;
         } else if (actionMasked == 2) {
+            /* REWORK(gesture): defer taking the drag until the finger has
+             * moved sideways past the touch slop (adw-parity inside scroll
+             * containers); vertical gestures keep scrolling the page. */
             if (!mTracking) {
-                return false;
+                float deltaX = motionEvent.getX() - mTouchDownX;
+                float deltaY = motionEvent.getY() - mTouchDownY;
+                if (Math.abs(deltaX) > touchSlop() && Math.abs(deltaX) > Math.abs(deltaY)) {
+                    mTracking = true;
+                    attemptClaimDrag();
+                    if (mListener != null) {
+                        mListener.onStartTrackingTouch(this);
+                    }
+                    setValueFromTouch(motionEvent.getX(), true);
+                    updateOverlay();
+                }
+                return true;
             }
             setValueFromTouch(motionEvent.getX(), true);
             return true;
@@ -243,7 +274,10 @@ public class DiscreteSeekBar extends View {
         float trackLength = trackLength();
         int i = mMin;
         if (trackLength > 0.0f) {
-            i += (int) ((Math.max(0.0f, Math.min(trackLength, f - trackStartX())) / trackLength) * ((mMax - mMin) + 0.5f));
+            /* Round, don't truncate: truncating made the last step half as
+             * wide as the others, so max was hard to reach. */
+            float fraction = Math.max(0.0f, Math.min(trackLength, f - trackStartX())) / trackLength;
+            i += Math.round(fraction * (float) (mMax - mMin));
         }
         int original = mValue;
         setValue(i);
