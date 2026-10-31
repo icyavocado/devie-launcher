@@ -275,8 +275,13 @@ patch. Known trap classes + the fixes:
    SMS = `Telephony.Sms.getDefaultSmsPackage(Context)`, contacts = VIEW +
    `CONTENT_ITEM_TYPE` (NOT the Secure key `sms_default_application` — Samsung
    doesn't populate it; roles live in RoleManager: check via
-   `cmd role get-role-holders android.app.role.SMS`). See
-   `com.evie.search.local.LocalAppsManager` + `LinkResolver` (b844ee8).
+   `cmd role get-role-holders android.app.role.SMS`). The TAPPED contact row is
+   the same trap x2: index links are `contact:<URL-encoded FULL contacts URI>`
+   (use the ssp directly; don't re-prefix) and even with the MIME type the
+   resolution still matches generic content handlers (file managers claim every
+   MIME; "Open with" offered Google/Lichess/Messages) — query VIEW+MIME,
+   prefer a FLAG_SYSTEM app, `setPackage`. See
+   `com.evie.search.local.LocalAppsManager` + `LinkResolver` (b844ee8, 3e4f3e0).
 
 ## 10. Known quirks / open items (see docs/roadmap.md)
 
