@@ -2,7 +2,7 @@
 <LinearLayout android:gravity="center_horizontal" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content"
   xmlns:android="http://schemas.android.com/apk/res/android">
         <LinearLayout android:orientation="vertical" android:background="@drawable/settings_dark_card_background" android:layout_marginStart="12.0dip" android:layout_marginTop="10.0dip" android:layout_marginEnd="12.0dip" android:layout_marginBottom="10.0dip" android:paddingTop="10.0dip" android:paddingBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
-            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="150.0dip">
+            <LinearLayout android:layout_gravity="center_horizontal" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="62.0dip">
                 <com.voxel.simplesearchlauncher.view.BadgeableAppIcon android:layout_gravity="center_vertical" android:id="@id/icon1" android:padding="8.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="18.0dip" />
                 <com.voxel.simplesearchlauncher.view.BadgeableAppIcon android:layout_gravity="center_vertical" android:id="@id/icon2" android:padding="8.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="18.0dip" />
                 <com.voxel.simplesearchlauncher.view.BadgeableAppIcon android:layout_gravity="center_vertical" android:id="@id/icon3" android:padding="8.0dip" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginEnd="18.0dip" />
