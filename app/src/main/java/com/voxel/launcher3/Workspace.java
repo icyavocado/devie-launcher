@@ -3142,12 +3142,14 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                 } else {
                     view2 = view4;
                 }
-                if (getScreenIdForPageIndex(this.mCurrentPage) != j2 || zIsHotseatLayout) {
-                    i = -1;
-                } else {
+                /* REWORK(donor-parity): snap only when the drop lands on a
+                 * page we're not already viewing (and never for hotseat). */
+                if (getScreenIdForPageIndex(this.mCurrentPage) != j2 && !zIsHotseatLayout) {
                     int pageIndexForScreenId = getPageIndexForScreenId(j2);
                     snapToPage(pageIndexForScreenId);
                     i = pageIndexForScreenId;
+                } else {
+                    i = -1;
                 }
                 if (z5) {
                     itemInfo = (ItemInfo) view2.getTag();
@@ -3177,7 +3179,9 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                     layoutParams.cellHSpan = itemInfo2.spanX;
                     layoutParams.cellVSpan = itemInfo2.spanY;
                     layoutParams.isLockedToGrid = z;
-                    if (j == -101 && (view2 instanceof LauncherAppWidgetHostView)) {
+                    /* REWORK(donor-parity): the resize frame is only for
+                     * desktop widgets, never hotseat drops. */
+                    if (j != -101 && (view2 instanceof LauncherAppWidgetHostView)) {
                         final LauncherAppWidgetHostView launcherAppWidgetHostView = (LauncherAppWidgetHostView) view2;
                         if (launcherAppWidgetHostView.getAppWidgetInfo() != null) {
                             final ItemInfo itemInfoCapture = itemInfo;
