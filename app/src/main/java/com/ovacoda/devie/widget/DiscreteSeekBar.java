@@ -335,7 +335,13 @@ public class DiscreteSeekBar extends View {
 
     @Override // android.view.View
     protected void onDetachedFromWindow() {
-        hideOverlay();
+        /* PopupWindow keeps the activity's window referenced: dismiss it and
+         * drop the field, so closing Settings doesn't leak a WindowLeaked. */
+        if (mOverlayPopup != null) {
+            mOverlayPopup.dismiss();
+            mOverlayPopup = null;
+            mOverlayView = null;
+        }
         super.onDetachedFromWindow();
     }
 
