@@ -40,8 +40,6 @@ import java.util.Set;
 /* JADX INFO: loaded from: classes2.dex */
 public class HideAppsSettingsFragment extends Fragment implements SettingsActivity.OnSettingsBackButtonPressedListener {
     private static final String DIALOG_TAG = HideAppsSettingsFragment.class.getCanonicalName() + ".dialog";
-    private static final int TYPE_CONFIG = 0;
-    private static final int TYPE_APP = 2;
 
     private List<AppsInfoDataHelper.AppInfo> mAppInfos;
     Context mApplicationContext;
@@ -77,49 +75,21 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
         }
 
         @Override
-        public int getItemViewType(int position) {
-            return position == 0 ? TYPE_CONFIG : TYPE_APP;
-        }
-
-        @Override
         public int getItemCount() {
-            return HideAppsSettingsFragment.this.mAppInfos.size() + 1;
+            return HideAppsSettingsFragment.this.mAppInfos.size();
         }
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            switch (viewType) {
-                case TYPE_CONFIG:
-                    return new ConfigViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.settings_activity_hide_apps_config, parent, false));
-                default:
-                    ItemViewHolder itemViewHolder = new ItemViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.hide_app_picker_list_item, parent, false));
-                    itemViewHolder.itemView.setOnClickListener(this.mItemClickListener);
-                    itemViewHolder.mCheckBox.setClickable(false);
-                    return itemViewHolder;
-            }
+            ItemViewHolder itemViewHolder = new ItemViewHolder(HideAppsSettingsFragment.this.mLayoutInflater.inflate(R.layout.hide_app_picker_list_item, parent, false));
+            itemViewHolder.itemView.setOnClickListener(this.mItemClickListener);
+            itemViewHolder.mCheckBox.setClickable(false);
+            return itemViewHolder;
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-            int itemViewType = getItemViewType(position);
-            if (itemViewType == TYPE_CONFIG) {
-                bindConfig((ConfigViewHolder) viewHolder);
-            } else {
-                bindItem((ItemViewHolder) viewHolder, position - 1);
-            }
-        }
-
-        private void bindConfig(ConfigViewHolder configViewHolder) {
-            configViewHolder.mHideFromSearch.mLabel.setText(R.string.app_settings_hide_apps_hide_from_search);
-            configViewHolder.mHideFromSearch.mSubLabel.setVisibility(0);
-            configViewHolder.mHideFromSearch.mSubLabel.setText(R.string.app_settings_hide_apps_hide_from_search_subtext);
-            configViewHolder.mHideFromSearch.mSwitch.setChecked(!HideAppsSettingsFragment.this.mHideAppsModel.isHiddenSearchable());
-            configViewHolder.mHideFromSearch.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public final void onCheckedChanged(CompoundButton compoundButton, boolean z) {
-                    HideAppsSettingsFragment.this.mHideAppsModel.setHiddenSearchable(!z);
-                }
-            });
+            bindItem((ItemViewHolder) viewHolder, position);
         }
 
         private void bindItem(ItemViewHolder itemViewHolder, int position) {
@@ -146,15 +116,6 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             this.mApplicationIcon = (ImageView) view.findViewById(R.id.application_icon);
             this.mCheckBox = (CheckBox) view.findViewById(R.id.checkbox);
             this.mLabel = (TextView) view.findViewById(R.id.label);
-        }
-    }
-
-    class ConfigViewHolder extends RecyclerView.ViewHolder {
-        SettingsSwitchViewHolder mHideFromSearch;
-
-        public ConfigViewHolder(View view) {
-            super(view);
-            this.mHideFromSearch = new SettingsSwitchViewHolder(view.findViewById(R.id.hide_from_search));
         }
     }
 
@@ -330,6 +291,16 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         this.mRecyclerView.addItemDecoration(new SettingsListDividerDecoration(view.getContext()));
         this.mRecyclerView.setAdapter(new AppListAdapter());
-        ((TextView) view.findViewById(R.id.text)).setText(R.string.app_settings_hide_apps);
+        SettingsSwitchViewHolder hideFromSearch = new SettingsSwitchViewHolder(view.findViewById(R.id.hide_from_search));
+        hideFromSearch.mLabel.setText(R.string.app_settings_hide_apps_hide_from_search);
+        hideFromSearch.mSubLabel.setVisibility(0);
+        hideFromSearch.mSubLabel.setText(R.string.app_settings_hide_apps_hide_from_search_subtext);
+        hideFromSearch.mSwitch.setChecked(!this.mHideAppsModel.isHiddenSearchable());
+        hideFromSearch.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public final void onCheckedChanged(CompoundButton compoundButton, boolean z) {
+                HideAppsSettingsFragment.this.mHideAppsModel.setHiddenSearchable(!z);
+            }
+        });
     }
 }
