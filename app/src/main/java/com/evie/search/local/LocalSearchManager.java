@@ -227,10 +227,13 @@ public class LocalSearchManager {
             @Override // java.lang.Runnable
             public final void run() {
                 LocalSearchManager localSearchManager = LocalSearchManager.this;
-                if (localSearchManager.db == null) {
+                /* restart() (backup restore) may close the handle between the
+                 * check and use: snapshot once and query the local. */
+                SQLiteDatabase db = localSearchManager.db;
+                if (db == null || !db.isOpen()) {
                     return;
                 }
-                localSearchManager.updateApps(localSearchManager.db.query("item", new String[]{"_id", "link"}, "type=?", new String[]{"LOCAL_APP"}, null, null, null), localSearchManager.mLocalAppsManager.getAllApps());
+                localSearchManager.updateApps(db.query("item", new String[]{"_id", "link"}, "type=?", new String[]{"LOCAL_APP"}, null, null, null), localSearchManager.mLocalAppsManager.getAllApps());
             }
         });
     }
@@ -412,7 +415,7 @@ public class LocalSearchManager {
         ArrayList arrayList = new ArrayList();
         Cursor cursorQuery = null;
         try {
-            cursorQuery = this.db.query("recents", null, null, null, null, null, "last_used DESC", String.valueOf(this.mMaxRecents));
+            cursorQuery = sQLiteDatabase.query("recents", null, null, null, null, null, "last_used DESC", String.valueOf(this.mMaxRecents));
             while (cursorQuery.moveToNext()) {
                 arrayList.add(new RecentItem(cursorQuery.getString(cursorQuery.getColumnIndexOrThrow("link")), cursorQuery.getString(cursorQuery.getColumnIndexOrThrow("label")), cursorQuery.getString(cursorQuery.getColumnIndexOrThrow("item_type")), cursorQuery.getString(cursorQuery.getColumnIndexOrThrow("image_url"))));
             }
@@ -618,10 +621,13 @@ public class LocalSearchManager {
             @Override // java.lang.Runnable
             public final void run() {
                 LocalSearchManager localSearchManager = LocalSearchManager.this;
-                if (localSearchManager.db == null) {
+                /* restart() (backup restore) may close the handle between the
+                 * check and use: snapshot once and query the local. */
+                SQLiteDatabase db = localSearchManager.db;
+                if (db == null || !db.isOpen()) {
                     return;
                 }
-                localSearchManager.updateApps(localSearchManager.db.query("item", new String[]{"_id", "link"}, "link LIKE ?", new String[]{"app:" + str + "|%"}, null, null, null), list);
+                localSearchManager.updateApps(db.query("item", new String[]{"_id", "link"}, "link LIKE ?", new String[]{"app:" + str + "|%"}, null, null, null), list);
             }
         });
     }
