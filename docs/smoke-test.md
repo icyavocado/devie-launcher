@@ -548,3 +548,17 @@ behind the demo icons — keep the spacing, only shrink the background.
 - Phone R5CT60JX7FM: phoneDebug in-place install Success, relaunch
   0 FATAL (pid 11794). Launcher.java gesture fix still uncommitted
   (pending phone re-test). Branch main at 7133458; nothing pushed.
+
+## 2026-10-31 — gesture strand fix committed (b9c8c94)
+
+User re-test on the phone: "The drawer issue is not reproducible" —
+re-tested on rw9.1, which does NOT contain the fix, so the strand is
+intermittent rather than gone. The fix stays as protective hardening
+(root cause code-verified: gesture claims, including unassigned ones,
+close the router gate mid-stream; trackers never see UP/CANCEL; the
+spring parks at the last fed factor) and adds the at-rest heal clause
+in onDown.
+
+- Committed the Launcher.java fix (22 insertions, 1 deletion) with the
+  deviation rationale in the commit body.
+- Emulator relaunch sanity: 0 FATAL (pid 4614).
