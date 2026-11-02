@@ -562,3 +562,42 @@ in onDown.
 - Committed the Launcher.java fix (22 insertions, 1 deletion) with the
   deviation rationale in the commit body.
 - Emulator relaunch sanity: 0 FATAL (pid 4614).
+
+## 2026-11-02 — triple bug report: contact taps, ghost icons, dock reset
+
+User-reported (bug 1 from a Xiaomi/MIUI user; bugs 2-3 own re-tests):
+1) substring search finds contacts but taps do nothing; 2) restoring a
+backup whose apps were since uninstalled leaves icons that cannot be
+removed (no Remove in long-press); 3) the Dock switch showed OFF after
+restoring/updates though it was ON.
+
+- Bug 1 (0c2b8d3): contact-link resolution had no fallback when every
+  MIUI tier probe failed (no default contacts handler / resolver
+  quirks) — resolve() returned false silently and the tap did nothing.
+  LinkResolver contact case now falls back: validated setPackage ->
+  MAIN/APP_CONTACTS category probe -> untyped VIEW re-verified ->
+  give up (null). LocalItemPresenter toasts "App isn't installed."
+  when resolve returns false instead of a silent no-op.
+- Bug 2 (7103421): after a pm update the app's sticky broadcast
+  (SYSTEM_READY) is gone, so LoaderTask treated every restored row as
+  "sd card not ready" and kept pending icons for uninstalled packages
+  until reboot — unremovable ghosts. isSdCardReady now reads
+  Environment.getExternalStorageState() directly.
+- Bug 3 (8a07788): saveRestoredUserData clear()ed each pref file then
+  wrote only keys present in the backup JSON — restoring an older
+  backup erased prefs that postdate it (dock_container_enabled).
+  Restore is now upsert-only over the existing whitelist.
+- Emulator verification: Ada Lovelace tap -> com.android.contacts
+  QuickContactActivity, card stays open, 0 FATAL; seeded ghost rows
+  (app/shortcut/widget for com.ghost.uninstalled, restored flags set)
+  pruned on relaunch; restore of a prefs-only zip lacking the dock key
+  with dock ON left dock_container_enabled=true and the dock visible.
+- REWORK-comment sweep (user directive; comments rule recorded in
+  AGENTS.md section 7, ccdc699): 123 files cleaned, net ~450 comment
+  lines removed (aaf2e58). First sweep attempt had a broken string/
+  comment boundary lexer and mangled 15 files; tree restored from the
+  pre-sweep copy and re-swept with a strict char-level lexer.
+- Phone R5CT60JX7FM: phoneDebug in-place install of the final
+  swept+fixed build Success; logcat-cleared fresh relaunch 0 FATAL.
+- Branch main at 135f5e4; nothing pushed. Pending: Xiaomi reporter
+  retest and the user's timeline for the bug-3 observation.
