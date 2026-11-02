@@ -176,6 +176,14 @@ emulator release: `su 0 sh -c 'cat /data/local/tmp/qN.sql | sqlite3 /data/data/c
   leaked once and forced a full squash + purge).
 - History = a single squashed root on purpose (secret purge). Keep it that way.
 
+### Comments rule (standing, user directive 2026-11-02)
+
+- Do NOT leave REWORK/rationale comments in code ("You are over commenting again").
+- Code comments only when truly necessary and short; rationale, donor diffs, and
+  lessons belong here in AGENTS.md / docs/ and commit messages, not the source.
+- A full sweep removing every REWORK comment is part of the rework discipline;
+  do not re-add them.
+
 ### How to cut a release (user has approved)
 
 1. `app/build.gradle.kts`: `versionCode` +1, `versionName` next `rw<N>`; commit
