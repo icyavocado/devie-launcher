@@ -647,7 +647,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
             AppWidgetManager.getInstance(context);
             boolean isSafeMode = packageManager.isSafeMode();
             LauncherAppsCompat launcherApps = LauncherAppsCompat.getInstance(context);
-            boolean isSdCardReady = ContextCompat.registerReceiver(context, null, new IntentFilter("com.voxel.launcher3.SYSTEM_READY"), ContextCompat.RECEIVER_NOT_EXPORTED) != null;
+            boolean isSdCardReady = Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
             boolean loadedOldDb = false;
             DeviceProfile deviceProfile = LauncherAppState.getInstance().getDynamicGrid().getDeviceProfile();
             CellParams cellParams = deviceProfile.getCellParamsForType(DeviceProfile.ParamType.WORKSPACE);
