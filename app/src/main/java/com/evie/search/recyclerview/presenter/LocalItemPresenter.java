@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
+import android.widget.Toast;
 import com.evie.common.services.links.LinkCallback;
 import com.evie.common.services.links.LinkRequest;
 import com.evie.common.services.links.LinkResolver;
@@ -114,12 +115,14 @@ public class LocalItemPresenter implements BaseItemPresenter {
     @Override // com.evie.search.recyclerview.presenter.BaseItemPresenter
     public void onItemClick() {
         LocalSearchManager.getInstance().itemAccessed(this.mItem, true);
-        this.mLinkResolver.resolve(this.mContext, new LinkRequest(this.mItem.getLink()).callback(new LinkCallback() { // from class: com.evie.search.recyclerview.presenter.-$$Lambda$LocalItemPresenter$Q3fz_64kAQBkO2eI8mtS8T7k1dM
+        if (!this.mLinkResolver.resolve(this.mContext, new LinkRequest(this.mItem.getLink()).callback(new LinkCallback() { // from class: com.evie.search.recyclerview.presenter.-$$Lambda$LocalItemPresenter$Q3fz_64kAQBkO2eI8mtS8T7k1dM
             @Override // com.evie.common.services.links.LinkCallback
             public final boolean onResolved(Intent intent) {
                 return LocalItemPresenter.this.lambda$onItemClick$1( intent);
             }
-        }));
+        }))) {
+            Toast.makeText(this.mContext, R.string.activity_not_found, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override // com.evie.search.recyclerview.presenter.BaseItemPresenter

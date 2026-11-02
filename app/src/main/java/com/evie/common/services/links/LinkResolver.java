@@ -126,8 +126,27 @@ public class LinkResolver {
                             }
                             if (resolveInfoPick != null) {
                                 data.setPackage(resolveInfoPick.activityInfo.packageName);
+                                if (packageManager.resolveActivity(data, 0) != null) {
+                                    break;
+                                }
+                                resolveInfoPick = null;
+                            }
+                            Intent intentContactsHome = new Intent("android.intent.action.MAIN");
+                            intentContactsHome.addCategory("android.intent.category.APP_CONTACTS");
+                            ResolveInfo resolveInfoContacts = null;
+                            try {
+                                resolveInfoContacts = packageManager.resolveActivity(intentContactsHome, 0);
+                            } catch (Exception unused) {
+                            }
+                            if (resolveInfoContacts != null && resolveInfoContacts.activityInfo != null && !"android".equals(resolveInfoContacts.activityInfo.packageName)) {
+                                data = new Intent("android.intent.action.MAIN");
+                                data.setComponent(new ComponentName(resolveInfoContacts.activityInfo.packageName, resolveInfoContacts.activityInfo.name));
+                                data.addFlags(268435456);
                             } else {
-                                data.setData(contactUriData);
+                                ResolveInfo resolveInfoUntyped = packageManager.resolveActivity(data.setPackage(null).setData(contactUriData), 0);
+                                if (resolveInfoUntyped == null || resolveInfoUntyped.activityInfo == null) {
+                                    data = null;
+                                }
                             }
                             break;
                         case "market":
