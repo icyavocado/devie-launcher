@@ -26,9 +26,9 @@ class ContactUpdater {
         /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
         @Override // android.os.AsyncTask
         public Void doInBackground(Void... voidArr) {
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable thReflow = null;
-            /* REWORK: jadx blank register */
+
             Cursor cursorQuery = null;
             long jCurrentTimeMillis = System.currentTimeMillis();
             HashSet hashSet = new HashSet();
@@ -127,7 +127,7 @@ class ContactUpdater {
                     throw th2;
                 }
             } catch (Throwable th3) {
-                /* REWORK: the dex-level worker swallowed the reflow and ended the run. */
+
                 Timber.e(th3);
                 if (cursorQuery != null) {
                     cursorQuery.close();

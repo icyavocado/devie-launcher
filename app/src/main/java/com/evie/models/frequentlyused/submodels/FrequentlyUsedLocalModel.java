@@ -32,7 +32,7 @@ public class FrequentlyUsedLocalModel implements Disposable {
 
     public FrequentlyUsedLocalModel(AppLaunchDAO appLaunchDAO) {
         this.mAppLaunchDAO = appLaunchDAO;
-        // REWORK: Room's RxJava binding was cut with room-rxjava2; wrap the blocking DAO call in Maybe instead.
+
         this.mDisposables.add(io.reactivex.Maybe.fromCallable(() -> this.mAppLaunchDAO.getMostRecentEntry()).subscribeOn(Schedulers.io()).map(new Function() { // from class: com.evie.models.frequentlyused.submodels.-$$Lambda$FrequentlyUsedLocalModel$wpiGjjya7trryMk_Cogov8HTZhs
             @Override // io.reactivex.functions.Function
             public final Object apply(Object obj) {

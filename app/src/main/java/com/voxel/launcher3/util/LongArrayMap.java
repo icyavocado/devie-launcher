@@ -19,7 +19,7 @@ public class LongArrayMap<E> extends LongSparseArray<E> implements Iterable<E> {
 
         @Override // java.util.Iterator
         public E next() {
-            /* REWORK: jadx dropped the generic qualifier; the iterator returns E. */
+
             LongArrayMap<E> longArrayMap = LongArrayMap.this;
             int i = this.mNextIndex;
             this.mNextIndex = i + 1;

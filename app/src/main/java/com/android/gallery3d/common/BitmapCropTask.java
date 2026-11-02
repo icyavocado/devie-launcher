@@ -135,10 +135,8 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
     /* JADX WARN: Type inference failed for: r12v1 */
     /* JADX WARN: Type inference failed for: r12v3, types: [java.io.Closeable] */
     /* JADX WARN: Type inference failed for: r9v3, types: [int] */
-    public boolean cropBitmap(int i) { /* REWORK: every failure path is caught inside */
-        /* REWORK: jadx again dropped the exception-flow locals and reintroduced a
-         * register ("r12") through Utils.closeSilently; reimplemented with a plain
-         * try/catch/finally per stage. */
+    public boolean cropBitmap(int i) {
+
         boolean z = false;
         if (this.mSetWallpaper && this.mNoCrop) {
             InputStream in = null;
@@ -324,7 +322,7 @@ public class BitmapCropTask extends AsyncTask<Integer, Void, Boolean> {
     }
 
     public BitmapFactory.Options optionsFor(int sampleSize) {
-        /* REWORK: helper extracted from cropBitmap's inline option setup. */
+
         BitmapFactory.Options options = new BitmapFactory.Options();
         if (sampleSize > 1) {
             options.inSampleSize = sampleSize;

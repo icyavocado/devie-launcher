@@ -65,10 +65,7 @@ public class AlphabeticIndexCompat {
             this.mAlphabeticIndex = cls.getConstructor(Locale.class).newInstance(locale);
             Method declaredMethod2 = cls.getDeclaredMethod("addLabels", Locale[].class);
             for (int i = 1; i < iIntValue; i++) {
-                /* REWORK: donor wraps the Locale[] in Object (smali: aput-object
-                   into a new Object[]) — invoke is a varargs method, so passing the
-                   bare array made it BECOME the args array and addLabels threw
-                   IllegalArgumentException (argument 1 is Locale[], got Locale). */
+
                 declaredMethod2.invoke(this.mAlphabeticIndex, (Object) new Locale[]{(Locale) declaredMethod.invoke(objInvoke, Integer.valueOf(i))});
             }
             declaredMethod2.invoke(this.mAlphabeticIndex, (Object) new Locale[]{Locale.ENGLISH});

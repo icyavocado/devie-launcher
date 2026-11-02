@@ -149,9 +149,7 @@ public class DragController implements DragDriver.EventListener {
             this.mDragDriver = null;
             this.mOptions = null;
             clearScrollRunnable();
-            /* REWORK: a nested endDrag/cleanup inside drop() (deferred widget-drag
-               cleanup) can null mDragObject while isDragging() still holds; the dex
-               never hit that re-entrancy, so guard the object here. */
+
             if (this.mDragObject == null) {
                 releaseVelocityTracker();
                 return;
@@ -358,9 +356,7 @@ public class DragController implements DragDriver.EventListener {
         } else {
             z = false;
         }
-        /* REWORK: dex reads dragSource from the entry-captured local (DragController.smali
-           drop(), iget p3,p3 dragSource after :cond_b); a nested cancelDrag during
-           onDrop nulls the FIELD — re-reading it here NPE'd the drop. */
+
         dragObject.dragSource.onDropCompleted(dropTarget instanceof View ? (View) dropTarget : null, dragObject, pointF != null, z);
         if (this.mIsDragDeferred) {
             this.mOptions.deferDragCondition.onDropBeforeDeferredDrag();

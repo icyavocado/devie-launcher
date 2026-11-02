@@ -12,12 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import timber.log.Timber;
 
-/* REWORK: cloud analytics removed (events.evie.com upload, Fabric/Crashlytics, GMS AdvertisingIdClient,
- * device fingerprint payload, location/geohash, local log upload DB). Events still flow through the
- * AnalyticsFilter chain locally: FrequentlyUsedAnalyticsFilter uses app-launch events to keep the
- * frequently-used list populated. Upload side is a no-op, and no device
- * identifiers are generated or persisted (the old anonym_user_id UUID prefs
- * writer is gone — event JSON carries no user_id). */
 public class AnalyticsHandler {
     private static final String TAG = "AnalyticsHandler";
     private static AnalyticsHandler instance;
@@ -76,8 +70,7 @@ public class AnalyticsHandler {
     }
 
     public static EventProp generateAppLaunchProperties(Context context, Intent intent, String str) {
-        /* REWORK: the (Context, ComponentName, String) overload jadx emitted was a
-         * register-misbind of the (ComponentName, String) one; route through it. */
+
         return generateAppLaunchProperties(getComponent(context, intent), str);
     }
 
@@ -151,9 +144,6 @@ public class AnalyticsHandler {
         instance = new AnalyticsHandler(context, analyticsFilter);
     }
 
-    /* REWORK: filters that need injected state (FrequentlyUsedAnalyticsFilter
-       reads FrequentlyUsedModel) cannot exist before the dagger graph; start
-       analytics with a pass-through and swap in the real filter post-inject. */
     public static synchronized void setAnalyticsFilter(AnalyticsFilter analyticsFilter) {
         if (instance == null) {
             throw new IllegalStateException("Instance must be initialized before trying to use.");
@@ -181,5 +171,4 @@ public class AnalyticsHandler {
         logEvent("ev_app_launch", generateAppLaunchProperties(str, str2, str3));
     }
 
-    /* REWORK: sync was the upload path; no-op now that upload is removed. */
 }

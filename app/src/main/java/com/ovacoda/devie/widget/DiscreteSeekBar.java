@@ -246,9 +246,7 @@ public class DiscreteSeekBar extends View {
             }
             return true;
         } else if (actionMasked == 2) {
-            /* REWORK(gesture): defer taking the drag until the finger has
-             * moved sideways past the touch slop (adw-parity inside scroll
-             * containers); vertical gestures keep scrolling the page. */
+
             if (!mTracking) {
                 float deltaX = motionEvent.getX() - mTouchDownX;
                 float deltaY = motionEvent.getY() - mTouchDownY;

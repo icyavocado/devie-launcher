@@ -8,8 +8,7 @@ import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 import javax.inject.Provider;
 
 /* JADX INFO: loaded from: classes.dex */
-/* REWORK(fresco): the OkHttpClient and ConnectionPoolKiller injections are
- * gone along with the drawee pipeline. */
+
 public final class FlavorInitializer_MembersInjector {
     public static void injectMFrequentlyUsedModel(FlavorInitializer flavorInitializer, FrequentlyUsedModel frequentlyUsedModel) {
         flavorInitializer.mFrequentlyUsedModel = frequentlyUsedModel;

@@ -17,7 +17,6 @@ import com.voxel.simplesearchlauncher.activity.SafeActivityStarter;
 import com.voxel.simplesearchlauncher.model.managers.BackupRestoreManager;
 import com.ovacoda.devie.R;
 
-/* REWORK: Google Drive / Google-SignIn backup removed; document-picker (SAF) backup/restore. */
 public class BackupRestoreSettingsFragment extends Fragment implements BackupRestoreManager.BackupRestoreUI {
     private static final String TAG = "BackupRestoreSettingsFragment";
     private BackupRestoreManager mBackupManager;
@@ -175,10 +174,6 @@ public class BackupRestoreSettingsFragment extends Fragment implements BackupRes
         startActivityForResult(restoreDocumentIntent(), BackupRestoreManager.REQUEST_CODE_RESTORE);
     }
 
-    /* REWORK: androidx.fragment 1.8 routes SAF results through the FRAGMENT with the
-       original request code; the activity side receives a registry-encoded code that
-       differs every launch, so the activity-side switch never matched and the backup
-       /restore loading dialog stayed up forever. */
     @Override
     public void onActivityResult(int i, int i2, Intent intent) {
         super.onActivityResult(i, i2, intent);

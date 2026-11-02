@@ -163,7 +163,7 @@ public class PopupContainerWithArrow extends LinearLayout {
             animatorCreateOpenAnimation.setStartDelay(((long) (this.mIsAboveIcon ? (itemCount - i) - 1 : i)) * integer3);
             animatorCreateOpenAnimation.setInterpolator(decelerateInterpolator);
             animatorSetCreateAnimatorSet.play(animatorCreateOpenAnimation);
-            ObjectAnimator objectAnimatorOfFloat = ObjectAnimator.ofFloat(itemViewAt, (Property) View.ALPHA /* REWORK: raw-ified; Property is invariant in its target type */, 1.0f);
+            ObjectAnimator objectAnimatorOfFloat = ObjectAnimator.ofFloat(itemViewAt, (Property) View.ALPHA , 1.0f);
             objectAnimatorOfFloat.setInterpolator(logAccelerateInterpolator);
             j = j;
             objectAnimatorOfFloat.setDuration(j);
@@ -217,7 +217,7 @@ public class PopupContainerWithArrow extends LinearLayout {
             });
             animatorSetCreateAnimatorSet.play(duration);
         }
-        ObjectAnimator duration2 = ObjectAnimator.ofFloat(this.mNotificationGroupView, (Property) ALPHA /* REWORK: raw-ified; Property is invariant in its target type */, 0.0f).setDuration(integer);
+        ObjectAnimator duration2 = ObjectAnimator.ofFloat(this.mNotificationGroupView, (Property) ALPHA , 0.0f).setDuration(integer);
         duration2.addListener(new AnimatorListenerAdapter() { // from class: com.voxel.simplesearchlauncher.popup.PopupContainerWithArrow.1
             @Override // android.animation.AnimatorListenerAdapter, android.animation.Animator.AnimatorListener
             public void onAnimationEnd(Animator animator) {
@@ -351,7 +351,7 @@ public class PopupContainerWithArrow extends LinearLayout {
             long j = ((long) (this.mIsAboveIcon ? i4 - i3 : (i - i4) - 1)) * integer3;
             animatorCreateCloseAnimation.setStartDelay(j);
             int i5 = i3;
-            ObjectAnimator objectAnimatorOfFloat = ObjectAnimator.ofFloat(itemViewAt, (Property) View.ALPHA /* REWORK: raw-ified; Property is invariant in its target type */, 0.0f);
+            ObjectAnimator objectAnimatorOfFloat = ObjectAnimator.ofFloat(itemViewAt, (Property) View.ALPHA , 0.0f);
             objectAnimatorOfFloat.setStartDelay(j + integer2);
             objectAnimatorOfFloat.setDuration(integer - integer2);
             objectAnimatorOfFloat.setInterpolator(logAccelerateInterpolator);
@@ -452,7 +452,7 @@ public class PopupContainerWithArrow extends LinearLayout {
         for (int i4 = 0; i4 < getItemCount(); i4++) {
             PopupGroupBaseView itemViewAt = getItemViewAt(i4);
             if (this.mIsAboveIcon || itemViewAt != this.mNotificationGroupView) {
-                ObjectAnimator duration = ObjectAnimator.ofFloat(itemViewAt, (Property) TRANSLATION_Y /* REWORK: raw-ified; Property is invariant */, itemViewAt.getTranslationY() + i3).setDuration(i2);
+                ObjectAnimator duration = ObjectAnimator.ofFloat(itemViewAt, (Property) TRANSLATION_Y , itemViewAt.getTranslationY() + i3).setDuration(i2);
                 duration.addListener(propertyResetListener);
                 this.mReduceHeightAnimatorSet.play(duration);
             }
@@ -495,8 +495,7 @@ public class PopupContainerWithArrow extends LinearLayout {
         if (this.mIsAboveIcon) {
             Collections.reverse(list);
         }
-        /* REWORK: jadx made the loop vars final while the posted runnables capture them;
-         * snapshot per pass. */
+
         int i = 0;
         while (i < list.size()) {
             final int icap = i;

@@ -25,8 +25,6 @@ public class FrequentlyUsedModelImpl implements FrequentlyUsedModel {
     private final Subject<List<FrequentlyUsedApp>> mSubject = BehaviorSubject.createDefault(Collections.emptyList());
     private CompositeDisposable mDisposables = new CompositeDisposable();
 
-    /* REWORK: cloud frequently-used removed (remote predictions + analytics
-       distinct-user id); local Room ranking merged over bundled defaults. */
     public FrequentlyUsedModelImpl(Context context, FrequentlyUsedLocalModel frequentlyUsedLocalModel) {
         this.mDefaultsModel = new FrequentlyUsedDefaultsModel(context);
         this.mFrequentlyUsedLocalModel = frequentlyUsedLocalModel;

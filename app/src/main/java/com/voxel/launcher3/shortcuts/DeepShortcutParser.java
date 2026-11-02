@@ -179,7 +179,7 @@ public class DeepShortcutParser {
                 ((XmlResourceParser) xmlPullParser).close();
             }
         }
-        /* REWORK: the parser fell through its catch blocks; report what we got. */
+
         return arrayList;
     }
 }

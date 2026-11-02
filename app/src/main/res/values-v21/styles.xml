@@ -200,7 +200,7 @@
         <item name="android:elevation">1.0dip</item>
     </style>
     <style name="SettingsListItemStyle">
-        <!-- REWORK: card restyle — frames stay transparent; row inners draw the card. -->
+        
     </style>
     <style name="SideScreenTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:statusBarColor">@android:color/black</item>

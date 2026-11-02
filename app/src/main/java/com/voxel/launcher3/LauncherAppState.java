@@ -1,6 +1,5 @@
 package com.voxel.launcher3;
 
-/* REWORK: minSdk-safe receiver registration (API 34+ flag rule) */
 import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -24,11 +23,7 @@ import java.util.concurrent.CountDownLatch;
 public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
     private static LauncherAppState INSTANCE;
     private static Context sContext;
-    /* REWORK: was a WeakReference — the provider is a process-lifetime
-       singleton; after the first GC the weak ref cleared and every
-       getLauncherProviderSafe() call returned null, silently disabling the
-       workspaceScreens reconcile (duplicate ranks went unhealed and blank
-       pages followed). Strong reference now. */
+
     private static LauncherProvider sLauncherProvider;
     private static CountDownLatch sLauncherProviderCountDownLatch = new CountDownLatch(1);
     private DynamicGrid mDynamicGrid;
@@ -53,7 +48,7 @@ public class LauncherAppState implements DeviceProfile.DeviceProfileCallbacks {
             throw new IllegalStateException("LauncherAppState inited before app context set");
         }
         Log.v("Launcher", "LauncherAppState inited");
-        /* REWORK: MemoryTracker (debug weight-watcher) cut. */
+
         this.mIsScreenLarge = isScreenLarge(sContext.getResources());
         this.mScreenDensity = sContext.getResources().getDisplayMetrics().density;
         this.mIconCache = new IconCache(sContext);

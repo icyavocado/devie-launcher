@@ -153,7 +153,7 @@ public class IconPackShader {
     }
 
     public void load() {
-        /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
         Throwable eReflow = null;
         XmlPullParser xmlPullParserNewPullParser;
         ShaderInstruction instruction;
@@ -175,7 +175,7 @@ public class IconPackShader {
                         try {
                             xmlPullParserNewPullParser.setInput(inputStreamOpen, "utf-8");
                         } catch (Exception e) {
-                            /* REWORK: setInput throws XmlPullParserException, not IOException */
+
                             e = e;
                             Log.d(TAG, "No shader.xml file", e);
                         }

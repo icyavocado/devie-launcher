@@ -76,7 +76,7 @@ public class BitmapUtils {
     /* JADX WARN: Type inference failed for: r3v2 */
     /* JADX WARN: Type inference failed for: r3v3 */
     /* JADX WARN: Type inference failed for: r3v8, types: [java.lang.Integer] */
-    private static int getRotationFromExifHelper(Resources resources, int i, Context context, Uri uri) { /* REWORK: IOException/NPE are already contained; drop the throw */
+    private static int getRotationFromExifHelper(Resources resources, int i, Context context, Uri uri) {
         try {
             InputStream input;
             if (uri != null) {

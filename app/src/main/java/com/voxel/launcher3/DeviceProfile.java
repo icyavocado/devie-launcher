@@ -204,8 +204,7 @@ public class DeviceProfile {
         this.iconTextSize = f6;
         this.numBaseHotseatIcons = f7;
         this.hotseatIconSize = f8;
-        /* REWORK: jadx dropped the two trailing int params (the workspace xml ids the
-         * grid table passes down); restore the param wiring. */
+
         this.defaultLayoutId = i;
         this.defaultNoAllAppsLayoutId = i2;
     }
@@ -432,7 +431,7 @@ public class DeviceProfile {
     }
 
     public float getMaxIconScaleForType(Context context, ParamType paramType) {
-        return paramType != ParamType.HOTSEAT /* REWORK: was a compiled switch-map; HOTSEAT maps to 1 */ ? getMaxIconScaleVerticallyUnconstrainedForType(context, paramType) : getMaxWorkspaceIconScale(context);
+        return paramType != ParamType.HOTSEAT  ? getMaxIconScaleVerticallyUnconstrainedForType(context, paramType) : getMaxWorkspaceIconScale(context);
     }
 
     public float getMaxIconScaleVerticallyUnconstrainedForType(Context context, ParamType paramType) {
@@ -445,9 +444,7 @@ public class DeviceProfile {
         defaultDisplay.getSize(point);
         defaultDisplay.getCurrentSizeRange(point2, point3);
         return ((((int) ((this.availableWidthPx - (this.edgeMarginPx * 4)) / cellParamsForType.numColumns)) - cellParamsForType.iconDrawablePaddingPx) / (float) DynamicGrid.pxFromDp(this.iconSize, displayMetrics));
-        /* REWORK: the donor dex int-to-floats BOTH operands before div-float; the
-           decompiled int/int division truncated to 0 once cell width < icon size px
-           (columns > 4) and the icon-size control stuck at 0. */
+
     }
 
     public float getMaxWorkspaceIconScale(Context context) {
@@ -471,8 +468,7 @@ public class DeviceProfile {
         Paint.FontMetrics fontMetrics = paint.getFontMetrics();
         int iPxFromDp = DynamicGrid.pxFromDp(this.iconSize, displayMetrics) + ((int) Math.ceil(fontMetrics.bottom - fontMetrics.top));
         float fPxFromDp = i4 / (float) DynamicGrid.pxFromDp(this.iconSize, displayMetrics);
-        /* REWORK: donor dex rounds through div-float with both operands converted;
-           int/int truncation zeroed the max scale. */
+
         float fMin = Math.min(i3 / (float) iPxFromDp, fPxFromDp);
         if (fMin >= MIN_ICON_TEXT_SCALE) {
             return fMin;
@@ -715,7 +711,7 @@ public class DeviceProfile {
         } else {
             this.availableHeightPx = point3.y;
         }
-        int identifier = resources.getIdentifier("navigation_bar_height", "dimen", "android" /* REWORK: was facebook SDK AbstractSpiCall constant */);
+        int identifier = resources.getIdentifier("navigation_bar_height", "dimen", "android" );
         if (identifier > 0) {
             this.navBarHeightPx = identifier > 0 ? resources.getDimensionPixelSize(identifier) : 0;
         }

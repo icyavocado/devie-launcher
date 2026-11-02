@@ -1572,11 +1572,9 @@
     </style>
     <style name="SettingsListItemContainerStyle" />
     <style name="SettingsListItemStyle">
-        <!-- REWORK: card restyle — frames stay transparent; row inners draw the card. -->
+        
     </style>
-    <!-- REWORK: modem settings restyle — opaque window, system bars tinted to the
-         activity background (was show-wallpaper/translucent: home screen leaked
-         through the status bar, the preview area and the navigation strip). -->
+    
     <style name="SettingsTheme" parent="@style/SettingsBaseTheme">
         <item name="android:windowBackground">@color/settings_activity_background</item>
         <item name="android:statusBarColor">@color/settings_activity_background</item>
@@ -1587,8 +1585,7 @@
         <item name="searchViewStyle">@style/SearchViewStyle</item>
     </style>
     <style name="SettingsWallpaperTheme" parent="@style/SettingsTheme">
-        <!-- REWORK: was fully transparent (wallpaper bled through); keeps only
-             its activity-level slide-over behaviour now. -->
+        
     </style>
     <style name="ShortcutTheme" parent="@style/BaseTheme">
         <item name="android:windowBackground">@android:color/transparent</item>

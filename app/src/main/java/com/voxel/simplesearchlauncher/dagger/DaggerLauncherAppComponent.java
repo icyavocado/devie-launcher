@@ -113,7 +113,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import javax.inject.Provider;
-/* JADX INFO: REWORK: regenerated component; sidescreen/feed/Jigsaw-adjacent graph removed */
+
 public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     private Provider<CommonAndroidInjectionModule_AllAppsFragment.AllAppsFragmentSubcomponent.Builder> allAppsFragmentSubcomponentBuilderProvider;
     private Provider<FlavorAndroidInjectionModule_AppDrawerSettingsFragment.AppDrawerSettingsFragmentSubcomponent.Builder> appDrawerSettingsFragmentSubcomponentBuilderProvider;
@@ -171,8 +171,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class AllAppsFragmentSubcomponentImpl implements CommonAndroidInjectionModule_AllAppsFragment.AllAppsFragmentSubcomponent {
         private AllAppsFragmentSubcomponentImpl(AllAppsFragment allAppsFragment) {
@@ -191,8 +189,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectAllAppsFragment(allAppsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class AppDrawerSettingsFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_AppDrawerSettingsFragment.AppDrawerSettingsFragmentSubcomponent.Builder {
@@ -214,8 +210,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class AppDrawerSettingsFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_AppDrawerSettingsFragment.AppDrawerSettingsFragmentSubcomponent {
         private AppDrawerSettingsFragmentSubcomponentImpl(AppDrawerSettingsFragment appDrawerSettingsFragment) {
@@ -231,8 +225,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectAppDrawerSettingsFragment(appDrawerSettingsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class AppOptionsFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_AppOptionsFragment.AppOptionsFragmentSubcomponent.Builder {
@@ -254,8 +246,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class AppOptionsFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_AppOptionsFragment.AppOptionsFragmentSubcomponent {
         private AppOptionsFragmentSubcomponentImpl(AppOptionsFragment appOptionsFragment) {
@@ -271,8 +261,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectAppOptionsFragment(appOptionsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class ChangeIconFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_ChangeIconFragment.ChangeIconFragmentSubcomponent.Builder {
@@ -294,8 +282,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class ChangeIconFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_ChangeIconFragment.ChangeIconFragmentSubcomponent {
         private ChangeIconFragmentSubcomponentImpl(ChangeIconFragment changeIconFragment) {
@@ -312,8 +298,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectChangeIconFragment(changeIconFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class ConfirmShortcutActivitySubcomponentBuilder extends CommonAndroidInjectionModule_ContributesConfirmShortcutActivityInjector.ConfirmShortcutActivitySubcomponent.Builder {
@@ -335,8 +319,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class ConfirmShortcutActivitySubcomponentImpl implements CommonAndroidInjectionModule_ContributesConfirmShortcutActivityInjector.ConfirmShortcutActivitySubcomponent {
         private ConfirmShortcutActivitySubcomponentImpl(ConfirmShortcutActivity confirmShortcutActivity) {
@@ -353,8 +335,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectConfirmShortcutActivity(confirmShortcutActivity);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class CustomGestureSettingsFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_CustomGestureSettingsFragment.CustomGestureSettingsFragmentSubcomponent.Builder {
@@ -376,8 +356,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class CustomGestureSettingsFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_CustomGestureSettingsFragment.CustomGestureSettingsFragmentSubcomponent {
         private CustomGestureSettingsFragmentSubcomponentImpl(CustomGestureSettingsFragment customGestureSettingsFragment) {
@@ -393,8 +371,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectCustomGestureSettingsFragment(customGestureSettingsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class DesktopSettingsFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_DesktopSettingsFragment.DesktopSettingsFragmentSubcomponent.Builder {
@@ -416,8 +392,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class DesktopSettingsFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_DesktopSettingsFragment.DesktopSettingsFragmentSubcomponent {
         private DesktopSettingsFragmentSubcomponentImpl(DesktopSettingsFragment desktopSettingsFragment) {
@@ -433,8 +407,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectDesktopSettingsFragment(desktopSettingsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class DockSettingsFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_DockSettingsFragment.DockSettingsFragmentSubcomponent.Builder {
@@ -456,8 +428,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class DockSettingsFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_DockSettingsFragment.DockSettingsFragmentSubcomponent {
         private DockSettingsFragmentSubcomponentImpl(DockSettingsFragment dockSettingsFragment) {
@@ -473,8 +443,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectDockSettingsFragment(dockSettingsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class FolderSettingsFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_FolderSettingsFragment.FolderSettingsFragmentSubcomponent.Builder {
@@ -496,8 +464,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class FolderSettingsFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_FolderSettingsFragment.FolderSettingsFragmentSubcomponent {
         private FolderSettingsFragmentSubcomponentImpl(FolderSettingsFragment folderSettingsFragment) {
@@ -514,8 +480,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectFolderSettingsFragment(folderSettingsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class HideAppsSettingsFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_HideAppSettingsFragment.HideAppsSettingsFragmentSubcomponent.Builder {
@@ -537,8 +501,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class HideAppsSettingsFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_HideAppSettingsFragment.HideAppsSettingsFragmentSubcomponent {
         private HideAppsSettingsFragmentSubcomponentImpl(HideAppsSettingsFragment hideAppsSettingsFragment) {
@@ -554,8 +516,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectHideAppsSettingsFragment(hideAppsSettingsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class IconPackSettingsFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_IconPackSettingsFragment.IconPackSettingsFragmentSubcomponent.Builder {
@@ -577,8 +537,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class IconPackSettingsFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_IconPackSettingsFragment.IconPackSettingsFragmentSubcomponent {
         private IconPackSettingsFragmentSubcomponentImpl(IconPackSettingsFragment iconPackSettingsFragment) {
@@ -595,8 +553,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectIconPackSettingsFragment(iconPackSettingsFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class LauncherSubcomponentBuilder extends FlavorAndroidInjectionModule_Launcher.LauncherSubcomponent.Builder {
@@ -618,13 +574,10 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class LauncherSubcomponentImpl implements FlavorAndroidInjectionModule_Launcher.LauncherSubcomponent {
         private LauncherSubcomponentImpl(Launcher launcher) {
         }
-
 
         private Launcher injectLauncher(Launcher launcher) {
             Launcher_MembersInjector.injectLocalAppsManager(launcher, (LocalAppsManager) DaggerLauncherAppComponent.this.localAppsManagerProvider.get());
@@ -640,8 +593,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectLauncher(launcher);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class OnboardingActivitySubcomponentBuilder extends FlavorAndroidInjectionModule_OnboardingActivity.OnboardingActivitySubcomponent.Builder {
@@ -663,20 +614,16 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class OnboardingActivitySubcomponentImpl implements FlavorAndroidInjectionModule_OnboardingActivity.OnboardingActivitySubcomponent {
         private OnboardingActivitySubcomponentImpl(OnboardingActivity onboardingActivity) {
         }
 
         @Override // dagger.android.AndroidInjector
-        /* REWORK: no members to inject since the intro slide was removed. */
+
         public void inject(OnboardingActivity onboardingActivity) {
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class PopupFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_PopupFragment.PopupFragmentSubcomponent.Builder {
@@ -698,8 +645,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class PopupFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_PopupFragment.PopupFragmentSubcomponent {
         private PopupFragmentSubcomponentImpl(PopupFragment popupFragment) {
@@ -715,8 +660,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectPopupFragment(popupFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class ResetLauncherFailureFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_ResetLauncherFailureFragment.ResetLauncherFailureFragmentSubcomponent.Builder {
@@ -738,8 +681,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class ResetLauncherFailureFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_ResetLauncherFailureFragment.ResetLauncherFailureFragmentSubcomponent {
         private ResetLauncherFailureFragmentSubcomponentImpl(ResetLauncherFailureFragment resetLauncherFailureFragment) {
@@ -755,8 +696,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectResetLauncherFailureFragment(resetLauncherFailureFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class ResetLauncherPromptFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_ResetLauncherPromptFragment.ResetLauncherPromptFragmentSubcomponent.Builder {
@@ -778,8 +717,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class ResetLauncherPromptFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_ResetLauncherPromptFragment.ResetLauncherPromptFragmentSubcomponent {
         private ResetLauncherPromptFragmentSubcomponentImpl(ResetLauncherPromptFragment resetLauncherPromptFragment) {
@@ -795,8 +732,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectResetLauncherPromptFragment(resetLauncherPromptFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class SelectAppFragmentSubcomponentBuilder extends FlavorAndroidInjectionModule_SelectAppFragment.SelectAppFragmentSubcomponent.Builder {
@@ -818,8 +753,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class SelectAppFragmentSubcomponentImpl implements FlavorAndroidInjectionModule_SelectAppFragment.SelectAppFragmentSubcomponent {
         private SelectAppFragmentSubcomponentImpl(SelectAppFragment selectAppFragment) {
@@ -835,8 +768,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectSelectAppFragment(selectAppFragment);
         }
     }
-
-
 
     /* JADX INFO: loaded from: classes2.dex */
     private final class WidgetsFragmentSubcomponentBuilder extends CommonAndroidInjectionModule_WidgetsFragment.WidgetsFragmentSubcomponent.Builder {
@@ -858,8 +789,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         }
     }
 
-
-
     /* JADX INFO: loaded from: classes2.dex */
     private final class WidgetsFragmentSubcomponentImpl implements CommonAndroidInjectionModule_WidgetsFragment.WidgetsFragmentSubcomponent {
         private WidgetsFragmentSubcomponentImpl(WidgetsFragment widgetsFragment) {
@@ -875,7 +804,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
             injectWidgetsFragment(widgetsFragment);
         }
     }
-
 
     private DaggerLauncherAppComponent(SingletonsModule singletonsModule, FrequentlyUsedModule frequentlyUsedModule, DeepShortcutManagerModule deepShortcutManagerModule, HideAppsModule hideAppsModule, Application application, Context context, MemoryWatcher memoryWatcher) {
         this.memoryWatcher = memoryWatcher;
@@ -940,17 +868,17 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
     }
 
     private DispatchingAndroidInjector<Activity> getDispatchingAndroidInjectorOfActivity() {
-        // REWORK: Dagger 2.22.1's factory returns the injector provider; call get() directly.
+
         return DispatchingAndroidInjector_Factory.<Activity>create(InstanceFactory.create(getMapOfClassOfAndProviderOfFactoryOf()), InstanceFactory.create(Collections.<String, Provider<AndroidInjector.Factory<?>>>emptyMap())).get();
     }
 
     private DispatchingAndroidInjector<Fragment> getDispatchingAndroidInjectorOfFragment() {
-        // REWORK: Dagger 2.22.1's factory returns the injector provider; call get() directly.
+
         return DispatchingAndroidInjector_Factory.<Fragment>create(InstanceFactory.create(getMapOfClassOfAndProviderOfFactoryOf()), InstanceFactory.create(Collections.<String, Provider<AndroidInjector.Factory<?>>>emptyMap())).get();
     }
 
     private DispatchingAndroidInjector<Service> getDispatchingAndroidInjectorOfService() {
-        // REWORK: Dagger 2.22.1's factory returns the injector provider; call get() directly.
+
         return DispatchingAndroidInjector_Factory.<Service>create(InstanceFactory.create(getMapOfClassOfAndProviderOfFactoryOf()), InstanceFactory.create(Collections.<String, Provider<AndroidInjector.Factory<?>>>emptyMap())).get();
     }
 
@@ -986,7 +914,7 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         this.contextProvider = InstanceFactory.create(context);
         this.applicationProvider = InstanceFactory.create(application);
         this.localAppsManagerProvider = DoubleCheck.provider(LocalAppsManager_Factory.create(this.contextProvider));
-        // REWORK: SetFactory.builder(0, 0).build() is raw (SetFactory<Object>) in Dagger 2.22.1,
+
         // so shape the empty set explicitly for the gson-deserializer slot.
         this.providesSettingsStorageProvider = DoubleCheck.provider(SingletonsModule_ProvidesSettingsStorageFactory.create(singletonsModule, this.contextProvider));
         this.providesAnalyticsHandlerProvider = DoubleCheck.provider(SingletonsModule_ProvidesAnalyticsHandlerFactory.create(singletonsModule));
@@ -1058,7 +986,6 @@ public final class DaggerLauncherAppComponent extends LauncherAppComponent {
         LauncherModel_MembersInjector.injectMAppsInfoLabelOverrideFilter(launcherModel, getAppsInfoLabelOverrideFilter());
         return launcherModel;
     }
-
 
     @Override // com.voxel.simplesearchlauncher.dagger.LauncherAppComponent
     public void inject(BaseApplication baseApplication) {

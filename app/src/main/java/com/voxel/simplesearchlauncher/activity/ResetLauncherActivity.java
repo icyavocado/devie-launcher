@@ -42,13 +42,11 @@ public class ResetLauncherActivity extends Activity {
         if (resolveInfoResolveActivity == null) {
             return false;
         }
-        return !resolveInfoResolveActivity.activityInfo.packageName.equals("android" /* REWORK: was facebook SDK AbstractSpiCall constant */);
+        return !resolveInfoResolveActivity.activityInfo.packageName.equals("android" );
     }
 
     public static boolean isLauncherDefault(Context context) {
-        /* REWORK: Samsung/modern Android holds the home default as a ROLE, not a
-           PackageManager preferred-activity; resolveActivity-based checks see the
-           resolver or the rival launcher. Ask the role system instead. */
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             RoleManager roleManager = (RoleManager) context.getSystemService(RoleManager.class);
             return roleManager != null && roleManager.isRoleHeld(RoleManager.ROLE_HOME);
@@ -63,14 +61,7 @@ public class ResetLauncherActivity extends Activity {
     }
 
     public static void resetHome(Activity activity, boolean z, boolean z2) {
-        /* REWORK: the legacy dance (trampoline enable, resolveActivity, clearHome
-           reflection, raw HOME startActivity) is all dead on modern Android — the
-           launcher-loader/loader saw no role change and the raw HOME intent just
-           foregrounded the currently-set home (the user reads this as "dEvie
-           crashed"). ROLE_HOME request gives the one-tap system dialog. When
-           dEvie IS already the default home there is nothing to request — the
-           row's contract is "switch to another launcher", so hand the user the
-           system default-apps page where any launcher can be picked. */
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             RoleManager roleManager = (RoleManager) activity.getSystemService(RoleManager.class);
             if (roleManager != null && roleManager.isRoleAvailable(RoleManager.ROLE_HOME)) {

@@ -1,6 +1,5 @@
 package com.voxel.launcher3;
 
-/* REWORK: minSdk-safe receiver registration (API 34+ flag rule) */
 import androidx.core.content.ContextCompat;
 import timber.log.Timber;
 import android.animation.Animator;
@@ -558,7 +557,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             if (Launcher.this.mWorkspace == null || Launcher.this.mWorkspace.getViewTreeObserver() == null) {
                 return;
             }
-            // REWORK: the dex lambda captured only `this`; it removes THIS listener.
+
             Launcher.this.mWorkspace.getViewTreeObserver().removeOnDrawListener(this);
         }
 
@@ -896,7 +895,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         }
     }
 
-
     /* JADX INFO: Access modifiers changed from: private */
     public void cleanupGoogleNowLaunchBackground() {
         this.mIsGoogleNowAnimLocked = false;
@@ -1115,7 +1113,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 return;
             }
         }
-        /* REWORK: fabric removed — the unreachable error-log branch is gone. */
+
         this.mDragLayer.clearAnimatedView();
         if (runnable != null) {
             runnable.run();
@@ -1515,8 +1513,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
 
     /* JADX INFO: Access modifiers changed from: private */
     public static void readConfiguration(Context context, LocaleConfiguration localeConfiguration) {
-        /* REWORK: the dex method swallowed everything after closing the stream; the
-         * decompile's rethrow tangle does not survive javac. Best-effort IO. */
+
         DataInputStream dataInputStream = null;
         try {
             dataInputStream = new DataInputStream(context.openFileInput("launcher.preferences"));
@@ -2160,7 +2157,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         if (searchDropTargetBar != null) {
             searchDropTargetBar.setup(this, dragController);
         }
-        /* REWORK: WeightWatcher/memory debug overlay cut (debug-only, never shown). */
+
         this.mCustomGestureListener = new CustomGestureListener(this, new CustomGestureManager(this, SettingsStorage.getInstance()));
         this.mCustomGestureDetector = new GestureDetectorCompat(this, this.mCustomGestureListener);
         this.mScaleCustomGestureDetector = new ScaleGestureDetector(this, this.mCustomGestureListener);
@@ -2280,26 +2277,23 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     }
 
     private boolean shouldRunFirstRunActivity() {
-        /* REWORK: keep the onboarding flow on emulators too — dropping the
-           isRunningInTestHarness clause so the flow is verifiable on our AVD. */
+
         return isInstrumentedRun() || this.mSharedPrefs.getBoolean("launcher.first_run_activity_displayed", false) ? false : true;
     }
 
     private boolean shouldRunFirstRunClings() {
-        /* REWORK: emulator-visible like shouldRunFirstRunActivity. */
+
         return isInstrumentedRun() || this.mSharedPrefs.getBoolean("launcher.first_run_cling_displayed", false) ? false : true;
     }
 
-
     private void showBrokenAppInstallDialog(final String str, DialogInterface.OnClickListener onClickListener) {
-        new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_DeviceDefault /* REWORK: android-35 R flattens nested style classes */)).setTitle(R.string.abandoned_promises_title).setMessage(R.string.abandoned_promise_explanation).setPositiveButton(R.string.abandoned_search, onClickListener).setNeutralButton(R.string.abandoned_clean_this, new DialogInterface.OnClickListener() { // from class: com.voxel.launcher3.-$$Lambda$Launcher$J1M51etEzYVkQ2xk1sr_TZFd7eA
+        new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_DeviceDefault )).setTitle(R.string.abandoned_promises_title).setMessage(R.string.abandoned_promise_explanation).setPositiveButton(R.string.abandoned_search, onClickListener).setNeutralButton(R.string.abandoned_clean_this, new DialogInterface.OnClickListener() { // from class: com.voxel.launcher3.-$$Lambda$Launcher$J1M51etEzYVkQ2xk1sr_TZFd7eA
             @Override // android.content.DialogInterface.OnClickListener
             public final void onClick(DialogInterface dialogInterface, int i) {
                 Launcher.this.mWorkspace.removeAbandonedPromise(str, UserHandleCompat.myUserHandle());
             }
         }).create().show();
     }
-
 
     /* JADX WARN: Code duplicated, block: B:12:0x0021  */
     private boolean startActivity(View view, Intent intent, Object obj) {
@@ -2524,7 +2518,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
 
     /* JADX INFO: Access modifiers changed from: private */
     public static void writeConfiguration(Context context, LocaleConfiguration localeConfiguration) {
-        /* REWORK: see readConfiguration; best-effort write and delete on failure. */
+
         DataOutputStream dataOutputStream = null;
         try {
             dataOutputStream = new DataOutputStream(context.openFileOutput("launcher.preferences", 0));
@@ -2533,7 +2527,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             dataOutputStream.writeInt(localeConfiguration.mnc);
             dataOutputStream.flush();
         } catch (FileNotFoundException e) {
-            /* REWORK: file open failures drop the write; harmless for a locale cache. */
+
         } catch (IOException e2) {
             try {
                 context.getFileStreamPath("launcher.preferences").delete();
@@ -2855,9 +2849,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                             viewCreateShortcut = createShortcut((ShortcutInfo) itemInfo);
                             if (itemInfo.container == -100 && (screenWithId = this.mWorkspace.getScreenWithId(itemInfo.screenId)) != null && screenWithId.isOccupied(itemInfo.cellX, itemInfo.cellY)) {
                                 str = "Collision while binding workspace item: " + itemInfo + ". Collides with " + screenWithId.getChildAt(itemInfo.cellX, itemInfo.cellY).getTag();
-                                /* REWORK: donor polarity is dogfood→throw, release→log
-                                   (smali: if-nez isDogfoodBuild → cond_5 throw). jadx
-                                   flipped it, so release builds crashed on any collision. */
+
                                 if (LauncherAppState.isDogfoodBuild()) {
                                     throw new RuntimeException(str);
                                 }
@@ -2896,11 +2888,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                 } else {
                     viewCreateShortcut = createShortcut((ShortcutInfo) itemInfo);
                     if (itemInfo.container == -100 && (screenWithId = this.mWorkspace.getScreenWithId(itemInfo.screenId)) != null && screenWithId.isOccupied(itemInfo.cellX, itemInfo.cellY)) {
-                        /* REWORK: donor shares the guarded collision block with the
-                           app/shortcut case (smali cond_4:pswitch_1 — screen != null,
-                           isOccupied, skip via cond_6). jadx split the block and
-                           dropped BOTH guards here, so binding a pinned shortcut to an
-                           empty cell NPE'd at getTag() (issue #1, K-9/MIUI shortcuts). */
+
                         str = "Collision while binding workspace item: " + itemInfo + ". Collides with " + screenWithId.getChildAt(itemInfo.cellX, itemInfo.cellY).getTag();
                         if (LauncherAppState.isDogfoodBuild()) {
                             throw new RuntimeException(str);
@@ -2918,9 +2906,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
                         j = itemInfo.screenId;
                     }
                 }
-                /* REWORK: jadx duplicated the loop increment at two edges; the dex has
-                   a single add-int at the common join (:goto_4). Double-increment
-                   skipped every other item (dock slots 1,3,5... never bound). */
+
                 animatorSetCreateAnimatorSet = animatorSet;
                 workspace3 = workspace2;
             }
@@ -2965,7 +2951,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         if (arrayList.size() == 0) {
             this.mWorkspace.addExtraEmptyScreen();
         }
-        /* REWORK: side-screen feed removed — no custom left page. */
+
     }
 
     @Override // com.voxel.launcher3.LauncherModel.Callbacks
@@ -3050,7 +3036,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             this.mAllAppsMotionTracker.setFactor(1.0f);
         }
     }
-
 
     void closeFolder(Folder folder) {
         if (folder == null) {
@@ -3307,8 +3292,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return this.mIndicatorAlpha;
     }
 
-
-
     public AlphaSet getMainLayerDarkenAlpha() {
         return this.mMainLayerDarkenAlpha;
     }
@@ -3344,9 +3327,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return this.mQsb;
     }
 
-
-
-
     public SearchDropTargetBar getSearchBar() {
         return this.mSearchDropTargetBar;
     }
@@ -3354,7 +3334,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     public int getSearchBarHiddenHeight() {
         return Math.round(((-((View) this.mQsb.getParent()).getPaddingTop()) - ((View) this.mQsb.getParent().getParent()).getPaddingTop()) - (this.mQsbSearchView.getHeight() * 1.05f));
     }
-
 
     public LauncherStackableFragment getStackFragmentAt(int i) {
         return this.mFragmentHelper.getStackFragmentAt(i);
@@ -3381,8 +3360,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
     public Workspace getWorkspace() {
         return this.mWorkspace;
     }
-
-
 
     protected boolean hasFirstRunActivity() {
         return true;
@@ -3588,7 +3565,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             this.mDragLayer.clearAnimatedView();
             return;
         }
-        int widgetId = i3; // REWORK: jadx merged this with the effectively-final lambda capture above.
+        int widgetId = i3;
         int intExtra2 = intent != null ? intent.getIntExtra("appWidgetId", -1) : -1;
         if (intExtra2 >= 0) {
             widgetId = intExtra2;
@@ -3704,7 +3681,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         intentFilter.addAction("android.intent.action.USER_PRESENT");
         intentFilter.addAction("android.intent.action.MANAGED_PROFILE_ADDED");
         intentFilter.addAction("android.intent.action.MANAGED_PROFILE_REMOVED");
-        /* REWORK: API 34+ exported-state rule; filters are system broadcasts. */
+
         ContextCompat.registerReceiver(this, this.mReceiver, intentFilter, ContextCompat.RECEIVER_NOT_EXPORTED);
         FirstFrameAnimatorHelper.initializeDrawListener(getWindow().getDecorView());
         Utilities.setupTransparentSystemBarsForLmp(this);
@@ -3826,7 +3803,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             Toast.makeText(this, i, 0).show();
             return;
         }
-        /* REWORK: MemoryDumpActivity / ToggleWeightWatcher debug shortcuts removed. */
+
         if ((view instanceof BubbleTextView) && shortcutInfo.isPromise() && !shortcutInfo.hasStatusFlag(4)) {
             showBrokenAppInstallDialog(shortcutInfo.getTargetComponent().getPackageName(), new DialogInterface.OnClickListener() { // from class: com.voxel.launcher3.-$$Lambda$Launcher$JL9YE_-t4w1nwULsQukRbUYlwcs
                 @Override // android.content.DialogInterface.OnClickListener
@@ -3865,7 +3842,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             }
         }
     }
-
 
     public void onClickPendingWidget(final PendingAppWidgetHostView pendingAppWidgetHostView) {
         final LauncherAppWidgetInfo launcherAppWidgetInfo = (LauncherAppWidgetInfo) pendingAppWidgetHostView.getTag();
@@ -3921,7 +3897,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         Log.d("Launcher", "Cannot fetch activity for intent: " + intent.toString());
         Toast.makeText(this, getString(R.string.widget_could_not_be_added_error), 1).show();
     }
-
 
     public void onClickSettingsButton(View view) {
         this.mOnResumeState = State.WORKSPACE;
@@ -4304,7 +4279,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             int stackFragmentCount = getStackFragmentCount();
             if (stackFragmentCount > 0) {
                 int i = stackFragmentCount - 1;
-                /* REWORK: upgrade/What's-New popup removed. */
+
                 z = false;
                 if (!z) {
                     if (z3) {
@@ -4530,8 +4505,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             changeAllAppsVisibility(false, false);
             changeSearchMode(false, false);
         }
-        /* REWORK: the rate-us survey was cut (no Play Store); only the
-         * set-default search prompt remains in this chain. */
+
         if (!getResources().getBoolean(R.bool.widget_enabled)) {
             this.mSearchUiHelper.showSetLauncherSearchPromptIfNeeded();
         }
@@ -4672,7 +4646,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return false;
     }
 
-
     public void onTouchDownScrollingWidget(LauncherAppWidgetHostView launcherAppWidgetHostView) {
         MainLayerGestureListener mainLayerGestureListener = this.mMainLayerGestureListener;
         if (mainLayerGestureListener != null) {
@@ -4692,8 +4665,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return this.mQsbSearchViewGestureDetector.onTouchEvent(motionEvent) || super.onTouchEvent(motionEvent);
     }
 
-    /* REWORK(fresco): the MemoryTrimType registry was fresco-owned; our
-     * IconCache flush + LRU eviction is all that remains. */
     @Override // android.app.Activity, android.content.ComponentCallbacks2
     public void onTrimMemory(int i) {
         super.onTrimMemory(i);
@@ -4702,13 +4673,7 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
             if (iconCache != null) {
                 iconCache.flush();
             }
-            /* REWORK: real memory pressure only. The unconditional
-               clearMemory() ran at EVERY trim level, and
-               TRIM_MEMORY_UI_HIDDEN (20) fires when the launcher UI is
-               hidden — lock screen, app switch — so the icon LRU was wiped
-               on every lock and everything re-decoded on unlock. The LRU
-               self-trims to its byte cap; hold it for the true-pressure
-               levels above. */
+
             IconLoader.getInstance().clearMemory();
         }
     }
@@ -4762,12 +4727,10 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         return true;
     }
 
-
     @Override // com.voxel.simplesearchlauncher.fragment.LauncherStackableFragment.OnFragmentInteractionListener
     public void popStackFragment(LauncherStackableFragment launcherStackableFragment, boolean z) {
         this.mFragmentHelper.popStackFragment(launcherStackableFragment, z);
     }
-
 
     void processShortcut(Intent intent) {
         Utilities.startActivityForResultSafely(this, intent, 1);
@@ -4831,7 +4794,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         this.mSearchDropTargetBar.animate().translationY(0.0f).start();
         getQsbBar().animate().translationY(0.0f).start();
     }
-
 
     @Override // com.voxel.launcher3.LauncherModel.Callbacks
     public boolean setLoadOnResume() {
@@ -4909,7 +4871,6 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         markFirstRunClingShown();
         return true;
     }
-
 
     void showOutOfSpaceMessage(boolean z) {
         Toast.makeText(this, getString(z ? R.string.hotseat_out_of_space : R.string.out_of_space), 0).show();

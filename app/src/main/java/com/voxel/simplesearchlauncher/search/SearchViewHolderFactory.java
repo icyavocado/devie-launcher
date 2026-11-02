@@ -12,9 +12,7 @@ import com.voxel.simplesearchlauncher.view.SlideLayout;
 import com.ovacoda.devie.R;
 
 /* JADX INFO: loaded from: classes2.dex */
-/* REWORK: the rate-us / feedback survey view types were cut with the Play
- * Store (345780345 + the orphaned 345780346 AppFlash variant); only the
- * set-default-launcher prompt remains. */
+
 class SearchViewHolderFactory implements CustomViewHolderFactory {
     private Activity mActivity;
     private SearchPresenter mSearch;

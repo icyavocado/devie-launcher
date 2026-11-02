@@ -11,7 +11,6 @@ public class SingletonsModule {
         return AnalyticsHandler.getInstance();
     }
 
-    /* REWORK: remote launcher-config cut — config Lazy input dropped. */
     public SettingsStorage providesSettingsStorage(Context context) {
         SettingsStorage.init(context);
         return SettingsStorage.getInstance();

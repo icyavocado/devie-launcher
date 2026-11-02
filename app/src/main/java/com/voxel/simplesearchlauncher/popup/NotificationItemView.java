@@ -110,7 +110,7 @@ public class NotificationItemView extends FrameLayout {
         setTranslationX(0.0f);
         setTag(new ItemInfo());
         if (z) {
-            ObjectAnimator.ofFloat(this.mTextAndBackground, (Property) ALPHA /* REWORK: raw-ified; Property is invariant in its target type */, 0.0f, 1.0f).setDuration(150L).start();
+            ObjectAnimator.ofFloat(this.mTextAndBackground, (Property) ALPHA , 0.0f, 1.0f).setDuration(150L).start();
         }
     }
 

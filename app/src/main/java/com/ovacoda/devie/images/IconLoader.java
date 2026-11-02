@@ -40,23 +40,6 @@ import java.util.concurrent.Executors;
 
 import timber.log.Timber;
 
-/**
- * REWORK(fresco): single in-process icon loader that replaces the Fresco
- * pipeline. dEvie performs no network image loads (cloud services are
- * stripped and the app has no INTERNET permission), so this loader resolves
- * exactly three URI families:
- *
- *  1. "data:image/bmp;base64,..." — locally generated bitmaps (contact
- *     initials headers, composed badge icons) kept as in-memory data URIs
- *     (BitmapUtil.getUrlFromBitmap).
- *  2. "content://..." — contact photo URIs from the contacts provider.
- *  3. The magic "http://example.com/<hash>?pn=..&an=..&ip=.." identifiers
- *     persisted in LocalSearch.db — never real network addresses; resolved
- *     locally through IconCache (optionally through the active icon pack).
- *
- * Anything else (real http/https URLs) is refused and logged. This keeps the
- * no-network guarantee structural instead of intercepted-at-runtime.
- */
 public final class IconLoader {
 
     /** Magic-URI host + path hash from HybridNetworkFetcherCommon. */
@@ -228,13 +211,7 @@ public final class IconLoader {
         if (cached != null && !cached.isRecycled()) {
             return cached;
         }
-        /* REWORK(disk): the RAM LRU dies with the process — on devices that
-         * kill the launcher while the screen is locked (OneUI app freezing),
-         * every icon re-decoded from scratch on the first pull-down after
-         * unlock and the rows pop in staggered. Magic + data URIs are
-         * content-derived and immutable per URL, so their decoded PNGs may
-         * live on disk (content:// contact photos stay excluded: their URI
-         * can persist across photo changes). */
+
         Bitmap bitmap = readDisk(url);
         if (bitmap == null) {
             bitmap = decode(url);

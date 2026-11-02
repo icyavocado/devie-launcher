@@ -188,7 +188,7 @@ public class FolderPagedView extends PagedView {
         if (this.mPendingAnimations.isEmpty()) {
             return;
         }
-        for (Map.Entry<View, Runnable> entry : new HashMap<>(this.mPendingAnimations).entrySet()) { /* REWORK: jadx raw map */
+        for (Map.Entry<View, Runnable> entry : new HashMap<>(this.mPendingAnimations).entrySet()) {
             ((View) entry.getKey()).animate().cancel();
             ((Runnable) entry.getValue()).run();
         }
@@ -351,7 +351,7 @@ public class FolderPagedView extends PagedView {
     public void realTimeReorder(int i, int i2) {
         int i3;
         int i4;
-        /* REWORK: jadx declared the reorder cursor final while the reorder loop mutates it. */
+
         int i5 = i;
         completePendingPageChanges();
         int nextPage = getNextPage();

@@ -66,7 +66,7 @@ public class ChangeIconFragment extends LauncherStackableFragment {
         /* JADX INFO: Access modifiers changed from: protected */
         @Override // android.os.AsyncTask
         public LoadIconPackResult doInBackground(Void... voidArr) {
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable eReflow = null;
             Bitmap bitmapCreateIconBitmap;
             AnonymousClass1 anonymousClass1 = null;
@@ -79,7 +79,7 @@ public class ChangeIconFragment extends LauncherStackableFragment {
             ArrayList arrayList2 = new ArrayList();
             try {
                 bitmapCreateIconBitmap = Utilities.createIconBitmap(this.val$context.getPackageManager().getActivityIcon(ChangeIconFragment.this.mItemInfo.getIntent()), this.val$context);
-                /* REWORK: jadx wrapped the non-throwing list add in a dead catch. */
+
                 arrayList2.add(bitmapCreateIconBitmap);
             } catch (PackageManager.NameNotFoundException e2) {
                 eReflow = e2;

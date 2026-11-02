@@ -149,9 +149,7 @@ public class WidgetsFragment extends LauncherStackableFragment implements DragSo
             /* JADX INFO: Access modifiers changed from: protected */
             @Override // android.os.AsyncTask
             public WidgetsModel doInBackground(Void... voidArr) {
-                /* REWORK: AsyncTasks cannot throw checked exceptions; the dex version
-                 * let the framework's worker catch it. Model the same way:
-                 * fall back to a fresh (empty) model on failure. */
+
                 try {
                     return new WidgetsModel(context, LauncherAppState.getInstance().getIconCache()).updateAndClone(context);
                 } catch (Exception e) {

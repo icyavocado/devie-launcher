@@ -112,7 +112,7 @@ public class NotificationListener extends NotificationListenerService {
                 return;
             }
             StatusBarNotification[] activeNotifications = getActiveNotifications();
-            /* REWORK: jadx raw map */
+
             HashMap<String, Integer> map = new HashMap<>();
             if (activeNotifications != null) {
                 Notifier notifier = Notifier.getInstance(getApplicationContext());

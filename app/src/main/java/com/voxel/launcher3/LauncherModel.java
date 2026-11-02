@@ -1,6 +1,5 @@
 package com.voxel.launcher3;
 
-/* REWORK: minSdk-safe receiver registration (API 34+ flag rule) */
 import timber.log.Timber;
 import androidx.core.content.ContextCompat;
 import android.appwidget.AppWidgetManager;
@@ -208,7 +207,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
             Context context = LauncherAppState.getInstance().getContext();
             ArrayList arrayList2 = new ArrayList();
             if (!multiHashMap.isEmpty()) {
-                for (DeepShortcutInfoCompat deepShortcutInfoCompat : LauncherModel.this.mDeepShortcutManager.queryForFullDetails(this.mPackageName, new ArrayList<>(multiHashMap.keySet()) /* REWORK: raw ArrayList erased the call element types */, this.mUser)) {
+                for (DeepShortcutInfoCompat deepShortcutInfoCompat : LauncherModel.this.mDeepShortcutManager.queryForFullDetails(this.mPackageName, new ArrayList<>(multiHashMap.keySet()) , this.mUser)) {
                     List<ShortcutInfo> listRemove = multiHashMap.remove(deepShortcutInfoCompat.getId());
                     if (deepShortcutInfoCompat.isPinned()) {
                         for (ShortcutInfo shortcutInfo2 : listRemove) {
@@ -332,7 +331,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
         private void bindWorkspaceItems(final Callbacks callbacks, final ArrayList<ItemInfo> arrayList, ArrayList<LauncherAppWidgetInfo> arrayList2, final LongArrayMap<FolderInfo> longArrayMap, ArrayList<Runnable> arrayList3) {
             boolean z = arrayList3 != null;
             int size = arrayList.size();
-            /* REWORK: jadx rolled a mutable loop counter into a final capture; separate them. */
+
             int iStart = 0;
             while (iStart < size) {
                 final int i = iStart;
@@ -422,11 +421,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                     itemInfoArr[(int) itemInfo.screenId][0] = itemInfo;
                     return true;
                 }
-                /* REWORK: donor log line indexed the map with an int key (-101 vs the
-                   Long-keyed map) which always NPE'd — the exception aborted the
-                   entire favorites loop, so every load after a hotseat collision
-                   silently lost every remaining dock/ws item. Use the array we
-                   already resolved instead of map.get(-101). */
+
                 Log.e("Launcher.Model", "Error loading shortcut into hotseat " + itemInfo + " into position (" + itemInfo.screenId + ":" + itemInfo.cellX + "," + itemInfo.cellY + ") occupied by " + itemInfoArr[(int) itemInfo.screenId][0]);
                 return false;
             }
@@ -733,12 +728,6 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
 
                     while (!this.mStopped && cursor.moveToNext()) {
                     try {
-                        /* REWORK: per-row load survival — the donor aborted the whole
-                           favorites loop ("Desktop items loading interrupted") on any
-                           bad row (NPE in hotseat-collision logging, null
-                           ShortcutInfo, …), silently losing every remaining
-                           workspace/dock item on the next launch — the
-                           dock-shrink/ghost/empty-home family of bugs. */
 
                         try {
                             AtomicBoolean hotseatAllAppsCollision = new AtomicBoolean(false);
@@ -945,10 +934,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                     hotseatAllAppsCollision.set(false);
                                     // check & update map of what's occupied
                                     if (!checkItemPlacement(occupied, info, hotseatAllAppsCollision)) {
-                                        /* REWORK: hotseat rows colliding on a dock slot (duplicate
-                                           screen/cellX rows accumulated by raw-slot drop commits) were
-                                           silently skipped forever, emptying the dock. Re-slot them to
-                                           the first free dock position the same load and persist the fix. */
+
                                         boolean reslotted = false;
                                         if (info.container == -101 && !hotseatAllAppsCollision.get()) {
                                             ItemInfo[][] dockGrid = (ItemInfo[][]) occupied.get(Long.valueOf(-101L));
@@ -981,7 +967,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                     switch (container) {
                                         case -100: // CONTAINER_DESKTOP
                                         case -101: // CONTAINER_HOTSEAT
-                                            /* REWORK-DBG */
+
                                             if (container == -101) android.util.Log.d("WsDebug", "hotseat bound id=" + id + " type=" + info.itemType + " slot=" + info.screenId + " cellX=" + info.cellX);
                                             LauncherModel.sBgWorkspaceItems.add(info);
                                             break;
@@ -1149,7 +1135,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                             Launcher.addDumpLog("Launcher.Model", "Desktop items loading interrupted", e, true);
                         }
                     } catch (Exception eLoadRow) {
-                        /* REWORK: skip-and-continue instead of aborting the load. */
+
                         Launcher.addDumpLog("Launcher.Model", "Desktop items loading interrupted for row", eLoadRow, true);
                     }
                 }
@@ -1211,9 +1197,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
 
                 // Rebuild sBgWorkspaceScreens
                 TreeMap<Integer, Long> screensDb = LauncherModel.loadWorkspaceScreensDb(this.mContext);
-                /* REWORK: iterate values() so every screen survives even when the
-                   persisted ranks collide (the keySet+get form silently dropped the
-                   colliding screen, leaving ws items orphaned: "screenId not found"). */
+
                 for (Long screenId : screensDb.values()) {
                     LauncherModel.sBgWorkspaceScreens.add(screenId);
                 }
@@ -1231,11 +1215,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                 if (unusedScreens.size() != 0) {
                     Launcher.addDumpLog("Launcher.Model", "11683562 -   unusedScreens (to be removed): " + TextUtils.join(", ", unusedScreens), true);
                     LauncherModel.sBgWorkspaceScreens.removeAll(unusedScreens);
-                    /* REWORK: only persist when at least one screen remains — the
-                       batch in updateWorkspaceScreenOrder deletes every row before
-                       re-inserting, so persisting an empty list wipes the table and
-                       permanently orphaned ws items (empty desktop + empty settings
-                       previews) until the data is cleared. */
+
                     if (!LauncherModel.sBgWorkspaceScreens.isEmpty()) {
                         LauncherModel.this.updateWorkspaceScreenOrder(context, LauncherModel.sBgWorkspaceScreens);
                     }
@@ -1653,7 +1633,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                     }
                                 }
                                 it2 = it;
-                                // REWORK: jadx register-shuffle round-trip; net effect is nothing (callbacks2 == callbacks4).
+
                             }
                         }
                         callbacks = callbacks4;
@@ -2344,9 +2324,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                     case 0:
                     case 1:
                         if (itemInfo.container == -100 || itemInfo.container == -101) {
-                            /* REWORK: jadx flipped the comparison chain — the dex adds
-                               to sBgWorkspaceItems for BOTH workspace (-100) and hotseat
-                               (-101); anything else runs the folder-containment check. */
+
                             sBgWorkspaceItems.add(itemInfo);
                         } else if (!sBgFolders.containsKey(itemInfo.container)) {
                             Log.e("Launcher.Model", "adding item: " + itemInfo + " to a folder that  doesn't exist");
@@ -2633,10 +2611,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
     /* JADX INFO: Access modifiers changed from: private */
     /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     public static TreeMap<Integer, Long> loadWorkspaceScreensDb(Context context) {
-        /* REWORK: self-heal — workspaceScreens can end up wiped (e.g. a batch
-           persisted while no ws pages were bound yet), while favorites still carry
-           rows for those screens; without them every ws item is skipped at bind
-           ("screenId not found") and the settings previews come back empty. */
+
         if (LauncherAppState.getLauncherProviderSafe() != null) {
             LauncherAppState.getLauncherProviderSafe().restoreWorkspaceScreensFromFavorites();
         }
@@ -3369,9 +3344,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                 it.remove();
             }
         }
-        /* REWORK: the batch deletes all rows before re-inserting — persisting an
-           empty list (no real ws pages bound yet, temp screens only) would wipe
-           workspaceScreens and orphan every ws item until data clear. */
+
         if (arrayList2.isEmpty()) {
             return;
         }

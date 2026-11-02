@@ -13,8 +13,7 @@ import com.ovacoda.devie.R;
 import com.ovacoda.devie.images.IconLoader;
 
 /* JADX INFO: loaded from: classes.dex */
-/* REWORK(fresco): SimpleDraweeView/hierarchy → ImageView + IconLoader; the
- * never-bound rating widgets were removed with the Play-Store survey. */
+
 public class SearchItemViewHolder extends BaseViewHolder {
     public static final int ID = R.layout.search_item;
     private Context mContext;

@@ -220,7 +220,7 @@ public class BitmapRegionTileSource implements TiledImageRenderer.TileSource {
                 exifInterface.readExif(inputStreamRegenerateInputStream);
                 Utils.closeSilently(inputStreamRegenerateInputStream);
                 return true;
-            } catch (IOException e) { /* REWORK: FileNotFoundException is subsumed */
+            } catch (IOException e) {
                 Log.d("BitmapRegionTileSource", "Failed to load URI " + this.mUri, e);
                 return false;
             } catch (NullPointerException e2) {

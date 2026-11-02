@@ -41,10 +41,7 @@ public class NycWallpaperUtils {
         } else {
             i2 = i == 1 ? 2 : 3;
         }
-        /* REWORK: the param must stay generic — donor dex builds an Integer[] here
-           (new-array [Ljava/lang/Integer;); a raw AsyncTask receiver made javac
-           pass an Object[] and doInBackground(Integer...) threw ClassCastException
-           in the wallpaper_chooser process (crash on "Set wallpaper"/"Crop"). */
+
         asyncTask.execute(Integer.valueOf(i2));
     }
 

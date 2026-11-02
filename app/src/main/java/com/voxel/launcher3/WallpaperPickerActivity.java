@@ -638,7 +638,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
     }
 
     private File getDefaultThumbFile() {
-        return new File(getContext().getFilesDir(), Build.VERSION.SDK_INT + "-" /* REWORK: was crittercism EventsFilesManager constant */ + "default_thumb2.jpg");
+        return new File(getContext().getFilesDir(), Build.VERSION.SDK_INT + "-"  + "default_thumb2.jpg");
     }
 
     static Point getDefaultThumbnailSize(Resources resources) {
@@ -680,7 +680,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
         Bitmap bitmapCreateThumbnail;
         boolean zSaveDefaultWallpaperThumb;
         Resources system = Resources.getSystem();
-        int identifier = system.getIdentifier("default_wallpaper", "drawable", "android" /* REWORK: was facebook SDK AbstractSpiCall constant */);
+        int identifier = system.getIdentifier("default_wallpaper", "drawable", "android" );
         File defaultThumbFile = getDefaultThumbFile();
         if (defaultThumbFile.exists()) {
             bitmapCreateThumbnail = BitmapFactory.decodeFile(defaultThumbFile.getAbsolutePath());
@@ -748,7 +748,7 @@ public class WallpaperPickerActivity extends WallpaperCropActivity {
         new File(getContext().getFilesDir(), "default_thumb.jpg").delete();
         new File(getContext().getFilesDir(), "default_thumb2.jpg").delete();
         for (int i = 16; i < Build.VERSION.SDK_INT; i++) {
-            new File(getContext().getFilesDir(), i + "-" /* REWORK: was crittercism EventsFilesManager constant */ + "default_thumb2.jpg").delete();
+            new File(getContext().getFilesDir(), i + "-"  + "default_thumb2.jpg").delete();
         }
         return writeImageToFileAsJpeg(getDefaultThumbFile(), bitmap);
     }

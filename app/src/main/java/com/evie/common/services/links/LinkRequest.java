@@ -4,7 +4,6 @@ import android.content.Intent;
 import java.util.Collections;
 import java.util.List;
 
-/* REWORK: analytics data slot removed; LinkRequest is now just links + app + callback. */
 public class LinkRequest {
     private static final LinkCallback NO_CALLBACK = new LinkCallback() { // from class: com.evie.common.services.links.LinkRequest.1
         @Override // com.evie.common.services.links.LinkCallback

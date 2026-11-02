@@ -28,13 +28,7 @@ public class FrequentlyUsedAnalyticsFilter extends AnalyticsFilter {
                     String string = jSONObject2.getString("launch_package_name");
                     String string2 = jSONObject2.getString("launch_class_name");
                     List<FrequentlyUsedApp> listBlockingFirst = this.mFrequentlyUsed.getFrequentlyUsedApps().blockingFirst();
-                    /* REWORK: the write used to land synchronously inside the
-                     * click chain, so the visible frequent-apps row re-sorted
-                     * (clicked app promoted, neighbours shifted) right as the
-                     * activity-open animation started — a one-frame icon swap
-                     * in the row. Defer the write so the rebind happens after
-                     * the search overlay is gone. predicted_rank still uses
-                     * the pre-launch frequencies. */
+
                     int rank = 0;
                     for (int i = 0; i < listBlockingFirst.size(); i++) {
                         if (listBlockingFirst.get(i).getPackageName().equals(string)) {

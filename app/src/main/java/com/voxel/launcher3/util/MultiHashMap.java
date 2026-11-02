@@ -28,7 +28,7 @@ public class MultiHashMap<K, V> extends HashMap<K, ArrayList<V>> {
     @Override // java.util.HashMap, java.util.AbstractMap
     public MultiHashMap<K, V> clone() {
         MultiHashMap<K, V> multiHashMap = new MultiHashMap<>(size());
-        for (Map.Entry<K, ArrayList<V>> entry : entrySet()) { /* REWORK: entry values are ArrayList */
+        for (Map.Entry<K, ArrayList<V>> entry : entrySet()) {
             multiHashMap.put(entry.getKey(), new ArrayList((Collection) entry.getValue()));
         }
         return multiHashMap;

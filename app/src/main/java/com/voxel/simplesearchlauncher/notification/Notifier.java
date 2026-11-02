@@ -1,6 +1,5 @@
 package com.voxel.simplesearchlauncher.notification;
 
-/* REWORK: minSdk-safe receiver registration (API 34+ flag rule) */
 import androidx.core.content.ContextCompat;
 import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
@@ -180,7 +179,7 @@ public class Notifier implements SharedPreferences.OnSharedPreferenceChangeListe
             Intent intent = new Intent("android.intent.action.DIAL");
             intent.setData(Uri.parse("tel:123456789"));
             ResolveInfo resolveInfoResolveActivity = context.getPackageManager().resolveActivity(intent, 65536);
-            if (resolveInfoResolveActivity != null && resolveInfoResolveActivity.activityInfo != null && !resolveInfoResolveActivity.activityInfo.packageName.equals("android" /* REWORK: was facebook SDK AbstractSpiCall constant */)) {
+            if (resolveInfoResolveActivity != null && resolveInfoResolveActivity.activityInfo != null && !resolveInfoResolveActivity.activityInfo.packageName.equals("android" )) {
                 str = resolveInfoResolveActivity.activityInfo.packageName;
             }
             this.clearCount(str);

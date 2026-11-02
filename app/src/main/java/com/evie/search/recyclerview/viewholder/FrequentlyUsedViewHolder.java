@@ -26,8 +26,7 @@ public class FrequentlyUsedViewHolder extends BaseViewHolder {
     }
 
     public void bindItems(List<FrequentlyUsedItem> list) {
-        /* REWORK: jadx made the loop var final while an anon captures it; keep the
-         * for-loop but snapshot the index as an effectively-final copy each pass. */
+
         int i = 0;
         while (i < list.size() && i < this.mLayout.getChildCount()) {
             final int icap = i;

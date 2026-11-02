@@ -61,7 +61,7 @@ public class SearchShortcutHandler {
             simpleDraweeView = (ImageView) view.findViewById(R.id.search_item_image);
         }
         if (simpleDraweeView == null) {
-            return false; /* REWORK(icon-loader): no icon row to lift the image from */
+            return false;
         }
         if (localSearchSubitem.getLink().startsWith("tel:")) {
             intent = new Intent("android.intent.action.CALL", Uri.parse(localSearchSubitem.getLink()));
@@ -84,10 +84,7 @@ public class SearchShortcutHandler {
             Intent intent = frequentlyUsedItem.getIntent();
             ResolveInfo resolveInfoResolveActivity = this.mPackageManager.resolveActivity(intent, 0);
             if (resolveInfoResolveActivity != null) {
-                /* REWORK(icon-loader): getBitmap now returns null instead of
-                 * throwing on a missing drawable, so the guard belongs here
-                 * (BitmapUtil.getBitmap's NPE used to be swallowed by this
-                 * try/catch) — never start a drag with no icon bitmap. */
+
                 Bitmap bitmap = BitmapUtil.getBitmap(simpleDraweeView.getDrawable(), simpleDraweeView.getWidth());
                 if (bitmap == null) {
                     Timber.e("Invalid view passed to createShortcut: %s", "null icon drawable");
@@ -113,7 +110,7 @@ public class SearchShortcutHandler {
         }
         ImageView simpleDraweeView = (ImageView) view.findViewById(R.id.search_item_image);
         if (simpleDraweeView == null) {
-            return false; /* REWORK(icon-loader): no icon row to lift the image from */
+            return false;
         }
         Uri uri = Uri.parse(localSearchItem.getLink());
         String type = localSearchItem.getType();

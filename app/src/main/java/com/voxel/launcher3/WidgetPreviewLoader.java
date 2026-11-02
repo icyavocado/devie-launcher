@@ -274,7 +274,7 @@ public class WidgetPreviewLoader {
         int intrinsicHeight;
         WidgetPreviewLoader widgetPreviewLoader;
         LauncherAppWidgetProviderInfo launcherAppWidgetProviderInfo2;
-        Bitmap bitmap3 = null; /* REWORK: jadx blank register */
+        Bitmap bitmap3 = null;
         Bitmap bitmapCreateBitmap = bitmap;
         int i2 = i < 0 ? Integer.MAX_VALUE : i;
         if (launcherAppWidgetProviderInfo.previewImage != 0) {
@@ -353,9 +353,7 @@ public class WidgetPreviewLoader {
             }
             int i10 = iMax;
             float f4 = i5;
-            /* REWORK: donor divides as floats (int-to-float on both operands +
-               div-float in smali); jadx's int/int form truncated the icon scale
-               toward 0, shrinking widgets' fallback icons to nothing. */
+
             float fMin = Math.min(Math.min(intrinsicWidth, intrinsicHeight) / (float) (i5 + (((int) (0.25f * f4)) * 2)), f);
             widgetPreviewLoader = this;
             try {
@@ -411,8 +409,8 @@ public class WidgetPreviewLoader {
     /* JADX WARN: Code duplicated, block: B:32:0x0076 A[PHI: r10
       0x0076: PHI (r10v4 android.database.Cursor) = (r10v3 android.database.Cursor), (r10v6 android.database.Cursor) binds: [B:31:0x0074, B:22:0x0064] A[DONT_GENERATE, DONT_INLINE]] */
     /* JADX WARN: Code duplicated, block: B:37:0x007e  */
-    Bitmap readFromDb(WidgetCacheKey widgetCacheKey, Bitmap bitmap, PreviewLoadTask previewLoadTask) { /* REWORK: the dex caught its own IO failures; the AsyncTask worker must not see them */
-        /* REWORK: jadx lost an exception-flow local across catch scopes. */
+    Bitmap readFromDb(WidgetCacheKey widgetCacheKey, Bitmap bitmap, PreviewLoadTask previewLoadTask) {
+
         Throwable eReflow = null;
         Throwable thReflow = null;
         Cursor cursorQuery;
@@ -472,7 +470,7 @@ public class WidgetPreviewLoader {
             if (cursor != null) {
                 cursor.close();
             }
-            /* REWORK: dex swallowed DB-read failures; reparse by falling through. */
+
             return null;
         }
         return null;

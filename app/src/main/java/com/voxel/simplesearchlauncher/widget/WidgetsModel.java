@@ -71,8 +71,7 @@ public class WidgetsModel {
     }
 
     private void setWidgetsAndShortcuts(Context context, ArrayList<Object> arrayList) {
-        /* REWORK: jadx left these register locals blank on the widget branches;
-         * default them so every pass of the loop is definite. */
+
         String packageName = null;
         String string = null;
         ComponentName componentName = null;

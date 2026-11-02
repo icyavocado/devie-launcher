@@ -101,7 +101,7 @@ public class PullDownRecyclerView extends NoItemClickRecyclerView {
     }
 
     @Override // com.voxel.recyclerview.widget.RecyclerView, android.view.ViewGroup, android.view.View
-    protected void onLayout(boolean z, int i, int i2, int i3, int i4) { /* REWORK: jadx added a bogus throws */
+    protected void onLayout(boolean z, int i, int i2, int i3, int i4) {
         try {
             super.onLayout(z, i, i2, i3, i4);
             applyCurrentFactor();

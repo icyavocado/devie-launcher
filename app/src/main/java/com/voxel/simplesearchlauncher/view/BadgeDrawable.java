@@ -37,9 +37,7 @@ public class BadgeDrawable extends Drawable {
     private float mScaleFactor;
     private Paint mTextPaint;
     private boolean mBadgeEnabled = true;
-    /* REWORK: jadx hoisted these dpToPx() initializers into field init, which ran
-       before mContext was assigned (NPE at BadgeableAppIcon construction); they
-       belong in the constructor, after mContext is set. */
+
     private float mTextHeight;
     private float mMinWidth;
     private float mPaddingHorizontal;

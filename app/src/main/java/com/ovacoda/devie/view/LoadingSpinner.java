@@ -11,10 +11,6 @@ import android.view.View;
 import android.view.animation.LinearInterpolator;
 import com.ovacoda.devie.R;
 
-/* REWORK(vendor): replaces the decompiled com.github.rahatarmanahmed.cpv
-   CircularProgressView library (indeterminate-only). Same call surface the app
-   relies on (startAnimation / stopAnimation + the two XML attributes its two
-   layouts set). Package kept under the rework's own com.ovacoda.devie id. */
 public class LoadingSpinner extends View {
     private static final float ARC_SWEEP = 90.0f;
     private static final long ROTATION_MS = 1000L;

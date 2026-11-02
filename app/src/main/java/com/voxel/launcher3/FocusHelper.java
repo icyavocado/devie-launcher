@@ -197,8 +197,7 @@ public class FocusHelper {
         int i2;
         int i3;
         int[][] iArrCreateSparseMatrix;
-        /* REWORK: jadx left this register blank; the switch below assigns every
-         * reachable path, but default it to null to be safe. */
+
         View childAt = null;
         boolean zShouldConsume = FocusLogic.shouldConsume(i);
         if (keyEvent.getAction() == 1 || !zShouldConsume) {

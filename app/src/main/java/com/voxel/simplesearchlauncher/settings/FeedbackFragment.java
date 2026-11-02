@@ -15,7 +15,7 @@ import com.ovacoda.devie.R;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class FeedbackFragment extends Fragment {
-    /* REWORK(github): community row now opens the GitHub issue tracker. */
+
     public void lambda$onViewCreated$0(View view) {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addFlags(268468224);
@@ -31,8 +31,6 @@ public class FeedbackFragment extends Fragment {
         }
     }
 
-    /* REWORK(github): rating row now opens the GitHub repo (star it there);
-       the play-store fallback + analytics event are gone with the store. */
     public void lambda$onViewCreated$1(View view) {
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.addFlags(268468224);

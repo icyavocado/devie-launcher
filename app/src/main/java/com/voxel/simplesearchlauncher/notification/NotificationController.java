@@ -101,9 +101,7 @@ public class NotificationController implements INotificationController, Extracto
                     if (!widgetExtractor.isConfigured() && !widgetExtractor.requiresConfig()) {
                         InterceptingWidgetHost interceptingWidgetHost = InterceptingWidgetHost.getInstance(this.mContext);
                         int iAllocateAppWidgetId = interceptingWidgetHost.allocateAppWidgetId();
-                        /* REWORK(donor-parity): delete the id on every path
-                         * except a successful create + enable, so bound
-                         * extractors keep their widget. */
+
                         boolean created = false;
                         try {
                             ComponentName widgetComponent = widgetExtractor.getWidgetComponent();

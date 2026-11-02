@@ -10,11 +10,6 @@ import com.evie.search.local.LocalSearchManager;
 import com.evie.search.model.RecentItem;
 import com.voxel.launcher3.MainThreadExecutor;
 
-/**
- * REWORK(fresco): was ImagePipelineCleaner. Keeps the donor lifecycle
- * behavior: when the launcher pauses, drop the LRU and warm up the recent
- * items' icons so reopening search is instant.
- */
 public class IconCacheCleaner implements Application.ActivityLifecycleCallbacks {
     private static final long CLEAN_DELAY_MS = 2000;
 

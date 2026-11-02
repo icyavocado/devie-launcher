@@ -18,8 +18,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- REWORK: no INTERNET — all cloud/network features are stripped; the
-         app performs no network I/O. Removing it proves that at install level. -->
+    
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
@@ -27,22 +26,16 @@
     <uses-permission android:name="com.ovacoda.devie.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="com.ovacoda.devie.permission.RECEIVE_FIRST_LOAD_BROADCAST"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <!-- REWORK: the PermissionsSlide storage/location grant rows need these
-         declared; the permission-pruning pass removed them. -->
+    
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <!-- REWORK: launchable-app visibility on API 30+ (drawer + search scanning). -->
+    
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-feature android:glEsVersion="0x00020000" android:required="true"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-feature android:name="android.sensor.rotation_vector" android:required="false"/>
-    <!-- REWORK: API 30+ package visibility. Icon packs advertise apply/support
-         activities to launchers via custom theme intents (Nova/Apex/GO/ADW);
-         without <queries> those queries return empty and the icon-pack picker
-         lists nothing on modern devices. The MAIN/LAUNCHER intent is what lets
-         the launcher enumerate home-screen apps at all on API 30+; QUERY_ALL_PACKAGES
-         covers OEM skins that filter LauncherApps by role/handle. -->
+    
     <queries>
         <intent>
             <action android:name="android.intent.action.MAIN"/>
@@ -77,8 +70,7 @@
                 <action android:name="android.intent.action.SEARCH"/>
                 <category android:name="android.intent.category.HOME"/>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <!-- REWORK: the LAUNCHER category removed — it made dEvie list
-                     itself in the app drawer (and other launchers') app scans. -->
+                
                 <category android:name="android.intent.category.MONKEY"/>
             </intent-filter>
             <intent-filter>

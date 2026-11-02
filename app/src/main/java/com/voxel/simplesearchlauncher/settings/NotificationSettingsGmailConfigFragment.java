@@ -33,8 +33,7 @@ public class NotificationSettingsGmailConfigFragment extends Fragment {
     RecyclerView mRecyclerView;
 
     /* JADX INFO: Access modifiers changed from: private */
-    /* REWORK: javac resolves the extends-clause generics before the class's own
-     * nested members are in scope; qualify the view holder. */
+
     class AccountListAdapter extends RecyclerView.Adapter<AccountListAdapter.SwitchViewHolder> {
         List<String> mAccounts = Collections.synchronizedList(new ArrayList());
 

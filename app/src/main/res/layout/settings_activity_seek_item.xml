@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- REWORK: label and seek stacked (donor ran them side-by-side with a 1:3 weight
-     split that squeezed long labels like "Background Opacity" into a 3-line word
-     break after the modern type sizes). -->
+
 <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" android:minHeight="@dimen/search_list_item_height" android:splitMotionEvents="false" android:paddingStart="25.0dip" android:paddingTop="10.0dip" android:paddingBottom="12.0dip" android:paddingEnd="16.0dip"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView android:textAppearance="@style/SettingsItemTextAppearance" android:id="@id/label" android:layout_width="fill_parent" android:layout_height="wrap_content" />

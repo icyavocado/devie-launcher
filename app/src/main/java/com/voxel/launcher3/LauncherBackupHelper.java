@@ -112,7 +112,7 @@ public class LauncherBackupHelper implements BackupHelper {
     /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     private void backupIcons(BackupProtos.Journal journal, BackupDataOutput backupDataOutput, BackupProtos.Journal journal2, ArrayList<BackupProtos.Key> arrayList) throws IOException {
         HashSet hashSet;
-        /* REWORK: jadx left the per-row row-count register blank; default it. */
+
         int i = 0;
         String strKeyToBackupKey;
         BackupProtos.Key key;
@@ -147,7 +147,7 @@ public class LauncherBackupHelper implements BackupHelper {
                     if (savedIdsByType.contains(strKeyToBackupKey)) {
                         StringBuilder sb = new StringBuilder();
                         hashSet = hashSet2;
-                        /* REWORK: jadx wrapped non-throwing statements in dead catches. */
+
                         sb.append("already saved icon ");
                         sb.append(strKeyToBackupKey);
                         Log.v("LauncherBackupHelper", sb.toString());
@@ -170,7 +170,7 @@ public class LauncherBackupHelper implements BackupHelper {
                                     writeRowToBackup(key, packIcon(i2, icon), journal2, backupDataOutput);
                                 }
                             } catch (Exception unused3) {
-                                /* REWORK: neither call here declares a checked throw anymore. */
+
                                 Log.e("LauncherBackupHelper", "unable to save application icon for favorite: " + j);
                             }
                         } else {
@@ -181,7 +181,7 @@ public class LauncherBackupHelper implements BackupHelper {
                     }
                 } catch (URISyntaxException unused6) {
                     hashSet = hashSet2;
-                } /* REWORK: dead IOException catch removed (only parseUri throws here) */
+                }
                 hashSet2 = hashSet;
                 i4 = i;
                 i3 = 3;
@@ -518,8 +518,7 @@ public class LauncherBackupHelper implements BackupHelper {
 
     /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
     private BackupProtos.Journal readJournal(ParcelFileDescriptor parcelFileDescriptor) {
-        /* REWORK: jadx tangled the journal read into dead catches plus a rethrow this
-         * method never declared; restored to the dex's straightforward read loop. */
+
         BackupProtos.Journal journal = new BackupProtos.Journal();
         if (parcelFileDescriptor == null) {
             return journal;
@@ -786,8 +785,7 @@ public class LauncherBackupHelper implements BackupHelper {
                 backupIcons(journal, backupDataOutput, journal2, arrayList);
                 backupWidgets(journal, backupDataOutput, journal2, arrayList);
             } catch (Throwable e) {
-                /* REWORK: the decompiled chains rethrow Throwable; the dex level
-                 * surfaced only IOException to this catch. */
+
                 Log.e("LauncherBackupHelper", "launcher backup has failed", e);
             }
             journal2.key = (BackupProtos.Key[]) arrayList.toArray(new BackupProtos.Key[arrayList.size()]);

@@ -97,8 +97,7 @@ public class BaseApplication extends Application implements Injector, HasActivit
         this.launcherAppComponent.inject(LauncherAppState.getInstance().getModel());
         LauncherAppState.getInstance().getModel().onInject();
         registerPackageChangedReceiver();
-        /* REWORK(fresco): the drawee pipeline is gone; the in-process icon
-         * loader takes its place (local data:/content:/magic URIs only). */
+
         IconLoader.init(this);
     }
 
@@ -130,8 +129,7 @@ public class BaseApplication extends Application implements Injector, HasActivit
     }
 
     public boolean isDebugBuild() {
-        /* REWORK: jadx decompiled this as a hardcoded false, killing every Timber
-           log (the debug tree never plants). Read the actual BuildConfig flag. */
+
         if (this.mIsDebugBuild == null) {
             this.mIsDebugBuild = Boolean.valueOf(BuildConfig.DEBUG);
         }

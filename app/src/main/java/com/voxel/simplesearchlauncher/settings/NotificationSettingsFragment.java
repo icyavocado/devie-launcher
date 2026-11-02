@@ -408,7 +408,7 @@ public class NotificationSettingsFragment extends Fragment {
             if (intent == null) {
                 return;
             }
-            /* REWORK: jadx dropped this exception-flow local. */
+
             int intExtra = 0;
             intExtra = intent != null ? intent.getIntExtra("appWidgetId", 0) : 0;
             if (intExtra != 0) {

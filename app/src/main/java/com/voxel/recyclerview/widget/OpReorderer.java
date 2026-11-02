@@ -91,7 +91,7 @@ class OpReorderer {
     /* JADX WARN: Code duplicated, block: B:70:? A[RETURN, SYNTHETIC] */
     void swapMoveRemove(List<AdapterHelper.UpdateOp> list, int i, AdapterHelper.UpdateOp updateOp, int i2, AdapterHelper.UpdateOp updateOp2) {
         boolean z;
-        AdapterHelper.UpdateOp updateOpObtainUpdateOp = null; /* REWORK: jadx blank register */
+        AdapterHelper.UpdateOp updateOpObtainUpdateOp = null;
         boolean z2 = false;
         if (updateOp.positionStart < updateOp.itemCount) {
             if (updateOp2.positionStart == updateOp.positionStart && updateOp2.itemCount == updateOp.itemCount - updateOp.positionStart) {
@@ -230,7 +230,7 @@ class OpReorderer {
     /* JADX WARN: Code duplicated, block: B:22:0x006c  */
     /* JADX WARN: Code duplicated, block: B:24:? A[RETURN, SYNTHETIC] */
     void swapMoveUpdate(List<AdapterHelper.UpdateOp> list, int i, AdapterHelper.UpdateOp updateOp, int i2, AdapterHelper.UpdateOp updateOp2) {
-        AdapterHelper.UpdateOp updateOpObtainUpdateOp = null; /* REWORK: jadx blank register */
+        AdapterHelper.UpdateOp updateOpObtainUpdateOp = null;
         AdapterHelper.UpdateOp updateOpObtainUpdateOp2 = null;
         if (updateOp.itemCount >= updateOp2.positionStart) {
             if (updateOp.itemCount < updateOp2.positionStart + updateOp2.itemCount) {

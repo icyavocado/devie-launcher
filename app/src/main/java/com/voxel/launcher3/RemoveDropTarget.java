@@ -157,7 +157,7 @@ public class RemoveDropTarget extends ButtonDropTarget {
         final float f4 = rect.top;
         final float f5 = iconRect.left;
         final float f6 = iconRect.top;
-        /* REWORK: lambda-holder class used as a type; use its functional interface */
+
         final TimeInterpolator __lambda_removedroptarget_5gdyfcdvbcbkdlgdb_scnvymcrq = new TimeInterpolator() { // from class: com.voxel.launcher3.-$$Lambda$RemoveDropTarget$5gDyFCDVbcBKDLgDb_sCnVYmCrQ
             @Override // android.animation.TimeInterpolator
             public final float getInterpolation(float f7) {

@@ -20,8 +20,7 @@ import com.voxel.simplesearchlauncher.notification.Notifier;
 import com.ovacoda.devie.R;
 
 /* JADX INFO: loaded from: classes2.dex */
-/* REWORK(fresco): icon view = ImageView; the badge-tint bitmap callback now
- * arrives through IconLoader's main-thread listener (no drawee pipeline). */
+
 public class BadgeableAppIcon extends LinearLayout {
     private String mActivityName;
     private BadgeDrawable mBadgeDrawable;

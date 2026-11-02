@@ -1,6 +1,5 @@
 package com.voxel.simplesearchlauncher.model;
 
-/* REWORK: minSdk-safe receiver registration (API 34+ flag rule) */
 import androidx.core.content.ContextCompat;
 import android.content.BroadcastReceiver;
 import android.content.Context;

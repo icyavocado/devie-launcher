@@ -1,7 +1,7 @@
 package com.voxel.simplesearchlauncher.model.managers;
 
 import android.app.Activity;
-import com.voxel.launcher3.LauncherProvider; // REWORK: cross-package static helpers
+import com.voxel.launcher3.LauncherProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -34,7 +34,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/* REWORK: Google Drive / Google-SignIn cloud backup removed; local files + SAF streams. */
 public class BackupRestoreManager {
     private static final String TAG = "BackupRestoreManager";
     public static final int REQUEST_CODE_BACKUP = 3001;
@@ -65,8 +64,7 @@ public class BackupRestoreManager {
     }
 
     public void createLocalBackup(Context context, String str) {
-        /* REWORK: the dex-era createBackup returned the zip stream; decompiled it
-         * returns the file name. Drive the stream out explicitly. */
+
         OutputStream outputStream = null;
         try {
             outputStream = context.openFileOutput(str, 0);
@@ -88,10 +86,6 @@ public class BackupRestoreManager {
         }
     }
 
-    /* REWORK: SAF document-picker results (backup/restore) instead of Google Drive/SignIn results.
-       The zip/db work runs on a worker thread: doing it in onActivityResult froze the
-       ProgressDialog and ANRed on multi-DB restores. UI callbacks are synchronized and
-       restoreFromZipInputStream already hops to the UI thread before touching views/music. */
     public void handleActivityResult(int i, int i2, Intent intent, Activity activity) {
         switch (i) {
             case REQUEST_CODE_BACKUP: {
@@ -291,8 +285,7 @@ public class BackupRestoreManager {
 
     public synchronized void backupToStream(Context context, OutputStream outputStream, final BackupRestoreUI callbacks) {
         try {
-            /* REWORK: see createLocalBackup; the decompiled createBackup returns a
-             * file name, so close the caller-owned stream here like the dex version did. */
+
             createBackup(context, outputStream);
             outputStream.close();
             if (callbacks != null) {

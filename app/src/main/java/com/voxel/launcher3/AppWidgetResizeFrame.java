@@ -70,9 +70,7 @@ public class AppWidgetResizeFrame extends FrameLayout {
         this.mLauncher = (Launcher) context;
         this.mCellLayout = cellLayout;
         this.mWidgetView = launcherAppWidgetHostView;
-        /* REWORK(provider-limits): donor hardcoded mode 3; honor the provider.
-         * Framework values (0 none, 1 horizontal, 2 vertical, 3 both) already
-         * match this class's encoding (& 1 horizontal, & 2 vertical). */
+
         this.mResizeMode = launcherAppWidgetHostView.getAppWidgetInfo().resizeMode;
         this.mDragLayer = dragLayer;
         int[] minSpanForWidget = Launcher.getMinSpanForWidget(this.mLauncher, launcherAppWidgetHostView.getAppWidgetInfo());

@@ -15,7 +15,6 @@ public interface AppLaunchDAO {
     @Query("SELECT * FROM app_launch_entries ORDER BY id ASC")
     List<AppLaunchEntry> getAllEntries();
 
-    // REWORK: room-rxjava2 was cut with the cloud deps; poll through the DAO instead.
     @Query("SELECT * FROM app_launch_entries ORDER BY id DESC LIMIT 1")
     AppLaunchEntry getMostRecentEntry();
 

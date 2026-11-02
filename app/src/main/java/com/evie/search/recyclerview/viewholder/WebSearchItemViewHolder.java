@@ -10,7 +10,7 @@ import com.evie.search.recyclerview.presenter.WebItemPresenter;
 import com.ovacoda.devie.R;
 
 /* JADX INFO: loaded from: classes.dex */
-/* REWORK(fresco): both views were always resource-driven; plain ImageViews. */
+
 public class WebSearchItemViewHolder extends BaseViewHolder {
     public static final int ID = R.layout.search_autocomplete;
     private int extraPadding;

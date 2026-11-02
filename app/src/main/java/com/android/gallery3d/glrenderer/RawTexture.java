@@ -7,8 +7,6 @@ public class RawTexture extends BasicTexture {
     private boolean mIsFlipped;
     private final boolean mOpaque;
 
-    /* REWORK: jadx dropped the only ctor, leaving the final field unassigned;
-     * restore the AOSP (width, height, opaque) construction. */
     public RawTexture(int i, int i2, boolean z) {
         this.mOpaque = z;
         setSize(i, i2);

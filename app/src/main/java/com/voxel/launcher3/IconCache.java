@@ -96,7 +96,7 @@ public class IconCache {
         return cacheLocked(componentName, launcherActivityInfoCompat, map, userHandleCompat, z, false);
     }
 
-    private CacheEntry cacheLocked(ComponentName componentName, LauncherActivityInfoCompat launcherActivityInfoCompat, HashMap<Object, CharSequence> map, UserHandleCompat userHandleCompat, boolean z, boolean z2) { /* REWORK: the callees no longer throw */ 
+    private CacheEntry cacheLocked(ComponentName componentName, LauncherActivityInfoCompat launcherActivityInfoCompat, HashMap<Object, CharSequence> map, UserHandleCompat userHandleCompat, boolean z, boolean z2) {
         CacheEntry entryForPackage;
         CacheKey cacheKey = new CacheKey(componentName, userHandleCompat);
         CacheEntry cacheEntry = this.mCache.get(cacheKey);
@@ -164,8 +164,7 @@ public class IconCache {
 
     /* JADX WARN: Multi-variable type inference failed */
     private Bitmap getPreloadedIcon(ComponentName componentName, UserHandleCompat userHandleCompat) {
-        /* REWORK: jadx flattened this file-read into a tangle of half-dropped
-         * exception locals; reimplemented as plain best-effort IO. */
+
         String strFlattenToShortString = componentName.flattenToShortString();
         Bitmap bitmapDecodeByteArray = null;
         FileInputStream fileInputStreamOpenFileInput = null;
@@ -237,8 +236,7 @@ public class IconCache {
     }
 
     public static void preloadIcon(Context context, ComponentName componentName, Bitmap bitmap, int i) {
-        /* REWORK: jadx again flattened the file-write into half-dropped exception locals;
-         * reimplemented as plain best-effort IO. */
+
         try {
             context.getPackageManager().getActivityIcon(componentName);
         } catch (PackageManager.NameNotFoundException unused) {

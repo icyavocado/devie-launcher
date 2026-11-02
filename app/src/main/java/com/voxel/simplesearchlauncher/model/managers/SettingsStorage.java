@@ -18,7 +18,6 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
     private long desktopUnlockedAt;
     private SharedPreferences sharedPref;
 
-    /* REWORK: remote launcher-config cut — no Lazy<LauncherConfigModel> input. */
     private SettingsStorage(Context context) {
         this.sharedPref = context.getApplicationContext().getSharedPreferences("settings_storage", 0);
         upgradeIfNeeded();
@@ -52,7 +51,6 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
         }
         instance = new SettingsStorage(context);
     }
-
 
     public CustomGestureAction getActionForGestureType(GestureType gestureType) {
         String keyForGestureType = getKeyForGestureType(gestureType);
@@ -167,7 +165,6 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
     public SharedPreferences getSharedPreferences() {
         return this.sharedPref;
     }
-
 
     public boolean isAppDrawerHintEnabled() {
         return this.sharedPref.getBoolean("app_drawer_hint_enabled", true);
@@ -356,8 +353,6 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
         editorEdit.putInt("search_bar_style", i);
         editorEdit.apply();
     }
-
-
 
     public void upgradeIfNeeded() {
         UpgradeUtil.processUpgrade(this.sharedPref, this, 3);

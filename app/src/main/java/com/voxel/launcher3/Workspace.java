@@ -598,10 +598,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
         this.mSpringLoadedShrinkFactor = resources.getInteger(R.integer.config_workspaceSpringLoadShrinkPercentage) / 100.0f;
         this.mOverviewModeShrinkFactor = deviceProfile.getOverviewModeScale();
         this.mCameraDistance = resources.getInteger(R.integer.config_cameraDistance);
-        /* REWORK: the dex read styleable index 2 (workspaceDefaultPage, unused in
-           our layouts) with default 1 — a leftover of the feed build where the
-           custom-content page sat at index 0. With the feed cut, the first page
-           (defaultScreen, our launcher.xml sets it to 0) is the home page. */
+
         int i2 = typedArrayObtainStyledAttributes.getInt(0, 0);
         this.mDefaultPage = i2;
         this.mOriginalDefaultPage = i2;
@@ -1242,7 +1239,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
         int i3;
         int i4;
         char c2;
-        /* REWORK: jadx left this def blank on the no-resize paths. */
+
         boolean z4 = false;
         Runnable runnable = new Runnable() { // from class: com.voxel.launcher3.-$$Lambda$Workspace$zV5yGOHv9A4eOQvWqaaQp6efGsA
             @Override // java.lang.Runnable
@@ -1351,11 +1348,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                     throw new IllegalStateException("Unknown item type: " + itemInfo3.itemType);
             }
         } else {
-            /* REWORK: donor guards the ShortcutInfo→(AppInfo) wrap with
-               instance-of too (smali cond_d:pswitch_1 shared block: container==-1
-               AND instanceof AppInfo). jadx dropped the instanceof here, so
-               dropping a pinned shortcut (plain ShortcutInfo) to the desktop
-               crashed with ClassCastException (issue #1 repro'd live). */
+
             if (itemInfo3.container == -1 && (itemInfo3 instanceof AppInfo)) {
                 ShortcutInfo shortcutInfo2 = new ShortcutInfo((AppInfo) itemInfo3);
                 dragObject.dragInfo = shortcutInfo2;
@@ -1773,8 +1766,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
     /* JADX WARN: Code duplicated, block: B:23:0x00b7 A[DONT_INVERT] */
     /* JADX WARN: Code duplicated, block: B:25:0x00ba  */
     public void animateWidgetDrop(ItemInfo itemInfo, CellLayout cellLayout, DragView dragView, final Runnable runnable, int i, final View view, boolean z) {
-        /* REWORK: jadx left the endStyle register blank on one path; every write in
-         * this method assigns 1, so default it. */
+
         int i2 = 1;
         DragLayer dragLayer;
         Rect rect = new Rect();
@@ -1806,9 +1798,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                 }, i != i2 ? 0 : 2, integer, this);
             }
         }
-        /* REWORK: the dex only builds the cross-fade bitmap when the bound host
-           view exists (widget-picker drags carry no host view yet); jadx dropped
-           the guard and the null-view NPE crashed every widget drop. */
+
         if (view != null) {
             dragView.setCrossFadeBitmap(createWidgetBitmap(itemInfo, view));
             dragView.crossFade((int) (integer * 0.8f));
@@ -2271,8 +2261,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
             long j = integer;
             launcherViewPropertyAnimator.scaleX(this.mNewScale).scaleY(this.mNewScale).translationY(overviewModeTranslationY).setDuration(j).setInterpolator(this.mZoomInInterpolator);
             animatorSetCreateAnimatorSet.play(launcherViewPropertyAnimator);
-            /* REWORK: jadx made the loop var final while an anon captures its value;
-             * split into a while loop with an effectively-final copy per iteration. */
+
             int i4 = 0;
             while (i4 < getChildCount()) {
                 final int i4cap = i4;
@@ -2282,7 +2271,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                     cellLayout2.setBackgroundAlpha(this.mNewBackgroundAlphas[i4]);
                     cellLayout2.setShortcutAndWidgetAlpha(this.mNewAlphas[i4]);
                 } else {
-                    if (arrayList != null) {  /* REWORK: jadx int-ified a null check */
+                    if (arrayList != null) {
                         arrayList.add(cellLayout2);
                     }
                     float f7 = this.mOldAlphas[i4];
@@ -2511,7 +2500,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
     void getUniqueIntents(CellLayout cellLayout, ArrayList<ComponentName> arrayList, ArrayList<ComponentName> arrayList2, boolean z) {
         FolderIcon folderIcon;
         ArrayList<View> itemsInReadingOrder;
-        /* REWORK: jadx left this cursor uninitialized; each branch starts it at 0. */
+
         int i = 0;
         ShortcutInfo shortcutInfo;
         ComponentName component;
@@ -3050,9 +3039,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
     /* JADX WARN: Type inference failed for: r8v2, types: [com.voxel.launcher3.CellLayout] */
     @Override // com.voxel.launcher3.DropTarget
     public void onDrop(DropTarget.DragObject dragObject) {
-        /* REWORK: jadx left the register locals blank; initialize them so every
-         * dex-possible path has a definite value, and snapshot the captures
-         * (the reorder-frame runnable and the item being moved) as single assignments. */
+
         View r12 = null;
         boolean z = false;
         int r15 = 0;
@@ -3142,8 +3129,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                 } else {
                     view2 = view4;
                 }
-                /* REWORK(donor-parity): snap only when the drop lands on a
-                 * page we're not already viewing (and never for hotseat). */
+
                 if (getScreenIdForPageIndex(this.mCurrentPage) != j2 && !zIsHotseatLayout) {
                     int pageIndexForScreenId = getPageIndexForScreenId(j2);
                     snapToPage(pageIndexForScreenId);
@@ -3179,8 +3165,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                     layoutParams.cellHSpan = itemInfo2.spanX;
                     layoutParams.cellVSpan = itemInfo2.spanY;
                     layoutParams.isLockedToGrid = z;
-                    /* REWORK(donor-parity): the resize frame is only for
-                     * desktop widgets, never hotseat drops. */
+
                     if (j != -101 && (view2 instanceof LauncherAppWidgetHostView)) {
                         final LauncherAppWidgetHostView launcherAppWidgetHostView = (LauncherAppWidgetHostView) view2;
                         if (launcherAppWidgetHostView.getAppWidgetInfo() != null) {
@@ -3234,7 +3219,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                     this.mLauncher.getDragLayer().animateViewIntoPosition(dragObject.dragView, r12, i < 0 ? -1 : 300, runnable3, this);
                 }
             } else {
-                dragObject.deferDragViewCleanupPostAnimation = r15 != 0;  /* REWORK: r15 was mangled to int by jadx */
+                dragObject.deferDragViewCleanupPostAnimation = r15 != 0;
                 r12.setVisibility(r15);
             }
             r8.onDropChild(r12);
@@ -3651,7 +3636,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                 map.put((ItemInfo) childAt.getTag(), childAt);
             }
             final ArrayList<View> arrayList = new ArrayList();
-            final HashMap<FolderInfo, ArrayList<ShortcutInfo>> map2 = new HashMap<>(); /* REWORK: jadx raw HashMap */
+            final HashMap<FolderInfo, ArrayList<ShortcutInfo>> map2 = new HashMap<>();
             LauncherModel.filterItemInfos(map.keySet(), new LauncherModel.ItemInfoFilter() { // from class: com.voxel.launcher3.-$$Lambda$Workspace$lRUFBgTLJmx6HjIRF_UzDKa1VcI
                 @Override // com.voxel.launcher3.LauncherModel.ItemInfoFilter
                 public final boolean filterItem(ItemInfo itemInfo, ItemInfo itemInfo2, ComponentName componentName) {
@@ -3688,7 +3673,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
                 map.put((ItemInfo) childAt.getTag(), childAt);
             }
             final ArrayList<View> arrayList = new ArrayList();
-            final HashMap<FolderInfo, ArrayList<ShortcutInfo>> map2 = new HashMap<>(); /* REWORK: jadx raw HashMap */
+            final HashMap<FolderInfo, ArrayList<ShortcutInfo>> map2 = new HashMap<>();
             LauncherModel.filterItemInfos(map.keySet(), new LauncherModel.ItemInfoFilter() { // from class: com.voxel.launcher3.-$$Lambda$Workspace$BFa00BaVFGg_oLPeVI1OwRFwi-0
                 @Override // com.voxel.launcher3.LauncherModel.ItemInfoFilter
                 public final boolean filterItem(ItemInfo itemInfo, ItemInfo itemInfo2, ComponentName componentName) {
@@ -4136,7 +4121,7 @@ public class Workspace extends PagedView implements View.OnTouchListener, ViewGr
     }
 
     void updateShortcutsAndWidgets(ArrayList<AppInfo> arrayList) {
-        /* REWORK: jadx raw HashMap */
+
         HashMap<UserHandleCompat, ArrayList<AppInfo>> map = new HashMap<>();
         for (AppInfo appInfo : arrayList) {
             ArrayList<AppInfo> arrayList2 = map.get(appInfo.user);

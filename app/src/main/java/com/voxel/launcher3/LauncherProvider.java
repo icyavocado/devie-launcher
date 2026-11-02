@@ -296,8 +296,7 @@ public class LauncherProvider extends ContentProvider {
         }
 
         private long addUriShortcut(SQLiteDatabase sQLiteDatabase, ContentValues contentValues, Resources resources, XmlResourceParser xmlResourceParser) {
-        /* REWORK: jadx split the single URISyntaxException try into two; merge back
-         * the way the dex had it (one try, one catch, always returning). */
+
         int attributeResourceValue = LauncherProvider.getAttributeResourceValue(xmlResourceParser, "icon", 0);
         int attributeResourceValue2 = LauncherProvider.getAttributeResourceValue(xmlResourceParser, "title", 0);
         String str = null;
@@ -389,9 +388,9 @@ public class LauncherProvider extends ContentProvider {
 
         /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
         private void convertWidgets(SQLiteDatabase sQLiteDatabase) throws Throwable {
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable thReflow = null;
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable eReflow = null;
             Cursor cursorQuery;
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this.mContext);
@@ -463,7 +462,7 @@ public class LauncherProvider extends ContentProvider {
         }
 
         private int copyFromCursor(SQLiteDatabase sQLiteDatabase, Cursor cursor, ContentValuesCallback contentValuesCallback) throws Throwable {
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable thReflow = null;
             Cursor cursor2 = cursor;
             int columnIndexOrThrow = cursor2.getColumnIndexOrThrow("_id");
@@ -535,7 +534,7 @@ public class LauncherProvider extends ContentProvider {
                 sQLiteDatabase.endTransaction();
                 return i3;
             } catch (Throwable th2) {
-                /* REWORK: the dex swallowed IO failures here and reported no rows. */
+
                 thReflow = th2;
                 sQLiteDatabase.endTransaction();
                 return 0;
@@ -687,7 +686,7 @@ public class LauncherProvider extends ContentProvider {
 
         /* JADX INFO: Access modifiers changed from: private */
         public int loadFavoritesRecursive(SQLiteDatabase sQLiteDatabase, Resources resources, int i, ArrayList<Long> arrayList) {
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable eReflow = null;
             int iLoadFavoritesRecursive;
             boolean zLoadFolder;
@@ -984,9 +983,7 @@ public class LauncherProvider extends ContentProvider {
                             }
                         }
                         if (arrayList7.size() > 0) {
-                            /* REWORK(donor-parity): ended on every path, like
-                             * the donor's catchall; the bare swallow left the
-                             * transaction open (jadx lost the reflow edge). */
+
                             sQLiteDatabase.beginTransaction();
                             try {
                                 for (ContentValues contentValues4 : arrayList7) {
@@ -1028,9 +1025,9 @@ public class LauncherProvider extends ContentProvider {
             this.mMaxScreenId = initializeMaxScreenId(sQLiteDatabase);
         }
         private void normalizeIcons(SQLiteDatabase sQLiteDatabase) throws Throwable {
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable thReflow = null;
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable eReflow = null;
             SQLiteStatement sQLiteStatementCompileStatement;
             Cursor cursor;
@@ -1156,7 +1153,7 @@ public class LauncherProvider extends ContentProvider {
         /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
         private boolean updateContactsShortcuts(SQLiteDatabase sQLiteDatabase) throws Throwable {
             Throwable th = null;
-            Cursor cursorQuery = null; /* REWORK: jadx blank register */
+            Cursor cursorQuery = null;
             SQLException e = null;
             int[] r2 = new int[]{1};
             String strBuildOrWhereString = LauncherProvider.buildOrWhereString("itemType", r2);
@@ -1222,7 +1219,7 @@ public class LauncherProvider extends ContentProvider {
                 } catch (Throwable th2) {
                     th = th2;
                     sQLiteDatabase.endTransaction();
-                    /* REWORK: the r2 register here was the still-open Cursor. */
+
                     if (cursorQuery != null) {
                         cursorQuery.close();
                     }
@@ -1232,7 +1229,7 @@ public class LauncherProvider extends ContentProvider {
                 cursorQuery = null;
                 e = e5;
             } catch (Throwable th3) {
-                /* REWORK: jadx reused the `r2` int[] register for the Cursor here. */
+
                 th = th3;
                 sQLiteDatabase.endTransaction();
                 if (cursorQuery != null) {
@@ -1240,8 +1237,7 @@ public class LauncherProvider extends ContentProvider {
                 }
                 throw th;
             }
-            /* REWORK: the SQLException path falls out of both transactions;
-             * the dex version returned false there. */
+
             return false;
         }
 
@@ -1323,7 +1319,7 @@ public class LauncherProvider extends ContentProvider {
                     setFlagEmptyDbCreated();
                 }
             } catch (Throwable th) {
-                /* REWORK: the dex-level onCreate swallowed migration failures. */
+
                 Log.e("LauncherProvider", "launcher2 migration failed during onCreate", th);
                 setFlagEmptyDbCreated();
             }
@@ -1337,8 +1333,7 @@ public class LauncherProvider extends ContentProvider {
 
         @Override // android.database.sqlite.SQLiteOpenHelper
         public void onUpgrade(SQLiteDatabase sQLiteDatabase, int i, int i2) {
-        /* REWORK: the dex method could not declare checked throws; every sub-step
-         * below is best-effort: end the transaction and log on failure. */
+
         if (i < 3) {
             try {
                 sQLiteDatabase.beginTransaction();
@@ -1862,11 +1857,7 @@ public class LauncherProvider extends ContentProvider {
         SQLiteDatabase writableDatabase = this.mOpenHelper.getWritableDatabase();
         addModifiedTime(contentValues);
         long jDbInsertAndCheck = dbInsertAndCheck(this.mOpenHelper, writableDatabase, sqlArguments.table, null, contentValues);
-        /* REWORK: accept rowId 0 — the default workspace's first screen _id IS 0
-           (updateWorkspaceScreenOrder batches an explicit _id=0 insert; rejecting
-           it made every applyBatch throw "returned no result" and killed the
-           launcher-loader thread during the set-default flow). rowid 0 is a valid
-           SQLite row; only negatives are insert failures. */
+
         if (jDbInsertAndCheck < 0 || (jDbInsertAndCheck == 0 && !"workspaceScreens".equals(sqlArguments.table))) {
             return null;
         }
@@ -1886,13 +1877,6 @@ public class LauncherProvider extends ContentProvider {
         }
     }
 
-    /* REWORK: self-heal — reconcile workspaceScreens with the ws favorites. The
-       screens table can end up wiped or half-wiped (a batch persisted while only
-       the -201 temp page was bound), while favorites still carry desktop rows;
-       orphaned screens make the ws skip every item ("screenId not found") and the
-       settings previews come back empty. Uses direct SQL so screens with _id 0
-       survive (the provider insert path rejects rowId <= 0 and would drop the
-       first screen again). Ranks are rebuilt sequentially to clear collisions. */
     public synchronized void restoreWorkspaceScreensFromFavorites() {
         try {
             SQLiteDatabase sQLiteDatabase = this.mOpenHelper.getWritableDatabase();

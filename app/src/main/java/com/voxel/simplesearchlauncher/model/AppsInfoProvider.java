@@ -103,9 +103,7 @@ public class AppsInfoProvider extends ContentProvider {
 
         /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
         public ContentProviderResult[] applyBatch(ArrayList<ContentProviderOperation> arrayList) throws OperationApplicationException {
-            /* REWORK: the wrapper (the provider override) declares OperationApplicationException;
-             * carry the same single checked type through instead of Throwable. */
-            /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
             Throwable thReflow = null;
             boolean z;
             SQLiteDatabase writableDatabase = getWritableDatabase();
@@ -130,8 +128,7 @@ public class AppsInfoProvider extends ContentProvider {
                             Timber.e(new RuntimeException(contentProviderOperation.toString(), th));
                         }
                     } catch (Throwable th2) {
-                        /* REWORK: the dex version rethrew the raw Throwable; wrap it for
-                         * the provider-level contract after the cleanup above. */
+
                         this.mApplyingBatch.set(false);
                         writableDatabase.endTransaction();
                         if (z) {
@@ -148,7 +145,7 @@ public class AppsInfoProvider extends ContentProvider {
                 }
                 return contentProviderResultArr;
             } catch (OperationApplicationException th3) {
-                /* REWORK: pass the wrapped batch failure through. */
+
                 throw th3;
             }
         }

@@ -155,7 +155,7 @@ public class LocalSearchManager {
     }
 
     /* JADX WARN: Unreachable blocks removed: 1, instructions: 1 */
-    public void lambda$updateSettings$1(Context context) { /* REWORK: everything inside is best-effort; the reflow var is unused below */
+    public void lambda$updateSettings$1(Context context) {
             Cursor cursorQuery;
         long jCurrentTimeMillis = System.currentTimeMillis();
         try {
@@ -192,7 +192,7 @@ public class LocalSearchManager {
             }
             Timber.d("Found %d settings. Deleted: %d, Inserted: %d. Time: %d ms", Integer.valueOf(size), Integer.valueOf(i), Integer.valueOf(i2), Long.valueOf(System.currentTimeMillis() - jCurrentTimeMillis));
         } catch (Throwable th2) {
-            /* REWORK: jadx's reflow local is gone; the dex version swallowed here. */
+
             Timber.e(th2);
             cursorQuery = null;
         }
@@ -202,7 +202,7 @@ public class LocalSearchManager {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService("alarm");
         Intent intent = new Intent(context, (Class<?>) LocalSearchBroadcastReceiver.class);
         intent.setAction("com.evie.search.DECAY_USAGE_IF_NEEDED");
-        /* REWORK: FLAG_IMMUTABLE required since targetSdk 31 (decompiled 0-flag pre-S). */
+
         alarmManager.setInexactRepeating(3, SystemClock.elapsedRealtime(), 86400000L, PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE));
     }
 
@@ -517,7 +517,7 @@ public class LocalSearchManager {
                     sb.append("?)");
                 }
             }
-            /* REWORK: jadx raw list; all rows are LocalSearchItem */
+
             ArrayList<LocalSearchItem> arrayList2 = new ArrayList<>();
             Cursor cursorRawQuery = null;
             try {
@@ -539,9 +539,7 @@ public class LocalSearchManager {
                                     iIndexOf = arrayList2.indexOf(localSearchItem);
                                     break;
                                 case "CONTACT":
-                                    /* REWORK: the dex branches to the loop end for the
-                                       far-distance case (no add, no rank update); jadx
-                                       flattened it and left `get(-1)` at the tail. */
+
                                     if (f == 0.0f && i2 == 0
                                             && LocalSearchUtil.distance(str2, string, false) > iMaxDistance) {
                                         continue;

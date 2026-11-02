@@ -115,9 +115,7 @@ public class FolderSettingsFragment extends Fragment {
     }
 
     private void setupMockTarget() {
-        /* REWORK: donor painted a 37.5% black wash (0x60000000) behind the folder
-           mock, which made the preview band read darker than the card rows; use
-           the settings background so both match. */
+
         this.mFragmentInteractionListener.getRootView().setBackgroundColor(getContext().getResources().getColor(R.color.settings_activity_background));
         this.mFolderInfo = new FolderInfo();
         this.mFolderInfo.setTitle(getResources().getString(R.string.app_settings_item_folders_name));
@@ -129,9 +127,7 @@ public class FolderSettingsFragment extends Fragment {
             LocalAppData localAppData = (allLocalLaunchApps.size() > 0) ? allLocalLaunchApps.get(i % allLocalLaunchApps.size()) : null;
             shortcutInfo.intent = new Intent();
             if (localAppData != null) {
-                /* REWORK: pull the real per-app icon instead of the default green
-                   android — the mock used to fetch getDefaultIcon() unconditionally
-                   even though the labels came from real apps. */
+
                 shortcutInfo.intent.setPackage(localAppData.getAppPackageName());
                 shortcutInfo.intent.setComponent(new ComponentName(localAppData.getAppPackageName(), localAppData.getAppActivityName()));
                 shortcutInfo.title = localAppData.getLabel();
@@ -145,9 +141,7 @@ public class FolderSettingsFragment extends Fragment {
         Collections.shuffle(this.mShuffledRankList);
         applyShuffledRanksToFolderInfo();
         this.mFolder = Folder.fromXml(getContext());
-        /* REWORK: in the mock the folder sits on the light settings band; the donor's
-           30%-white drag background left the white labels illegible. An opaque navy
-           "phone screen" panel behind the folder keeps the white text readable. */
+
         this.mFolder.getContent().setBackground(this.getResources().getDrawable(R.drawable.mock_phone_screen));
         this.mFolder.bind(this.mFolderInfo, false, SettingsStorage.getInstance().getFolderAlphabetSortEnabled());
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(-2, -2);

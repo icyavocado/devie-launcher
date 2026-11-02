@@ -150,8 +150,7 @@ public class AppDrawerSettingsFragment extends Fragment implements AllAppsFragme
     }
 
     private void setupMock() {
-        /* REWORK: skip the donor's 37.5% black wash — it dimmed the preview band
-           darker than the card rows (same as FolderSettingsFragment). */
+
         this.mFragmentInteractionListener.getRootView().setBackgroundColor(getContext().getResources().getColor(R.color.settings_activity_background));
         ((ViewGroup) this.mMockView.getParent()).removeView(this.mMockView);
         this.mFragmentInteractionListener.getRootView().addView(this.mMockView, 0);

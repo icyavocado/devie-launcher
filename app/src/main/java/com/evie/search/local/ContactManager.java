@@ -390,11 +390,7 @@ public class ContactManager {
                             strBuildInitialsUri = buildInitialsUri(string, TextDrawable.builder().beginConfig().fontSize(this.mResources.getDimensionPixelSize(R.dimen.contact_shortcut_initials_size)).bold().endConfig(), this.mResources.getDimensionPixelSize(R.dimen.shortcut_icon_dimension));
                             contactData.setShortcutUri(strBuildInitialsUri);
                         }
-                        /* REWORK: header used to come from getHeaderImageUrl()
-                         * = a cleartext S3 cover-image URL that Fresco fetched
-                         * over the network on every photo-less contact bind.
-                         * Reuse the local initials/photo URI instead — no
-                         * network fetch anywhere in the app now. */
+
                         contactData.setHeaderUri(strBuildInitialsUri);
                     }
                 } catch (Throwable th) {
@@ -469,7 +465,7 @@ public class ContactManager {
       0x0038: PHI (r9v7 android.database.Cursor) = (r9v6 android.database.Cursor), (r9v9 android.database.Cursor) binds: [B:17:0x0036, B:11:0x0028] A[DONT_GENERATE, DONT_INLINE]] */
     /* JADX WARN: Code duplicated, block: B:23:0x0042  */
     String getContactLink(String str) throws Throwable {
-        /* REWORK: jadx lost an exception-flow local across catch scopes. */
+
         Throwable thReflow = null;
         Cursor cursorQuery;
         Cursor cursor = null;
@@ -593,7 +589,7 @@ public class ContactManager {
                 cursorQuery.close();
             }
         } catch (Exception e2) {
-            cursorQuery = null; /* REWORK: jadx dead reflow store */
+            cursorQuery = null;
         } catch (Throwable th3) {
             th = th3;
             cursorQuery = null;
@@ -641,10 +637,9 @@ public class ContactManager {
                 cursorQuery.close();
             }
         } catch (Exception e2) {
-            cursorQuery = null; /* REWORK: jadx dead reflow store */
+            cursorQuery = null;
         } catch (Throwable th2) {
-            /* REWORK: jadx reflowed through a local the decompile dropped; rethrow
-             * the caught throwable directly after cleanup. */
+
             cursorQuery = null;
             if (cursorQuery != null) {
                 cursorQuery.close();

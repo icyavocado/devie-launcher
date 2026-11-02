@@ -267,7 +267,7 @@ public class FolderFragment extends Fragment implements FolderInfo.FolderListene
             this.mFactorUpdateListener = new ValueAnimator.AnimatorUpdateListener() { // from class: com.voxel.simplesearchlauncher.fragment.-$$Lambda$FolderFragment$TransitionItem$KKunX63pXZ1dK2mUrN164srvjSM
                 @Override // android.animation.ValueAnimator.AnimatorUpdateListener
                 public final void onAnimationUpdate(ValueAnimator valueAnimator) {
-                    FolderFragment.TransitionItem.lambda$new$0(TransitionItem.this, FolderFragment.this, valueAnimator); /* REWORK: jadx dropped the captured outer receiver */
+                    FolderFragment.TransitionItem.lambda$new$0(TransitionItem.this, FolderFragment.this, valueAnimator);
                 }
             };
         }

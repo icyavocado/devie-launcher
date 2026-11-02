@@ -2,7 +2,7 @@ package com.evie.search;
 
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent; /* REWORK: jadx dropped this import; the frecents builder builds launch intents */
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -16,7 +16,7 @@ import com.evie.search.dagger.DaggerSearchComponent;
 import com.evie.search.dagger.SearchComponent;
 import com.evie.search.dagger.SearchModule;
 import com.evie.search.local.ContactManager;
-import com.evie.search.model.AppLink; /* REWORK: cross-package reference */
+import com.evie.search.model.AppLink;
 import com.evie.search.local.LocalAppsManager;
 import com.evie.search.local.LocalSearchManager;
 import com.evie.search.local.LocalSearchSubitem;
@@ -54,7 +54,6 @@ import java.util.concurrent.TimeUnit;
 import timber.log.Timber;
 import com.ovacoda.devie.R;
 
-/* REWORK: remote/web suggestion managers removed; web row kept as plain intent */
 public class SearchPresenter {
     private SearchAdapter mAdapter;
     private AppAvailabilityProvider mAppAvailabilityProvider;
@@ -181,8 +180,7 @@ public class SearchPresenter {
     private List<BaseItemPresenter> generateLocalSubitems(LocalSearchItem localSearchItem) {
         ArrayList arrayList = new ArrayList();
         if (localSearchItem.getType().equals("CONTACT") && this.mContactManager.contactRecentlyUsed(localSearchItem)) {
-            /* REWORK: the dex chain declared this helper as a checked-throwing
-             * contact lookup; swallow + log like the launcher does elsewhere. */
+
             try {
             for (ActionData actionData : this.mContactManager.getContactData(Uri.parse(localSearchItem.getLink()).getSchemeSpecificPart()).getActions()) {
                 switch (actionData.getActionType()) {
@@ -234,8 +232,7 @@ public class SearchPresenter {
     }
 
     private Observable<SearchPresenterData> getSearchObservable(final String str) {
-        /* REWORK: jadx dropped the type args on the RxJava chains; retype them so the
-         * concatEager inference resolves. */
+
         Observable<SearchPresenterData> observableSubscribeOn = Observable.<SearchPresenterData>fromCallable(new Callable<SearchPresenterData>() { // from class: com.evie.search.-$$Lambda$SearchPresenter$xN3IZbuvzz0lQ5SI8ShlIXTOrM0
             @Override // java.util.concurrent.Callable
             public final SearchPresenterData call() throws Exception {
@@ -358,9 +355,7 @@ public class SearchPresenter {
     }
 
     public SearchPresenterData lambda$getSearchObservable$2(String str) throws Exception {
-        /* REWORK: contacts can be granted mid-lifetime (while the launcher stays
-           resumed, e.g. granted from system settings); re-sync on search so the
-           first query after a grant sees contacts without a launcher restart. */
+
         this.mLocalSearchManager.initContactsIfNeeded(this.mContext);
         this.mLocalItems = this.mLocalSearchManager.search(str);
         LinkedList linkedList = new LinkedList();
@@ -433,7 +428,7 @@ public class SearchPresenter {
                     launchIntentForPackage.addCategory("android.intent.category.LAUNCHER");
                     launchIntentForPackage.setFlags(268435456);
                     arrayList2.add(new FrequentlyUsedItem(launchIntentForPackage));
-                } catch (Exception unused) {/* REWORK: multi-catch listed a subclass pair; collapse */
+                } catch (Exception unused) {
                 }
             }
         }

@@ -7,11 +7,6 @@ import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
 import com.ovacoda.devie.R;
 
-/* REWORK: menu-card restyle — RecyclerView card bodies draw the same thin
- * inset row divider the LinearLayout card wrappers use (showDividers=middle)
- * so plain lists look identical to the Search card. Dividers are drawn
- * between consecutive rows only: not above the first row and not below the
- * last row, where the card's rounded corner must stay clean. */
 public class SettingsListDividerDecoration extends RecyclerView.ItemDecoration {
     private final Drawable mDivider;
 

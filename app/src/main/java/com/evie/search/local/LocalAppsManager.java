@@ -23,9 +23,7 @@ import timber.log.Timber;
 /* JADX INFO: loaded from: classes.dex */
 public class LocalAppsManager {
     private static LocalAppsManager instance;
-    /* REWORK (Xiaomi 17 / HyperOS report): kept for the telecom/Secure-setting
-     * default lookups; always the application context to avoid leaking the
-     * caller. */
+
     private Context mContext;
     private Set<String> mBlacklist;
     private PackageManager mPackageManager;
@@ -60,9 +58,7 @@ public class LocalAppsManager {
         if (intent == null || (resolveInfoResolveActivity = this.mPackageManager.resolveActivity(intent, 65536)) == null) {
             return null;
         }
-        /* REWORK: also skip OEM resolver activities — they live in the
-         * "android" package but use a different class name on some ROMs
-         * (e.g. MIUI/HyperOS). */
+
         if (!resolveInfoResolveActivity.activityInfo.name.equals("com.android.internal.app.ResolverActivity") && !"android".equals(resolveInfoResolveActivity.activityInfo.packageName)) {
             return resolveInfoResolveActivity;
         }
@@ -70,8 +66,7 @@ public class LocalAppsManager {
         if (listQueryIntentActivities.isEmpty()) {
             return null;
         }
-        /* REWORK: prefer a system app over user-installed wildcard handlers
-         * (file managers claim every MIME via generic content VIEW). */
+
         for (ResolveInfo resolveInfo : listQueryIntentActivities) {
             if (resolveInfo.activityInfo != null && (resolveInfo.activityInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0 && !"android".equals(resolveInfo.activityInfo.packageName)) {
                 return resolveInfo;
@@ -137,8 +132,6 @@ public class LocalAppsManager {
         }
     }
 
-    /* REWORK: first hop of the text default — the default-SMS package via the
-     * public Telephony API (consults the SMS role on Q+; null when unset). */
     private String getDefaultSmsApplication() {
         try {
             String strDefaultSmsPackage = Telephony.Sms.getDefaultSmsPackage(this.mContext);
@@ -152,11 +145,7 @@ public class LocalAppsManager {
     }
 
     AppData getDefaultContactsApp() {
-        /* REWORK (Xiaomi 17 / HyperOS report): donor's probe lacked the
-         * contact MIME type, so the resolver was returned (or an unrelated
-         * messaging app via its generic content VIEW handler) and the
-         * fallback picked list.get(0). Probe with the contact item type and
-         * fall back to the APP_CONTACTS category. */
+
         Uri uri = Uri.withAppendedPath(ContactsContract.Contacts.CONTENT_URI, "1234");
         Intent intent = new Intent("android.intent.action.VIEW");
         intent.setDataAndType(uri, ContactsContract.Contacts.CONTENT_ITEM_TYPE);
@@ -182,10 +171,7 @@ public class LocalAppsManager {
     }
 
     AppData getDefaultPhoneApp() {
-        /* REWORK (Xiaomi 17 / HyperOS report): donor's raw ACTION_CALL probe
-         * resolved the system resolver on OEM devices and the fallback picked
-         * an arbitrary handler (Zoiper, etc.), ignoring the user's default
-         * dialer. Ask TelecomManager first, then the donor probe. */
+
         TelecomManager telecomManager = (TelecomManager) this.mContext.getSystemService(TelecomManager.class);
         if (telecomManager != null) {
             try {
@@ -207,9 +193,7 @@ public class LocalAppsManager {
     }
 
     AppData getDefaultTextApp() {
-        /* REWORK: donor's SENDTO sms: probe also matches WhatsApp (it
-         * registers sms: with DEFAULT), so the fallback could pick either
-         * app. Consult the default-SMS setting first. */
+
         String strDefaultSmsPackage = getDefaultSmsApplication();
         if (strDefaultSmsPackage != null) {
             AppData appData = getAppDataByPackage(strDefaultSmsPackage);

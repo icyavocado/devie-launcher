@@ -34,7 +34,7 @@ public class PermissionsSlide extends Slide implements ActivityCompat.OnRequestP
     private final Button mPositiveButton;
     private SlideLayout mSlideLayout;
     private PermissionItem mStorageItem;
-    // REWORK: jadx dropped this field declaration; the location permission item
+
     // is created and registered alongside the storage item.
     private PermissionItem mLocationItem;
 
@@ -62,7 +62,7 @@ public class PermissionsSlide extends Slide implements ActivityCompat.OnRequestP
             this.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() { // from class: com.voxel.simplesearchlauncher.activity.onboarding.-$$Lambda$PermissionsSlide$PermissionItem$D9h-NQ5hjr5ryGqmynXGuPLgkB0
                 @Override // android.widget.CompoundButton.OnCheckedChangeListener
                 public final void onCheckedChanged(CompoundButton compoundButton, boolean z) {
-                    PermissionsSlide.PermissionItem.lambda$new$0(PermissionItem.this, PermissionsSlide.this, compoundButton, z); /* REWORK: jadx dropped the captured outer receiver */
+                    PermissionsSlide.PermissionItem.lambda$new$0(PermissionItem.this, PermissionsSlide.this, compoundButton, z);
                 }
             });
         }
@@ -99,14 +99,10 @@ public class PermissionsSlide extends Slide implements ActivityCompat.OnRequestP
             this.mStorageItem.checkBox.setEnabled(false);
             this.mStorageItem.checkBox.setChecked(true);
             this.mPermissionItemsMap.put("android.permission.READ_EXTERNAL_STORAGE", this.mStorageItem);
-            /* REWORK: jadx dropped the registration of the location item (only the
-               field's declaration survived); without it the storage/location row's
-               Grant Access button never requested location. */
+
             this.mPermissionItemsMap.put("android.permission.ACCESS_FINE_LOCATION", this.mLocationItem);
         }
-        /* REWORK: on API 33+ the legacy storage permission is always denied for
-           targetSdk 34+ apps (scoped storage); the launcher's storage needs are
-           media reads only, so drop the dead row there. */
+
         if (Utilities.isAtLeastT()) {
             PermissionItem storageItem = this.mPermissionItemsMap.remove("android.permission.READ_EXTERNAL_STORAGE");
             if (storageItem != null) {
@@ -151,8 +147,7 @@ public class PermissionsSlide extends Slide implements ActivityCompat.OnRequestP
     public static boolean needsPermissions(Context context) {
         ArrayList arrayList = new ArrayList();
         arrayList.add("android.permission.READ_CONTACTS");
-        /* REWORK: legacy READ_EXTERNAL_STORAGE never grants on targetSdk 34+ (API 33
-           devices+); storage access goes through SAF, so don't gate on it. */
+
         if (Utilities.isAtLeast81() && !Utilities.isAtLeastT()) {
             arrayList.add("android.permission.READ_EXTERNAL_STORAGE");
         }

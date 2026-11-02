@@ -1497,7 +1497,7 @@ public class RecyclerView extends ViewGroup {
         View getViewForPosition(int i, boolean z) {
             ViewHolder viewHolderCreateViewHolder;
             boolean z2;
-            /* REWORK: jadx left z3 uninitialized on one decompiled path; default it. */
+
             boolean z3 = false;
             ViewGroup.LayoutParams layoutParams;
             LayoutParams layoutParams2;
@@ -1951,7 +1951,7 @@ public class RecyclerView extends ViewGroup {
         private LayoutManager mLayoutManager;
         private boolean mPendingInitialRun;
         private RecyclerView mRecyclerView;
-        /* REWORK: jadx lost the init; the action is a scratch buffer per scroller. */
+
         private final Action mRecyclingAction = new Action();
         private boolean mRunning;
         private int mTargetPosition;

@@ -17,7 +17,7 @@ public class AppWidgetsRestoredReceiver extends BroadcastReceiver {
     /* JADX WARN: Type inference failed for: r11v1, types: [com.voxel.launcher3.AppWidgetsRestoredReceiver$1] */
     static void restoreAppWidgetIds(Context context, int[] iArr, int[] iArr2) {
         ContentResolver contentResolver = context.getContentResolver();
-        /* REWORK: jadx raw list */ final ArrayList<Integer> arrayList = new ArrayList<>();
+         final ArrayList<Integer> arrayList = new ArrayList<>();
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         for (int i = 0; i < iArr.length; i++) {
             Log.i("AppWidgetsRestoredReceiver", "Widget state restore id " + iArr[i] + " => " + iArr2[i]);

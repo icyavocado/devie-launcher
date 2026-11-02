@@ -79,12 +79,6 @@ public class BitmapUtil {
         return bitmapCreateBitmap;
     }
 
-    /* REWORK(icon-loader): a plain ImageView has no drawable until IconLoader's
-     * async decode lands (or at all when the icon cannot be resolved — uninstalled
-     * app, dead content:// photo). Fresco's SimpleDraweeView always held a
-     * hierarchy drawable, so the donor never hit this, but long-press → create
-     * shortcut crashed with an NPE from drawable.setBounds. Callers treat a null
-     * return as "no shortcut" (all checked). */
     public static Bitmap getBitmap(Drawable drawable, int i) {
         if (drawable == null || i <= 0) {
             return null;
@@ -97,12 +91,12 @@ public class BitmapUtil {
     }
 
     public static Bitmap getBitmap(Uri uri, ContentResolver contentResolver) {
-        /* REWORK: jadx tangled the decode path; restore the dex's simple open/decode/close. */
+
         InputStream inputStreamOpenInputStream = null;
         try {
             inputStreamOpenInputStream = contentResolver.openInputStream(uri);
             return BitmapFactory.decodeStream(inputStreamOpenInputStream);
-        } catch (IOException unused) { /* REWORK: FileNotFoundException is subsumed */
+        } catch (IOException unused) {
             return null;
         } catch (RuntimeException unused2) {
             return null;

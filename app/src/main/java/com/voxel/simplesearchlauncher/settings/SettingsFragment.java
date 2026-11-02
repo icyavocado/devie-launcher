@@ -53,7 +53,7 @@ public class SettingsFragment extends Fragment {
         HIDE_APPS(SettingsGroup.CUSTOMIZATION, R.string.app_settings_hide_apps),
         BACKUP_AND_RESTORE(SettingsGroup.GENERAL, R.string.app_settings_item_backup_restore_title),
         FEEDBACK(SettingsGroup.GENERAL, R.string.app_settings_item_feedback_title),
-        /* REWORK: privacy-policy web page cut; the row now shows the no-tracking copy. */
+
         PRIVACY_POLICY(SettingsGroup.GENERAL, R.string.app_settings_item_no_tracking_title),
         SWITCH_LAUNCHER(SettingsGroup.GENERAL, R.string.app_settings_item_switch_launcher);
 

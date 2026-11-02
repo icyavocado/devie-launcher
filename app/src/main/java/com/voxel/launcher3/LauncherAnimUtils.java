@@ -80,7 +80,7 @@ public class LauncherAnimUtils {
     }
 
     public static void onDestroyActivity() {
-        /* REWORK: jadx raw HashSet */ for (Animator animator : new HashSet<Animator>(sAnimators.keySet())) {
+         for (Animator animator : new HashSet<Animator>(sAnimators.keySet())) {
             if (animator.isRunning()) {
                 animator.cancel();
             }

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- REWORK: the dex-era defaults named 2014-era Android packages that no modern
-     device ships, so every row failed to resolve and the rebuild started with an
-     empty desktop. Modern defaults: dialer, settings, files, messaging, camera,
-     browser (whatever exists resolves; the rest are skipped by loadFavorites). -->
+
 <favorites xmlns:launcher="http://schemas.android.com/apk/res-auto/com.voxel.launcher3">
     <favorite launcher:className="com.android.dialer.DialtactsActivity" launcher:packageName="com.android.dialer" launcher:container="-101" launcher:screen="1" launcher:x="0" launcher:y="0" />
     <favorite launcher:className="com.android.mms.ui.ConversationList" launcher:packageName="com.android.messaging" launcher:container="-101" launcher:screen="1" launcher:x="1" launcher:y="0" />

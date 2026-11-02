@@ -137,7 +137,7 @@ public class LayoutSettingsManager {
     }
 
     public boolean getContainerEnabled(DeviceProfile.ParamType paramType) {
-        boolean z = paramType != DeviceProfile.ParamType.HOTSEAT /* REWORK: was a compiled switch-map; HOTSEAT maps to 1 */;
+        boolean z = paramType != DeviceProfile.ParamType.HOTSEAT ;
         return this.mSharedPreferences.getBoolean(getPrefixForType(paramType) + "container_enabled", z);
     }
 
@@ -167,7 +167,7 @@ public class LayoutSettingsManager {
     }
 
     public boolean getShowLabel(DeviceProfile.ParamType paramType) {
-        boolean z = paramType != DeviceProfile.ParamType.HOTSEAT /* REWORK: was a compiled switch-map; HOTSEAT maps to 1 */;
+        boolean z = paramType != DeviceProfile.ParamType.HOTSEAT ;
         return this.mSharedPreferences.getBoolean(getPrefixForType(paramType) + "show_label", z);
     }
 

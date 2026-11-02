@@ -1,6 +1,5 @@
 package com.voxel.simplesearchlauncher.model.managers;
 
-/* REWORK: minSdk-safe receiver registration (API 34+ flag rule) */
 import androidx.core.content.ContextCompat;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;

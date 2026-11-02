@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- REWORK: row sits flat inside the shared white card (no per-row pill). -->
+
 <FrameLayout android:layout_width="fill_parent" android:layout_height="@dimen/search_list_item_height" style="@style/SettingsListItemStyle"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout android:layout_width="fill_parent" android:layout_height="@dimen/search_list_item_height" android:paddingStart="@dimen/settings_list_item_row_padding_left" android:paddingEnd="@dimen/settings_list_item_row_padding_right"

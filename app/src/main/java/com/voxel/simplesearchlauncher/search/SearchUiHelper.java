@@ -1,6 +1,5 @@
 package com.voxel.simplesearchlauncher.search;
 
-/* REWORK: minSdk-safe receiver registration (API 34+ flag rule) */
 import androidx.core.content.ContextCompat;
 import android.app.Activity;
 import android.content.IntentFilter;
@@ -36,8 +35,7 @@ public class SearchUiHelper {
     private LocalSearchBroadcastReceiver mSearchBroadcastReceiver;
     private SearchPresenter mSearchPresenter;
     private SearchViewHolderFactory mSearchViewHolderFactory;
-    /* REWORK: was an anonymous-listener private field (SearchUiHelper$3.currentState);
-     * javac cannot reference an anonymous type, so the state lives here now. */
+
     private volatile SearchPresenter.SearchState mCurrentSearchState;
     private SharedPreferences mSharedPrefs;
     private Spring mSpringScale;
@@ -83,7 +81,7 @@ public class SearchUiHelper {
     }
 
     public SearchUiHelper(Activity activity, SpringySearchView springySearchView, PullDownRecyclerView pullDownRecyclerView, FrequentlyUsedModel frequentlyUsedModel, AppAvailabilityProvider appAvailabilityProvider, ScaleState scaleState) {
-        // REWORK: the decompiled component has no inject(SearchUiHelper) member; the
+
         // view-holder factory below is constructed directly instead.
         this.mActivity = activity;
         this.mHandler = new Handler(activity.getMainLooper());
@@ -98,8 +96,7 @@ public class SearchUiHelper {
         intentFilter.addAction("android.intent.action.PACKAGE_REPLACED");
         intentFilter.addAction("android.intent.action.PACKAGE_REMOVED");
         intentFilter.addDataScheme("package");
-        /* REWORK: API 34+ requires an explicit exported state; NOT_EXPORTED is
-           safe — filters are system or same-app broadcasts. */
+
         ContextCompat.registerReceiver(this.mActivity.getApplicationContext(), this.mSearchBroadcastReceiver, intentFilter, ContextCompat.RECEIVER_NOT_EXPORTED);
         IntentFilter intentFilter2 = new IntentFilter();
         intentFilter2.addAction("com.evie.search.DECAY_USAGE_IF_NEEDED");
@@ -186,8 +183,7 @@ public class SearchUiHelper {
                         ((InputMethodManager) SearchUiHelper.this.mActivity.getApplicationContext().getSystemService("input_method")).hideSoftInputFromWindow(SearchUiHelper.this.mQsbSearchView.getWindowToken(), 0);
                         break;
                     case 4:
-                        /* REWORK: the rate-us survey was cut (no Play Store); the
-                         * completed-search counter only existed to trigger it. */
+
                         ((InputMethodManager) SearchUiHelper.this.mActivity.getApplicationContext().getSystemService("input_method")).hideSoftInputFromWindow(SearchUiHelper.this.mQsbSearchView.getWindowToken(), 0);
                         SearchUiHelper.this.mQsbSearchView.clearFocus();
                         if (!SearchUiHelper.this.mSharedPrefs.getBoolean("launcher.has_completed_search", false)) {

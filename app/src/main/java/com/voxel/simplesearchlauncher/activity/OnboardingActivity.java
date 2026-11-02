@@ -36,7 +36,7 @@ public class OnboardingActivity extends FragmentActivity {
         if (slideLayout == null || slideLayout.isAnimating()) {
             return;
         }
-        /* REWORK: per-launcher import slides removed. */
+
     }
 
     @Override // androidx.fragment.app.FragmentActivity, androidx.core.app.ComponentActivity, android.app.Activity
@@ -54,7 +54,7 @@ public class OnboardingActivity extends FragmentActivity {
             return;
         }
         SlideLayout slideLayout2 = this.mSlideLayout;
-        /* REWORK: intro promo-video slide removed — onboarding starts on permissions. */
+
         slideLayout2.addSlide(new PermissionsSlide(this, slideLayout2), 0);
         SharedPreferences.Editor editorEdit = getSharedPreferences(LauncherAppState.getSharedPreferencesKey(), 0).edit();
         editorEdit.putBoolean("launcher.first_run_activity_displayed", true);

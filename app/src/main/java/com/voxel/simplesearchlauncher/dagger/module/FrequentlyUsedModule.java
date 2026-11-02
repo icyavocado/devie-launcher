@@ -12,7 +12,6 @@ public class FrequentlyUsedModule {
         return new FrequentlyUsedLocalModel(appLaunchDatabase.appLaunchDAO());
     }
 
-    /* REWORK: cloud frequently-used cut — no retrofit/okhttp/analytics inputs. */
     public FrequentlyUsedModel providesFrequentlyUsedModel(Context context, FrequentlyUsedLocalModel frequentlyUsedLocalModel) {
         return new FrequentlyUsedModelImpl(context, frequentlyUsedLocalModel);
     }

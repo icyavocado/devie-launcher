@@ -127,8 +127,6 @@ public class TiledImageRenderer {
         TileDecoder() {
         }
 
-        /* REWORK: jadx emitted a de-facto infinite wait loop without a return;
-         * restore the AOSP intent: pop a tile, wait while none is queued. */
         private Tile waitForTile() throws InterruptedException {
             while (true) {
                 synchronized (TiledImageRenderer.this.mQueueLock) {

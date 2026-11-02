@@ -745,8 +745,7 @@ public class CellLayout extends ViewGroup {
         int integer = resources.getInteger(R.integer.config_dragOutlineFadeTime);
         float integer2 = resources.getInteger(R.integer.config_dragOutlineMaxAlpha);
         Arrays.fill(this.mDragOutlineAlphas, 0.0f);
-        /* REWORK: jadx made this loop var final while an anon captures its value;
-         * split into a while loop with an effectively-final copy. */
+
         int i3 = 0;
         while (i3 < this.mDragOutlineAnims.length) {
             final int i3cap = i3;
@@ -1540,7 +1539,7 @@ public class CellLayout extends ViewGroup {
     }
 
     boolean findCellForSpanThatIntersectsIgnoring(int[] iArr, int i, int i2, int i3, int i4, View view, boolean[][] zArr) {
-        /* REWORK: jadx left this register blank; findNearestArea starts the scan cursor at 0. */
+
         int i5 = 0;
         markCellsAsUnoccupiedForView(view, zArr);
         int i6 = i3;
@@ -1613,9 +1612,6 @@ public class CellLayout extends ViewGroup {
         return itemConfiguration;
     }
 
-        /* REWORK: body restored from the upstream Launcher2 implementation (the dex is
-               literally this algorithm; jadx had flattened the occupied-skip and expansion
-               edges into a form that spun forever on a drop — the findNearestArea ANR). */
     int[] findNearestArea(int i, int i2, int i3, int i4, int i5, int i6, View view, boolean z, int[] iArr, int[] iArr2, boolean[][] zArr) {
         lazyInitTempRectStack();
         // mark space take by ignoreView as available (method checks if ignoreView is null)
@@ -1733,7 +1729,6 @@ public class CellLayout extends ViewGroup {
         recycleTempRects(validRegions);
         return bestXY;
     }
-
 
     int[] findNearestArea(int i, int i2, int i3, int i4, View view, boolean z, int[] iArr) {
         return findNearestArea(i, i2, i3, i4, i3, i4, view, z, iArr, null, this.mOccupied);

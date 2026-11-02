@@ -8,8 +8,7 @@ import dagger.internal.Preconditions;
 import javax.inject.Provider;
 
 /* JADX INFO: loaded from: classes2.dex */
-/* REWORK: hand-slimmed after the cloud frequently-used cut (was generated
-   with client/analytics/retrofit providers). */
+
 public final class FrequentlyUsedModule_ProvidesFrequentlyUsedModelFactory implements Factory<FrequentlyUsedModel> {
     private final Provider<Context> contextProvider;
     private final Provider<FrequentlyUsedLocalModel> frequentlyUsedLocalModelProvider;

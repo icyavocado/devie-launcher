@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ovacoda.devie.R;
 
 /* JADX INFO: loaded from: classes2.dex */
-/* REWORK(fresco): SimpleDraweeView → ImageView + IconLoader. */
+
 public class WidgetsRowViewHolder extends RecyclerView.ViewHolder {
     ViewGroup mContent;
     ViewGroup mRow;

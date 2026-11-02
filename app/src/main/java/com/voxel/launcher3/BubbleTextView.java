@@ -1,6 +1,5 @@
 package com.voxel.launcher3;
 
-/* REWORK: grid fallback for unset cell params */
 import com.voxel.launcher3.DeviceProfile.ParamType;
 import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
@@ -87,9 +86,7 @@ public class BubbleTextView extends TextView implements Notifier.OnNotificationC
     /* JADX INFO: Access modifiers changed from: private */
     public void applyCellParams() {
         if (this.mCellParams == null) {
-            /* REWORK: createShortcut can bind while workspace.getChildAt(currentPage)
-               is still null (page not created yet during LoaderTask binding), leaving
-               cell params unset; fall back to the grid's workspace params. */
+
             DynamicGrid dynamicGrid = LauncherAppState.getInstance().getDynamicGrid();
             if (dynamicGrid != null) {
                 this.mCellParams = dynamicGrid.getDeviceProfile().getCellParamsForType(DeviceProfile.ParamType.WORKSPACE);

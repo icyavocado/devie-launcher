@@ -372,7 +372,6 @@ public final class Utilities {
         return Build.VERSION.SDK_INT >= 27;
     }
 
-    /* REWORK: API 33 (T) — legacy storage permission stops granting (scoped storage). */
     public static boolean isAtLeastT() {
         return Build.VERSION.SDK_INT >= 33;
     }

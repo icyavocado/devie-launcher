@@ -13,8 +13,6 @@ import com.voxel.simplesearchlauncher.utils.BitmapUtil;
 public class BadgedIcons {
     private static final Paint SHORTCUT_BASE_ICON_PAINT = new Paint(7);
 
-    /* REWORK(fresco): the base and badge bitmaps now resolve via the in-process
-       IconLoader (callers are background threads, so blocking is fine). */
     public static String getBadgedIconUrl(String str, String str2, boolean z, int i) {
         Bitmap bitmapDecode = IconLoader.getInstance().loadSync(str);
         if (bitmapDecode == null) {

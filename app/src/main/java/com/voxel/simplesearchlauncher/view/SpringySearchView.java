@@ -493,9 +493,7 @@ public class SpringySearchView extends SearchView {
             this.mBackgroundDrawable.setLayerInset(0, 0, Math.round(this.mDensity * 1.0f), 0, 0);
             findViewById(R.id.search_bar).setBackground(this.mBackgroundDrawable);
         }
-        /* REWORK(resize): install the provider on every size change — it
-         * captures i/i2, so leaving it under the "background == null" gate
-         * kept the first (stale) bounds after a resize. */
+
         if (Utilities.ATLEAST_LOLLIPOP) {
             setOutlineProvider(new ViewOutlineProvider() { // from class: com.voxel.simplesearchlauncher.view.SpringySearchView.3
                 @Override // android.view.ViewOutlineProvider

@@ -41,7 +41,7 @@ public abstract class BaseAppData extends SearchItemData {
     @Override // com.voxel.simplesearchlauncher.model.itemdata.SearchItemData
     public String getItemId() {
         if (this.itemId == null) {
-            this.itemId = "" + Math.abs(this.packageName.hashCode()) + "-" /* REWORK: was crittercism EventsFilesManager constant */ + Math.abs(this.activityName.hashCode());
+            this.itemId = "" + Math.abs(this.packageName.hashCode()) + "-"  + Math.abs(this.activityName.hashCode());
         }
         return this.itemId;
     }

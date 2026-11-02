@@ -5,7 +5,6 @@ import dagger.internal.Factory;
 import dagger.internal.Preconditions;
 import javax.inject.Provider;
 
-/* REWORK: analytics + event-service params removed. */
 public final class SearchModule_LinkResolverFactory implements Factory<LinkResolver> {
     private final SearchModule module;
 

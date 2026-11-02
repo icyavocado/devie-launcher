@@ -10,7 +10,7 @@ import com.ovacoda.devie.R;
 import com.ovacoda.devie.images.IconLoader;
 
 /* JADX INFO: loaded from: classes.dex */
-/* REWORK(fresco): SimpleDraweeView → ImageView + IconLoader. */
+
 public class SearchSubitemViewHolder extends BaseViewHolder {
     public static final int ID = R.layout.search_subitem;
     private ImageView mImage;

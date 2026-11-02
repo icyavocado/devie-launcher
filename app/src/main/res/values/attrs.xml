@@ -611,12 +611,12 @@
     <attr name="x" format="string" />
     <attr name="y" format="string" />
 
-    <!-- REWORK(vendor): styleable groups for vendored libs (originals from their res/attrs.xml) -->
+    
     <declare-styleable name="LoadingSpinner">
         <attr name="spinner_color" format="color" />
         <attr name="spinner_autoStart" format="boolean" />
     </declare-styleable>
-    <!-- REWORK(vendor): inline-view styleables referenced by decompiled custom views -->
+    
     <declare-styleable name="WindowInsetPolicyFrameLayout">
         <attr name="consumeLeft" />
         <attr name="consumeRight" />
@@ -631,7 +631,7 @@
         <attr name="vxl_radiusBottomLeft" />
         <attr name="vxl_nCompatCheck" />
     </declare-styleable>
-    <!-- REWORK(vendor): styleables referenced by decompiled framework-ish views -->
+    
     <attr name="pageIndicatorViewId" format="reference" />
     <attr name="pageLayoutHeightGap" format="dimension" />
     <attr name="workspaceDefaultPage" format="integer" />

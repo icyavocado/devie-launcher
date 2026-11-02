@@ -20,8 +20,6 @@ import java.net.URLEncoder;
 import java.util.List;
 import timber.log.Timber;
 
-/* REWORK: analytics + event-service plumbing removed; this resolver only
- * opens links (custom tabs, contacts, tel, deep links, web search, apps). */
 public class LinkResolver {
 
     private Intent getActionViewIntent(Uri uri, String str, PackageManager packageManager) {
@@ -45,8 +43,6 @@ public class LinkResolver {
         return null;
     }
 
-    /* REWORK: ACTION_DIAL targeted at a specific dialer (no CALL_PHONE
-     * needed); null when that package has no dial activity. */
     private Intent getDialIntent(Uri uri, String str, PackageManager packageManager) {
         Intent intent = new Intent("android.intent.action.DIAL", uri);
         intent.setPackage(str);
@@ -153,11 +149,7 @@ public class LinkResolver {
                             data = new Intent("android.intent.action.VIEW", uri);
                             break;
                         case "sms":
-                            /* REWORK (Xiaomi 17 / HyperOS report): WhatsApp
-                             * registers sms: too, so a plain SENDTO pops the
-                             * system chooser. Target the default SMS app
-                             * (public Telephony API, consults the SMS role),
-                             * then any sms handler. */
+
                             data = null;
                             try {
                                 String strSmsPackage = Telephony.Sms.getDefaultSmsPackage(context);
@@ -175,12 +167,7 @@ public class LinkResolver {
                             }
                             break;
                         case "tel":
-                            /* REWORK (Xiaomi 17 / HyperOS report): donor's
-                             * non-CALL_PHONE path fell back to a plain VIEW
-                             * tel: intent, which pops the system chooser with
-                             * unrelated handlers (messaging apps register
-                             * tel:/sms: VIEW). Open the user's default dialer
-                             * directly, then any dialer via ACTION_DIAL. */
+
                             if (context.checkCallingOrSelfPermission("android.permission.CALL_PHONE") == 0) {
                                 data = new Intent("android.intent.action.CALL", uri);
                             } else {

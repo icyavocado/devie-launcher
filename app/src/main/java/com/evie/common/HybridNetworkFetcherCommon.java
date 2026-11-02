@@ -23,8 +23,6 @@ public class HybridNetworkFetcherCommon {
         return iconPackFilter.getVersionCode();
     }
 
-    /* REWORK(fresco): moved here from the deleted HybridNetworkFetcher so the
-     * persisted magic-URI identifier keeps one author. */
     public static Uri getMagicResourceUri(LocalAppData localAppData) {
         return getMagicResourceUri(localAppData.getPackageName(), localAppData.getActivityName(), localAppData.getVersionCode());
     }
