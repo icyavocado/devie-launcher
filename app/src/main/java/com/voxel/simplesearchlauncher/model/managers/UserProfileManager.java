@@ -183,7 +183,6 @@ public class UserProfileManager {
                 return;
             }
             SharedPreferences.Editor editorEdit = this.context.getSharedPreferences(string, 0).edit();
-            editorEdit.clear();
             Iterator<String> itKeys = jSONObject2.keys();
             while (itKeys.hasNext()) {
                 try {
