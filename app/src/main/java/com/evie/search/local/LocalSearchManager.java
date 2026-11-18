@@ -427,7 +427,7 @@ public class LocalSearchManager {
                     return null;
                 }
             case 3:
-                return "res:///" + R.drawable.autocomplete;
+                return "res:///" + R.drawable.autocomplete_shortcut_icon;
             default:
                 Timber.e("Unrecognized item type: %s", localSearchItem.getType());
                 return null;
@@ -516,7 +516,7 @@ public class LocalSearchManager {
 
     public void itemAccessed(WebSearchItem webSearchItem) {
         if (this.mSearchSettings.getRecentsIncludeWebResults()) {
-            addToRecents(webSearchItem.getLink(), webSearchItem.getLabel(), "WEB_AUTOCOMPLETE", "res:///" + R.drawable.autocomplete);
+            addToRecents(webSearchItem.getLink(), webSearchItem.getLabel(), "WEB_AUTOCOMPLETE", "res:///" + R.drawable.autocomplete_shortcut_icon);
         }
     }
 
