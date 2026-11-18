@@ -341,6 +341,21 @@ public final class IconLoader {
         }
     }
 
+    /** Decodes "res:///<numeric-resource-id>" (donor recents scheme). */
+    @Nullable
+    private Bitmap decodeResourceUri(@NonNull Uri uri) {
+        Context context = context();
+        if (context == null) {
+            return null;
+        }
+        try {
+            int id = Integer.parseInt(uri.getLastPathSegment());
+            return BitmapFactory.decodeResource(context.getResources(), id, preferredOptions());
+        } catch (Exception unused) {
+            return null;
+        }
+    }
+
     @Nullable
     private Bitmap decode(@NonNull String url) {
         if (url.startsWith(DATA_PREFIX)) {
@@ -352,10 +367,15 @@ public final class IconLoader {
             }
         }
         Uri uri = Uri.parse(url);
-        if (uri == null || uri.getHost() == null) {
+        String scheme = uri.getScheme();
+        /* "res:///<resource-id>" (donor recents scheme) has an empty
+         * authority, so getHost() returns "" — check the scheme directly. */
+        if ("res".equals(scheme)) {
+            return decodeResourceUri(uri);
+        }
+        if (uri.getHost() == null) {
             return null;
         }
-        String scheme = uri.getScheme();
         if ("content".equals(scheme)) {
             Context context = context();
             if (context == null) {
