@@ -16,6 +16,16 @@ public class SettingsSwitchViewHolder extends SettingsViewHolder {
         this.mLabel = (TextView) view.findViewById(R.id.line1);
         this.mSubLabel = (TextView) view.findViewById(R.id.line2);
         this.mSwitch = (SwitchCompat) view.findViewById(R.id.item_switch);
+        /* Theme experiment: derived text colors and accent tint when the
+         * custom palette is in use. */
+        this.mLabel.setTextColor(SettingsPalette.labelColor(view.getContext()));
+        this.mSubLabel.setTextColor(SettingsPalette.subLabelColor(view.getContext()));
+        int accent = SettingsPalette.accentOrUnset();
+        if (accent != -1) {
+            this.mSwitch.setThumbTintList(android.content.res.ColorStateList.valueOf(accent));
+            int track = android.graphics.Color.argb(102, android.graphics.Color.red(accent), android.graphics.Color.green(accent), android.graphics.Color.blue(accent));
+            this.mSwitch.setTrackTintList(android.content.res.ColorStateList.valueOf(track));
+        }
     }
 
     public TextView getLabel() {

@@ -318,6 +318,17 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
         return androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
     }
 
+    /* Custom palette colors for the theme experiment; -1 = unset. */
+    public int getThemeColor(String key) {
+        return this.sharedPref.getInt(key, -1);
+    }
+
+    public void setThemeColor(String key, int color) {
+        SharedPreferences.Editor editorEdit = this.sharedPref.edit();
+        editorEdit.putInt(key, color);
+        editorEdit.apply();
+    }
+
     public void setAppDrawerHintEnabled(boolean z) {
         boolean zIsAppDrawerHintEnabled = isAppDrawerHintEnabled();
         SharedPreferences.Editor editorEdit = this.sharedPref.edit();

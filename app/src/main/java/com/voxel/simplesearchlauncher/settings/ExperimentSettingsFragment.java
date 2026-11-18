@@ -15,11 +15,12 @@ import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 
 /* Opt-in experiments and the theme experiment, grouped like the main
  * settings screen: muted section header above one rounded card per group. */
-public class ExperimentSettingsFragment extends Fragment {
+public class ExperimentSettingsFragment extends Fragment implements ColorPickerDialogFragment.OnColorPicked {
 
     private SettingsSwitchViewHolder mCompactIconsViewHolder;
     private SettingsSwitchViewHolder mWebSuggestionsViewHolder;
     private SettingsTextViewHolder mThemeViewHolder;
+    private SettingsTextViewHolder mResetRow;
 
     @Override // androidx.fragment.app.Fragment
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -31,6 +32,7 @@ public class ExperimentSettingsFragment extends Fragment {
         LinearLayout container = (LinearLayout) view.findViewById(R.id.list_container);
         container.removeAllViews();
         LayoutInflater inflater = getLayoutInflater();
+        applyPaletteToSelf();
 
         /* --- EXPERIMENT group --- */
         addHeader(inflater, container, R.string.app_settings_experiment_header);
@@ -54,19 +56,73 @@ public class ExperimentSettingsFragment extends Fragment {
         updateThemeRow();
         this.mThemeViewHolder.itemView.setOnClickListener((v) -> cycleTheme());
         themeCard.addView(this.mThemeViewHolder.itemView);
+        themeCard.addView(newPickerRow(inflater, themeCard, R.string.app_settings_theme_background_title, R.string.app_settings_theme_value_default, "theme_bg"));
+        themeCard.addView(newPickerRow(inflater, themeCard, R.string.app_settings_theme_cards_title, R.string.app_settings_theme_value_default, "theme_card"));
+        this.mResetRow = new SettingsTextViewHolder(inflater.inflate(R.layout.settings_activity_text_item, themeCard, false));
+        this.mResetRow.mLabel.setText(R.string.app_settings_theme_reset_title);
+        this.mResetRow.itemView.setOnClickListener((v) -> {
+            SettingsPalette.reset();
+            recreateHost();
+        });
+        themeCard.addView(this.mResetRow.itemView);
+        updateResetRowVisibility();
         container.addView(themeCard);
+    }
+
+    private View newPickerRow(LayoutInflater inflater, LinearLayout parent, int labelRes, int subRes, String target) {
+        SettingsTextViewHolder holder = new SettingsTextViewHolder(inflater.inflate(R.layout.settings_activity_text_item, parent, false));
+        holder.mLabel.setText(labelRes);
+        holder.mSubLabel.setText(subRes);
+        holder.itemView.setOnClickListener((v) -> {
+            int current = target.equals("theme_card") ? SettingsPalette.card() : SettingsPalette.background();
+            ColorPickerDialogFragment picker = ColorPickerDialogFragment.newInstance(target, current);
+            picker.setTargetFragment(ExperimentSettingsFragment.this, 0);
+            picker.show(getChildFragmentManager(), target);
+        });
+        return holder.itemView;
+    }
+
+    private void updateResetRowVisibility() {
+        this.mResetRow.itemView.setVisibility(SettingsPalette.hasCustomColors() ? View.VISIBLE : View.GONE);
+    }
+
+    /* Activity recreation re-applies the palette everywhere (AppCompat
+     * activities host the settings stack). */
+    private void recreateHost() {
+        if (getActivity() != null) {
+            getActivity().recreate();
+        }
+    }
+
+    @Override // ColorPickerDialogFragment.OnColorPicked
+    public void onPicked(int color) {
+        recreateHost();
+    }
+
+    /* Apply the custom palette to this fragment's card container. */
+    private void applyPaletteToSelf() {
+        View view = getView();
+        if (view == null) {
+            return;
+        }
+        int bg = SettingsPalette.background();
+        if (bg != -1) {
+            view.setBackgroundColor(bg);
+        }
     }
 
     private void addHeader(LayoutInflater inflater, LinearLayout container, int textRes) {
         View header = inflater.inflate(R.layout.settings_activity_top_level_header, container, false);
-        ((TextView) header.findViewById(R.id.text)).setText(textRes);
+        TextView text = (TextView) header.findViewById(R.id.text);
+        text.setText(textRes);
+        text.setTextColor(SettingsPalette.headerColor(getContext()));
         container.addView(header);
     }
 
     private LinearLayout newCard(LayoutInflater inflater, LinearLayout container) {
         LinearLayout card = new LinearLayout(getContext());
         card.setOrientation(LinearLayout.VERTICAL);
-        card.setBackgroundResource(R.drawable.settings_list_item_background);
+        card.setBackground(SettingsPalette.cardBackground(getContext()));
         card.setDividerDrawable(new android.graphics.drawable.InsetDrawable(
             getResources().getDrawable(R.drawable.settings_group_divider), dp(25), 0, dp(15), 0));
         card.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);

@@ -2,11 +2,11 @@
 <androidx.core.widget.NestedScrollView android:layout_width="fill_parent" android:layout_height="fill_parent" android:fillViewport="true" android:scrollbars="none"
   xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout android:orientation="vertical" android:background="@color/settings_activity_background" android:layout_width="fill_parent" android:layout_height="wrap_content">
-        <LinearLayout android:orientation="vertical" android:background="@drawable/settings_list_item_background" android:layout_marginStart="12.0dip" android:layout_marginTop="10.0dip" android:layout_marginEnd="12.0dip" android:layout_marginBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <com.voxel.simplesearchlauncher.view.ThemeCardView android:orientation="vertical" android:background="@drawable/settings_list_item_background" android:layout_marginStart="12.0dip" android:layout_marginTop="10.0dip" android:layout_marginEnd="12.0dip" android:layout_marginBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <include layout="@layout/settings_activity_hide_apps_config" />
-        </LinearLayout>
-        <LinearLayout android:orientation="vertical" android:background="@drawable/settings_list_item_background" android:layout_marginStart="12.0dip" android:layout_marginTop="10.0dip" android:layout_marginEnd="12.0dip" android:layout_marginBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
+        </com.voxel.simplesearchlauncher.view.ThemeCardView>
+        <com.voxel.simplesearchlauncher.view.ThemeCardView android:orientation="vertical" android:background="@drawable/settings_list_item_background" android:layout_marginStart="12.0dip" android:layout_marginTop="10.0dip" android:layout_marginEnd="12.0dip" android:layout_marginBottom="10.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content">
             <androidx.recyclerview.widget.RecyclerView android:id="@id/recycler_view" android:layout_width="fill_parent" android:layout_height="wrap_content" android:nestedScrollingEnabled="false" />
-        </LinearLayout>
+        </com.voxel.simplesearchlauncher.view.ThemeCardView>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

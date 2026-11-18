@@ -13,6 +13,8 @@ public class SettingsTextViewHolder extends SettingsViewHolder {
         super(view);
         this.mLabel = (TextView) view.findViewById(R.id.line1);
         this.mSubLabel = (TextView) view.findViewById(R.id.line2);
+        this.mLabel.setTextColor(SettingsPalette.labelColor(view.getContext()));
+        this.mSubLabel.setTextColor(SettingsPalette.subLabelColor(view.getContext()));
     }
 
     @Override // com.voxel.simplesearchlauncher.settings.SettingsViewHolder
