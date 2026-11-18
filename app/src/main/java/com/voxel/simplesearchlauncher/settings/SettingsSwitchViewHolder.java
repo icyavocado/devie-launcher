@@ -28,17 +28,7 @@ public class SettingsSwitchViewHolder extends SettingsViewHolder {
     /* ON = opaque accent thumb on an accent track; OFF = the same accent at
      * half opacity over a neutral track. */
     private void retintSwitch() {
-        int accent = SettingsPalette.accentOrUnset();
-        if (accent == -1) {
-            return;
-        }
-        int onThumb = accent;
-        int offThumb = android.graphics.Color.argb(128, android.graphics.Color.red(accent), android.graphics.Color.green(accent), android.graphics.Color.blue(accent));
-        int onTrack = android.graphics.Color.argb(255, android.graphics.Color.red(accent), android.graphics.Color.green(accent), android.graphics.Color.blue(accent));
-        int offTrack = SettingsPalette.uncheckedColor(this.mPaletteContext);
-        int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
-        this.mSwitch.setThumbTintList(new android.content.res.ColorStateList(states, new int[]{onThumb, offThumb}));
-        this.mSwitch.setTrackTintList(new android.content.res.ColorStateList(states, new int[]{onTrack, offTrack}));
+        SettingsPalette.switchTints(this.mSwitch, SettingsPalette.resolveBaseAccent(this.mPaletteContext));
     }
 
     public TextView getLabel() {

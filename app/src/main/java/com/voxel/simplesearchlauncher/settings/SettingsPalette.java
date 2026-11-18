@@ -142,23 +142,39 @@ public final class SettingsPalette {
         return darkTrack ? 0xff4a5560 : 0xffb8bfc9;
     }
 
-    /** Tints any compound button (SwitchCompat, Switch, RadioButton, CheckBox)
-     * with the custom accent; checked state gets the accent, unchecked gets a
-     * neutral gray. No-op when no custom accent is set. */
+    /** Resolves the switch-tint base: the custom accent when set, else the
+     * built-in teal, so the ON/OFF pill treatment is uniform. */
+    public static int resolveBaseAccent(Context context) {
+        int accent = accentOrUnset();
+        if (accent != UNSET) {
+            return accent;
+        }
+        return ContextCompat.getColor(context, R.color.evie_theme_green);
+    }
+
+    /** Applies the theme switch opacities to a SwitchCompat from a base
+     * color: ON = thumb 100% / pill 75%; OFF = thumb 50% / pill 25%. */
+    public static void switchTints(androidx.appcompat.widget.SwitchCompat switchCompat, int baseAccent) {
+        int onThumb = baseAccent;
+        int offThumb = blendAlpha(baseAccent, 0.5f);
+        int onTrack = blendAlpha(baseAccent, 0.75f);
+        int offTrack = blendAlpha(baseAccent, 0.25f);
+        int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
+        switchCompat.setThumbTintList(new android.content.res.ColorStateList(states, new int[]{onThumb, offThumb}));
+        switchCompat.setTrackTintList(new android.content.res.ColorStateList(states, new int[]{onTrack, offTrack}));
+    }
+
+    private static int blendAlpha(int color, float alpha) {
+        int base = color & 0xFFFFFF;
+        return ((int) (alpha * 255) << 24) | base;
+    }
+
+    /** Tints checkboxes and radios: checked state gets the accent, unchecked
+     * gets a neutral gray. No-op when no custom accent is set. Switches use
+     * switchTints() instead. */
     public static void tintCompoundButton(CompoundButton button, Context context) {
         int accent = accentOrUnset();
-        if (accent == UNSET) {
-            return;
-        }
-        if (button instanceof androidx.appcompat.widget.SwitchCompat) {
-            androidx.appcompat.widget.SwitchCompat switchCompat = (androidx.appcompat.widget.SwitchCompat) button;
-            /* ON = opaque accent thumb on an accent track; OFF = the same
-             * accent at half opacity over a neutral track. */
-            int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
-            int[] thumbs = {accent, android.graphics.Color.argb(128, android.graphics.Color.red(accent), android.graphics.Color.green(accent), android.graphics.Color.blue(accent))};
-            int[] tracks = {accent, uncheckedColor(context)};
-            switchCompat.setThumbTintList(new android.content.res.ColorStateList(states, thumbs));
-            switchCompat.setTrackTintList(new android.content.res.ColorStateList(states, tracks));
+        if (accent == UNSET || button instanceof androidx.appcompat.widget.SwitchCompat) {
             return;
         }
         int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
