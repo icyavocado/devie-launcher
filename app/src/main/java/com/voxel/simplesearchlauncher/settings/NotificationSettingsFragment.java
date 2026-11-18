@@ -305,7 +305,7 @@ public class NotificationSettingsFragment extends Fragment {
             this.mName = (TextView) view.findViewById(R.id.name);
             this.mSubtext = (TextView) view.findViewById(R.id.subtext);
             this.mSwitch = (SwitchCompat) view.findViewById(R.id.item_switch);
-            SettingsPalette.switchTints(this.mSwitch, SettingsPalette.resolveBaseAccent(view.getContext()));
+            SettingsPalette.switchTints(this.mSwitch, SettingsPalette.resolveBaseAccent(view.getContext()), SettingsPalette.surfaceColor(view.getContext()));
         }
     }
 
@@ -321,7 +321,7 @@ public class NotificationSettingsFragment extends Fragment {
             this.mLabel = (TextView) view.findViewById(R.id.line1);
             this.mSubLabel = (TextView) view.findViewById(R.id.line2);
             this.mSwitch = (SwitchCompat) view.findViewById(R.id.item_switch);
-            SettingsPalette.switchTints(this.mSwitch, SettingsPalette.resolveBaseAccent(view.getContext()));
+            SettingsPalette.switchTints(this.mSwitch, SettingsPalette.resolveBaseAccent(view.getContext()), SettingsPalette.surfaceColor(view.getContext()));
         }
     }
 
@@ -457,7 +457,7 @@ public class NotificationSettingsFragment extends Fragment {
         this.mLayoutInflater = layoutInflater;
         this.mSwitchContainer = layoutInflater.inflate(R.layout.toolbar_switch, (ViewGroup) null);
         this.mEnabledSwitch = (SwitchCompat) this.mSwitchContainer.findViewById(R.id.toolbar_switch);
-        SettingsPalette.switchTints(this.mEnabledSwitch, SettingsPalette.resolveBaseAccent(this.mSwitchContainer.getContext()));
+        SettingsPalette.switchTints(this.mEnabledSwitch, SettingsPalette.resolveBaseAccent(this.mSwitchContainer.getContext()), SettingsPalette.surfaceColor(this.mSwitchContainer.getContext()));
         return layoutInflater.inflate(R.layout.settings_activity_notification_fragment, viewGroup, false);
     }
 

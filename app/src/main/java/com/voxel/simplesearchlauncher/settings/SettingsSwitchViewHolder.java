@@ -28,7 +28,7 @@ public class SettingsSwitchViewHolder extends SettingsViewHolder {
     /* ON = opaque accent thumb on an accent track; OFF = the same accent at
      * half opacity over a neutral track. */
     private void retintSwitch() {
-        SettingsPalette.switchTints(this.mSwitch, SettingsPalette.resolveBaseAccent(this.mPaletteContext));
+        SettingsPalette.switchTints(this.mSwitch, SettingsPalette.resolveBaseAccent(this.mPaletteContext), SettingsPalette.surfaceColor(this.mPaletteContext));
     }
 
     public TextView getLabel() {

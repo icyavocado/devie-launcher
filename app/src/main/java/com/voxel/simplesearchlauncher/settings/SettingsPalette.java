@@ -143,6 +143,16 @@ public final class SettingsPalette {
         return darkTrack ? 0xff4a5560 : 0xffb8bfc9;
     }
 
+    /** The card surface behind switches: the custom card color when set,
+     * else the day/night card. Used for pre-compositing switch colors. */
+    public static int surfaceColor(Context context) {
+        int card = card();
+        if (card != UNSET) {
+            return card;
+        }
+        return isNight(context) ? 0xff1f242b : 0xffffffff;
+    }
+
     /** Resolves the switch-tint base: the custom accent when set, else the
      * built-in teal, so the ON/OFF pill treatment is uniform. */
     public static int resolveBaseAccent(Context context) {
@@ -153,16 +163,15 @@ public final class SettingsPalette {
         return ContextCompat.getColor(context, R.color.evie_theme_green);
     }
 
-    /** Applies the theme switch opacities to a SwitchCompat from a base
-     * color: ON = thumb 100% / pill 75%; OFF = thumb 50% / pill 25%. No
-     * extra dimming baked in — disabled switches get a 50% mask on top
-     * (a checked-disabled and an unchecked-disabled switch dim even
-     * further). */
-    public static void switchTints(androidx.appcompat.widget.SwitchCompat switchCompat, int baseAccent) {
+    /** Applies the theme switch opacities to a SwitchCompat: from a base
+     * color over the card surface, ON = thumb full accent / pill 75% blend,
+     * OFF = thumb 50% blend / pill 25% blend — all pre-composited opaque so
+     * the thumb never shows the track through it. */
+    public static void switchTints(androidx.appcompat.widget.SwitchCompat switchCompat, int baseAccent, int surface) {
         int onThumb = baseAccent;
-        int offThumb = blendAlpha(baseAccent, 0.5f);
-        int onTrack = blendAlpha(baseAccent, 0.75f);
-        int offTrack = blendAlpha(baseAccent, 0.25f);
+        int offThumb = ColorUtils.blendARGB(baseAccent, surface, 0.5f);
+        int onTrack = ColorUtils.blendARGB(baseAccent, surface, 0.75f);
+        int offTrack = ColorUtils.blendARGB(baseAccent, surface, 0.25f);
         int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
         switchCompat.setThumbTintList(new android.content.res.ColorStateList(states, new int[]{onThumb, offThumb}));
         switchCompat.setTrackTintList(new android.content.res.ColorStateList(states, new int[]{onTrack, offTrack}));
