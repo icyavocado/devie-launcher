@@ -287,4 +287,5 @@
     <item type="id" name="list_container" />
     <item type="id" name="compact_icons_switch" />
     <item type="id" name="web_suggestions_switch" />
+    <item type="id" name="search_web_suggestions" />
 </resources>

@@ -194,6 +194,20 @@ public class SearchSettingsFragment extends Fragment {
                 searchSettings.setRecentsIncludeWebResults(z);
             }
         });
+        /* The Google-autocomplete Experiment toggle surfaced here for
+         * discoverability; both switches read/write the same pref so they
+         * stay in sync. */
+        SettingsSwitchViewHolder webSuggestionsViewHolder = new SettingsSwitchViewHolder(view.findViewById(R.id.search_web_suggestions));
+        webSuggestionsViewHolder.mLabel.setText(R.string.app_settings_item_search_web_suggestions);
+        webSuggestionsViewHolder.mSubLabel.setText(R.string.app_settings_item_search_web_suggestions_sub);
+        webSuggestionsViewHolder.mSubLabel.setVisibility(0);
+        webSuggestionsViewHolder.mSwitch.setChecked(com.voxel.simplesearchlauncher.model.managers.SettingsStorage.getInstance().getWebSuggestions());
+        webSuggestionsViewHolder.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override // android.widget.CompoundButton.OnCheckedChangeListener
+            public final void onCheckedChanged(CompoundButton compoundButton, boolean z) {
+                com.voxel.simplesearchlauncher.model.managers.SettingsStorage.getInstance().setWebSuggestions(z);
+            }
+        });
         settingsSwitchViewHolder2.mLabel.setText(R.string.app_settings_item_search_include_frequently_used);
         settingsSwitchViewHolder2.mSubLabel.setText(R.string.app_settings_item_search_include_frequently_used_subtext);
         settingsSwitchViewHolder2.mSubLabel.setVisibility(0);

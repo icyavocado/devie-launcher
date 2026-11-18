@@ -10,6 +10,7 @@
                 <include android:id="@id/search_engine" layout="@layout/settings_activity_text_item" />
                 <include android:id="@id/autocomplete_behavior" layout="@layout/settings_activity_switch_item" />
                 <include android:id="@id/recents_include_web_results" layout="@layout/settings_activity_switch_item" />
+                <include android:id="@id/search_web_suggestions" layout="@layout/settings_activity_switch_item" />
                 <include android:id="@id/clear_recent" layout="@layout/settings_activity_text_item" />
             </LinearLayout>
         </LinearLayout>

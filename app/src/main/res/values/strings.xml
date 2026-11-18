@@ -212,6 +212,8 @@
     <string name="app_settings_item_search_include_frequently_used">Frequently used apps</string>
     <string name="app_settings_item_search_include_frequently_used_subtext">Show frequently used apps in search</string>
     <string name="app_settings_item_search_recents_include_web_results">Include web searches in recent results</string>
+    <string name="app_settings_item_search_web_suggestions">Web search suggestions (Google)</string>
+    <string name="app_settings_item_search_web_suggestions_sub">Off by default. When on, your query is sent to Google after you stop typing. Also under Experiment.</string>
     <string name="app_settings_item_search_title">Search</string>
     <string name="app_settings_item_switch_launcher">Switch to another launcher</string>
     <string name="app_settings_version_footer">dEvie %1$s - %2$s</string>
