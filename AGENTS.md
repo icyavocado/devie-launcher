@@ -323,3 +323,12 @@ patch. Known trap classes + the fixes:
 - KEEP: local search + web-intent row (opens in the user's browser), notifications/
   badges, app lock, backup/restore (local/SAF), feedback screen (GitHub Issues +
   star links), contacts onboarding permission.
+14. **`getCanonicalName()` under R8 is build-unstable** (rw10, 2026-11-18): R8 renaming/repackaging
+   shifted `LayoutSettingsManager`'s canonical name, so its `class.getCanonicalName() + ".pref"`
+   SharedPreferences file silently changed (`c00.pref`) and the dock/grid settings read as defaults
+   (icon pack prefs reset the same way, `jw.pref`). Data was never lost — the original files sat
+   untouched. Fix: prefs filenames and any persistent key derived from a class name MUST be string
+   literals (LayoutSettingsManager, IconPackManager fixed); `getCanonicalName()` is allowed only
+   for transient keys (intent extras, fragment arguments, dialog tags) produced and consumed within
+   one build. After any R8-affecting change, diff the `shared_prefs/` listing on a device with
+   existing data before shipping.
