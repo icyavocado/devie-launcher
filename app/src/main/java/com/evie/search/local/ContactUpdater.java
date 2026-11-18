@@ -14,6 +14,9 @@ import timber.log.Timber;
 
 /* JADX INFO: loaded from: classes.dex */
 class ContactUpdater {
+    /* The ContentObserver registers on the application-scoped resolver and
+     * is never removed; register at most once per process. */
+    private static boolean sObserverRegistered = false;
     private SQLiteDatabase db;
     private ContactManager mContactManager;
     private ContactUpdateTask mContactUpdateTask;
@@ -141,6 +144,10 @@ class ContactUpdater {
         this.db = sQLiteDatabase;
         this.mContactManager = ContactManager.getInstance(context);
         updateContacts();
+        if (sObserverRegistered) {
+            return;
+        }
+        sObserverRegistered = true;
         context.getContentResolver().registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, new ContentObserver(new Handler()) { // from class: com.evie.search.local.ContactUpdater.1
             @Override // android.database.ContentObserver
             public void onChange(boolean z) {

@@ -3917,6 +3917,8 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         startActivityForResult(intent, 10);
     }
 
+    private IconCacheCleaner mIconCacheCleaner;
+
     @Override // androidx.fragment.app.FragmentActivity, androidx.core.app.ComponentActivity, android.app.Activity
     protected void onCreate(Bundle bundle) {
         this.mLocalSearchManager = LocalSearchManager.getInstance(getApplicationContext(), true);
@@ -4041,7 +4043,8 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         ContextCompat.registerReceiver(this, this.mCloseSystemDialogsReceiver, new IntentFilter("android.intent.action.CLOSE_SYSTEM_DIALOGS"), ContextCompat.RECEIVER_NOT_EXPORTED);
         unlockScreenOrientation(true);
         this.mPreviousDefaultState = UserProfileManager.getInstance().getLauncherDefaultState();
-        getApplication().registerActivityLifecycleCallbacks(new IconCacheCleaner(this.mLocalSearchManager));
+        this.mIconCacheCleaner = new IconCacheCleaner(this.mLocalSearchManager);
+        getApplication().registerActivityLifecycleCallbacks(this.mIconCacheCleaner);
         Timber.tag("DEBUG-HOME-DELAY").d("**** Launcher.onCreate() DONE ****");
     }
 
@@ -4067,6 +4070,10 @@ public class Launcher extends FragmentActivity implements DialogInterface.OnDism
         this.mWidgetsToAdvance.clear();
         TextKeyListener.getInstance().release();
         getContentResolver().unregisterContentObserver(this.mWidgetObserver);
+        if (this.mIconCacheCleaner != null) {
+            getApplication().unregisterActivityLifecycleCallbacks(this.mIconCacheCleaner);
+            this.mIconCacheCleaner = null;
+        }
         BroadcastReceiver broadcastReceiver = this.mWallpaperBroadcastReceiver;
         if (broadcastReceiver != null) {
             unregisterReceiver(broadcastReceiver);
