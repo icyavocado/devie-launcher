@@ -255,14 +255,14 @@ public class SearchPresenter {
     }
 
     /* Opt-in Google autocomplete: fires only after the user has stopped
-     * typing for 600ms (queries >= 2 chars); the per-query subscription is
+     * typing for 430ms (queries >= 2 chars); the per-query subscription is
      * disposed by the next keystroke, which cancels the pending timer. */
     private Observable<SearchPresenterData> webSuggestionsObservable(final String str) {
         if (!com.voxel.simplesearchlauncher.model.managers.SettingsStorage.getInstance().getWebSuggestions()
                 || str.trim().length() < 2) {
             return Observable.empty();
         }
-        return Observable.timer(600L, TimeUnit.MILLISECONDS, io.reactivex.schedulers.Schedulers.computation())
+        return Observable.timer(430L, TimeUnit.MILLISECONDS, io.reactivex.schedulers.Schedulers.computation())
                 .flatMap(new io.reactivex.functions.Function<Long, io.reactivex.ObservableSource<SearchPresenterData>>() {
                     @Override
                     public io.reactivex.ObservableSource<SearchPresenterData> apply(Long unused) throws Exception {
