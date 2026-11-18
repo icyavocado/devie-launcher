@@ -165,6 +165,9 @@
 
 
     <string name="app_settings_item_feedback_title">Feedback</string>
+    <string name="app_settings_item_experiment_title">Experiment</string>
+    <string name="app_settings_experiment_compact_icons_title">Compact icon memory (RGB 565)</string>
+    <string name="app_settings_experiment_compact_icons_sub">Halves the memory used by drawer icons. Colors may band slightly. Takes effect when you leave this screen.</string>
     <string name="app_settings_item_folder_title">Folders</string>
     <string name="app_settings_item_folders_alpha_sort">Sort items in folders alphabetically</string>
     <string name="app_settings_item_folders_name">Folder</string>

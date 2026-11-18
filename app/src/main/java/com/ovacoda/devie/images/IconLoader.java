@@ -264,11 +264,25 @@ public final class IconLoader {
         if (file == null || !file.exists()) {
             return null;
         }
-        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), preferredOptions());
         if (bitmap == null) {
             file.delete();
         }
         return bitmap;
+    }
+
+    /* Experiment toggle (Settings > Experiment): RGB_565 halves per-icon
+     * memory at a small color-fidelity cost; default stays ARGB_8888. */
+    @NonNull
+    private static BitmapFactory.Options preferredOptions() {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        try {
+            if (com.voxel.simplesearchlauncher.model.managers.SettingsStorage.getInstance().getCompactIconMemory()) {
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+            }
+        } catch (Exception unused) {
+        }
+        return options;
     }
 
     /** Guards all disk-cache mutations: writes take the lock too, so a
@@ -332,7 +346,7 @@ public final class IconLoader {
         if (url.startsWith(DATA_PREFIX)) {
             try {
                 byte[] bytes = Base64.decode(url.substring(DATA_PREFIX_LENGTH), Base64.DEFAULT);
-                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, preferredOptions());
             } catch (Exception unused) {
                 return null;
             }
@@ -352,7 +366,7 @@ public final class IconLoader {
                 if (inputStream == null) {
                     return null;
                 }
-                return BitmapFactory.decodeStream(inputStream);
+                return BitmapFactory.decodeStream(inputStream, null, preferredOptions());
             } catch (Exception unused) {
                 return null;
             }

@@ -146,6 +146,8 @@ android {
                (design_snackbar, app_widget_preview, qsb); the app runs on all
                devices without querying them in unqualified configs. */
             "MissingDefaultResource",
+            /* Vendor res copies carried in our tree (abc_*, design_*). */
+            "UseAndroidAlpha",
         )
         /* Donor-arch facts that lint cannot verify (reconstructed styleables,
            decompile flow overrides, donor permissions) are snapshotted in the

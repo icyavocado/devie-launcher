@@ -266,6 +266,16 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
         editorEdit.apply();
     }
 
+    public boolean getCompactIconMemory() {
+        return this.sharedPref.getBoolean("experiment_rgb_565", false);
+    }
+
+    public void setCompactIconMemory(boolean z) {
+        SharedPreferences.Editor editorEdit = this.sharedPref.edit();
+        editorEdit.putBoolean("experiment_rgb_565", z);
+        editorEdit.apply();
+    }
+
     public void setAppDrawerHintEnabled(boolean z) {
         boolean zIsAppDrawerHintEnabled = isAppDrawerHintEnabled();
         SharedPreferences.Editor editorEdit = this.sharedPref.edit();

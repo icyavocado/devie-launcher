@@ -52,6 +52,7 @@ public class SettingsFragment extends Fragment {
         SEARCH(SettingsGroup.CUSTOMIZATION, R.string.app_settings_item_search_title),
         HIDE_APPS(SettingsGroup.CUSTOMIZATION, R.string.app_settings_hide_apps),
         BACKUP_AND_RESTORE(SettingsGroup.GENERAL, R.string.app_settings_item_backup_restore_title),
+        EXPERIMENT(SettingsGroup.GENERAL, R.string.app_settings_item_experiment_title),
         FEEDBACK(SettingsGroup.GENERAL, R.string.app_settings_item_feedback_title),
 
         PRIVACY_POLICY(SettingsGroup.GENERAL, R.string.app_settings_item_no_tracking_title),
@@ -178,6 +179,9 @@ public class SettingsFragment extends Fragment {
                 break;
             case BACKUP_AND_RESTORE:
                 pushFragment(new BackupRestoreSettingsFragment(), item.mainTextResId);
+                break;
+            case EXPERIMENT:
+                pushFragment(new ExperimentSettingsFragment(), item.mainTextResId);
                 break;
             case FEEDBACK:
                 pushFragment(new FeedbackFragment(), item.mainTextResId);
