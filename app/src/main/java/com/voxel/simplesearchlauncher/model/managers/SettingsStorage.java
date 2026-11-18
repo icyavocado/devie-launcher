@@ -276,6 +276,16 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
         editorEdit.apply();
     }
 
+    public boolean getWebSuggestions() {
+        return this.sharedPref.getBoolean("experiment_web_suggestions", false);
+    }
+
+    public void setWebSuggestions(boolean z) {
+        SharedPreferences.Editor editorEdit = this.sharedPref.edit();
+        editorEdit.putBoolean("experiment_web_suggestions", z);
+        editorEdit.apply();
+    }
+
     public void setAppDrawerHintEnabled(boolean z) {
         boolean zIsAppDrawerHintEnabled = isAppDrawerHintEnabled();
         SharedPreferences.Editor editorEdit = this.sharedPref.edit();

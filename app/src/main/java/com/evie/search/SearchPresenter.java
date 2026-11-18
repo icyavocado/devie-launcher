@@ -251,7 +251,45 @@ public class SearchPresenter {
         arrayList.add(new WebItemPresenter(this, this.mContext, new WebSearchItem(true, str)));
         SearchPresenterData searchPresenterData = new SearchPresenterData(arrayList, SearchPresenterData.DataType.WEB);
         Observable<SearchPresenterData> observableJust = Observable.just(searchPresenterData);
-        return Observable.concatEager(Observable.<Observable<SearchPresenterData>>just(observableSubscribeOn, observableJust)).mergeWith(Observable.just(new SearchPresenterData(null, SearchPresenterData.DataType.CLEAR)).delay(200L, TimeUnit.MILLISECONDS));
+        return Observable.concatEager(Observable.<Observable<SearchPresenterData>>just(observableSubscribeOn, observableJust)).mergeWith(Observable.just(new SearchPresenterData(null, SearchPresenterData.DataType.CLEAR)).delay(200L, TimeUnit.MILLISECONDS)).mergeWith(webSuggestionsObservable(str));
+    }
+
+    /* Opt-in Google autocomplete: fires only after the user has stopped
+     * typing for 600ms (queries >= 2 chars); the per-query subscription is
+     * disposed by the next keystroke, which cancels the pending timer. */
+    private Observable<SearchPresenterData> webSuggestionsObservable(final String str) {
+        if (!com.voxel.simplesearchlauncher.model.managers.SettingsStorage.getInstance().getWebSuggestions()
+                || str.trim().length() < 2) {
+            return Observable.empty();
+        }
+        return Observable.timer(600L, TimeUnit.MILLISECONDS, io.reactivex.schedulers.Schedulers.computation())
+                .flatMap(new io.reactivex.functions.Function<Long, io.reactivex.ObservableSource<SearchPresenterData>>() {
+                    @Override
+                    public io.reactivex.ObservableSource<SearchPresenterData> apply(Long unused) throws Exception {
+                        return Observable.fromCallable(() -> fetchWebSuggestions(str));
+                    }
+                })
+                .onErrorReturnItem(new SearchPresenterData(new ArrayList(), SearchPresenterData.DataType.WEB));
+    }
+
+    private SearchPresenterData fetchWebSuggestions(String str) {
+        ArrayList arrayList = new ArrayList();
+        arrayList.add(new WebItemPresenter(this, this.mContext, new WebSearchItem(true, str)));
+        List<String> suggestions = com.evie.search.web.WebSuggestClient.fetch(str, 2000);
+        if (suggestions != null) {
+            int shown = 0;
+            for (String suggestion : suggestions) {
+                if (suggestion.equalsIgnoreCase(str.trim())) {
+                    continue;
+                }
+                arrayList.add(new WebItemPresenter(this, this.mContext, new WebSearchItem(false, suggestion)));
+                shown++;
+                if (shown >= 5) {
+                    break;
+                }
+            }
+        }
+        return new SearchPresenterData(arrayList, SearchPresenterData.DataType.WEB);
     }
 
     private DisposableObserver<SearchPresenterData> getSearchObserver(final String str) {

@@ -15,6 +15,7 @@ import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 public class ExperimentSettingsFragment extends Fragment {
 
     private SettingsSwitchViewHolder mCompactIconsViewHolder;
+    private SettingsSwitchViewHolder mWebSuggestionsViewHolder;
 
     @Override // androidx.fragment.app.Fragment
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -34,6 +35,17 @@ public class ExperimentSettingsFragment extends Fragment {
                 ExperimentSettingsFragment.this.onCompactIconsChanged(compoundButton, z);
             }
         });
+        this.mWebSuggestionsViewHolder = new SettingsSwitchViewHolder(view.findViewById(R.id.web_suggestions_switch));
+        this.mWebSuggestionsViewHolder.mLabel.setText(R.string.app_settings_experiment_web_suggestions_title);
+        this.mWebSuggestionsViewHolder.mSubLabel.setText(R.string.app_settings_experiment_web_suggestions_sub);
+        this.mWebSuggestionsViewHolder.mSubLabel.setVisibility(View.VISIBLE);
+        this.mWebSuggestionsViewHolder.mSwitch.setChecked(SettingsStorage.getInstance().getWebSuggestions());
+        this.mWebSuggestionsViewHolder.mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override // android.widget.CompoundButton.OnCheckedChangeListener
+            public final void onCheckedChanged(CompoundButton compoundButton, boolean z) {
+                ExperimentSettingsFragment.this.onWebSuggestionsChanged(compoundButton, z);
+            }
+        });
     }
 
     /* JADX INFO: Access modifiers changed from: private */
@@ -47,5 +59,11 @@ public class ExperimentSettingsFragment extends Fragment {
             LauncherAppState.getInstance().getModel().forceReload();
         } catch (Exception unused) {
         }
+    }
+
+    /* JADX INFO: Access modifiers changed from: private */
+    public void onWebSuggestionsChanged(CompoundButton compoundButton, boolean z) {
+        SettingsStorage.getInstance().setWebSuggestions(z);
+        /* Applies to the next query; no state to flush. */
     }
 }
