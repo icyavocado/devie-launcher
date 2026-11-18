@@ -125,6 +125,7 @@ public class IconPackSettingsFragment extends Fragment {
             this.mIcon = (ImageView) view.findViewById(R.id.list_item_icon);
             this.mLabel = (TextView) view.findViewById(R.id.list_item_label);
             this.mRadioButton = (RadioButton) view.findViewById(R.id.radio_btn);
+            SettingsPalette.tintCompoundButton(this.mRadioButton, view.getContext());
         }
     }
 

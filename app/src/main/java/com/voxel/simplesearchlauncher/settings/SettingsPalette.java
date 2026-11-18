@@ -9,6 +9,8 @@ import android.view.Window;
 
 import androidx.core.content.ContextCompat;
 
+import android.widget.CompoundButton;
+
 import com.ovacoda.devie.R;
 import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 
@@ -131,6 +133,50 @@ public final class SettingsPalette {
     /** Accent for switch tinting; -1 when the built-in accent is in use. */
     public static int accentOrUnset() {
         return accent();
+    }
+
+    /* Neutral unchecked color, derived from the palette so it stays visible
+     * on custom backgrounds. */
+    private static int uncheckedColor(Context context) {
+        boolean darkTrack = isNight(context) || background() != UNSET && luminance(background()) <= 0.5f;
+        return darkTrack ? 0xff4a5560 : 0xffb8bfc9;
+    }
+
+    /** Tints any compound button (SwitchCompat, Switch, RadioButton, CheckBox)
+     * with the custom accent; checked state gets the accent, unchecked gets a
+     * neutral gray. No-op when no custom accent is set. */
+    public static void tintCompoundButton(CompoundButton button, Context context) {
+        int accent = accentOrUnset();
+        if (accent == UNSET) {
+            return;
+        }
+        if (button instanceof androidx.appcompat.widget.SwitchCompat) {
+            androidx.appcompat.widget.SwitchCompat switchCompat = (androidx.appcompat.widget.SwitchCompat) button;
+            switchCompat.setThumbTintList(android.content.res.ColorStateList.valueOf(accent));
+            switchCompat.setTrackTintList(android.content.res.ColorStateList.valueOf(uncheckedColor(context)));
+            return;
+        }
+        int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
+        int[] colors = {accent, uncheckedColor(context)};
+        android.content.res.ColorStateList tintList = new android.content.res.ColorStateList(states, colors);
+        if (button instanceof androidx.appcompat.widget.AppCompatCheckBox) {
+            ((androidx.appcompat.widget.AppCompatCheckBox) button).setSupportButtonTintList(tintList);
+        } else if (button instanceof androidx.appcompat.widget.AppCompatRadioButton) {
+            ((androidx.appcompat.widget.AppCompatRadioButton) button).setSupportButtonTintList(tintList);
+        } else if (android.os.Build.VERSION.SDK_INT >= 21) {
+            button.setButtonTintList(tintList);
+        }
+    }
+
+    /** Tints a DiscreteSeekBar's scrubber and thumb with the custom accent;
+     * no-op when no custom accent is set. */
+    public static void tintSeekBar(com.ovacoda.devie.widget.DiscreteSeekBar seekBar) {
+        int accent = accentOrUnset();
+        if (accent == UNSET) {
+            return;
+        }
+        seekBar.setScrubberColor(accent);
+        seekBar.setThumbColor(accent, accent);
     }
 
     private static boolean isNight(Context context) {

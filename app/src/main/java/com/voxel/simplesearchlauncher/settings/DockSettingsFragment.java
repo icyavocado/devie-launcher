@@ -248,6 +248,7 @@ public class DockSettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
         this.mSwitchContainer = layoutInflater.inflate(R.layout.toolbar_switch, (ViewGroup) null);
         this.mEnabledSwitch = (SwitchCompat) this.mSwitchContainer.findViewById(R.id.toolbar_switch);
+        SettingsPalette.tintCompoundButton(this.mEnabledSwitch, this.mSwitchContainer.getContext());
         return layoutInflater.inflate(R.layout.settings_activity_dock_fragment, viewGroup, false);
     }
 

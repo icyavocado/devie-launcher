@@ -455,6 +455,7 @@ public class NotificationSettingsFragment extends Fragment {
         this.mLayoutInflater = layoutInflater;
         this.mSwitchContainer = layoutInflater.inflate(R.layout.toolbar_switch, (ViewGroup) null);
         this.mEnabledSwitch = (SwitchCompat) this.mSwitchContainer.findViewById(R.id.toolbar_switch);
+        SettingsPalette.tintCompoundButton(this.mEnabledSwitch, this.mSwitchContainer.getContext());
         return layoutInflater.inflate(R.layout.settings_activity_notification_fragment, viewGroup, false);
     }
 

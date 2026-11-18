@@ -104,6 +104,7 @@ public class ThemeSettingsFragment extends Fragment {
         AppCompatRadioButton radio = new AppCompatRadioButton(getContext());
         radio.setClickable(false);
         radio.setFocusable(false);
+        SettingsPalette.tintCompoundButton(radio, getContext());
         radio.setLayoutParams(new LinearLayout.LayoutParams(-2, -2));
         radio.setOnCheckedChangeListener(null);
         row.addView(radio);

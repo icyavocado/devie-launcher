@@ -54,7 +54,9 @@ public class MultipleChoiceDialogFragment extends DialogFragment {
                 textView.setText(item.subLabelResId);
                 textView.setVisibility(0);
             }
-            ((RadioButton) view.findViewById(R.id.radio_button)).setChecked(i == MultipleChoiceDialogFragment.this.mSelectedIndex);
+            RadioButton dialogRadio = (RadioButton) view.findViewById(R.id.radio_button);
+            SettingsPalette.tintCompoundButton(dialogRadio, view.getContext());
+            dialogRadio.setChecked(i == MultipleChoiceDialogFragment.this.mSelectedIndex);
             return view;
         }
     }

@@ -16,8 +16,13 @@ public class SettingsSeekBarViewHolder extends SettingsViewHolder {
         super(view);
         this.mLabel = (TextView) view.findViewById(R.id.label);
         this.mDiscreteSeekBar = (DiscreteSeekBar) view.findViewById(R.id.seek_bar);
-        this.mBaseColor = view.getResources().getColor(R.color.evie_theme_green);
+        int accent = SettingsPalette.accentOrUnset();
+        this.mBaseColor = accent != -1 ? accent : view.getResources().getColor(R.color.evie_theme_green);
         this.mDisabledColor = -7829368;
+        /* Apply the enabled colors immediately; setEnabled() re-tints on
+         * state changes. */
+        this.mDiscreteSeekBar.setScrubberColor(this.mBaseColor);
+        this.mDiscreteSeekBar.setThumbColor(this.mBaseColor, this.mBaseColor);
     }
 
     public DiscreteSeekBar getDiscreteSeekBar() {

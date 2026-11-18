@@ -115,6 +115,7 @@ public class HideAppsSettingsFragment extends Fragment implements SettingsActivi
             super(view);
             this.mApplicationIcon = (ImageView) view.findViewById(R.id.application_icon);
             this.mCheckBox = (CheckBox) view.findViewById(R.id.checkbox);
+            SettingsPalette.tintCompoundButton(this.mCheckBox, view.getContext());
             this.mLabel = (TextView) view.findViewById(R.id.label);
         }
     }
