@@ -73,32 +73,39 @@ final class ColorPickerDialog {
             }
         });
 
-        /* Round preset swatches: fixed-size circles, 5 per row. */
+        /* Round preset swatches: fixed-size circles, 5 per row, evenly
+         * distributed across the full width (each cell centers its circle,
+         * so the outer gaps match the inner gaps). */
         int circlePx = Math.round(40 * density);
         LinearLayout swatches = new LinearLayout(context);
         swatches.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout swatchRow = null;
         for (int i = 0; i < PRESETS.length; i++) {
             final int preset = PRESETS[i];
             if (i % 5 == 0) {
-                swatchRow = new LinearLayout(context);
+                LinearLayout swatchRow = new LinearLayout(context);
                 swatchRow.setOrientation(LinearLayout.HORIZONTAL);
-                swatches.addView(swatchRow);
+                swatches.addView(swatchRow, new LinearLayout.LayoutParams(-1, -2));
+                for (int j = 0; j < 5 && i + j < PRESETS.length; j++) {
+                    final int cellPreset = PRESETS[i + j];
+                    android.widget.FrameLayout cell = new android.widget.FrameLayout(context);
+                    cell.setLayoutParams(new LinearLayout.LayoutParams(0, -2, 1f));
+                    View swatch = new View(context);
+                    android.widget.FrameLayout.LayoutParams swatchLp = new android.widget.FrameLayout.LayoutParams(circlePx, circlePx, Gravity.CENTER_HORIZONTAL);
+                    swatchLp.setMargins(0, Math.round(4 * density), 0, Math.round(4 * density));
+                    swatch.setLayoutParams(swatchLp);
+                    GradientDrawable circle = new GradientDrawable();
+                    circle.setShape(GradientDrawable.OVAL);
+                    circle.setColor(cellPreset);
+                    swatch.setBackground(circle);
+                    swatch.setOnClickListener((v) -> {
+                        picked[0] = cellPreset;
+                        hexInput.setText(toHex(cellPreset));
+                        hexInput.setSelection(hexInput.getText().length());
+                    });
+                    cell.addView(swatch);
+                    swatchRow.addView(cell);
+                }
             }
-            View swatch = new View(context);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(circlePx, circlePx);
-            lp.setMargins(Math.round(4 * density), Math.round(4 * density), Math.round(4 * density), Math.round(4 * density));
-            swatch.setLayoutParams(lp);
-            GradientDrawable circle = new GradientDrawable();
-            circle.setShape(GradientDrawable.OVAL);
-            circle.setColor(preset);
-            swatch.setBackground(circle);
-            swatch.setOnClickListener((v) -> {
-                picked[0] = preset;
-                hexInput.setText(toHex(preset));
-                hexInput.setSelection(hexInput.getText().length());
-            });
-            swatchRow.addView(swatch);
         }
         root.addView(swatches);
 
