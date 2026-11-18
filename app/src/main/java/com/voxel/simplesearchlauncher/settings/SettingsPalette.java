@@ -165,13 +165,13 @@ public final class SettingsPalette {
 
     /** Applies the theme switch opacities to a SwitchCompat: from a base
      * color over the card surface, ON = thumb full accent / pill 75% blend,
-     * OFF = thumb 50% blend / pill 25% blend — all pre-composited opaque so
+     * OFF = thumb 65% blend / pill 40% blend — all pre-composited opaque — all pre-composited opaque so
      * the thumb never shows the track through it. */
     public static void switchTints(androidx.appcompat.widget.SwitchCompat switchCompat, int baseAccent, int surface) {
         int onThumb = baseAccent;
-        int offThumb = ColorUtils.blendARGB(baseAccent, surface, 0.5f);
+        int offThumb = ColorUtils.blendARGB(baseAccent, surface, 0.65f);
         int onTrack = ColorUtils.blendARGB(baseAccent, surface, 0.75f);
-        int offTrack = ColorUtils.blendARGB(baseAccent, surface, 0.25f);
+        int offTrack = ColorUtils.blendARGB(baseAccent, surface, 0.4f);
         int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
         switchCompat.setThumbTintList(new android.content.res.ColorStateList(states, new int[]{onThumb, offThumb}));
         switchCompat.setTrackTintList(new android.content.res.ColorStateList(states, new int[]{onTrack, offTrack}));
