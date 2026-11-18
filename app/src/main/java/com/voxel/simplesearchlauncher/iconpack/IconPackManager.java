@@ -26,7 +26,8 @@ import java.util.List;
 
 /* JADX INFO: loaded from: classes.dex */
 public class IconPackManager {
-    private static final String ICON_PACK_PREF_NAME = IconPackManager.class.getCanonicalName() + ".pref";
+    /* Literal, not class.getCanonicalName(): see LayoutSettingsManager.ICON_PREF_NAME. */
+    private static final String ICON_PACK_PREF_NAME = "com.voxel.simplesearchlauncher.iconpack.IconPackManager.pref";
     private Context mContext;
     private DataSetObservable mDataSetObservable;
     private LocalAppsManager mLocalAppsManager;

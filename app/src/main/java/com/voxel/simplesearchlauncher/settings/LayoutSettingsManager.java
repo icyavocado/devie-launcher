@@ -14,7 +14,10 @@ import java.util.Map;
 
 /* JADX INFO: loaded from: classes.dex */
 public class LayoutSettingsManager {
-    private static final String ICON_PREF_NAME = LayoutSettingsManager.class.getCanonicalName() + ".pref";
+    /* Literal, not class.getCanonicalName(): R8 obfuscation is free to rename
+     * classes between builds, which silently retargets the prefs file (the
+     * rw10 release read a fresh "c00.pref" instead of this one). */
+    private static final String ICON_PREF_NAME = "com.voxel.simplesearchlauncher.settings.LayoutSettingsManager.pref";
     private DataSetObservable mDataSetObservable;
     private SharedPreferences mSharedPreferences;
     private final UpgradeUtil.UpgradableComponent mUpgradeComponent = new UpgradeUtil.UpgradableComponent() { // from class: com.voxel.simplesearchlauncher.settings.-$$Lambda$LayoutSettingsManager$SbY0NVEv4pQbMcIu41vrz5lfGn0
