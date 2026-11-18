@@ -137,7 +137,7 @@ public final class SettingsPalette {
 
     /* Neutral unchecked color, derived from the palette so it stays visible
      * on custom backgrounds. */
-    private static int uncheckedColor(Context context) {
+    static int uncheckedColor(Context context) {
         boolean darkTrack = isNight(context) || background() != UNSET && luminance(background()) <= 0.5f;
         return darkTrack ? 0xff4a5560 : 0xffb8bfc9;
     }
@@ -152,8 +152,13 @@ public final class SettingsPalette {
         }
         if (button instanceof androidx.appcompat.widget.SwitchCompat) {
             androidx.appcompat.widget.SwitchCompat switchCompat = (androidx.appcompat.widget.SwitchCompat) button;
-            switchCompat.setThumbTintList(android.content.res.ColorStateList.valueOf(accent));
-            switchCompat.setTrackTintList(android.content.res.ColorStateList.valueOf(uncheckedColor(context)));
+            /* ON = opaque accent thumb on an accent track; OFF = the same
+             * accent at half opacity over a neutral track. */
+            int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
+            int[] thumbs = {accent, android.graphics.Color.argb(128, android.graphics.Color.red(accent), android.graphics.Color.green(accent), android.graphics.Color.blue(accent))};
+            int[] tracks = {accent, uncheckedColor(context)};
+            switchCompat.setThumbTintList(new android.content.res.ColorStateList(states, thumbs));
+            switchCompat.setTrackTintList(new android.content.res.ColorStateList(states, tracks));
             return;
         }
         int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};
