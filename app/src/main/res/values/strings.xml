@@ -178,10 +178,13 @@
     <string name="app_settings_theme_value_light">Light</string>
     <string name="app_settings_theme_background_title">Background color</string>
     <string name="app_settings_theme_cards_title">Card color</string>
+    <string name="app_settings_theme_accent_title">Accent color</string>
+    <string name="app_settings_theme_colors_header">Colors</string>
     <string name="app_settings_theme_value_default">Default</string>
     <string name="app_settings_theme_reset_title">Reset colors to default</string>
     <string name="app_settings_theme_pick_bg">Background color</string>
     <string name="app_settings_theme_pick_card">Card color</string>
+    <string name="app_settings_theme_pick_accent">Accent color</string>
     <string name="app_settings_item_folder_title">Folders</string>
     <string name="app_settings_item_folders_alpha_sort">Sort items in folders alphabetically</string>
     <string name="app_settings_item_folders_name">Folder</string>

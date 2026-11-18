@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import com.ovacoda.devie.R;
 import com.voxel.launcher3.LauncherAppState;
 import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
@@ -20,7 +21,6 @@ public class ExperimentSettingsFragment extends Fragment {
     private SettingsSwitchViewHolder mCompactIconsViewHolder;
     private SettingsSwitchViewHolder mWebSuggestionsViewHolder;
     private SettingsTextViewHolder mThemeViewHolder;
-    private SettingsTextViewHolder mResetRow;
 
     @Override // androidx.fragment.app.Fragment
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -54,34 +54,25 @@ public class ExperimentSettingsFragment extends Fragment {
         LinearLayout themeCard = newCard(inflater, container);
         this.mThemeViewHolder = new SettingsTextViewHolder(inflater.inflate(R.layout.settings_activity_text_item, themeCard, false));
         updateThemeRow();
-        this.mThemeViewHolder.itemView.setOnClickListener((v) -> cycleTheme());
-        themeCard.addView(this.mThemeViewHolder.itemView);
-        themeCard.addView(newPickerRow(inflater, themeCard, R.string.app_settings_theme_background_title, R.string.app_settings_theme_value_default, "theme_bg"));
-        themeCard.addView(newPickerRow(inflater, themeCard, R.string.app_settings_theme_cards_title, R.string.app_settings_theme_value_default, "theme_card"));
-        this.mResetRow = new SettingsTextViewHolder(inflater.inflate(R.layout.settings_activity_text_item, themeCard, false));
-        this.mResetRow.mLabel.setText(R.string.app_settings_theme_reset_title);
-        this.mResetRow.itemView.setOnClickListener((v) -> {
-            SettingsPalette.reset();
-            recreateHost();
+        /* Opens the full theme screen, like the Gestures entry. */
+        this.mThemeViewHolder.itemView.setOnClickListener((v) -> {
+            FragmentTransaction tx = getActivity().getSupportFragmentManager().beginTransaction();
+            tx.setCustomAnimations(R.anim.fade_in_short, R.anim.fade_out_short, R.anim.fade_in_short, R.anim.fade_out_short);
+            tx.replace(R.id.container, new ThemeSettingsFragment());
+            tx.setBreadCrumbTitle(R.string.app_settings_theme_title);
+            tx.addToBackStack(null);
+            tx.commit();
         });
-        themeCard.addView(this.mResetRow.itemView);
-        updateResetRowVisibility();
+        themeCard.addView(this.mThemeViewHolder.itemView);
         container.addView(themeCard);
     }
 
-    private View newPickerRow(LayoutInflater inflater, LinearLayout parent, int labelRes, int subRes, String target) {
-        SettingsTextViewHolder holder = new SettingsTextViewHolder(inflater.inflate(R.layout.settings_activity_text_item, parent, false));
-        holder.mLabel.setText(labelRes);
-        holder.mSubLabel.setText(subRes);
-        holder.itemView.setOnClickListener((v) -> {
-            int current = target.equals(ColorPickerDialog.TARGET_CARD) ? SettingsPalette.card() : SettingsPalette.background();
-            ColorPickerDialog.show(getContext(), target, current, (color) -> recreateHost());
-        });
-        return holder.itemView;
-    }
-
-    private void updateResetRowVisibility() {
-        this.mResetRow.itemView.setVisibility(SettingsPalette.hasCustomColors() ? View.VISIBLE : View.GONE);
+    @Override // androidx.fragment.app.Fragment
+    public void onResume() {
+        super.onResume();
+        if (this.mThemeViewHolder != null) {
+            updateThemeRow();
+        }
     }
 
     /* Activity recreation re-applies the palette everywhere (AppCompat
@@ -149,21 +140,6 @@ public class ExperimentSettingsFragment extends Fragment {
         this.mThemeViewHolder.mSubLabel.setVisibility(View.VISIBLE);
     }
 
-    /* JADX INFO: Access modifiers changed from: private */
-    public void cycleTheme() {
-        String current = SettingsStorage.getInstance().getTheme();
-        String next;
-        if (SettingsStorage.THEME_DARK.equals(current)) {
-            next = SettingsStorage.THEME_LIGHT;
-        } else if (SettingsStorage.THEME_LIGHT.equals(current)) {
-            next = SettingsStorage.THEME_SYSTEM;
-        } else {
-            next = SettingsStorage.THEME_DARK;
-        }
-        SettingsStorage.getInstance().setTheme(next);
-        AppCompatDelegate.setDefaultNightMode(SettingsStorage.themeToNightMode(next));
-        updateThemeRow();
-    }
 
     /* JADX INFO: Access modifiers changed from: private */
     public void onCompactIconsChanged(CompoundButton compoundButton, boolean z) {
