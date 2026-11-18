@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat;
 import com.ovacoda.devie.R;
 import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 
+import android.view.View;
+
 /* Custom color palette for the settings screens (Theme experiment). Values
  * live in settings_storage (-1 = unset → the built-in day/night palette);
  * text colors derive from the card luminance so users cannot build
@@ -58,11 +60,20 @@ public final class SettingsPalette {
         SettingsStorage.getInstance().setThemeColor("theme_accent", UNSET);
     }
 
-    /** Window background honoring the custom palette. */
-    public static void applyToWindow(Window window) {
+    /** Window + toolbar background honoring the custom palette. Called
+     * after setContentView so the toolbar exists. */
+    public static void applyToActivity(android.app.Activity activity) {
         int bg = background();
-        if (bg != UNSET) {
-            window.setBackgroundDrawable(new ColorDrawable(bg));
+        if (bg == UNSET) {
+            return;
+        }
+        Window window = activity.getWindow();
+        window.setBackgroundDrawable(new ColorDrawable(bg));
+        window.setStatusBarColor(bg);
+        window.setNavigationBarColor(bg);
+        View toolbar = activity.findViewById(R.id.toolbar);
+        if (toolbar != null) {
+            toolbar.setBackgroundColor(bg);
         }
     }
 
@@ -84,7 +95,7 @@ public final class SettingsPalette {
     public static int labelColor(Context context) {
         int card = card();
         if (card == UNSET) {
-            return ContextCompat.getColor(context, isNight(context) ? 0xffe3e7ec : 0xff1f2a38);
+            return isNight(context) ? 0xffe3e7ec : 0xff1f2a38;
         }
         return luminance(card) > 0.5f ? 0xff1f2a38 : 0xffe3e7ec;
     }
@@ -92,7 +103,7 @@ public final class SettingsPalette {
     public static int subLabelColor(Context context) {
         int card = card();
         if (card == UNSET) {
-            return ContextCompat.getColor(context, isNight(context) ? 0xff77808b : 0xff99a3ad);
+            return isNight(context) ? 0xff77808b : 0xff99a3ad;
         }
         return luminance(card) > 0.5f ? 0xff99a3ad : 0xff77808b;
     }
@@ -100,7 +111,7 @@ public final class SettingsPalette {
     public static int headerColor(Context context) {
         int bg = background();
         if (bg == UNSET) {
-            return ContextCompat.getColor(context, isNight(context) ? 0xff8a93a0 : 0xff6b7683);
+            return isNight(context) ? 0xff8a93a0 : 0xff6b7683;
         }
         return luminance(bg) > 0.5f ? 0xff6b7683 : 0xff8a93a0;
     }

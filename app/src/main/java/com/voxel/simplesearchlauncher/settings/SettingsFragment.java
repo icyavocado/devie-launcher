@@ -100,7 +100,7 @@ public class SettingsFragment extends Fragment {
             }
             LinearLayout card = new LinearLayout(getContext());
             card.setOrientation(LinearLayout.VERTICAL);
-            card.setBackgroundResource(R.drawable.settings_list_item_background);
+            card.setBackground(com.voxel.simplesearchlauncher.settings.SettingsPalette.cardBackground(getContext()));
             card.setDividerDrawable(new android.graphics.drawable.InsetDrawable(
                 getResources().getDrawable(R.drawable.settings_group_divider), dp(25), 0, dp(15), 0));
             card.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);

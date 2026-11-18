@@ -15,7 +15,7 @@ import com.voxel.simplesearchlauncher.model.managers.SettingsStorage;
 
 /* Opt-in experiments and the theme experiment, grouped like the main
  * settings screen: muted section header above one rounded card per group. */
-public class ExperimentSettingsFragment extends Fragment implements ColorPickerDialogFragment.OnColorPicked {
+public class ExperimentSettingsFragment extends Fragment {
 
     private SettingsSwitchViewHolder mCompactIconsViewHolder;
     private SettingsSwitchViewHolder mWebSuggestionsViewHolder;
@@ -74,10 +74,8 @@ public class ExperimentSettingsFragment extends Fragment implements ColorPickerD
         holder.mLabel.setText(labelRes);
         holder.mSubLabel.setText(subRes);
         holder.itemView.setOnClickListener((v) -> {
-            int current = target.equals("theme_card") ? SettingsPalette.card() : SettingsPalette.background();
-            ColorPickerDialogFragment picker = ColorPickerDialogFragment.newInstance(target, current);
-            picker.setTargetFragment(ExperimentSettingsFragment.this, 0);
-            picker.show(getChildFragmentManager(), target);
+            int current = target.equals(ColorPickerDialog.TARGET_CARD) ? SettingsPalette.card() : SettingsPalette.background();
+            ColorPickerDialog.show(getContext(), target, current, (color) -> recreateHost());
         });
         return holder.itemView;
     }
@@ -92,11 +90,6 @@ public class ExperimentSettingsFragment extends Fragment implements ColorPickerD
         if (getActivity() != null) {
             getActivity().recreate();
         }
-    }
-
-    @Override // ColorPickerDialogFragment.OnColorPicked
-    public void onPicked(int color) {
-        recreateHost();
     }
 
     /* Apply the custom palette to this fragment's card container. */

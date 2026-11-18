@@ -59,8 +59,8 @@ public class TransparentSettingsActivity extends AppCompatActivity implements Sa
         super.onCreate(bundle);
         LauncherAppState.setApplicationContext(getApplicationContext());
         LauncherAppState.getInstance().initDynamicGrid(this);
-        com.voxel.simplesearchlauncher.settings.SettingsPalette.applyToWindow(getWindow());
         setContentView(R.layout.settings_activity);
+        com.voxel.simplesearchlauncher.settings.SettingsPalette.applyToActivity(this);
         setSupportActionBar((Toolbar) findViewById(R.id.toolbar));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
