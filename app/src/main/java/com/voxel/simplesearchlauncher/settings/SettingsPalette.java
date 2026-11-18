@@ -154,11 +154,13 @@ public final class SettingsPalette {
     }
 
     /** Applies the theme switch opacities to a SwitchCompat from a base
-     * color: ON = thumb 100% / pill 75%; OFF = thumb 35% (subtle) /
-     * pill 25%. */
+     * color: ON = thumb 100% / pill 75%; OFF = thumb 50% / pill 25%. No
+     * extra dimming baked in — disabled switches get a 50% mask on top
+     * (a checked-disabled and an unchecked-disabled switch dim even
+     * further). */
     public static void switchTints(androidx.appcompat.widget.SwitchCompat switchCompat, int baseAccent) {
         int onThumb = baseAccent;
-        int offThumb = blendAlpha(baseAccent, 0.35f);
+        int offThumb = blendAlpha(baseAccent, 0.5f);
         int onTrack = blendAlpha(baseAccent, 0.75f);
         int offTrack = blendAlpha(baseAccent, 0.25f);
         int[][] states = {new int[]{android.R.attr.state_checked}, new int[]{}};

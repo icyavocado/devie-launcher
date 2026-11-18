@@ -49,7 +49,13 @@ public class SettingsSwitchViewHolder extends SettingsViewHolder {
         this.mSwitch.setEnabled(z);
         this.mLabel.setAlpha(z ? 1.0f : 0.5f);
         this.mSubLabel.setAlpha(z ? 1.0f : 0.5f);
-        this.mSwitch.setAlpha(z ? 1.0f : 0.5f);
+        /* Disabled mask: fades the current state 50%. A disabled+unchecked
+         * ("double disabled") switch compounds past a checked-disabled one. */
+        if (z) {
+            this.mSwitch.setAlpha(Math.min(1.0f, this.mSwitch.getAlpha() * 2f));
+        } else {
+            this.mSwitch.setAlpha(Math.max(0.125f, this.mSwitch.getAlpha() * 0.5f));
+        }
         retintSwitch();
     }
 }
