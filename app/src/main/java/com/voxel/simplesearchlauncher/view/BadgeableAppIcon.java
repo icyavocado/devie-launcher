@@ -113,9 +113,8 @@ public class BadgeableAppIcon extends LinearLayout {
         this.mPackageName = appInfo.packageName;
         this.mActivityName = appInfo.activityName;
         loadImage(HybridNetworkFetcherCommon.getMagicResourceUri(appInfo.packageName, appInfo.activityName, appInfo.appVersion));
-        this.mLabel.setText(appInfo.appLabel);
+        setTextAndLayoutIfChanged(appInfo.appLabel);
         invalidate();
-        requestLayout();
     }
 
     public void setBadgeCount(int i) {
@@ -128,15 +127,31 @@ public class BadgeableAppIcon extends LinearLayout {
     }
 
     public void setCellParams(CellParams cellParams) {
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(cellParams.getIconSizePx(), cellParams.getIconSizePx());
+        int iconSizePx = cellParams.getIconSizePx();
+        float textSizePx = cellParams.getIconTextSizePx();
+        int labelVisibility = cellParams.showLabels ? 0 : 8;
+        int paddingPx = cellParams.getIconDrawablePaddingPx();
+        android.view.ViewGroup.LayoutParams iconParams = this.mIcon.getLayoutParams();
+        android.view.ViewGroup.LayoutParams labelParams = this.mLabel.getLayoutParams();
+        boolean unchanged = iconParams instanceof LinearLayout.LayoutParams
+                && ((LinearLayout.LayoutParams) iconParams).width == iconSizePx
+                && ((LinearLayout.LayoutParams) iconParams).height == iconSizePx
+                && labelParams instanceof LinearLayout.LayoutParams
+                && ((LinearLayout.LayoutParams) labelParams).topMargin == paddingPx
+                && this.mLabel.getTextSize() == textSizePx
+                && this.mLabel.getVisibility() == labelVisibility;
+        if (unchanged) {
+            return;
+        }
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(iconSizePx, iconSizePx);
         layoutParams.gravity = 1;
         this.mIcon.setLayoutParams(layoutParams);
         LinearLayout.LayoutParams layoutParams2 = new LinearLayout.LayoutParams(-2, -2);
         layoutParams2.gravity = 1;
-        layoutParams2.topMargin = cellParams.getIconDrawablePaddingPx();
+        layoutParams2.topMargin = paddingPx;
         this.mLabel.setLayoutParams(layoutParams2);
-        this.mLabel.setTextSize(0, cellParams.getIconTextSizePx());
-        this.mLabel.setVisibility(cellParams.showLabels ? 0 : 8);
+        this.mLabel.setTextSize(0, textSizePx);
+        this.mLabel.setVisibility(labelVisibility);
         invalidate();
         requestLayout();
     }
@@ -149,8 +164,17 @@ public class BadgeableAppIcon extends LinearLayout {
         this.mPackageName = localAppData.getPackageName();
         this.mActivityName = localAppData.getActivityName();
         loadImage(HybridNetworkFetcherCommon.getMagicResourceUri(this.mPackageName, this.mActivityName, localAppData.getAppVersionCode()));
-        this.mLabel.setText(localAppData.getLabel());
+        setTextAndLayoutIfChanged(localAppData.getLabel());
         invalidate();
+    }
+
+    /* Rebinding an identical label is common while recycling drawer rows;
+     * skip the layout pass when the text does not change. */
+    private void setTextAndLayoutIfChanged(CharSequence label) {
+        if (label == null || label.equals(this.mLabel.getText())) {
+            return;
+        }
+        this.mLabel.setText(label);
         requestLayout();
     }
 }
