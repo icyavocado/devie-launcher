@@ -65,6 +65,9 @@ final class ColorPickerDialog {
         int initial = current == -1 ? presetsFor(target)[0] : current;
         final int[] picked = {initial};
         final int[] presets = presetsFor(target);
+        final java.util.List<View> swatchViews = new java.util.ArrayList<>();
+        final java.util.List<Integer> swatchColors = new java.util.ArrayList<>();
+        final float ringDensity = density;
 
         LinearLayout root = new LinearLayout(context);
         root.setOrientation(LinearLayout.VERTICAL);
@@ -90,14 +93,17 @@ final class ColorPickerDialog {
                 Integer parsed = parseHex(s.toString());
                 if (parsed != null) {
                     picked[0] = parsed;
+                    markSelectedRing(swatchViews, swatchColors, parsed, ringDensity);
                 }
             }
         });
 
         /* Round preset swatches: fixed-size circles, 5 per row, evenly
          * distributed across the full width (each cell centers its circle,
-         * so the outer gaps match the inner gaps). */
+         * so the outer gaps match the inner gaps). The picked color's swatch
+         * carries a ring. */
         int circlePx = Math.round(40 * density);
+        final float fDensity = density;
         LinearLayout swatches = new LinearLayout(context);
         swatches.setOrientation(LinearLayout.VERTICAL);
         for (int i = 0; i < presets.length; i++) {
@@ -118,16 +124,21 @@ final class ColorPickerDialog {
                     circle.setShape(GradientDrawable.OVAL);
                     circle.setColor(cellPreset);
                     swatch.setBackground(circle);
+                    swatchViews.add(swatch);
+                    swatchColors.add(cellPreset);
+                    final View swatchView = swatch;
                     swatch.setOnClickListener((v) -> {
                         picked[0] = cellPreset;
                         hexInput.setText(toHex(cellPreset));
                         hexInput.setSelection(hexInput.getText().length());
+                        markSelectedRing(swatchViews, swatchColors, cellPreset, density);
                     });
                     cell.addView(swatch);
                     swatchRow.addView(cell);
                 }
             }
         }
+        markSelectedRing(swatchViews, swatchColors, picked[0], ringDensity);
         root.addView(swatches);
 
         /* #RRGGBB input row */
@@ -165,7 +176,39 @@ final class ColorPickerDialog {
                 .show();
     }
 
-    /* Accepts "#RRGGBB" or "RRGGBB" (case-insensitive). */
+    /* Rings the swatch matching the current color: a dark ring on light
+     * swatches, a light ring on dark ones. */
+    private static void markSelectedRing(java.util.List<View> swatchViews,
+            java.util.List<Integer> swatchColors, int current, float density) {
+        for (int i = 0; i < swatchViews.size(); i++) {
+            View swatch = swatchViews.get(i);
+            android.graphics.drawable.Drawable background = swatch.getBackground();
+            if (!(background instanceof android.graphics.drawable.GradientDrawable)) {
+                continue;
+            }
+            android.graphics.drawable.GradientDrawable circle = (android.graphics.drawable.GradientDrawable) background;
+            int swatchColor = swatchColors.get(i);
+            float lum = (0.2126f * Color.red(swatchColor) + 0.7152f * Color.green(swatchColor) + 0.0722f * Color.blue(swatchColor)) / 255f;
+            int ring = lum > 0.5f ? 0xff26323f : 0xffffffff;
+            View matching = swatchViewMatching(swatchViews, swatchColors, current);
+            if (swatch == matching) {
+                circle.setStroke(Math.round(3 * density), ring);
+            } else {
+                circle.setStroke(0, swatchColor);
+            }
+        }
+    }
+
+    private static View swatchViewMatching(java.util.List<View> swatchViews,
+            java.util.List<Integer> swatchColors, int target) {
+        for (int i = 0; i < swatchViews.size(); i++) {
+            if (swatchColors.get(i) == target) {
+                return swatchViews.get(i);
+            }
+        }
+        return null;
+    }
+
     private static Integer parseHex(String text) {
         if (text == null) {
             return null;
