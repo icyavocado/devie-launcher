@@ -160,6 +160,10 @@ dependencies {
     implementation("io.reactivex.rxjava2:rxjava:2.2.21")
     implementation("io.reactivex.rxjava2:rxandroid:2.1.1")
 
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.14.1")
+    testImplementation("androidx.test:core:1.6.1")
+
     // REWORK(fresco): Retrofit/OkHttp removed — no network consumers remain
     // after the fresco pipeline deletion (ConnectionPoolKiller died with it).
 }
