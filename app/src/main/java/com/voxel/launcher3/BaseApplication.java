@@ -11,6 +11,7 @@ import android.content.Context;
 import android.os.Process;
 import android.os.SystemClock;
 import android.text.TextUtils;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import com.evie.common.iconpack.IconPackFilter;
 import com.evie.common.utils.MemoryWatcher;
@@ -150,6 +151,14 @@ public class BaseApplication extends Application implements Injector, HasActivit
         flavorInitializer.preDaggerInit();
         setup();
         flavorInitializer.postDaggerInit();
+        /* Apply the stored theme (Experiment) now that SettingsStorage is
+         * initialized; activities re-read it when they inflate. */
+        try {
+            AppCompatDelegate.setDefaultNightMode(com.voxel.simplesearchlauncher.model.managers.SettingsStorage.themeToNightMode(
+                    com.voxel.simplesearchlauncher.model.managers.SettingsStorage.getInstance().getTheme()));
+        } catch (IllegalStateException notInitialized) {
+            /* Follow system until SettingsStorage exists. */
+        }
         Timber.d("STARTUP-PERFORMANCE", "* Launcher Application onCreate() total time: " + (SystemClock.elapsedRealtime() - this.mAppStartTime));
         Timber.d(TAG, "onCreate end");
     }

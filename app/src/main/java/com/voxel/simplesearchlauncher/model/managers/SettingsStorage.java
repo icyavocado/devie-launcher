@@ -286,6 +286,38 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
         editorEdit.apply();
     }
 
+    /* Theme experiment: "system" (default) / "dark" / "light". Rides
+     * settings_storage, so backup/restore covers it. */
+    public static final String THEME_SYSTEM = "system";
+    public static final String THEME_DARK = "dark";
+    public static final String THEME_LIGHT = "light";
+
+    public String getTheme() {
+        String theme = this.sharedPref.getString("theme", THEME_SYSTEM);
+        if (THEME_DARK.equals(theme) || THEME_LIGHT.equals(theme)) {
+            return theme;
+        }
+        return THEME_SYSTEM;
+    }
+
+    public void setTheme(String theme) {
+        SharedPreferences.Editor editorEdit = this.sharedPref.edit();
+        editorEdit.putString("theme", theme);
+        editorEdit.apply();
+    }
+
+    /* Maps the stored theme to an AppCompatDelegate night mode. Pure, for
+     * tests. MODE_NIGHT_NO = light, MODE_NIGHT_YES = dark. */
+    public static int themeToNightMode(String theme) {
+        if (THEME_DARK.equals(theme)) {
+            return androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
+        }
+        if (THEME_LIGHT.equals(theme)) {
+            return androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO;
+        }
+        return androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+    }
+
     public void setAppDrawerHintEnabled(boolean z) {
         boolean zIsAppDrawerHintEnabled = isAppDrawerHintEnabled();
         SharedPreferences.Editor editorEdit = this.sharedPref.edit();

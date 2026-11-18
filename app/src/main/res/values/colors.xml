@@ -89,6 +89,7 @@
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
     <color name="settings_activity_background">#ffd9dde3</color>
+    <color name="settings_header_text">#ff6b7683</color>
     <color name="slightly_darker_gray">#ff757575</color>
     <color name="ss_card_background_color">#ffffffff</color>
     <color name="subtext_color">#ff9b9b9b</color>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark palette for the settings screens (Theme experiment). -->
+    <color name="settings_activity_background">#ff14181d</color>
+    <color name="settings_header_text">#ff8a93a0</color>
+</resources>

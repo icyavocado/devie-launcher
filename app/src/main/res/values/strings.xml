@@ -170,6 +170,12 @@
     <string name="app_settings_experiment_compact_icons_sub">Halves the memory used by drawer icons. Colors may band slightly. Takes effect when you leave this screen.</string>
     <string name="app_settings_experiment_web_suggestions_title">Web search suggestions (Google)</string>
     <string name="app_settings_experiment_web_suggestions_sub">After you stop typing, the query is sent to Google to show web suggestions. Off by default; nothing is sent while this is off.</string>
+    <string name="app_settings_experiment_header">Experiment</string>
+    <string name="app_settings_experiment_theme_header">Theme</string>
+    <string name="app_settings_theme_title">Theme</string>
+    <string name="app_settings_theme_value_system">Follow system</string>
+    <string name="app_settings_theme_value_dark">Dark</string>
+    <string name="app_settings_theme_value_light">Light</string>
     <string name="app_settings_item_folder_title">Folders</string>
     <string name="app_settings_item_folders_alpha_sort">Sort items in folders alphabetically</string>
     <string name="app_settings_item_folders_name">Folder</string>

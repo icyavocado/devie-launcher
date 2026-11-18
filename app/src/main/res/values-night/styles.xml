@@ -1,3 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="SettingsItemTextAppearance">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#ffe3e7ec</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="SettingsItemSubTextAppearance">
+        <item name="android:textSize">13.0sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#ff77808b</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+    <style name="LightAppTextAppearance">
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">#ffe3e7ec</item>
+        <item name="android:shadowColor">#00000000</item>
+        <item name="android:shadowDy">0.0</item>
+        <item name="android:shadowRadius">0.0</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
 </resources>

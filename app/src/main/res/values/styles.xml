@@ -1516,12 +1516,12 @@
         <item name="searchIcon">@drawable/homescreen_search_icon</item>
         <item name="submitBackground">@android:color/transparent</item>
     </style>
-    <style name="SettingsBaseTheme" parent="@style/Theme.AppCompat.Light.DarkActionBar">
+    <style name="SettingsBaseTheme" parent="@style/Theme.AppCompat.DayNight.DarkActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-    <style name="SettingsBaseTheme.AppBarOverlay" parent="@style/ThemeOverlay.AppCompat.Light" />
-    <style name="SettingsBaseTheme.PopupOverlay" parent="@style/ThemeOverlay.AppCompat.Light" />
+    <style name="SettingsBaseTheme.AppBarOverlay" parent="@style/ThemeOverlay.AppCompat.DayNight.ActionBar" />
+    <style name="SettingsBaseTheme.PopupOverlay" parent="@style/ThemeOverlay.AppCompat.DayNight" />
     <style name="SettingsButtonStyle">
         <item name="android:textAppearance">@style/SettingsButtonTextAppearance</item>
         <item name="android:background">@drawable/layout_settings_round_button</item>
