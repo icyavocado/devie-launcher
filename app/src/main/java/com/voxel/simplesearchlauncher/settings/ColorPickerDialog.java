@@ -49,14 +49,6 @@ final class ColorPickerDialog {
         root.setOrientation(LinearLayout.VERTICAL);
         root.setPadding(pad, pad, pad, pad);
 
-        /* Live preview + hex input (declared first: swatch taps write the hex) */
-        final View preview = new View(context);
-        LinearLayout.LayoutParams previewLp = new LinearLayout.LayoutParams(-1, Math.round(46 * density));
-        previewLp.setMargins(0, 0, 0, Math.round(12 * density));
-        preview.setLayoutParams(previewLp);
-        preview.setBackgroundColor(picked[0]);
-        root.addView(preview);
-
         final EditText hexInput = new EditText(context);
         hexInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
         hexInput.setTypeface(android.graphics.Typeface.MONOSPACE);
@@ -77,18 +69,25 @@ final class ColorPickerDialog {
                 Integer parsed = parseHex(s.toString());
                 if (parsed != null) {
                     picked[0] = parsed;
-                    preview.setBackgroundColor(parsed);
                 }
             }
         });
 
-        /* Round preset swatches */
-        LinearLayout swatchRow = new LinearLayout(context);
-        swatchRow.setOrientation(LinearLayout.HORIZONTAL);
-        for (final int preset : PRESETS) {
+        /* Round preset swatches: fixed-size circles, 5 per row. */
+        int circlePx = Math.round(40 * density);
+        LinearLayout swatches = new LinearLayout(context);
+        swatches.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout swatchRow = null;
+        for (int i = 0; i < PRESETS.length; i++) {
+            final int preset = PRESETS[i];
+            if (i % 5 == 0) {
+                swatchRow = new LinearLayout(context);
+                swatchRow.setOrientation(LinearLayout.HORIZONTAL);
+                swatches.addView(swatchRow);
+            }
             View swatch = new View(context);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, Math.round(40 * density), 1f);
-            lp.setMargins(Math.round(3 * density), 0, Math.round(3 * density), 0);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(circlePx, circlePx);
+            lp.setMargins(Math.round(4 * density), Math.round(4 * density), Math.round(4 * density), Math.round(4 * density));
             swatch.setLayoutParams(lp);
             GradientDrawable circle = new GradientDrawable();
             circle.setShape(GradientDrawable.OVAL);
@@ -96,13 +95,12 @@ final class ColorPickerDialog {
             swatch.setBackground(circle);
             swatch.setOnClickListener((v) -> {
                 picked[0] = preset;
-                preview.setBackgroundColor(preset);
                 hexInput.setText(toHex(preset));
                 hexInput.setSelection(hexInput.getText().length());
             });
             swatchRow.addView(swatch);
         }
-        root.addView(swatchRow);
+        root.addView(swatches);
 
         /* #RRGGBB input row */
         LinearLayout hexRow = new LinearLayout(context);
