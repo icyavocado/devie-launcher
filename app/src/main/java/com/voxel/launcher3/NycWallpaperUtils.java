@@ -12,6 +12,8 @@ import java.io.InputStream;
 
 /* JADX INFO: loaded from: classes.dex */
 public class NycWallpaperUtils {
+    /* Utilities.ATLEAST_N guards the API-24 clear(int) overload. */
+    @android.annotation.SuppressLint("NewApi")
     public static void clear(Context context, int i) throws IOException {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
         if (Utilities.ATLEAST_N) {
@@ -45,6 +47,8 @@ public class NycWallpaperUtils {
         asyncTask.execute(Integer.valueOf(i2));
     }
 
+    /* Utilities.ATLEAST_N guards the API-24 setStream overload. */
+    @android.annotation.SuppressLint("NewApi")
     public static void setStream(Context context, InputStream inputStream, Rect rect, boolean z, int i) throws IOException {
         WallpaperManager wallpaperManager = WallpaperManager.getInstance(context);
         if (Utilities.ATLEAST_N) {

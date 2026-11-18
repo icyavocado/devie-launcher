@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 9.4.1" type="baseline" client="gradle" dependencies="false" name="AGP (9.4.1)" variant="all" version="9.4.1">
+
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by WallpaperManager.getDrawable: android.permission.MANAGE_EXTERNAL_STORAGE or android.permission.READ_WALLPAPER_INTERNAL"
+        errorLine1="                    drawable = wallpaperManager.getDrawable();"
+        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/Launcher.java"
+            line="1572"
+            column="32"/>
+    </issue>
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by WallpaperManager.getDrawable: android.permission.MANAGE_EXTERNAL_STORAGE or android.permission.READ_WALLPAPER_INTERNAL"
+        errorLine1="                        Drawable drawable = wallpaperManager.getDrawable();"
+        errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/Launcher.java"
+            line="4024"
+            column="45"/>
+    </issue>
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by WallpaperManager.getDrawable: android.permission.MANAGE_EXTERNAL_STORAGE or android.permission.READ_WALLPAPER_INTERNAL"
+        errorLine1="                        BitmapDrawable bitmapDrawable2 = (BitmapDrawable) wallpaperManager.getDrawable();"
+        errorLine2="                                                                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/Launcher.java"
+            line="4421"
+            column="75"/>
+    </issue>
+    <issue
+        id="MissingPermission"
+        message="Missing permissions required by WallpaperManager.getDrawable: android.permission.MANAGE_EXTERNAL_STORAGE or android.permission.READ_WALLPAPER_INTERNAL"
+        errorLine1="                Drawable drawable3 = wallpaperManager.getDrawable();"
+        errorLine2="                                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/view/SpringySearchView.java"
+            line="525"
+            column="38"/>
+    </issue>
+    <issue
+        id="MissingSuperCall"
+        message="Overriding method should call `super.onDismiss`"
+        errorLine1="    public void onDismiss(DialogInterface dialogInterface) {"
+        errorLine2="                ~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/settings/lock/ChooseLockMethodDialogFragment.java"
+            line="194"
+            column="17"/>
+    </issue>
+    <issue
+        id="MissingSuperCall"
+        message="Overriding method should call `super.onActivityResult`"
+        errorLine1="    protected void onActivityResult(int i, final int i2, Intent intent) {"
+        errorLine2="                   ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/Launcher.java"
+            line="3480"
+            column="20"/>
+    </issue>
+    <issue
+        id="MissingSuperCall"
+        message="Overriding method should call `super.onBackPressed`"
+        errorLine1="    public void onBackPressed() {"
+        errorLine2="                ~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/Launcher.java"
+            line="3693"
+            column="17"/>
+    </issue>
+    <issue
+        id="MissingSuperCall"
+        message="Overriding method should call `super.onRequestPermissionsResult`"
+        errorLine1="    public void onRequestPermissionsResult(int i, String[] strArr, int[] iArr) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/Launcher.java"
+            line="4361"
+            column="17"/>
+    </issue>
+    <issue
+        id="MissingSuperCall"
+        message="Overriding method should call `super.onBackPressed`"
+        errorLine1="    public void onBackPressed() {"
+        errorLine2="                ~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/activity/OnboardingActivity.java"
+            line="30"
+            column="17"/>
+    </issue>
+    <issue
+        id="MissingSuperCall"
+        message="Overriding method should call `super.onRequestPermissionsResult`"
+        errorLine1="    public void onRequestPermissionsResult(int i, String[] strArr, int[] iArr) {"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/activity/OnboardingActivity.java"
+            line="75"
+            column="17"/>
+    </issue>
+    <issue
+        id="MissingSuperCall"
+        message="Overriding method should call `super.onFinishInflate`"
+        errorLine1="    protected void onFinishInflate() {"
+        errorLine2="                   ~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/PageIndicatorMarker.java"
+            line="56"
+            column="20"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        iArr[0] = typedArrayObtainStyledAttributes.getDimensionPixelSize(3, iArr[0]);"
+        errorLine2="                                                                         ~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/view/BlackRoundedFrameLayout.java"
+            line="37"
+            column="74"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        iArr2[1] = typedArrayObtainStyledAttributes.getDimensionPixelSize(4, iArr2[1]);"
+        errorLine2="                                                                          ~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/view/BlackRoundedFrameLayout.java"
+            line="39"
+            column="75"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        iArr3[2] = typedArrayObtainStyledAttributes.getDimensionPixelSize(2, iArr3[2]);"
+        errorLine2="                                                                          ~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/view/BlackRoundedFrameLayout.java"
+            line="41"
+            column="75"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        iArr4[3] = typedArrayObtainStyledAttributes.getDimensionPixelSize(1, iArr4[3]);"
+        errorLine2="                                                                          ~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/view/BlackRoundedFrameLayout.java"
+            line="43"
+            column="75"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        this.mPageLayoutWidthGap = typedArrayObtainStyledAttributes.getDimensionPixelSize(2, 0);"
+        errorLine2="                                                                                          ~">
+        <location
+            file="src/main/java/com/voxel/launcher3/PagedView.java"
+            line="199"
+            column="91"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        this.mPageLayoutHeightGap = typedArrayObtainStyledAttributes.getDimensionPixelSize(1, 0);"
+        errorLine2="                                                                                           ~">
+        <location
+            file="src/main/java/com/voxel/launcher3/PagedView.java"
+            line="200"
+            column="92"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        this.mPaint.setStrokeWidth(typedArrayObtainStyledAttributes.getDimension(1, 0.0f));"
+        errorLine2="                                                                                 ~">
+        <location
+            file="src/main/java/com/voxel/launcher3/PreloadIconDrawable.java"
+            line="77"
+            column="82"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        this.mRingOutset = typedArrayObtainStyledAttributes.getDimensionPixelSize(2, 0);"
+        errorLine2="                                                                                  ~">
+        <location
+            file="src/main/java/com/voxel/launcher3/PreloadIconDrawable.java"
+            line="78"
+            column="83"/>
+    </issue>
+    <issue
+        id="ResourceType"
+        message="Expected resource of type styleable"
+        errorLine1="        this.fadeTop = typedArrayObtainStyledAttributes.getBoolean(1, this.fadeTop);"
+        errorLine2="                                                                   ~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/view/SpringFadingEdgeRecyclerView.java"
+            line="23"
+            column="68"/>
+    </issue>
+    <issue
+        id="MissingInflatedId"
+        message="`@layout/wallpaper_cropper` does not contain a declaration with id `set_wallpaper_button`"
+        errorLine1="        this.mSetWallpaperButton = findViewById(R.id.set_wallpaper_button);"
+        errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/WallpaperCropActivity.java"
+            line="311"
+            column="49"/>
+    </issue>
+    <issue
+        id="MissingInflatedId"
+        message="`@layout/wallpaper_picker` does not contain a declaration with id `set_wallpaper_button`"
+        errorLine1="        this.mSetWallpaperButton = findViewById(R.id.set_wallpaper_button);"
+        errorLine2="                                                ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/WallpaperPickerActivity.java"
+            line="898"
+            column="49"/>
+    </issue>
+    <issue
+        id="AppCompatCustomView"
+        message="This custom view should extend `androidx.appcompat.widget.AppCompatButton` instead"
+        errorLine1="public class AlphaDisableableButton extends Button {"
+        errorLine2="                                            ~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/AlphaDisableableButton.java"
+            line="8"
+            column="45"/>
+    </issue>
+    <issue
+        id="AppCompatCustomView"
+        message="This custom view should extend `androidx.appcompat.widget.AppCompatTextView` instead"
+        errorLine1="public class BubbleTextView extends TextView implements Notifier.OnNotificationChangeListener {"
+        errorLine2="                                    ~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/BubbleTextView.java"
+            line="33"
+            column="37"/>
+    </issue>
+    <issue
+        id="AppCompatCustomView"
+        message="This custom view should extend `androidx.appcompat.widget.AppCompatTextView` instead"
+        errorLine1="public class ButtonDropTarget extends TextView implements DropTarget, DragController.DragListener {"
+        errorLine2="                                      ~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/launcher3/ButtonDropTarget.java"
+            line="16"
+            column="39"/>
+    </issue>
+    <issue
+        id="AppCompatCustomView"
+        message="This custom view should extend `androidx.appcompat.widget.AppCompatImageView` instead"
+        errorLine1="public class CenterCropOffsetImageView extends ImageView {"
+        errorLine2="                                               ~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/view/CenterCropOffsetImageView.java"
+            line="11"
+            column="48"/>
+    </issue>
+    <issue
+        id="AppCompatCustomView"
+        message="This custom view should extend `androidx.appcompat.widget.AppCompatImageView` instead"
+        errorLine1="public class HotseatImageView extends ImageView {"
+        errorLine2="                                      ~~~~~~~~~">
+        <location
+            file="src/main/java/com/voxel/simplesearchlauncher/view/HotseatImageView.java"
+            line="14"
+            column="39"/>
+    </issue>
+    <issue
+        id="ReservedSystemPermission"
+        message="`com.android.launcher.permission.INSTALL_SHORTCUT` is a reserved permission"
+        errorLine1="    &lt;permission android:description=&quot;@string/permdesc_install_shortcut&quot; android:label=&quot;@string/permlab_install_shortcut&quot; android:name=&quot;com.android.launcher.permission.INSTALL_SHORTCUT&quot; android:protectionLevel=&quot;dangerous&quot;/>"
+        errorLine2="                                                                                                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="3"
+            column="136"/>
+    </issue>
+    <issue
+        id="ReservedSystemPermission"
+        message="`com.android.launcher.permission.UNINSTALL_SHORTCUT` is a reserved permission"
+        errorLine1="    &lt;permission android:description=&quot;@string/permdesc_uninstall_shortcut&quot; android:label=&quot;@string/permlab_uninstall_shortcut&quot; android:name=&quot;com.android.launcher.permission.UNINSTALL_SHORTCUT&quot; android:protectionLevel=&quot;dangerous&quot;/>"
+        errorLine2="                                                                                                                                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="4"
+            column="140"/>
+    </issue>
+    <issue
+        id="QueryAllPackagesPermission"
+        message="A `&lt;queries>` declaration should generally be used instead of QUERY_ALL_PACKAGES; see https://g.co/dev/packagevisibility for details"
+        errorLine1="    &lt;uses-permission android:name=&quot;android.permission.QUERY_ALL_PACKAGES&quot;/>"
+        errorLine2="                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="32"
+            column="22"/>
+    </issue>
+</issues>

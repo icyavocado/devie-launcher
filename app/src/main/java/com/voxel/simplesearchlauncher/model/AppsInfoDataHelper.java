@@ -119,16 +119,16 @@ public class AppsInfoDataHelper {
             return null;
         }
         AppInfo appInfo = new AppInfo();
-        appInfo.appLabel = cursor.getString(cursor.getColumnIndex("APP_LABEL"));
-        appInfo.packageName = cursor.getString(cursor.getColumnIndex("PACKAGE_NAME"));
-        appInfo.activityName = cursor.getString(cursor.getColumnIndex("ACTIVITY_NAME"));
-        appInfo.appVersion = cursor.getInt(cursor.getColumnIndex("APP_VERSION"));
-        appInfo.hidden = cursor.getInt(cursor.getColumnIndex("hidden")) != 0;
-        appInfo.firstInstallTime = cursor.getLong(cursor.getColumnIndex("first_install_time"));
-        appInfo.opened = cursor.getInt(cursor.getColumnIndex("opened")) != 0;
-        appInfo.labelOverride = cursor.getString(cursor.getColumnIndex("label_override"));
+        appInfo.appLabel = cursor.getString(cursor.getColumnIndexOrThrow("APP_LABEL"));
+        appInfo.packageName = cursor.getString(cursor.getColumnIndexOrThrow("PACKAGE_NAME"));
+        appInfo.activityName = cursor.getString(cursor.getColumnIndexOrThrow("ACTIVITY_NAME"));
+        appInfo.appVersion = cursor.getInt(cursor.getColumnIndexOrThrow("APP_VERSION"));
+        appInfo.hidden = cursor.getInt(cursor.getColumnIndexOrThrow("hidden")) != 0;
+        appInfo.firstInstallTime = cursor.getLong(cursor.getColumnIndexOrThrow("first_install_time"));
+        appInfo.opened = cursor.getInt(cursor.getColumnIndexOrThrow("opened")) != 0;
+        appInfo.labelOverride = cursor.getString(cursor.getColumnIndexOrThrow("label_override"));
         try {
-            byte[] blob = cursor.getBlob(cursor.getColumnIndex("icon"));
+            byte[] blob = cursor.getBlob(cursor.getColumnIndexOrThrow("icon"));
             if (blob != null && blob.length > 0) {
                 appInfo.icon = Utilities.createIconBitmap(BitmapFactory.decodeByteArray(blob, 0, blob.length), this.mContext);
             }

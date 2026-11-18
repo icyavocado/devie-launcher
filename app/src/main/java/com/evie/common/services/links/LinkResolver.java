@@ -172,14 +172,16 @@ public class LinkResolver {
                                 data = new Intent("android.intent.action.CALL", uri);
                             } else {
                                 data = null;
-                                TelecomManager telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
-                                if (telecomManager != null) {
-                                    try {
-                                        String strDialerPackage = telecomManager.getDefaultDialerPackage();
-                                        if (!TextUtils.isEmpty(strDialerPackage)) {
-                                            data = getDialIntent(uri, strDialerPackage, packageManager);
+                                if (android.os.Build.VERSION.SDK_INT >= 23) {
+                                    TelecomManager telecomManager = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
+                                    if (telecomManager != null) {
+                                        try {
+                                            String strDialerPackage = telecomManager.getDefaultDialerPackage();
+                                            if (!TextUtils.isEmpty(strDialerPackage)) {
+                                                data = getDialIntent(uri, strDialerPackage, packageManager);
+                                            }
+                                        } catch (Exception unused) {
                                         }
-                                    } catch (Exception unused) {
                                     }
                                 }
                                 if (data == null) {

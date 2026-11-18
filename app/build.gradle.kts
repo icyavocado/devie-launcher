@@ -100,7 +100,57 @@ android {
            translation/decompile-style noise is warnings (the donor ships the
            whole locale table and int-literal constants are decompile style);
            crash-risk checks stay fatal. */
-        checkReleaseBuilds = false
+        checkReleaseBuilds = true
+        disable += listOf(
+            /* AGP 9.4.1 vendor bug: timber.lint.WrongTimberUsageDetector calls
+               context.getMainProject() during module analysis; its own report
+               recommends disabling until upstream fixes it. */
+            "LogNotTimber",
+            "StringFormatInTimber",
+            "ThrowableNotAtBeginning",
+            "BinaryOperationInTimber",
+            "TimberArgCount",
+            "TimberArgTypes",
+            "TimberTagLength",
+            "TimberExceptionLogging",
+        )
+        warning += listOf(
+            "ExtraTranslation",
+            "MissingTranslation",
+            "WrongConstant",
+            "UnusedResources",
+            "PrivateResource",
+            "TypographyEllipsis",
+            "TypographyDashes",
+            "ObsoleteSdkInt",
+            "GradleDependency",
+            "RedundantNamespace",
+            "DiscouragedApi",
+            "RestrictedApi",
+            "UseRequiresApi",
+            "NotifyDataSetChanged",
+            "LongLogTag",
+            "ContentDescription",
+            "ClickableViewAccessibility",
+            "DefaultLocale",
+            "ObsoleteLayoutParam",
+            "UselessParent",
+            /* Full res-auto/com.voxel.launcher3 namespaces in the
+               default_workspace XMLs are donor-required: the dex
+               attribute-lookup helpers match that exact form. */
+            "ResAuto",
+            /* Cycles live in the libraries' own copies of the material styles
+               (decompile-merged res table). */
+            "ResourceCycle",
+            /* Donor-carried lib res that only exists in qualifier folders
+               (design_snackbar, app_widget_preview, qsb); the app runs on all
+               devices without querying them in unqualified configs. */
+            "MissingDefaultResource",
+        )
+        /* Donor-arch facts that lint cannot verify (reconstructed styleables,
+           decompile flow overrides, donor permissions) are snapshotted in the
+           baseline; new issues still fail the build. */
+        baseline = file("lint-baseline.xml")
     }
 
     buildFeatures {

@@ -28,6 +28,9 @@ public class NotificationContent {
     public final CharSequence text;
     public final CharSequence title;
 
+    /* Utilities.ATLEAST_MARSHMALLOW guards the API-23 icon calls below;
+       lint cannot follow the constant so the check is declared here. */
+    @android.annotation.SuppressLint("NewApi")
     public NotificationContent(Context context, StatusBarNotification statusBarNotification) {
         this.packageUserKey = PackageUserKey.fromNotification(statusBarNotification);
         this.notificationKey = statusBarNotification.getKey();

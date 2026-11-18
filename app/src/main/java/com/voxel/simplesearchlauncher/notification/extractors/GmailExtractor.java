@@ -95,9 +95,9 @@ public class GmailExtractor extends Extractor {
                 return 0;
             }
             while (cursorQuery.moveToNext()) {
-                String string = cursorQuery.getString(cursorQuery.getColumnIndex("canonicalName"));
+                String string = cursorQuery.getString(cursorQuery.getColumnIndexOrThrow("canonicalName"));
                 if (SUPPORTED_LABELS.contains(string)) {
-                    map.put(string, Integer.valueOf(cursorQuery.getInt(cursorQuery.getColumnIndex("numUnreadConversations"))));
+                    map.put(string, Integer.valueOf(cursorQuery.getInt(cursorQuery.getColumnIndexOrThrow("numUnreadConversations"))));
                     break;
                 }
             }

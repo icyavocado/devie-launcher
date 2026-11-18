@@ -181,7 +181,7 @@ public class ContactManager {
                             if (!TextUtils.isEmpty(string2) && !TextUtils.isEmpty(string3)) {
                                 if (string3.endsWith("/phone_v2")) {
                                     if (!TextUtils.isEmpty(string4)) {
-                                        int i = cursorQuery.getInt(cursorQuery.getColumnIndex("data2"));
+                                        int i = cursorQuery.getInt(cursorQuery.getColumnIndexOrThrow("data2"));
                                         int columnIndex = cursorQuery.getColumnIndex("data3");
                                         if (Build.VERSION.SDK_INT >= 21) {
                                             string4 = PhoneNumberUtils.formatNumber(string4, "US");

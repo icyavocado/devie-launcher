@@ -315,7 +315,12 @@ public final class IconLoader {
             for (File file : files) {
                 mtimes.put(file, Long.valueOf(file.lastModified()));
             }
-            Arrays.sort(files, Comparator.comparingLong(mtimes::get));
+            Arrays.sort(files, new java.util.Comparator<File>() {
+                @Override
+                public int compare(File a, File b) {
+                    return Long.compare(mtimes.get(a), mtimes.get(b));
+                }
+            });
             for (int i = 0; i < files.length - DISK_CACHE_MAX_FILES; i++) {
                 files[i].delete();
             }

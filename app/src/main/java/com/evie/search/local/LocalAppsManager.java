@@ -172,6 +172,9 @@ public class LocalAppsManager {
 
     AppData getDefaultPhoneApp() {
 
+        if (android.os.Build.VERSION.SDK_INT < 23) {
+            return null;
+        }
         TelecomManager telecomManager = (TelecomManager) this.mContext.getSystemService(TelecomManager.class);
         if (telecomManager != null) {
             try {
