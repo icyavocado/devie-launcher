@@ -601,3 +601,42 @@ restoring/updates though it was ON.
   swept+fixed build Success; logcat-cleared fresh relaunch 0 FATAL.
 - Branch main at 135f5e4; nothing pushed. Pending: Xiaomi reporter
   retest and the user's timeline for the bug-3 observation.
+
+## 2026-11-17 — performance pass (six phases, test-first)
+
+Commits: 451aa37 (test harness) → 2385c4b (startup) → c395000 (search
+normalize) → 6e7726d (loader) → 083b77d (drawer) → 5f8b1ee (debounce).
+Nothing pushed.
+
+- Test infra: JUnit 4 + Robolectric 4.14.1 in `:app:testDebugUnitTest`,
+  runs in the evie-build Docker image. 21 tests green across 4 classes
+  (fuzzy-match behavior locks, warmup null-safety, label_norm DB
+  round-trip + v4→v5 migration, debounce).
+- Phase 1 cold start: LocalSearchManager ctor was opening the search DB,
+  probing PackageManager, running the daily usage-decay UPDATE and an
+  AlarmManager call on the main thread before first frame. All of it now
+  runs as a background warmup; every consumer method is null-safe against
+  a not-yet-opened db; SearchPresenter no longer constructs
+  LocalAppsManager/ContactManager eagerly. ContactUpdater keeps a main
+  looper post (Handler-backed ContentObserver).
+- Phase 2+3: item table gains label_norm (v5 migration is non-destructive:
+  ALTER + Java-side backfill; v≤4 keeps the drop-recreate path). Fuzzy
+  ranking reads the precomputed label instead of re-normalizing per row
+  per keystroke; distance() lost its boxed-ArrayList churn.
+- Phase 4: workspace load queries favorites without the icon BLOB
+  (FAVORITES_PROJECTION_NO_ICON); custom-icon rows fetch the blob by row
+  id. Fixed a jadx param-shift in getAppShortcutInfo (title fallback read
+  the icon column). Dead-item deletes batched into one provider call.
+- Phase 5: BadgeableAppIcon setCellParams/setAppInfo/setLocalAppData skip
+  requestLayout when the bind is identical (recycle churn during fling).
+- Phase 6: SearchPresenter coalesces keystrokes behind a 150ms debounce;
+  empty queries still run immediately.
+- Emulator verification: home renders, drawer populated, search "calc" →
+  Calendar, "settings" → 3 settings rows; synthetic custom-icon shortcut
+  (itemType 1, iconType 1, DB blob) loads without FATAL; label_norm
+  backfill covered 44/44 rows; 0 FATAL across all runs.
+- Cold start A/B (Displayed, force-stop → auto-restart of the default
+  home, 3 runs each): baseline 451aa37 = 1977/1980/2075 ms; final =
+  1984/1825/1934 ms (~50–100 ms less main-thread work; emulator's first
+  frame is dominated by profile install + wallpaper decode, so the win
+  is modest here — larger on phones with heavier search DBs).
