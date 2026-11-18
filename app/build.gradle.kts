@@ -96,12 +96,10 @@ android {
     }
 
     lint {
-        // REWORK: checkReleaseBuilds stays off — the decompile merged the whole
-        // lib resource tables into our res (styles.xml keeps lib-owned entries);
-        // resource pruning removed ids/colors/dimens/strings/locales, but the
-        // remaining merged style table still trips release lint on cycles that
-        // live in the libraries' own copies. Cost accepted; shrinkResources
-        // already strips dead res from the APK at link time.
+        /* Release lint re-enabled after the 2026-11 res pass. Policy:
+           translation/decompile-style noise is warnings (the donor ships the
+           whole locale table and int-literal constants are decompile style);
+           crash-risk checks stay fatal. */
         checkReleaseBuilds = false
     }
 
@@ -162,6 +160,10 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.robolectric:robolectric:4.14.1")
     testImplementation("androidx.test:core:1.6.1")
+
+    // androidx.appcompat pins profileinstaller 1.3.1, which reports
+    // RESULT_UNSUPPORTED_ART_VERSION on API 34+ (the user's phone runs 16).
+    implementation("androidx.profileinstaller:profileinstaller:1.4.1")
 
     // REWORK(fresco): Retrofit/OkHttp removed — no network consumers remain
     // after the fresco pipeline deletion (ConnectionPoolKiller died with it).
