@@ -305,6 +305,7 @@ public class NotificationSettingsFragment extends Fragment {
             this.mName = (TextView) view.findViewById(R.id.name);
             this.mSubtext = (TextView) view.findViewById(R.id.subtext);
             this.mSwitch = (SwitchCompat) view.findViewById(R.id.item_switch);
+            SettingsPalette.tintCompoundButton(this.mSwitch, view.getContext());
         }
     }
 
@@ -320,6 +321,7 @@ public class NotificationSettingsFragment extends Fragment {
             this.mLabel = (TextView) view.findViewById(R.id.line1);
             this.mSubLabel = (TextView) view.findViewById(R.id.line2);
             this.mSwitch = (SwitchCompat) view.findViewById(R.id.item_switch);
+            SettingsPalette.tintCompoundButton(this.mSwitch, view.getContext());
         }
     }
 
