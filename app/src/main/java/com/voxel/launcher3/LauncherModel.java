@@ -73,7 +73,11 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
     public static final Comparator<AppInfo> APP_INSTALL_TIME_COMPARATOR;
     static final ArrayList<Runnable> mDeferredBindRunnables;
     static final ArrayList<LauncherAppWidgetInfo> sBgAppWidgets;
-    static final HashMap<Object, byte[]> sBgDbIconCache;
+        static final HashMap<Object, byte[]> sBgDbIconCache;
+    /* Workspace load reads every favorites row; the icon BLOB is the one heavy
+     * column and is only needed for custom-icon rows, so it is fetched by id
+     * on demand instead of carried in the cursor. */
+    private static final String[] FAVORITES_PROJECTION_NO_ICON = {"_id", "intent", "title", "iconType", "iconPackage", "iconResource", "container", "itemType", "appWidgetId", "appWidgetProvider", "screen", "cellX", "cellY", "spanX", "spanY", "rank", "restored", "profileId"};
     static final LongArrayMap<FolderInfo> sBgFolders;
     static final LongArrayMap<ItemInfo> sBgItemsIdMap;
     static final Object sBgLock;
@@ -667,14 +671,13 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                 ArrayList<Long> restoredRows = new ArrayList<>();
                 HashMap<ShortcutKey, DeepShortcutInfoCompat> shortcutKeyToPinnedShortcuts = new HashMap<>();
                 Uri contentUri = LauncherSettings.Favorites.CONTENT_URI_NO_NOTIFICATION;
-                Cursor cursor = contentResolver.query(contentUri, null, null, null, null);
+                Cursor cursor = contentResolver.query(contentUri, FAVORITES_PROJECTION_NO_ICON, null, null, null);
                 HashMap<Long, ItemInfo[][]> occupied = new HashMap<>();
                 try {
                     final int idIndex = cursor.getColumnIndexOrThrow("_id");
                     final int intentIndex = cursor.getColumnIndexOrThrow("intent");
                     final int titleIndex = cursor.getColumnIndexOrThrow("title");
                     final int iconTypeIndex = cursor.getColumnIndexOrThrow("iconType");
-                    final int iconIndex = cursor.getColumnIndexOrThrow("icon");
                     final int iconPackageIndex = cursor.getColumnIndexOrThrow("iconPackage");
                     final int iconResourceIndex = cursor.getColumnIndexOrThrow("iconResource");
                     final int containerIndex = cursor.getColumnIndexOrThrow("container");
@@ -870,7 +873,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                             continue;
                                         }
                                     } else if (itemType == 0) {
-                                        info = LauncherModel.this.getAppShortcutInfo(packageManager, intent, user, context, cursor, iconTypeIndex, iconIndex, this.mLabelCache, allowMissingTarget);
+                                        info = LauncherModel.this.getAppShortcutInfo(packageManager, intent, user, context, cursor, titleIndex, contentResolver, this.mLabelCache, allowMissingTarget);
                                     } else if (itemType == 6) {
                                         ShortcutKey key = ShortcutKey.fromIntent(intent, user);
                                         if (unlockedUsers.get(serialNumber)) {
@@ -884,7 +887,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                             intent = info.intent;
                                         } else {
                                             // Create a shortcut info in disabled mode for now.
-                                            info = LauncherModel.this.getShortcutInfo(cursor, context, iconTypeIndex, iconPackageIndex, iconResourceIndex, iconIndex, titleIndex);
+                                            info = LauncherModel.this.getShortcutInfo(cursor, context, iconTypeIndex, iconPackageIndex, iconResourceIndex, contentResolver, titleIndex);
                                             info.user = user;
                                             info.itemType = itemType;
                                             info.isDisabled |= 32; // ShortcutInfo.FLAG_DISABLED_LOCKED_USER
@@ -892,7 +895,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                         LauncherModel.this.incrementPinnedShortcutCount(key, false);
                                     } else { // item type == ITEM_TYPE_SHORTCUT
                                         if (InstallShortcutReceiver.isValidShortcutLaunchIntent(intent)) {
-                                            info = LauncherModel.this.getShortcutInfo(cursor, context, iconTypeIndex, iconPackageIndex, iconResourceIndex, iconIndex, titleIndex);
+                                            info = LauncherModel.this.getShortcutInfo(cursor, context, iconTypeIndex, iconPackageIndex, iconResourceIndex, contentResolver, titleIndex);
 
                                             // Shortcuts are only available on the primary profile
                                             if (PackageManagerHelper.isAppSuspended(packageManager, targetPackage)) {
@@ -908,7 +911,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                                             }
                                         } else {
-                                            info = LauncherModel.this.getAppShortcutInfo(packageManager, intent, user, context, cursor, iconTypeIndex, iconIndex, this.mLabelCache, allowMissingTarget);
+                                            info = LauncherModel.this.getAppShortcutInfo(packageManager, intent, user, context, cursor, titleIndex, contentResolver, this.mLabelCache, allowMissingTarget);
                                         }
                                     }
 
@@ -948,7 +951,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                                     modifyItemInDatabase(context, info, info.container, slot, slot, 0, 1, 1);
                                                     LauncherModel.sBgWorkspaceItems.add(info);
                                                     LauncherModel.sBgItemsIdMap.put(info.id, info);
-                                                    LauncherModel.this.queueIconToBeChecked(LauncherModel.sBgDbIconCache, info, cursor, iconIndex);
+                                                    LauncherModel.this.queueIconToBeChecked(LauncherModel.sBgDbIconCache, info, cursor, contentResolver);
                                                     Launcher.addDumpLog("Launcher.Model", "Re-slotted hotseat id=" + id + " to free slot " + slot, true);
                                                     reslotted = true;
                                                     break;
@@ -978,7 +981,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                                             break;
                                     }
                                     LauncherModel.sBgItemsIdMap.put(info.id, info);
-                                    LauncherModel.this.queueIconToBeChecked(LauncherModel.sBgDbIconCache, info, cursor, iconIndex);
+                                    LauncherModel.this.queueIconToBeChecked(LauncherModel.sBgDbIconCache, info, cursor, contentResolver);
                                     break;
                                 }
                                 case 2: // ITEM_TYPE_FOLDER
@@ -1152,16 +1155,12 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                 }
 
                 if (itemsToRemove.size() > 0) {
-                    // Remove dead items
+                    // Remove dead items in one batched delete
                     ContentProviderClient providerClient = contentResolver.acquireContentProviderClient(contentUri);
                     try {
-                        for (Long removedId : itemsToRemove) {
-                            try {
-                                providerClient.delete(LauncherSettings.Favorites.getContentUri(removedId.longValue(), false), null, null);
-                            } catch (RemoteException e) {
-                                Log.w("Launcher.Model", "Could not remove id = " + removedId);
-                            }
-                        }
+                        providerClient.delete(contentUri, "_id IN (" + TextUtils.join(", ", itemsToRemove) + ")", null);
+                    } catch (RemoteException e) {
+                        Log.w("Launcher.Model", "Could not remove ids = " + itemsToRemove);
                     } finally {
                         providerClient.release();
                     }
@@ -1763,10 +1762,6 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
         return launcherModel.getRestoredItemIntent(cursor, context, intent);
     }
 
-    static /* synthetic */ ShortcutInfo access$1200(LauncherModel launcherModel, Cursor cursor, Context context, int i, int i2, int i3, int i4, int i5) {
-        return launcherModel.getShortcutInfo(cursor, context, i, i2, i3, i4, i5);
-    }
-
     static /* synthetic */ void access$1300(LauncherModel launcherModel, ShortcutKey shortcutKey, boolean z) {
         launcherModel.incrementPinnedShortcutCount(shortcutKey, z);
     }
@@ -2130,7 +2125,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
     }
 
     /* JADX INFO: Access modifiers changed from: private */
-    public ShortcutInfo getShortcutInfo(Cursor cursor, Context context, int i, int i2, int i3, int i4, int i5) {
+    public ShortcutInfo getShortcutInfo(Cursor cursor, Context context, int i, int i2, int i3, ContentResolver contentResolver, int i5) {
         Bitmap iconFromCursor;
         ShortcutInfo shortcutInfo = new ShortcutInfo();
         shortcutInfo.user = UserHandleCompat.myUserHandle();
@@ -2150,14 +2145,14 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
                     }
                 } catch (Exception unused) {
                 }
-                iconFromCursor = bitmapCreateIconBitmap == null ? getIconFromCursor(cursor, i4, context) : bitmapCreateIconBitmap;
+                iconFromCursor = bitmapCreateIconBitmap == null ? getIconFromCursorByRowId(context, contentResolver, cursor) : bitmapCreateIconBitmap;
                 if (iconFromCursor == null) {
                     iconFromCursor = this.mIconCache.getDefaultIcon(shortcutInfo.user);
                     shortcutInfo.usingFallbackIcon = true;
                 }
                 break;
             case 1:
-                iconFromCursor = getIconFromCursor(cursor, i4, context);
+                iconFromCursor = getIconFromCursorByRowId(context, contentResolver, cursor);
                 if (iconFromCursor != null) {
                     shortcutInfo.customIcon = true;
                 } else {
@@ -2924,7 +2919,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
         startLoaderFromBackground();
     }
 
-    public ShortcutInfo getAppShortcutInfo(PackageManager packageManager, Intent intent, UserHandleCompat userHandleCompat, Context context, Cursor cursor, int i, int i2, HashMap<Object, CharSequence> map, boolean z) {
+    public ShortcutInfo getAppShortcutInfo(PackageManager packageManager, Intent intent, UserHandleCompat userHandleCompat, Context context, Cursor cursor, int titleIndex, ContentResolver contentResolver, HashMap<Object, CharSequence> map, boolean z) {
         if (userHandleCompat == null) {
             Log.d("Launcher.Model", "Null user found in getAppShortcutInfo");
             return null;
@@ -2945,7 +2940,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
         ShortcutInfo shortcutInfo = new ShortcutInfo();
         Bitmap icon = this.mIconCache.getIcon(component, launcherActivityInfoCompatResolveActivity, map);
         if (icon == null && cursor != null) {
-            icon = getIconFromCursor(cursor, i, context);
+            icon = getIconFromCursorByRowId(context, contentResolver, cursor);
         }
         if (icon == null) {
             icon = this.mIconCache.getDefaultIcon(userHandleCompat);
@@ -2969,7 +2964,7 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
             }
         }
         if (shortcutInfo.title == null && cursor != null) {
-            shortcutInfo.title = cursor.getString(i2);
+            shortcutInfo.title = cursor.getString(titleIndex);
         }
         if (shortcutInfo.title == null) {
             shortcutInfo.title = component.getClassName();
@@ -3032,6 +3027,36 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
             return Utilities.createIconBitmap(BitmapFactory.decodeByteArray(blob, 0, blob.length), context);
         } catch (Exception unused) {
             return null;
+        }
+    }
+
+    /* The workspace cursor no longer carries the icon BLOB; fetch it by row
+     * id for the (rare) custom-icon rows that need it. */
+    private Bitmap getIconFromCursorByRowId(Context context, ContentResolver contentResolver, Cursor cursor) {
+        Cursor iconCursor = contentResolver.query(LauncherSettings.Favorites.CONTENT_URI_NO_NOTIFICATION, new String[]{"icon"}, "_id=?", new String[]{String.valueOf(cursor.getLong(cursor.getColumnIndexOrThrow("_id")))}, null);
+        try {
+            if (iconCursor != null && iconCursor.moveToFirst()) {
+                byte[] blob = iconCursor.getBlob(0);
+                return Utilities.createIconBitmap(BitmapFactory.decodeByteArray(blob, 0, blob.length), context);
+            }
+            return null;
+        } catch (Exception unused) {
+            return null;
+        } finally {
+            if (iconCursor != null) {
+                iconCursor.close();
+            }
+        }
+    }
+
+    private byte[] getIconBlobByRowId(ContentResolver contentResolver, Cursor cursor) {
+        Cursor iconCursor = contentResolver.query(LauncherSettings.Favorites.CONTENT_URI_NO_NOTIFICATION, new String[]{"icon"}, "_id=?", new String[]{String.valueOf(cursor.getLong(cursor.getColumnIndexOrThrow("_id")))}, null);
+        try {
+            return (iconCursor != null && iconCursor.moveToFirst()) ? iconCursor.getBlob(0) : null;
+        } finally {
+            if (iconCursor != null) {
+                iconCursor.close();
+            }
         }
     }
 
@@ -3197,11 +3222,11 @@ public class LauncherModel extends BroadcastReceiver implements LauncherAppsComp
         enqueueTask(new DeepShortcutsChangedTask(str, userHandleCompat));
     }
 
-    boolean queueIconToBeChecked(HashMap<Object, byte[]> map, ShortcutInfo shortcutInfo, Cursor cursor, int i) {
+    boolean queueIconToBeChecked(HashMap<Object, byte[]> map, ShortcutInfo shortcutInfo, Cursor cursor, ContentResolver contentResolver) {
         if (!this.mAppsCanBeOnRemoveableStorage || shortcutInfo.customIcon || shortcutInfo.usingFallbackIcon) {
             return false;
         }
-        map.put(shortcutInfo, cursor.getBlob(i));
+        map.put(shortcutInfo, getIconBlobByRowId(contentResolver, cursor));
         return true;
     }
 
