@@ -57,6 +57,7 @@ public class SearchPresenter {
     private SearchAdapter mAdapter;
     private AppAvailabilityProvider mAppAvailabilityProvider;
     private volatile ContactManager mContactManager;
+    private SearchDebouncer mSearchDebouncer;
     private Context mContext;
     private FrequentlyUsedModel mFrequentlyUsed;
     private final int mFrequentlyUsedHeight;
@@ -155,6 +156,7 @@ public class SearchPresenter {
         this.searchComponent = DaggerSearchComponent.builder().searchModule(new SearchModule(applicationContext, this.mAdapter)).build();
         this.searchComponent.inject(this);
         this.mContext = applicationContext;
+        this.mSearchDebouncer = new SearchDebouncer(150);
         this.mSharedPreferencesListener = new SharedPreferences.OnSharedPreferenceChangeListener() { // from class: com.evie.search.-$$Lambda$SearchPresenter$fkUNgwFswgpz5_SYBlqwPQFpP-I
             @Override // android.content.SharedPreferences.OnSharedPreferenceChangeListener
             public final void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String str2) {
@@ -640,21 +642,29 @@ public class SearchPresenter {
     }
 
     public void search(String str) {
-        if (str == null) {
-            str = "";
-        }
-        if (str.equals(this.mCurrentQuery)) {
+        final String query = str == null ? "" : str;
+        if (query.equals(this.mCurrentQuery)) {
             return;
         }
-        this.mCurrentQuery = str;
+        this.mCurrentQuery = query;
         this.mListExpandCounter = 0;
         if (this.mCurrentDisposable != null && !this.mCurrentDisposable.isDisposed()) {
             this.mCurrentDisposable.dispose();
         }
-        if (!str.trim().isEmpty()) {
-            this.mCurrentDisposable = (Disposable) getSearchObservable(str).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.computation()).subscribeWith(getSearchObserver(str));
+        if (!query.trim().isEmpty()) {
+            /* Coalesce rapid keystrokes: only the latest query hits the DB. */
+            this.mSearchDebouncer.schedule(() -> subscribeSearch(query));
             return;
         }
+        this.mSearchDebouncer.cancel();
+        runEmptySearch();
+    }
+
+    private void subscribeSearch(final String str) {
+        this.mCurrentDisposable = (Disposable) getSearchObservable(str).observeOn(AndroidSchedulers.mainThread()).subscribeOn(Schedulers.computation()).subscribeWith(getSearchObserver(str));
+    }
+
+    private void runEmptySearch() {
         this.mAdapter.setPresenters(this.mRecentPresenters);
         this.mLocalPresenters.clear();
         this.mCustomPresenters.clear();
