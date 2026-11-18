@@ -182,6 +182,7 @@
     <string name="app_settings_theme_colors_header">Colors</string>
     <string name="app_settings_theme_value_default">Default</string>
     <string name="app_settings_theme_reset_title">Reset colors to default</string>
+    <string name="app_settings_theme_reset_sub">Restore the built-in colors for this mode</string>
     <string name="app_settings_theme_pick_bg">Background color</string>
     <string name="app_settings_theme_pick_card">Card color</string>
     <string name="app_settings_theme_pick_accent">Accent color</string>

@@ -27,10 +27,30 @@ final class ColorPickerDialog {
     static final String TARGET_CARD = "theme_card";
     static final String TARGET_ACCENT = "theme_accent";
 
-    private static final int[] PRESETS = {
-        0xfff2f4f7, 0xffd9dde3, 0xff1f242b, 0xff14181d, 0xff101418,
-        0xff26323f, 0xff1d3327, 0xff331f26, 0xff232b45, 0xff2b2419,
+    /* Curated coolors.co-style sets, one per slot: backgrounds span the full
+     * neutral range, cards stay soft and muted, accents are vivid. */
+    private static final int[] BG_PRESETS = {
+        0xffffffff, 0xfff7f8fa, 0xffe8ebef, 0xffd9dde3, 0xff9aa3ad,
+        0xff4a5560, 0xff2a3138, 0xff1f242b, 0xff14181d, 0xff0c0f12,
     };
+    private static final int[] CARD_PRESETS = {
+        0xffffffff, 0xfff4f1ec, 0xffeaeef2, 0xffdde3e0, 0xffe3e0ea,
+        0xff3a4149, 0xff2c333b, 0xff242a31, 0xff1c2127, 0xff26323f,
+    };
+    private static final int[] ACCENT_PRESETS = {
+        0xff00b894, 0xff00cec9, 0xff0984e3, 0xff6c5ce7, 0xffe84393,
+        0xffd63031, 0xffe17055, 0xfffdcb6e, 0xff74b9ff, 0xff2d3436,
+    };
+
+    private static int[] presetsFor(String target) {
+        if (TARGET_CARD.equals(target)) {
+            return CARD_PRESETS;
+        }
+        if (TARGET_ACCENT.equals(target)) {
+            return ACCENT_PRESETS;
+        }
+        return BG_PRESETS;
+    }
 
     interface OnColorPicked {
         void onPicked(int color);
@@ -42,8 +62,9 @@ final class ColorPickerDialog {
     static void show(Context context, String target, int current, OnColorPicked callback) {
         float density = context.getResources().getDisplayMetrics().density;
         int pad = Math.round(20 * density);
-        int initial = current == -1 ? 0xff26323f : current;
+        int initial = current == -1 ? presetsFor(target)[0] : current;
         final int[] picked = {initial};
+        final int[] presets = presetsFor(target);
 
         LinearLayout root = new LinearLayout(context);
         root.setOrientation(LinearLayout.VERTICAL);
@@ -79,14 +100,14 @@ final class ColorPickerDialog {
         int circlePx = Math.round(40 * density);
         LinearLayout swatches = new LinearLayout(context);
         swatches.setOrientation(LinearLayout.VERTICAL);
-        for (int i = 0; i < PRESETS.length; i++) {
-            final int preset = PRESETS[i];
+        for (int i = 0; i < presets.length; i++) {
+            final int preset = presets[i];
             if (i % 5 == 0) {
                 LinearLayout swatchRow = new LinearLayout(context);
                 swatchRow.setOrientation(LinearLayout.HORIZONTAL);
                 swatches.addView(swatchRow, new LinearLayout.LayoutParams(-1, -2));
-                for (int j = 0; j < 5 && i + j < PRESETS.length; j++) {
-                    final int cellPreset = PRESETS[i + j];
+                for (int j = 0; j < 5 && i + j < presets.length; j++) {
+                    final int cellPreset = presets[i + j];
                     android.widget.FrameLayout cell = new android.widget.FrameLayout(context);
                     cell.setLayoutParams(new LinearLayout.LayoutParams(0, -2, 1f));
                     View swatch = new View(context);

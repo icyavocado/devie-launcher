@@ -61,7 +61,8 @@ public final class SettingsPalette {
     }
 
     /** Window + toolbar background honoring the custom palette. Called
-     * after setContentView so the toolbar exists. */
+     * after setContentView so the toolbar exists. The toolbar title and
+     * navigation arrow derive from the custom background's luminance. */
     public static void applyToActivity(android.app.Activity activity) {
         int bg = background();
         if (bg == UNSET) {
@@ -71,9 +72,20 @@ public final class SettingsPalette {
         window.setBackgroundDrawable(new ColorDrawable(bg));
         window.setStatusBarColor(bg);
         window.setNavigationBarColor(bg);
-        View toolbar = activity.findViewById(R.id.toolbar);
-        if (toolbar != null) {
+        View toolbarView = activity.findViewById(R.id.toolbar);
+        if (toolbarView instanceof androidx.appcompat.widget.Toolbar) {
+            androidx.appcompat.widget.Toolbar toolbar = (androidx.appcompat.widget.Toolbar) toolbarView;
             toolbar.setBackgroundColor(bg);
+            boolean darkBackground = luminance(bg) <= 0.5f;
+            toolbar.setTitleTextColor(darkBackground ? 0xffe3e7ec : 0xff1f2a38);
+            /* The home arrow uses colorControlNormal; tint it directly since
+             * the surrounding theme stays Light in light mode. */
+            android.graphics.drawable.Drawable nav = toolbar.getNavigationIcon();
+            if (nav != null) {
+                nav = androidx.core.graphics.drawable.DrawableCompat.wrap(nav).mutate();
+                androidx.core.graphics.drawable.DrawableCompat.setTint(nav, darkBackground ? 0xffe3e7ec : 0xff1f2a38);
+                toolbar.setNavigationIcon(nav);
+            }
         }
     }
 

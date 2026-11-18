@@ -50,22 +50,28 @@ public class ThemeSettingsFragment extends Fragment {
         /* --- Colors group --- */
         addHeader(inflater, container, R.string.app_settings_theme_colors_header);
         LinearLayout colorCard = newCard(inflater, container);
-        timber.log.Timber.d("theme screen: colors header added", new Object[0]);
         this.mBackgroundRow = newPickerRow(inflater, colorCard, R.string.app_settings_theme_background_title, ColorPickerDialog.TARGET_BG);
         this.mCardRow = newPickerRow(inflater, colorCard, R.string.app_settings_theme_cards_title, ColorPickerDialog.TARGET_CARD);
         this.mAccentRow = newPickerRow(inflater, colorCard, R.string.app_settings_theme_accent_title, ColorPickerDialog.TARGET_ACCENT);
         colorCard.addView(this.mBackgroundRow);
         colorCard.addView(this.mCardRow);
         colorCard.addView(this.mAccentRow);
+        /* Reset row styled like the picker rows above. */
         this.mResetRow = new LinearLayout(getContext());
         this.mResetRow.setOrientation(LinearLayout.VERTICAL);
         this.mResetRow.setPadding(dp(25), dp(10), dp(15), dp(10));
+        this.mResetRow.setMinimumHeight(dp(60));
         TextView resetLabel = new TextView(getContext());
         resetLabel.setText(R.string.app_settings_theme_reset_title);
         resetLabel.setTextSize(16);
         resetLabel.setTypeface(null, android.graphics.Typeface.BOLD);
         resetLabel.setTextColor(SettingsPalette.labelColor(getContext()));
         this.mResetRow.addView(resetLabel);
+        TextView resetSub = new TextView(getContext());
+        resetSub.setText(R.string.app_settings_theme_reset_sub);
+        resetSub.setTextSize(13);
+        resetSub.setTextColor(SettingsPalette.subLabelColor(getContext()));
+        this.mResetRow.addView(resetSub);
         this.mResetRow.setOnClickListener((v) -> {
             SettingsPalette.reset();
             recreateHost();
