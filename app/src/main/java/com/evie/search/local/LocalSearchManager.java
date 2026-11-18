@@ -14,6 +14,8 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import com.evie.common.BadgedIcons;
@@ -43,7 +45,7 @@ import com.ovacoda.devie.R;
 public class LocalSearchManager {
     private static boolean initialized = false;
     private static LocalSearchManager instance;
-    private SQLiteDatabase db;
+    private volatile SQLiteDatabase db;
     private ContactManager mContactManager;
     private LocalAppsManager mLocalAppsManager;
     private int mMaxRecents;
@@ -54,25 +56,46 @@ public class LocalSearchManager {
     private int mShortcutSizeInPixels;
 
     private LocalSearchManager(Context context, boolean z) {
-        this.db = SearchDbHelper.getInstance(context).getWritableDatabase();
-        double length = new File(this.db.getPath()).length();
-        Double.isNaN(length);
-        Timber.d("Search DB size: %f MB", Double.valueOf(length / 1000000.0d));
         this.mSearchSettings = SearchSettings.getInstance(context);
         this.mMaxRecents = this.mSearchSettings.getMaxRecents();
         this.mPackageManager = context.getPackageManager();
-        this.mContactManager = ContactManager.getInstance(context);
-        this.mLocalAppsManager = LocalAppsManager.getInstance(context);
-        this.mRecentSubject = BehaviorSubject.createDefault(getRecentItems());
-        decayUsageIfNeeded();
-        setUsageDecayAlarm(context);
-        this.mShortcutSizeInPixels = ((ActivityManager) context.getSystemService("activity")).getLauncherLargeIconSize();
-        if (z) {
-            init(context);
+        this.mRecentSubject = BehaviorSubject.createDefault(new ArrayList<RecentItem>());
+        if (z && !initialized) {
+            initialized = true;
+            warmUp(context);
         }
     }
 
+    /* Heavy bootstrap runs off the main thread; every consumer method is
+     * null-safe against a not-yet-opened db. */
+    private void warmUp(final Context context) {
+        io.reactivex.Observable.fromCallable((Callable<List<RecentItem>>) () -> {
+            this.db = SearchDbHelper.getInstance(context).getWritableDatabase();
+            double length = new File(this.db.getPath()).length();
+            Double.isNaN(length);
+            Timber.d("Search DB size: %f MB", Double.valueOf(length / 1000000.0d));
+            this.mContactManager = ContactManager.getInstance(context);
+            this.mLocalAppsManager = LocalAppsManager.getInstance(context);
+            this.mShortcutSizeInPixels = ((ActivityManager) context.getSystemService("activity")).getLauncherLargeIconSize();
+            decayUsageIfNeeded();
+            setUsageDecayAlarm(context);
+            List<RecentItem> recents = getRecentItems();
+            this.mRecentSubject.onNext(recents);
+            updateSettings(context);
+            updateAllApps();
+            /* ContactUpdater registers a Handler-backed ContentObserver —
+             * keep it on the main looper. */
+            new Handler(Looper.getMainLooper()).post(() -> initContacts(context));
+            return recents;
+        }).subscribeOn(io.reactivex.schedulers.Schedulers.io()).subscribe((Consumer<List<RecentItem>>) recents -> { }, error -> Timber.e(error, "Search warmup failed", new Object[0]));
+    }
+
     private void addToRecents(String str, String str2, String str3, String str4) {
+        SQLiteDatabase sQLiteDatabase = this.db;
+        if (sQLiteDatabase == null || !sQLiteDatabase.isOpen()) {
+            Timber.e("AddToRecents called on closed or null database.", new Object[0]);
+            return;
+        }
         long jCurrentTimeMillis = System.currentTimeMillis();
         this.db.beginTransaction();
         try {
@@ -295,6 +318,11 @@ public class LocalSearchManager {
     }
 
     public void clearRecentItems() {
+        SQLiteDatabase sQLiteDatabase = this.db;
+        if (sQLiteDatabase == null || !sQLiteDatabase.isOpen()) {
+            Timber.e("ClearRecentItems called on closed or null database.", new Object[0]);
+            return;
+        }
         this.db.delete("recents", null, null);
         this.mRecentSubject.onNext(new ArrayList());
     }
@@ -456,6 +484,11 @@ public class LocalSearchManager {
     }
 
     public void itemAccessed(LocalSearchItem localSearchItem, boolean z) {
+        SQLiteDatabase sQLiteDatabase = this.db;
+        if (sQLiteDatabase == null || !sQLiteDatabase.isOpen()) {
+            Timber.e("ItemAccessed called on closed or null database.", new Object[0]);
+            return;
+        }
         this.db.execSQL("UPDATE \"item\" SET \"usage\"=\"usage\"+1 WHERE \"link\"= ?", new Object[]{localSearchItem.getLink()});
         if (z) {
             addToRecents(localSearchItem.getLink(), localSearchItem.getLabel(), localSearchItem.getType(), null);

@@ -17,7 +17,6 @@ import com.evie.search.dagger.SearchComponent;
 import com.evie.search.dagger.SearchModule;
 import com.evie.search.local.ContactManager;
 import com.evie.search.model.AppLink;
-import com.evie.search.local.LocalAppsManager;
 import com.evie.search.local.LocalSearchManager;
 import com.evie.search.local.LocalSearchSubitem;
 import com.evie.search.model.ActionData;
@@ -57,13 +56,12 @@ import com.ovacoda.devie.R;
 public class SearchPresenter {
     private SearchAdapter mAdapter;
     private AppAvailabilityProvider mAppAvailabilityProvider;
-    private ContactManager mContactManager;
+    private volatile ContactManager mContactManager;
     private Context mContext;
     private FrequentlyUsedModel mFrequentlyUsed;
     private final int mFrequentlyUsedHeight;
     private final String mFrequentsHeader;
     private final int mItemHeight;
-    private LocalAppsManager mLocalAppsManager;
     private final String mLocalHeader;
     private List<LocalSearchItem> mLocalItems;
     private int mLocalItemsShowing;
@@ -172,17 +170,24 @@ public class SearchPresenter {
         this.mUnavailableHeight = resources.getDimensionPixelSize(R.dimen.search_header_top_spacing) + resources.getDimensionPixelSize(R.dimen.search_header_text_size) + resources.getDimensionPixelSize(R.dimen.keyboard_estimate_height);
         this.mItemHeight = resources.getDimensionPixelSize(R.dimen.search_item_height);
         this.mLocalSearchManager = LocalSearchManager.getInstance(applicationContext, true);
-        this.mLocalAppsManager = LocalAppsManager.getInstance(applicationContext);
-        this.mContactManager = ContactManager.getInstance(applicationContext);
         setupRecentObservable(this.mSearchSettings.getIncludeFrequentlyUsed());
+    }
+
+    private ContactManager getContactManager() {
+        ContactManager m = this.mContactManager;
+        if (m == null) {
+            m = ContactManager.getInstance(this.mContext);
+            this.mContactManager = m;
+        }
+        return m;
     }
 
     private List<BaseItemPresenter> generateLocalSubitems(LocalSearchItem localSearchItem) {
         ArrayList arrayList = new ArrayList();
-        if (localSearchItem.getType().equals("CONTACT") && this.mContactManager.contactRecentlyUsed(localSearchItem)) {
+        if (localSearchItem.getType().equals("CONTACT") && getContactManager().contactRecentlyUsed(localSearchItem)) {
 
             try {
-            for (ActionData actionData : this.mContactManager.getContactData(Uri.parse(localSearchItem.getLink()).getSchemeSpecificPart()).getActions()) {
+            for (ActionData actionData : getContactManager().getContactData(Uri.parse(localSearchItem.getLink()).getSchemeSpecificPart()).getActions()) {
                 switch (actionData.getActionType()) {
                     case "CALL":
                     case "TEXT":
