@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 import com.evie.search.model.LocalSearchItem;
 import com.evie.search.model.SearchKeywordItem;
-import java.lang.reflect.Array;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -60,57 +59,59 @@ class LocalSearchUtil {
     }
 
     static int distance(String str, String str2, boolean z) {
-        ArrayList arrayList = new ArrayList();
-        ArrayList arrayList2 = new ArrayList();
-        for (int i = 0; i < str.length(); i++) {
-            arrayList.add(Integer.valueOf(charToBucket(str.charAt(i))));
+        int len1 = str.length();
+        int len2 = str2.length();
+        int[] buckets1 = new int[len1];
+        int[] buckets2 = new int[len2];
+        for (int i = 0; i < len1; i++) {
+            buckets1[i] = charToBucket(str.charAt(i));
         }
-        for (int i2 = 0; i2 < str2.length(); i2++) {
-            arrayList2.add(Integer.valueOf(charToBucket(str2.charAt(i2))));
+        for (int i2 = 0; i2 < len2; i2++) {
+            buckets2[i2] = charToBucket(str2.charAt(i2));
         }
-        int[] iArr = new int[27 + NON_ASCII_BUCKETS];
-        int[][] iArr2 = (int[][]) Array.newInstance((Class<?>) int.class, arrayList.size() + 2, arrayList2.size() + 2);
-        int size = arrayList.size() + arrayList2.size();
-        iArr2[0][0] = size;
+        int[] lastRowByBucket = new int[27 + NON_ASCII_BUCKETS];
+        int[][] matrix = new int[len1 + 2][len2 + 2];
+        int size = len1 + len2;
+        matrix[0][0] = size;
         int i3 = 0;
-        while (i3 <= arrayList.size()) {
+        while (i3 <= len1) {
             int i4 = i3 + 1;
-            iArr2[i4][0] = size;
-            iArr2[i4][1] = i3;
+            matrix[i4][0] = size;
+            matrix[i4][1] = i3;
             i3 = i4;
         }
         int i5 = 0;
-        while (i5 <= arrayList2.size()) {
+        while (i5 <= len2) {
             int i6 = i5 + 1;
-            iArr2[0][i6] = size;
-            iArr2[1][i6] = i5;
+            matrix[0][i6] = size;
+            matrix[1][i6] = i5;
             i5 = i6;
         }
-        for (int i7 = 1; i7 <= arrayList.size(); i7++) {
+        for (int i7 = 1; i7 <= len1; i7++) {
             int i8 = 1;
             int i9 = 0;
-            while (i8 <= arrayList2.size()) {
+            while (i8 <= len2) {
                 int i10 = i8 - 1;
-                int i11 = iArr[((Integer) arrayList2.get(i10)).intValue()];
-                boolean zEquals = ((Integer) arrayList.get(i7 - 1)).equals(arrayList2.get(i10));
+                int i11 = lastRowByBucket[buckets2[i10]];
+                boolean zEquals = buckets1[i7 - 1] == buckets2[i10];
                 int i12 = zEquals ? i8 : i9;
-                int i13 = iArr2[i7][i8] + (!zEquals ? 1 : 0);
+                int i13 = matrix[i7][i8] + (!zEquals ? 1 : 0);
                 int i14 = i7 + 1;
                 int i15 = i8 + 1;
-                iArr2[i14][i15] = Math.min(Math.min(i13, iArr2[i14][i8] + 1), Math.min(iArr2[i7][i15] + 1, iArr2[i11][i9] + ((i7 - i11) - 1) + 1 + ((i8 - i9) - 1)));
+                matrix[i14][i15] = Math.min(Math.min(i13, matrix[i14][i8] + 1), Math.min(matrix[i7][i15] + 1, matrix[i11][i9] + ((i7 - i11) - 1) + 1 + ((i8 - i9) - 1)));
                 i9 = i12;
                 i8 = i15;
             }
-            iArr[((Integer) arrayList.get(i7 - 1)).intValue()] = i7;
+            lastRowByBucket[buckets1[i7 - 1]] = i7;
         }
-        int iMin = iArr2[arrayList.size() + 1][arrayList2.size() + 1];
-        if (z && arrayList.size() <= arrayList2.size()) {
+        int iMin = matrix[len1 + 1][len2 + 1];
+        if (z && len1 <= len2) {
             int iMaxDistance = maxDistance(str);
-            int size2 = iMaxDistance == 0 ? arrayList.size() : Math.max(arrayList.size() - iMaxDistance, 4);
-            int iMin2 = Math.min(arrayList.size() + iMaxDistance, arrayList2.size());
+            int size2 = iMaxDistance == 0 ? len1 : Math.max(len1 - iMaxDistance, 4);
+            int iMin2 = Math.min(len1 + iMaxDistance, len2);
             while (size2 <= iMin2) {
                 size2++;
-                iMin = Math.min(iMin, iArr2[arrayList.size() + 1][size2]);
+                iMin = Math.min(iMin, matrix[len1 + 1][size2]);
             }
         }
         return iMin;
@@ -124,6 +125,11 @@ class LocalSearchUtil {
         ContentValues contentValues = new ContentValues();
         contentValues.put("link", localSearchItem.getLink());
         contentValues.put("label", localSearchItem.getLabel());
+        String norm = normalizeString(localSearchItem.getLabel());
+        if (norm != null) {
+            norm = norm.toLowerCase();
+        }
+        contentValues.put("label_norm", norm);
         contentValues.put("note", localSearchItem.getNote());
         contentValues.put("type", localSearchItem.getType());
         contentValues.put("usage", Float.valueOf(f));
@@ -205,22 +211,27 @@ class LocalSearchUtil {
     }
 
     static void updateRank(LocalSearchItem localSearchItem, String str, int i) {
+        updateRank(localSearchItem, str, i, null);
+    }
+
+    static void updateRank(LocalSearchItem localSearchItem, String str, int i, String labelNorm) {
         if (localSearchItem == null) {
             return;
         }
         float length = (str.length() - i) / (float) str.length();
-        HashSet hashSet = new HashSet();
-        HashSet hashSet2 = new HashSet();
-        for (char c : normalizeString(localSearchItem.getLabel()).toLowerCase().toCharArray()) {
-            hashSet.add(Character.valueOf(c));
-            hashSet2.add(Character.valueOf(c));
+        String normalized = labelNorm != null ? labelNorm : normalizeString(localSearchItem.getLabel()).toLowerCase();
+        HashSet<Character> hashSet = new HashSet<>();
+        HashSet<Character> hashSet2 = new HashSet<>();
+        for (char c : normalized.toCharArray()) {
+            hashSet.add(c);
+            hashSet2.add(c);
         }
         float f = 0.0f;
         for (char c2 : str.toCharArray()) {
-            if (hashSet.remove(Character.valueOf(c2))) {
+            if (hashSet.remove(c2)) {
                 f += 1.0f;
             }
-            hashSet2.add(Character.valueOf(c2));
+            hashSet2.add(c2);
         }
         float size = (length * 0.6f) + ((f / hashSet2.size()) * 0.2f);
         if (localSearchItem.getRank() < size) {

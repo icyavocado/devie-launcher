@@ -1,6 +1,8 @@
 package com.evie.search.local;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -10,7 +12,7 @@ public class SearchDbHelper extends SQLiteOpenHelper {
     private static volatile SearchDbHelper sInstance;
 
     SearchDbHelper(Context context) {
-        super(context, DB_NAME, (SQLiteDatabase.CursorFactory) null, 4);
+        super(context, DB_NAME, (SQLiteDatabase.CursorFactory) null, 5);
     }
 
     public static synchronized SearchDbHelper getInstance(Context context) {
@@ -34,7 +36,7 @@ public class SearchDbHelper extends SQLiteOpenHelper {
 
     @Override // android.database.sqlite.SQLiteOpenHelper
     public void onCreate(SQLiteDatabase sQLiteDatabase) {
-        sQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS item (_id INTEGER PRIMARY KEY AUTOINCREMENT, link TEXT NOT NULL UNIQUE, label TEXT NOT NULL, note TEXT, type TEXT NOT NULL, usage REAL)");
+        sQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS item (_id INTEGER PRIMARY KEY AUTOINCREMENT, link TEXT NOT NULL UNIQUE, label TEXT NOT NULL, note TEXT, type TEXT NOT NULL, usage REAL, label_norm TEXT)");
         sQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS recents (_id INTEGER PRIMARY KEY AUTOINCREMENT, last_used INTEGER NOT NULL, link TEXT NOT NULL UNIQUE, label TEXT NOT NULL, item_type TEXT NOT NULL, image_url TEXT)");
         sQLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS search (_id INTEGER PRIMARY KEY AUTOINCREMENT, search_keyword TEXT NOT NULL, match_keyword TEXT NOT NULL, keyword_type TEXT,item_id INTEGER NOT NULL, FOREIGN KEY (item_id) REFERENCES item(_id) ON UPDATE CASCADE ON DELETE CASCADE)");
         sQLiteDatabase.execSQL("CREATE INDEX search_index ON search (search_keyword)");
@@ -43,14 +45,43 @@ public class SearchDbHelper extends SQLiteOpenHelper {
 
     @Override // android.database.sqlite.SQLiteOpenHelper
     public void onDowngrade(SQLiteDatabase sQLiteDatabase, int i, int i2) {
-        onUpgrade(sQLiteDatabase, i, i2);
+        dropAll(sQLiteDatabase);
+        onCreate(sQLiteDatabase);
+    }
+
+    private static void dropAll(SQLiteDatabase sQLiteDatabase) {
+        sQLiteDatabase.execSQL("DROP TABLE IF EXISTS search");
+        sQLiteDatabase.execSQL("DROP TABLE IF EXISTS recents");
+        sQLiteDatabase.execSQL("DROP TABLE IF EXISTS item");
     }
 
     @Override // android.database.sqlite.SQLiteOpenHelper
     public void onUpgrade(SQLiteDatabase sQLiteDatabase, int i, int i2) {
-        sQLiteDatabase.execSQL("DROP TABLE IF EXISTS search");
-        sQLiteDatabase.execSQL("DROP TABLE IF EXISTS recents");
-        sQLiteDatabase.execSQL("DROP TABLE IF EXISTS item");
-        onCreate(sQLiteDatabase);
+        if (i < 4) {
+            dropAll(sQLiteDatabase);
+            onCreate(sQLiteDatabase);
+            return;
+        }
+        if (i < 5) {
+            /* Non-destructive: keep item usage history, backfill label_norm. */
+            sQLiteDatabase.execSQL("ALTER TABLE item ADD COLUMN label_norm TEXT");
+            sQLiteDatabase.beginTransaction();
+            try {
+                Cursor cursor = sQLiteDatabase.query("item", new String[]{"_id", "label"}, "label_norm IS NULL", null, null, null, null);
+                android.content.ContentValues values = new android.content.ContentValues();
+                while (cursor.moveToNext()) {
+                    String norm = LocalSearchUtil.normalizeString(cursor.getString(1));
+                    if (norm != null) {
+                        norm = norm.toLowerCase();
+                    }
+                    values.put("label_norm", norm);
+                    sQLiteDatabase.update("item", values, "_id=?", new String[]{String.valueOf(cursor.getLong(0))});
+                }
+                cursor.close();
+                sQLiteDatabase.setTransactionSuccessful();
+            } finally {
+                sQLiteDatabase.endTransaction();
+            }
+        }
     }
 }

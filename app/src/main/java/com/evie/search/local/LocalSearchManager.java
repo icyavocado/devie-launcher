@@ -588,7 +588,7 @@ public class LocalSearchManager {
                                     break;
                             }
                         }
-                        LocalSearchUtil.updateRank(arrayList2.get(iIndexOf), str2, iDistance);
+                        LocalSearchUtil.updateRank(arrayList2.get(iIndexOf), str2, iDistance, cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("label_norm")));
                         i3 = 1;
                     }
                 }
