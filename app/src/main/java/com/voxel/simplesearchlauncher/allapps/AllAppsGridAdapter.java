@@ -2,8 +2,11 @@ package com.voxel.simplesearchlauncher.allapps;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.voxel.launcher3.CellParams;
@@ -12,6 +15,7 @@ import com.voxel.simplesearchlauncher.model.itemdata.SearchItemData;
 import com.voxel.simplesearchlauncher.view.EmptyViewHolder;
 import com.voxel.simplesearchlauncher.view.FastScrollRecyclerViewInterface;
 import com.ovacoda.devie.R;
+import com.voxel.simplesearchlauncher.settings.SettingsPalette;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -128,7 +132,10 @@ public class AllAppsGridAdapter extends AllAppsAdapter implements FastScrollRecy
             case 2:
                 return new AllAppsFragment.AppViewHolder(this.mInflater.inflate(R.layout.all_apps_grid_icon_text, viewGroup, false));
             case 3:
-                return new EmptyViewHolder(this.mInflater.inflate(R.layout.all_apps_grid_new_section_separator_item, viewGroup, false));
+                View indicatorLayout = this.mInflater.inflate(R.layout.all_apps_grid_new_section_separator_item, viewGroup, false);
+                ImageView indicatorDot = (ImageView) indicatorLayout.findViewById(R.id.new_item_indicator);
+                indicatorDot.setColorFilter(SettingsPalette.accentOr(ContextCompat.getColor(indicatorLayout.getContext(), R.color.evie_theme_green)), PorterDuff.Mode.SRC_IN);
+                return new EmptyViewHolder(indicatorLayout);
             default:
                 throw new IllegalStateException("Invalid type");
         }

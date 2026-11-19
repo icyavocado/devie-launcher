@@ -34,7 +34,7 @@ public class FastScrollRecyclerViewItemDecoration extends RecyclerView.ItemDecor
     }
 
     public void refreshColors() {
-        this.mIndexPaint.setColor(SettingsPalette.fastScrollColor(-3355444));
+        this.mIndexPaint.setColor(SettingsPalette.accentOr(-3355444));
     }
 
     @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration

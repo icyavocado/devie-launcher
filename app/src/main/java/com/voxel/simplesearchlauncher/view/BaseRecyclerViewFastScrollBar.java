@@ -63,8 +63,8 @@ public class BaseRecyclerViewFastScrollBar {
     public void refreshColors() {
         Resources resources = this.mRv.getResources();
         this.mThumbInactiveColor = this.mRv.getFastScrollerThumbInactiveColor(
-                SettingsPalette.fastScrollColor(resources.getColor(R.color.container_fastscroll_thumb_inactive_color)));
-        this.mThumbActiveColor = SettingsPalette.fastScrollColor(resources.getColor(R.color.container_fastscroll_thumb_active_color));
+                SettingsPalette.accentOr(resources.getColor(R.color.container_fastscroll_thumb_inactive_color)));
+        this.mThumbActiveColor = SettingsPalette.accentOr(resources.getColor(R.color.container_fastscroll_thumb_active_color));
         this.mThumbPaint.setColor(this.mThumbInactiveColor);
         this.mPopup.refreshColors();
         this.mRv.invalidate();

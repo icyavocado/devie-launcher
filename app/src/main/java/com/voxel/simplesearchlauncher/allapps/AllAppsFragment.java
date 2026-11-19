@@ -504,6 +504,20 @@ public class AllAppsFragment extends Fragment implements DragSource {
         return true;
     }
 
+    private void refreshToggleAccents() {
+        int accent = com.voxel.simplesearchlauncher.settings.SettingsPalette.customAccent();
+        boolean gridActive = this.mRecyclerView.getLayoutManager() == this.mGridLayoutManager;
+        ImageView active = gridActive ? this.mGridButton : this.mListButton;
+        ImageView dim = gridActive ? this.mListButton : this.mGridButton;
+        if (accent != 0) {
+            active.setColorFilter(accent, android.graphics.PorterDuff.Mode.SRC_IN);
+            dim.setColorFilter((0x64 << 24) | (accent & 0xFFFFFF), android.graphics.PorterDuff.Mode.SRC_IN);
+        } else {
+            active.setColorFilter(null);
+            dim.setColorFilter(null);
+        }
+    }
+
     private boolean setGridMode() {
         if (this.mRecyclerView.getLayoutManager() == this.mGridLayoutManager) {
             return false;
@@ -515,6 +529,7 @@ public class AllAppsFragment extends Fragment implements DragSource {
         this.mRecyclerView.setLayoutManager(this.mGridLayoutManager);
         this.mRecyclerView.setAdapter(this.mGridAdapter);
         this.mRecyclerView.scrollToPosition(iFindFirstVisibleItemPosition);
+        refreshToggleAccents();
         return true;
     }
 
@@ -533,6 +548,7 @@ public class AllAppsFragment extends Fragment implements DragSource {
         this.mRecyclerView.setLayoutManager(this.mLinearLayoutManager);
         this.mRecyclerView.setAdapter(this.mListAdapter);
         this.mRecyclerView.scrollToPosition(iFindFirstVisibleItemPosition);
+        refreshToggleAccents();
         return true;
     }
 
@@ -706,6 +722,7 @@ public class AllAppsFragment extends Fragment implements DragSource {
         updateStyle();
         this.mScrollBarRecyclerView.getScrollBar().refreshColors();
         this.mIndexDecoration.refreshColors();
+        refreshToggleAccents();
         OnFragmentInteractionListener onFragmentInteractionListener = this.fragmentInteractionListener;
         if ((onFragmentInteractionListener == null || !onFragmentInteractionListener.canShowAllAppsSetDefaultPrompt()) ? setShouldShowSetDefaultLauncherRow(false) : setShouldShowSetDefaultLauncherRow(!ResetLauncherActivity.isLauncherDefault(getActivity()))) {
             return;

@@ -47,9 +47,9 @@ public final class SettingsPalette {
         return accent != UNSET ? accent : 0;
     }
 
-    /** Drawer fast-scroll thumb / letters-rail / popup color: the custom
-     *  accent when set, else the legacy hardcoded color. */
-    public static int fastScrollColor(int defaultColor) {
+    /** The custom accent when set, else the supplied default. Used for
+     *  launcher chrome: fast scroll colors, drawer toggles, section dots. */
+    public static int accentOr(int defaultColor) {
         int accent = customAccent();
         return accent != 0 ? accent : defaultColor;
     }
