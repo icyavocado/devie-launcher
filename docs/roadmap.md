@@ -61,3 +61,36 @@ requests also land here.
 - Launcher settings importer — cut; the trimmed `ImportHelper.importItems` shell remains.
 - Gson-based cloud models — the gson deserializer slot in the Dagger graph is now an
   empty set; re-add when the remote models return.
+## P5 — Cloudflare-post optimization round (2026-11-19)
+
+Inspired by the 1.1.1.1 DNS-cache memory post (bench-first, carry only
+what the read needs). Landed, committed:
+
+- `5aa6a1e` search hot path: SELECT * (12 cols) -> the 7 read columns,
+  per-row getColumnIndexOrThrow hoisted, O(n^2) indexOf dedup -> link
+  maps. Robolectric A/B (80-item corpus, 15-query mix): 12.7 -> 11.8ms
+  median, identical 47 rows; gains scale with DB size.
+- `a0fa1d6` + `d7c66df` accents: fast-scroll thumb/popup/letters rail,
+  NEW-section dot, list/grid toggles now follow SettingsPalette accent
+  and refresh on drawer resume (no restart).
+
+On-device (R5CT60JX7FM) A/B old-vs-new, same gestures: jank ~14% both,
+p50 9->7ms, slow-UI-thread identical (14/165). The 69ms p99 outlier was
+a one-off first-open bitmap upload after install (0 GC pauses logged).
+
+Parked candidates (profiled-out or cold):
+- ContactManager line ~175 queries Data.CONTENT_URI with a null
+  projection (all columns) — cold path, one row per lookup; trim when
+  contacts next get touched.
+- Cold start wallpaper/blur pipeline: already async (decode + 25%
+  downscale + fastBlur off-main); main-thread first-frame is model-load
+  bound, not wallpaper-bound.
+- Unlock wedge (2026-11-18, phone): first unlock after screen-off left
+  the launcher unusable until lock+unlock again. No dropbox entry (no
+  crash). Non-reproducible on demand 2026-11-19. Watch: live logcat
+  stream to /tmp/opencode/live_unlock.log whenever the phone is
+  plugged in; Samsung third-party-launcher translucent-window class is
+  the suspected culprit.
+- Emulator-only: workspace search-bar tap resolves to quicksearchbox
+  (external WEB_SEARCH fallback); the in-app overlay opens via drawer
+  pull-down as designed. Harmless; note for future search-UI work.
