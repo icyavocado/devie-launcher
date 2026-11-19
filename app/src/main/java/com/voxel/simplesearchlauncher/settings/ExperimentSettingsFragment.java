@@ -239,9 +239,14 @@ public class ExperimentSettingsFragment extends Fragment {
     private void applyAnimSpeed(int pct) {
         SettingsStorage.getInstance().setAnimSpeedPercent(pct);
         boolean applied = false;
+        float scale = pct / 100.0f;
         try {
             android.provider.Settings.Global.putFloat(getActivity().getContentResolver(),
-                    android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, pct / 100.0f);
+                    android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, scale);
+            android.provider.Settings.Global.putFloat(getActivity().getContentResolver(),
+                    android.provider.Settings.Global.TRANSITION_ANIMATION_SCALE, scale);
+            android.provider.Settings.Global.putFloat(getActivity().getContentResolver(),
+                    android.provider.Settings.Global.WINDOW_ANIMATION_SCALE, scale);
             applied = true;
         } catch (SecurityException unused) {
         }
