@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import androidx.recyclerview.widget.RecyclerView;
 import com.voxel.simplesearchlauncher.utils.AlphaUtil;
 import com.ovacoda.devie.R;
+import com.voxel.simplesearchlauncher.settings.SettingsPalette;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class FastScrollRecyclerViewItemDecoration extends RecyclerView.ItemDecoration {
@@ -29,6 +30,11 @@ public class FastScrollRecyclerViewItemDecoration extends RecyclerView.ItemDecor
         this.mIndexPaint = new Paint();
         this.mIndexPaint.setAntiAlias(true);
         this.mIndexPaint.setStyle(Paint.Style.FILL);
+        refreshColors();
+    }
+
+    public void refreshColors() {
+        this.mIndexPaint.setColor(SettingsPalette.fastScrollColor(-3355444));
     }
 
     @Override // androidx.recyclerview.widget.RecyclerView.ItemDecoration
@@ -60,7 +66,6 @@ public class FastScrollRecyclerViewItemDecoration extends RecyclerView.ItemDecor
         int i = 0;
         while (i < strArr.length) {
             String upperCase = strArr[i].toUpperCase();
-            this.mIndexPaint.setColor(-3355444);
             this.mIndexPaint.setAlpha((int) (((f7 - f6) * 200.0f) + (50.0f * f6)));
             this.mIndexPaint.setFakeBoldText(false);
             int i2 = i + 1;

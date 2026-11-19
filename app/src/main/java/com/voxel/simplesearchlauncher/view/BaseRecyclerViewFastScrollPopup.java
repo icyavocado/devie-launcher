@@ -5,10 +5,12 @@ import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import com.voxel.launcher3.Utilities;
 import com.ovacoda.devie.R;
+import com.voxel.simplesearchlauncher.settings.SettingsPalette;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class BaseRecyclerViewFastScrollPopup {
@@ -38,6 +40,15 @@ public class BaseRecyclerViewFastScrollPopup {
         this.mTextPaint.setColor(-1);
         this.mTextPaint.setAntiAlias(true);
         this.mTextPaint.setTextSize(resources.getDimensionPixelSize(R.dimen.container_fastscroll_popup_text_size));
+    }
+
+    public void refreshColors() {
+        int accent = SettingsPalette.customAccent();
+        if (accent != 0) {
+            this.mBg.mutate().setColorFilter(accent, PorterDuff.Mode.SRC_IN);
+        } else {
+            this.mBg.setColorFilter(null);
+        }
     }
 
     public void animateVisibility(boolean z) {

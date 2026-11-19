@@ -78,6 +78,7 @@ public class AllAppsFragment extends Fragment implements DragSource {
     private boolean mQueuedRefresh;
     private RecyclerView mRecyclerView;
     private AllAppsRecyclerView mScrollBarRecyclerView;
+    private FastScrollRecyclerViewItemDecoration mIndexDecoration;
     private boolean mIsStartupComplete = false;
     private boolean mShouldShowSetDefaultLauncherRow = false;
     private AsyncTask<Void, Void, RefreshResult> mRefreshAppListTask = null;
@@ -623,7 +624,8 @@ public class AllAppsFragment extends Fragment implements DragSource {
         Log.d(TAG, "onCreateView");
         View viewInflate = layoutInflater.inflate(R.layout.fragment_all_apps, viewGroup, false);
         this.mFastScrollRecyclerView = (FastScrollRecyclerView) viewInflate.findViewById(R.id.fastscroll_list);
-        this.mFastScrollRecyclerView.addItemDecoration(new FastScrollRecyclerViewItemDecoration(getContext()));
+        this.mIndexDecoration = new FastScrollRecyclerViewItemDecoration(getContext());
+        this.mFastScrollRecyclerView.addItemDecoration(this.mIndexDecoration);
         this.mScrollBarRecyclerView = (AllAppsRecyclerView) viewInflate.findViewById(R.id.scrollbar_list);
         this.mListButton = (ImageView) viewInflate.findViewById(R.id.list_button);
         this.mGridButton = (ImageView) viewInflate.findViewById(R.id.grid_button);
@@ -702,6 +704,8 @@ public class AllAppsFragment extends Fragment implements DragSource {
     public void onResume() {
         super.onResume();
         updateStyle();
+        this.mScrollBarRecyclerView.getScrollBar().refreshColors();
+        this.mIndexDecoration.refreshColors();
         OnFragmentInteractionListener onFragmentInteractionListener = this.fragmentInteractionListener;
         if ((onFragmentInteractionListener == null || !onFragmentInteractionListener.canShowAllAppsSetDefaultPrompt()) ? setShouldShowSetDefaultLauncherRow(false) : setShouldShowSetDefaultLauncherRow(!ResetLauncherActivity.isLauncherDefault(getActivity()))) {
             return;

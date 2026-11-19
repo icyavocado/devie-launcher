@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import com.ovacoda.devie.R;
+import com.voxel.simplesearchlauncher.settings.SettingsPalette;
 
 /* JADX INFO: loaded from: classes2.dex */
 public class BaseRecyclerViewFastScrollBar {
@@ -46,11 +47,8 @@ public class BaseRecyclerViewFastScrollBar {
         this.mPopup = new BaseRecyclerViewFastScrollPopup(baseRecyclerView, resources);
         this.mTrackPaint.setColor(baseRecyclerView.getFastScrollerTrackColor(-16777216));
         this.mTrackPaint.setAlpha(30);
-        this.mThumbInactiveColor = baseRecyclerView.getFastScrollerThumbInactiveColor(resources.getColor(R.color.container_fastscroll_thumb_inactive_color));
-        this.mThumbActiveColor = resources.getColor(R.color.container_fastscroll_thumb_active_color);
         this.mThumbPaint = new Paint();
         this.mThumbPaint.setAntiAlias(true);
-        this.mThumbPaint.setColor(this.mThumbInactiveColor);
         this.mThumbPaint.setStyle(Paint.Style.FILL);
         int dimensionPixelSize = resources.getDimensionPixelSize(R.dimen.container_fastscroll_thumb_min_width);
         this.mThumbMinWidth = dimensionPixelSize;
@@ -59,6 +57,17 @@ public class BaseRecyclerViewFastScrollBar {
         this.mThumbHeight = resources.getDimensionPixelSize(R.dimen.container_fastscroll_thumb_height);
         this.mThumbCurvature = this.mThumbMaxWidth - this.mThumbMinWidth;
         this.mTouchInset = resources.getDimensionPixelSize(R.dimen.container_fastscroll_thumb_touch_inset);
+        refreshColors();
+    }
+
+    public void refreshColors() {
+        Resources resources = this.mRv.getResources();
+        this.mThumbInactiveColor = this.mRv.getFastScrollerThumbInactiveColor(
+                SettingsPalette.fastScrollColor(resources.getColor(R.color.container_fastscroll_thumb_inactive_color)));
+        this.mThumbActiveColor = SettingsPalette.fastScrollColor(resources.getColor(R.color.container_fastscroll_thumb_active_color));
+        this.mThumbPaint.setColor(this.mThumbInactiveColor);
+        this.mPopup.refreshColors();
+        this.mRv.invalidate();
     }
 
     public void lambda$showActiveScrollbar$0(ValueAnimator valueAnimator) {

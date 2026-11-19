@@ -41,6 +41,19 @@ public final class SettingsPalette {
         return SettingsStorage.getInstance().getThemeColor("theme_accent");
     }
 
+    /** The custom accent when set, else 0. */
+    public static int customAccent() {
+        int accent = accent();
+        return accent != UNSET ? accent : 0;
+    }
+
+    /** Drawer fast-scroll thumb / letters-rail / popup color: the custom
+     *  accent when set, else the legacy hardcoded color. */
+    public static int fastScrollColor(int defaultColor) {
+        int accent = customAccent();
+        return accent != 0 ? accent : defaultColor;
+    }
+
     public static boolean hasCustomColors() {
         return background() != UNSET || card() != UNSET || accent() != UNSET;
     }
