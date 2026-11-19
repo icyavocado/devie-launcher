@@ -7,6 +7,7 @@
     <permission android:name="com.ovacoda.devie.permission.RECEIVE_FIRST_LOAD_BROADCAST" android:protectionLevel="signatureOrSystem"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
+    <uses-permission xmlns:tools="http://schemas.android.com/tools" android:name="android.permission.WRITE_SECURE_SETTINGS" tools:ignore="ProtectedPermissions"/>
     <uses-permission android:name="android.permission.SET_WALLPAPER_HINTS"/>
     <!-- Only used when the opt-in web-suggestions Experiment is enabled. -->
     <uses-permission android:name="android.permission.INTERNET"/>

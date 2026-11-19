@@ -172,6 +172,11 @@
     <string name="app_settings_experiment_web_suggestions_sub">After you stop typing, the query is sent to Google to show web suggestions. Off by default; nothing is sent while this is off.</string>
     <string name="app_settings_experiment_header">Experiment</string>
     <string name="app_settings_experiment_theme_header">Theme</string>
+    <string name="app_settings_experiment_tuning_header">Tuning</string>
+    <string name="app_settings_experiment_anim_speed">Animation speed</string>
+    <string name="app_settings_experiment_anim_speed_sub">System-wide multiplier for animations; 0 turns them off. New animations pick it up immediately.</string>
+    <string name="app_settings_experiment_anim_speed_need_grant">Needs a one-time permission. With the phone connected to a computer: adb shell pm grant com.ovacoda.devie android.permission.WRITE_SECURE_SETTINGS</string>
+    <string name="app_settings_experiment_search_delay">Search suggestions delay</string>
     <string name="app_settings_theme_title">Theme</string>
     <string name="app_settings_theme_value_system">Follow system</string>
     <string name="app_settings_theme_value_dark">Dark</string>

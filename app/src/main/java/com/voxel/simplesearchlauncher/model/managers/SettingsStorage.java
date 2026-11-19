@@ -318,6 +318,23 @@ public class SettingsStorage implements UpgradeUtil.UpgradableComponent {
         return androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
     }
 
+    /* Experiment tuning knobs. */
+    public int getSearchDelayMs() {
+        return Math.max(50, Math.min(500, this.sharedPref.getInt("experiment_search_delay_ms", 430)));
+    }
+
+    public void setSearchDelayMs(int ms) {
+        this.sharedPref.edit().putInt("experiment_search_delay_ms", Math.max(50, Math.min(500, ms))).apply();
+    }
+
+    public int getAnimSpeedPercent() {
+        return Math.max(0, Math.min(100, this.sharedPref.getInt("experiment_anim_speed_percent", 100)));
+    }
+
+    public void setAnimSpeedPercent(int pct) {
+        this.sharedPref.edit().putInt("experiment_anim_speed_percent", Math.max(0, Math.min(100, pct))).apply();
+    }
+
     /* Custom palette colors for the theme experiment; -1 = unset. */
     public int getThemeColor(String key) {
         return this.sharedPref.getInt(key, -1);

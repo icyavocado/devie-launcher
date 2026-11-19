@@ -262,7 +262,7 @@ public class SearchPresenter {
                 || str.trim().length() < 2) {
             return Observable.empty();
         }
-        return Observable.timer(430L, TimeUnit.MILLISECONDS, io.reactivex.schedulers.Schedulers.computation())
+        return Observable.timer(com.voxel.simplesearchlauncher.model.managers.SettingsStorage.getInstance().getSearchDelayMs(), TimeUnit.MILLISECONDS, io.reactivex.schedulers.Schedulers.computation())
                 .flatMap(new io.reactivex.functions.Function<Long, io.reactivex.ObservableSource<SearchPresenterData>>() {
                     @Override
                     public io.reactivex.ObservableSource<SearchPresenterData> apply(Long unused) throws Exception {

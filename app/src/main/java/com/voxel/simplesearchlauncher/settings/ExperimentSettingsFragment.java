@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -21,6 +22,12 @@ public class ExperimentSettingsFragment extends Fragment {
     private SettingsSwitchViewHolder mCompactIconsViewHolder;
     private SettingsSwitchViewHolder mWebSuggestionsViewHolder;
     private SettingsTextViewHolder mThemeViewHolder;
+    private View mAnimSpeedView;
+    private TextView mAnimSpeedLabel;
+    private com.ovacoda.devie.widget.DiscreteSeekBar mAnimSpeedSeekBar;
+    private View mSearchDelayView;
+    private TextView mSearchDelayLabel;
+    private com.ovacoda.devie.widget.DiscreteSeekBar mSearchDelaySeekBar;
 
     @Override // androidx.fragment.app.Fragment
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
@@ -65,6 +72,60 @@ public class ExperimentSettingsFragment extends Fragment {
         });
         themeCard.addView(this.mThemeViewHolder.itemView);
         container.addView(themeCard);
+
+        /* --- TUNING group --- */
+        addHeader(inflater, container, R.string.app_settings_experiment_tuning_header);
+        LinearLayout tuningCard = newCard(inflater, container);
+        this.mAnimSpeedView = inflater.inflate(R.layout.settings_activity_seek_item, tuningCard, false);
+        this.mAnimSpeedLabel = (TextView) this.mAnimSpeedView.findViewById(R.id.label);
+        this.mAnimSpeedSeekBar = (com.ovacoda.devie.widget.DiscreteSeekBar) this.mAnimSpeedView.findViewById(R.id.seek_bar);
+        this.mAnimSpeedSeekBar.setMin(0);
+        this.mAnimSpeedSeekBar.setMax(100);
+        initAnimSpeedRow();
+        this.mAnimSpeedSeekBar.setOnProgressChangeListener(new com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener() {
+            @Override
+            public void onProgressChanged(com.ovacoda.devie.widget.DiscreteSeekBar seekBar, int value, boolean fromUser) {
+                if (fromUser) {
+                    ExperimentSettingsFragment.this.applyAnimSpeed(value);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(com.ovacoda.devie.widget.DiscreteSeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(com.ovacoda.devie.widget.DiscreteSeekBar seekBar) {
+            }
+        });
+        tuningCard.addView(this.mAnimSpeedView);
+        this.mSearchDelayView = inflater.inflate(R.layout.settings_activity_seek_item, tuningCard, false);
+        this.mSearchDelayLabel = (TextView) this.mSearchDelayView.findViewById(R.id.label);
+        this.mSearchDelaySeekBar = (com.ovacoda.devie.widget.DiscreteSeekBar) this.mSearchDelayView.findViewById(R.id.seek_bar);
+        this.mSearchDelaySeekBar.setMin(50);
+        this.mSearchDelaySeekBar.setMax(500);
+        this.mSearchDelaySeekBar.setValue(SettingsStorage.getInstance().getSearchDelayMs());
+        this.mSearchDelayLabel.setText(getString(R.string.app_settings_experiment_search_delay) + " - " + SettingsStorage.getInstance().getSearchDelayMs() + " ms");
+        this.mSearchDelaySeekBar.setOnProgressChangeListener(new com.ovacoda.devie.widget.DiscreteSeekBar.OnProgressChangeListener() {
+            @Override
+            public void onProgressChanged(com.ovacoda.devie.widget.DiscreteSeekBar seekBar, int value, boolean fromUser) {
+                if (fromUser) {
+                    SettingsStorage.getInstance().setSearchDelayMs(value);
+                    ExperimentSettingsFragment.this.mSearchDelayLabel.setText(
+                            ExperimentSettingsFragment.this.getString(R.string.app_settings_experiment_search_delay) + " - " + value + " ms");
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(com.ovacoda.devie.widget.DiscreteSeekBar seekBar) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(com.ovacoda.devie.widget.DiscreteSeekBar seekBar) {
+            }
+        });
+        tuningCard.addView(this.mSearchDelayView);
+        container.addView(tuningCard);
     }
 
     @Override // androidx.fragment.app.Fragment
@@ -158,6 +219,36 @@ public class ExperimentSettingsFragment extends Fragment {
     public void onWebSuggestionsChanged(CompoundButton compoundButton, boolean z) {
         SettingsStorage.getInstance().setWebSuggestions(z);
         /* Applies to the next query; no state to flush. */
+    }
+
+    /* Read the live system animator scale so the slider starts where the
+     * system actually is (developer options may have changed it). */
+    private void initAnimSpeedRow() {
+        float current = 1.0f;
+        try {
+            current = android.provider.Settings.Global.getFloat(getActivity().getContentResolver(),
+                    android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, 1.0f);
+        } catch (Exception unused) {
+        }
+        int pct = Math.max(0, Math.min(100, Math.round(current * 100.0f)));
+        SettingsStorage.getInstance().setAnimSpeedPercent(pct);
+        this.mAnimSpeedSeekBar.setValue(pct);
+        this.mAnimSpeedLabel.setText(getString(R.string.app_settings_experiment_anim_speed) + " - " + pct + "%");
+    }
+
+    private void applyAnimSpeed(int pct) {
+        SettingsStorage.getInstance().setAnimSpeedPercent(pct);
+        boolean applied = false;
+        try {
+            android.provider.Settings.Global.putFloat(getActivity().getContentResolver(),
+                    android.provider.Settings.Global.ANIMATOR_DURATION_SCALE, pct / 100.0f);
+            applied = true;
+        } catch (SecurityException unused) {
+        }
+        if (!applied) {
+            Toast.makeText(getContext(), R.string.app_settings_experiment_anim_speed_need_grant, Toast.LENGTH_LONG).show();
+        }
+        this.mAnimSpeedLabel.setText(getString(R.string.app_settings_experiment_anim_speed) + " - " + pct + "%");
     }
 
     private int dp(int dip) {
