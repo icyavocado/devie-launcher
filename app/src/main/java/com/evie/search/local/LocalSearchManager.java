@@ -534,6 +534,7 @@ public class LocalSearchManager {
         }
         HashMap map = new HashMap();
         List<LocalSearchItem> list = arrayList;
+        HashMap<String, Integer> mergedIndex = new HashMap<>();
         int i2 = 0;
         while (i2 < strArr.length) {
             String str2 = strArr[i2];
@@ -541,7 +542,7 @@ public class LocalSearchManager {
             HashSet hashSet = new HashSet();
             int i3 = 1;
             LocalSearchUtil.addKeywordWithDeletions(hashSet, strSubstring, LocalSearchUtil.maxDistance(strSubstring), true);
-            StringBuilder sb = new StringBuilder("SELECT * FROM search JOIN item ON item_id=item._id WHERE search_keyword IN (");
+            StringBuilder sb = new StringBuilder("SELECT search.match_keyword, item.link, item.label, item.note, item.type, item.usage, item.label_norm FROM search JOIN item ON item_id=item._id WHERE search_keyword IN (");
             String[] strArr2 = (String[]) hashSet.toArray(new String[hashSet.size()]);
             for (int i4 = 0; i4 < strArr2.length; i4++) {
                 if (i4 < strArr2.length - 1) {
@@ -552,43 +553,32 @@ public class LocalSearchManager {
             }
 
             ArrayList<LocalSearchItem> arrayList2 = new ArrayList<>();
+            HashMap<String, Integer> indexByLink = new HashMap<>();
             Cursor cursorRawQuery = null;
             try {
                 cursorRawQuery = this.db.rawQuery(sb.toString(), strArr2);
                 int iMaxDistance = LocalSearchUtil.maxDistance(str2);
                 while (cursorRawQuery.moveToNext()) {
-                    String string = cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("match_keyword"));
+                    String string = cursorRawQuery.getString(0);
                     int iDistance = LocalSearchUtil.distance(str2, string, i2 == strArr.length - i3);
                     if (iDistance <= iMaxDistance) {
-                        LocalSearchItem localSearchItem = new LocalSearchItem(cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("link")), cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("label")), cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("note")), null, cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("type")));
-                        int iIndexOf = arrayList2.indexOf(localSearchItem);
-                        if (iIndexOf < 0) {
-                            float f = cursorRawQuery.getFloat(cursorRawQuery.getColumnIndexOrThrow("usage"));
-                            switch (localSearchItem.getType()) {
-                                case "LOCAL_APP":
-                                    f += 2.0f;
-                                    map.put(localSearchItem.getLink(), Float.valueOf(f));
-                                    arrayList2.add(localSearchItem);
-                                    iIndexOf = arrayList2.indexOf(localSearchItem);
-                                    break;
-                                case "CONTACT":
-
-                                    if (f == 0.0f && i2 == 0
-                                            && LocalSearchUtil.distance(str2, string, false) > iMaxDistance) {
-                                        continue;
-                                    }
-                                    map.put(localSearchItem.getLink(), Float.valueOf(f));
-                                    arrayList2.add(localSearchItem);
-                                    iIndexOf = arrayList2.indexOf(localSearchItem);
-                                    break;
-                                default:
-                                    map.put(localSearchItem.getLink(), Float.valueOf(f));
-                                    arrayList2.add(localSearchItem);
-                                    iIndexOf = arrayList2.indexOf(localSearchItem);
-                                    break;
+                        LocalSearchItem localSearchItem = new LocalSearchItem(cursorRawQuery.getString(1), cursorRawQuery.getString(2), cursorRawQuery.getString(3), null, cursorRawQuery.getString(4));
+                        Integer existing = indexByLink.get(localSearchItem.getLink());
+                        if (existing == null) {
+                            float f = cursorRawQuery.getFloat(5);
+                            if ("CONTACT".equals(localSearchItem.getType()) && f == 0.0f && i2 == 0
+                                    && LocalSearchUtil.distance(str2, string, false) > iMaxDistance) {
+                                continue;
                             }
+                            if ("LOCAL_APP".equals(localSearchItem.getType())) {
+                                f += 2.0f;
+                            }
+                            map.put(localSearchItem.getLink(), Float.valueOf(f));
+                            arrayList2.add(localSearchItem);
+                            existing = Integer.valueOf(arrayList2.size() - 1);
+                            indexByLink.put(localSearchItem.getLink(), existing);
                         }
-                        LocalSearchUtil.updateRank(arrayList2.get(iIndexOf), str2, iDistance, cursorRawQuery.getString(cursorRawQuery.getColumnIndexOrThrow("label_norm")));
+                        LocalSearchUtil.updateRank(arrayList2.get(existing.intValue()), str2, iDistance, cursorRawQuery.getString(6));
                         i3 = 1;
                     }
                 }
@@ -603,14 +593,18 @@ public class LocalSearchManager {
                 } else {
                     ArrayList arrayList3 = new ArrayList();
                     for (LocalSearchItem localSearchItem3 : arrayList2) {
-                        int iIndexOf2 = list.indexOf(localSearchItem3);
-                        if (iIndexOf2 >= 0) {
-                            LocalSearchItem localSearchItem4 = list.get(iIndexOf2);
+                        Integer prior = mergedIndex.get(localSearchItem3.getLink());
+                        if (prior != null) {
+                            LocalSearchItem localSearchItem4 = list.get(prior.intValue());
                             localSearchItem4.setRank(localSearchItem4.getRank() + (localSearchItem3.getRank() / strArr.length));
                             arrayList3.add(localSearchItem4);
                         }
                     }
                     list = arrayList3;
+                }
+                mergedIndex = new HashMap<>();
+                for (int k = 0; k < list.size(); k++) {
+                    mergedIndex.put(list.get(k).getLink(), Integer.valueOf(k));
                 }
                 i2++;
             } catch (Throwable th) {
